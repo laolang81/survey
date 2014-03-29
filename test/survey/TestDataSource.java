@@ -1,19 +1,20 @@
 package survey;
 
-import javax.sql.DataSource;
-
-import org.hibernate.SessionFactory;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.sniper.survey.dao.BaseDao;
+import com.sniper.survey.model.Channel;
 
 public class TestDataSource {
 
+	BaseDao<Channel> baseDao;
+	
 	@Test
 	public void getConnection(){
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
-		SessionFactory ds = (SessionFactory) ctx.getBean("sessionFactory");
-		System.out.println(ds);
+		
+		Channel channel = baseDao.getEntity(1);
+		System.out.println(channel);
+		
 	}
 	
 }

@@ -57,7 +57,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 
 	// 查询使用的session
 	public Session getOpenSesion() {
-		return sessionFactory.openSession();
+		System.out.println(sessionFactory);
+		return null;
+		// return sessionFactory.openSession();
 	}
 
 	@Override
@@ -104,23 +106,24 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 */
 	@Override
 	public T loadEntity(Integer id) {
-		return (T) this.getCurrentSession().load(clazz, id);
+		return (T) this.getOpenSesion().load(clazz, id);
 
 	}
 
 	/**
 	 * 不能产生代理，记录为空没有异常
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public T getEntity(Integer id) {
 
-		return (T) this.getCurrentSession().get(clazz, id);
+		return (T) this.getOpenSesion().get(clazz, id);
 	}
 
 	@Override
 	public List<T> findEntityByHQL(String hql, Object... Object) {
 
-		Query query = this.getCurrentSession().createQuery(hql);
+		Query query = this.getOpenSesion().createQuery(hql);
 		for (int i = 0; i < Object.length; i++) {
 			query.setParameter(i, Object[i]);
 		}
