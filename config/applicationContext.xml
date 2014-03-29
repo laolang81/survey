@@ -12,6 +12,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
+	<context:component-scan base-package="com.sniper.survey.dao.impl,com.sniper.survey.service.impl,com.sniper.survey.struts2.action"></context:component-scan>
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${jdbc.driverClass}"></property>
@@ -28,8 +29,8 @@
 	<!-- 1、配置SessionFactory（可以自动完成） -->
 	<bean id="sessionFactory" 
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
-		<property name="dataSource" ref="dataSource"></property>		
+		<property name="dataSource" ref="dataSource"></property>	
+		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>			
 		<property name="mappingDirectoryLocations">
 			<list>
 				<value>classpath:com/sniper/survey/model/</value>

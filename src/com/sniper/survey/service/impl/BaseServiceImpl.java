@@ -8,7 +8,7 @@ import com.sniper.survey.dao.BaseDao;
 import com.sniper.survey.service.BaseService;
 
 /**
- * @Resource写法不能乱写，写在字段上和set上
+ * @Resource写法不能乱写，写在字段上和set上可以用子类覆盖，而字段不能被覆盖
  * @author laolang
  * 
  * @param <T>
@@ -17,12 +17,12 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	private BaseDao<T> dao;
 
-	// 注入
-	@Resource
+	
 	public BaseDao<T> getDao() {
 		return dao;
 	}
-
+	// 注入
+	@Resource
 	public void setDao(BaseDao<T> dao) {
 		this.dao = dao;
 	}
