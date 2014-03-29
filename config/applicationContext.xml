@@ -47,23 +47,29 @@
 	<!-- aopalliance-1.0 需要这个包否则报错，这个包在struts里面 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>		
-			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
-			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="save*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception"/>		
+			<tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception"/>
+			<tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception"/>
 			
-			<tx:method name="get*" propagation="REQUIRED" rollback-for="Exception"/>
-			<tx:method name="load*" propagation="NOT_SUPPORTED" read-only="true"/> 
-			<tx:method name="find*" propagation="NOT_SUPPORTED" read-only="true"/> 
+			<tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" rollback-for="Exception"/>
+			<tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" rollback-for="Exception"/> 
+			<tx:method name="find*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" rollback-for="Exception"/> 
 			
-			<tx:method name="*" propagation="NOT_SUPPORTED" read-only="true"/>
+			<!-- <tx:method name="*" propagation="NOT_SUPPORTED" isolation="DEFAULT" read-only="true"/> -->
+			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
 		</tx:attributes>  
 	</tx:advice>
 	<!-- 事物切入 -->
-	<aop:config proxy-target-class="true">
+	<!-- <aop:config proxy-target-class="true"> -->
 		<!-- * *.*Service.*.*(..)) 解释 * 返回值类型 *任何包和子包..包和类的结合 包含service. *r任何方法(..)参数不显-->
-		<aop:pointcut id="cut" expression="execution(* *.*Service.*.*(..))" />
+		<!-- <aop:pointcut id="cut" expression="execution(* *.*Service.*.*(..))" /> -->
 		<!-- <aop:pointcut id="cut" expression="execution(* com.sniper.survey.service.impl.*.*(..))" /> -->
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="cut" />
+		<!-- <aop:advisor advice-ref="txAdvice" pointcut-ref="cut" />
+	</aop:config> -->
+	
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *.*Service.*.*(..))"/>
 	</aop:config>
 
 </beans>
