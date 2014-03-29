@@ -15,9 +15,9 @@
 	<!-- 3、让Common继承HibernateDaoSupport类，该类提供了HibernateTemplate的getter和setter方法。 -->
 
 	<!-- 4、将hibernateTemplete注入到Common中 -->
-	<bean id="common" class="com.sniper.survey.spring.common.Common">
+	<!-- <bean id="common" class="com.sniper.survey.spring.common.Common">
 		<property name="hibernateTemplate" ref="hibernateTemplete"></property>
-	</bean>
+	</bean> -->
 
 	<!-- 5、将Common的方法修改成hibernateTemplete的操作。 -->
 </beans>
