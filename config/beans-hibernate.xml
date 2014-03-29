@@ -11,56 +11,6 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-	<context:property-placeholder location="classpath:jdbc.properties" />
-
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="driverClass" value="${jdbc.driverClass}"></property>
-		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
-		<property name="user" value="${jdbc.user}"></property>
-		<property name="password" value="${jdbc.password}"></property>
-
-		<property name="maxPoolSize" value="${c3p0.maxPoolSize}"></property>
-		<property name="minPoolSize" value="${c3p0.minPoolSize}"></property>
-		<property name="initialPoolSize" value="${c3p0.initialPoolSize}"></property>
-		<property name="acquireIncrement" value="${c3p0.acquireIncrement}"></property>
-	</bean>
-
-	<!-- 1、配置SessionFactory（可以自动完成） -->
-	<bean id="sessionFactory" 
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
-		<property name="dataSource" ref="dataSource"></property>		
-		<property name="mappingDirectoryLocations">
-			<list>
-				<value>classpath:com/sniper/survey/model/</value>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="transactionManager" 
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	<!-- 事物通知 -->
-	<!-- rollback-for回滚事物，果存在一个事务，则支持当前事务。如果没有事务则开启  -->
-	<!-- aopalliance-1.0 需要这个包否则报错，这个包在struts里面 -->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="sav*" propagation="REQUIRED" rollback-for="Exception"/>		
-			<tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>
-			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
-			<tx:method name="upd*" propagation="REQUIRED" rollback-for="Exception"/>
-			<tx:method name="qry*" propagation="NOT_SUPPORTED" read-only="true"/> 
-			<tx:method name="*" propagation="NOT_SUPPORTED" read-only="true"/>
-		</tx:attributes>  
-	</tx:advice>
-	<!-- 事物切入 -->
-	<aop:config proxy-target-class="true">
-		<!-- * *.*Service.*.*(..)) 解释 * 返回值类型 *任何包和子包..包和类的结合 包含service. *r任何方法(..)参数不显-->
-		<aop:pointcut id="cut" expression="execution(* *.*Service.*.*(..))" />
-		<!-- <aop:pointcut id="cut" expression="execution(* com.sniper.survey.service.impl.*.*(..))" /> -->
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="cut" />
-	</aop:config>
+	
 
 </beans>
