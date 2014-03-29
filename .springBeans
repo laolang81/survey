@@ -7,7 +7,6 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>config/beans.xml</config>
 		<config>config/beans-hibernate.xml</config>
 		<config>config/applicationContext.xml</config>
 		<config>config/demo.xml</config>

@@ -11,50 +11,6 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-	<context:property-placeholder location="classpath:jdbc.properties" />
-
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="driverClass" value="${jdbc.driverClass}"></property>
-		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
-		<property name="user" value="${jdbc.user}"></property>
-		<property name="password" value="${jdbc.password}"></property>
-
-		<property name="maxPoolSize" value="${c3p0.maxPoolSize}"></property>
-		<property name="minPoolSize" value="${c3p0.minPoolSize}"></property>
-		<property name="initialPoolSize" value="${c3p0.initialPoolSize}"></property>
-		<property name="acquireIncrement" value="${c3p0.acquireIncrement}"></property>
-	</bean>
-
-	<!-- 1、配置SessionFactory（可以自动完成） -->
-	<bean id="sessionFactory" 
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<!-- <property name="configLocation" value="classpath:hibernate.cfg.xml"></property> -->
-		<property name="dataSource" ref="dataSource"></property>
-		<property name="hibernateProperties">
-			<props>
-				<!-- 数据库基本信息 数据库方言 -->
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
-				<!-- 生成数据库表的策略 -->
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<!-- 设置事务隔离级别 -->
-				<prop key="hibernate.connection.isolation">2</prop>
-			</props>
-		</property>
-		<property name="mappingDirectoryLocations">
-			<list>
-				<value>classpath:com/sniper/survey/model/</value>
-			</list>
-		</property>
-	</bean>
-	<!-- 事务管理器  -->
-	<bean id="transactionManager" 
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
 	
 
 </beans>
