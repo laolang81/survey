@@ -47,11 +47,14 @@
 	<!-- aopalliance-1.0 需要这个包否则报错，这个包在struts里面 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="sav*" propagation="REQUIRED" rollback-for="Exception"/>		
-			<tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>
-			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
-			<tx:method name="upd*" propagation="REQUIRED" rollback-for="Exception"/>
-			<tx:method name="qry*" propagation="NOT_SUPPORTED" read-only="true"/> 
+			<tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>		
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+			
+			<tx:method name="get*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="load*" propagation="NOT_SUPPORTED" read-only="true"/> 
+			<tx:method name="find*" propagation="NOT_SUPPORTED" read-only="true"/> 
+			
 			<tx:method name="*" propagation="NOT_SUPPORTED" read-only="true"/>
 		</tx:attributes>  
 	</tx:advice>

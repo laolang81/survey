@@ -4,11 +4,10 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sniper.survey.dao.BaseDao;
 
@@ -24,7 +23,8 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	// 声明反射用，获取的类反射类型
 	private Class<T> clazz;
 	// 注入session
-	@Resource
+	//@Resource
+	@Autowired
 	private SessionFactory sessionFactory;
 
 	public BaseDaoImpl() {
@@ -58,8 +58,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	// 查询使用的session
 	public Session getOpenSesion() {
 		System.out.println(sessionFactory);
-		return null;
-		// return sessionFactory.openSession();
+		System.out.println("sssssssss");
+		//return null;
+		return sessionFactory.openSession();
 	}
 
 	@Override

@@ -4,16 +4,16 @@
 <hibernate-configuration>
 	<session-factory name="hibernate">
 		<!-- 连接数据库基本的信息 -->
-		<property name="hibernate.connection.username">sniper</property>
-		<property name="hibernate.connection.password">sniper</property>
+		<!-- <property name="hibernate.connection.username">sniper</property> -->
+		<!-- <property name="hibernate.connection.password">sniper</property> -->
 		<!-- "jdbc:mysql://127.0.0.1:3306/ht?useUnicode=true&amp;characterEncoding=UTF-8 
 			&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;maxReconnects=10000 
 			&amp;initialTimeout=2&amp;connectTimeout=0&amp;socketTimeout=0&amp;zeroDateTimeBehavior=convertToNull 
 			&amp;transformedBitIsBoolean=true" -->
 		<!-- zeroDateTimeBehavior=convertToNull解决数据库时间 0000-00-00 00:00:00不能转换的问题 -->
-		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://60.216.101.120:3306/jdbc_demo?zeroDateTimeBehavior=convertToNull</property>
-		<property name="hibernate.connection.pool_size">20</property>
+		<!-- <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property> -->
+		<!-- <property name="hibernate.connection.url">jdbc:mysql://60.216.101.120:3306/jdbc_demo?zeroDateTimeBehavior=convertToNull</property> -->
+		<!-- <property name="hibernate.connection.pool_size">20</property> -->
 		<!-- 数据库基本信息 数据库方言 -->
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
 		<!-- 控制台打印sql语句 -->
@@ -21,57 +21,25 @@
 		<!-- 输出带有格式的sql -->
 		<property name="hibernate.format_sql">true</property>
 		<!-- 生成数据库表的策略 -->
-		<property name="hibernate.hbm2ddl.auto">update</property>
+		<!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
 		<!-- hibernate单独使用时配置和spring不需要配置 -->
-		<property name="current_session_context_class">thread</property>
+		<!-- <property name="current_session_context_class">thread</property> -->
 		<!-- 设置事务隔离级别 -->
-		<property name="hibernate.connection.isolation">2</property>
+		<!-- <property name="hibernate.connection.isolation">2</property> -->
 
 		<!-- 删除对象后使其id为null ,开始发用的不多 -->
-		<property name="hibernate.use_identifier_rollback">true</property>
+		<!-- <property name="hibernate.use_identifier_rollback">true</property> -->
 
 		<!-- 当数据库读取记录比较大时，设置间断读取记录数 -->
-		<property name="hibernate.jdbc.fetch_size">100</property>
+		<!-- <property name="hibernate.jdbc.fetch_size">100</property> -->
 		<!-- 批量插入是，每次插入的批次大小，对oracle有效，mysql无效 -->
-		<property name="hibernate.jdbc.batch_size">30</property>
+		<!-- <property name="hibernate.jdbc.batch_size">30</property> -->
 		<!-- 启用二级缓存 -->
 		<property name="hibernate.cache.use_second_level_cache">true</property>
 		<!-- 配置二级缓存 -->
 		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
 		<!-- 启用查询缓存 -->
 		<property name="cache.use_query_cache">true</property>
-		
-		<!-- 包含 2=1 -->
-		<!-- <mapping resource="com/hibernate/custom/n21/Order.hbm.xml" /> <mapping 
-			resource="com/hibernate/custom/n21/Customer.hbm.xml" /> -->
-		<!-- 2-1 -->
-		<!-- <mapping resource="com/hibernate/custom/n12/Order.hbm.xml" /> <mapping 
-			resource="com/hibernate/custom/n12/Customer.hbm.xml" /> -->
-		<!-- 1 -1 -->
-
-		<!-- 外键关联 <mapping resource="com/hibernate/custom/n11/Department.hbm.xml" 
-			/> <mapping resource="com/hibernate/custom/n11/Manger.hbm.xml" /> -->
-		<!-- 主键关联 -->
-		<!-- <mapping resource="com/hibernate/custom/n11/primary/Department.hbm.xml" 
-			/> <mapping resource="com/hibernate/custom/n11/primary/Manger.hbm.xml" /> -->
-
-		<!-- <mapping resource="com/hibernate/custom/n22/Items.hbm.xml" /> <mapping 
-			resource="com/hibernate/custom/n22/Category.hbm.xml" /> -->
-		<!-- <mapping resource="com/hibernate/custom/extendp/join/Person.hbm.xml" 
-			/> -->
-
-		<!-- <mapping resource="com/hibernate/custom/extendp/union/Person.hbm.xml" 
-			/> -->
-		<mapping class="com.sniper.model.Post" />
-		<mapping class="com.sniper.model.PostValue" />
-		<mapping class="com.sniper.model.Channel" />
-		<!-- 对那个类使用缓存 -->
-		<class-cache usage="read-write" class="com.sniper.model.Channel"/>
-		<class-cache usage="read-write" class="com.sniper.model.Post"/>
-		<class-cache usage="read-write" class="com.sniper.model.PostValue"/>
-		<!-- 集合元素缓存 -->
-		<!-- <collection-cache usage="read-write" collection="com.sniper.model.Post.postValue"/> -->
-		<collection-cache usage="read-write" collection="com.sniper.model.Post.channels"/>
 		
 		
 		

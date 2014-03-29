@@ -71,7 +71,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	@Override
 	public List<T> findEntityByHQL(String hql, Object... Object) {
-
+	
 		return dao.findEntityByHQL(hql, Object);
 	}
 
