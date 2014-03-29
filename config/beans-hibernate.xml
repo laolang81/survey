@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 1、配置SessionFactory（可以自动完成） -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml">
+		</property>
+	</bean>
+	<!-- 2、配置HibernateTemplate，用于完成数据操作 -->
+	<bean id="hibernateTemplete" class="org.springframework.orm.hibernate4.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- 3、让Common继承HibernateDaoSupport类，该类提供了HibernateTemplate的getter和setter方法。 -->
+
+	<!-- 4、将hibernateTemplete注入到Common中 -->
+	<bean id="common" class="com.sniper.survey.spring.common.Common">
+		<property name="hibernateTemplate" ref="hibernateTemplete"></property>
+	</bean>
+
+	<!-- 5、将Common的方法修改成hibernateTemplete的操作。 -->
+</beans>
