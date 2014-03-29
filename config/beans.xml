@@ -28,21 +28,8 @@
 	<!-- 1、配置SessionFactory（可以自动完成） -->
 	<bean id="sessionFactory" 
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<!-- <property name="configLocation" value="classpath:hibernate.cfg.xml"></property> -->
-		<property name="dataSource" ref="dataSource"></property>
-		<property name="hibernateProperties">
-			<props>
-				<!-- 数据库基本信息 数据库方言 -->
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
-				<!-- 生成数据库表的策略 -->
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<!-- 设置事务隔离级别 -->
-				<prop key="hibernate.connection.isolation">2</prop>
-			</props>
-		</property>
+		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+		<property name="dataSource" ref="dataSource"></property>		
 		<property name="mappingDirectoryLocations">
 			<list>
 				<value>classpath:com/sniper/survey/model/</value>
@@ -57,7 +44,8 @@
 
 	<!-- 事物通知 -->
 	<!-- rollback-for回滚事物，果存在一个事务，则支持当前事务。如果没有事务则开启  -->
-	<!-- <tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<!-- aopalliance-1.0 需要这个包否则报错，这个包在struts里面 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="sav*" propagation="REQUIRED" rollback-for="Exception"/>		
 			<tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>
@@ -66,11 +54,13 @@
 			<tx:method name="qry*" propagation="NOT_SUPPORTED" read-only="true"/> 
 			<tx:method name="*" propagation="NOT_SUPPORTED" read-only="true"/>
 		</tx:attributes>  
-	</tx:advice> -->
+	</tx:advice>
 	<!-- 事物切入 -->
-	<!-- <aop:config proxy-target-class="true">
-		<aop:pointcut id="cut" expression="execution(* com.sniper.survey.service.impl.*.*(..))" />
+	<aop:config proxy-target-class="true">
+		<!-- * *.*Service.*.*(..)) 解释 * 返回值类型 *任何包和子包..包和类的结合 包含service. *r任何方法(..)参数不显-->
+		<aop:pointcut id="cut" expression="execution(* *.*Service.*.*(..))" />
+		<!-- <aop:pointcut id="cut" expression="execution(* com.sniper.survey.service.impl.*.*(..))" /> -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="cut" />
-	</aop:config> -->
+	</aop:config>
 
 </beans>
