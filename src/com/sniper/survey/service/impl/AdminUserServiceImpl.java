@@ -11,8 +11,6 @@ import com.sniper.survey.model.Channel;
 @Service("adminUserService")
 public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser> implements AdminUserService {
 
-	
-	
 	@Resource(name = "adminUserDao")
 	public void setDao(BaseDao<AdminUser> dao) {
 		// TODO Auto-generated method stub

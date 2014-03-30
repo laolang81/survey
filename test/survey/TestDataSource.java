@@ -15,11 +15,7 @@ public class TestDataSource {
 	@Before
 	public void iniChannelService() {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		String [] names = ctx.getBeanDefinitionNames();
-		for(int i = 0; i< names.length; i++)
-		{
-			System.out.println(names[i]);
-		}
+		cs = (ChannelService) ctx.getBean("channelService");
 	}
 
 	@Test
@@ -27,7 +23,7 @@ public class TestDataSource {
 
 		Channel channel = new Channel();
 		
-		//System.out.println(cs.getEntity(1));
+		System.out.println(cs.getEntity(1));
 	}
 
 }
