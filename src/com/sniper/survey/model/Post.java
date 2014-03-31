@@ -92,7 +92,7 @@ public class Post {
 	// @PrimaryKeyJoinColumn
 	// @JoinColumn(name = "pt_pe_id", unique = true)
 	// 默认为延迟加载,由于这里是主键关联，在住表删除时，次表没变化，是个bug
-	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.REMOVE })
 	@PrimaryKeyJoinColumn
 	private PostValue postValue;
 

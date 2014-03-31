@@ -17,17 +17,16 @@ public class PostValue {
 	//@GenericGenerator(name = "generator", strategy = "native", parameters = { @Parameter(name = "property", value = "post") })
 	//@GenericGenerator(name = "generator", strategy = GenerationType.AUTO)
 	//@GeneratedValue(generator = "generator")
-	@GeneratedValue( strategy = GenerationType.AUTO)
-	// 跨平台自适应
+	//@GeneratedValue( strategy = GenerationType.AUTO)
+	// 不能使用子曾
 	@Column(name = "pe_id")
 	private Integer id;
 	@Column(name = "pe_value", columnDefinition = "text")
 	private String value;
-
-	// @Column(name = "pe_pid")
+	
 	// @Transient
-	//@OneToOne(cascade = { CascadeType.ALL }, mappedBy = "postValue")
-	@OneToOne
+	//维护这post表这是个反向属性
+	@OneToOne(mappedBy = "post")
 	@PrimaryKeyJoinColumn
 	private Post post;
 
