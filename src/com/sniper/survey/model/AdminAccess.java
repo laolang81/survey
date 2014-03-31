@@ -1,6 +1,7 @@
 package com.sniper.survey.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
@@ -37,9 +39,11 @@ public class AdminAccess {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "au_group", nullable = false)
 	private AdminGroup adminGroup;
-	//mappedBy表示有那边维护，就写那边的类名
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "adminAccess")
-	private Set<AdminResource> adminResources = new HashSet<AdminResource>();
+
+	// mappedBy表示有那边维护，就写那边的类名,
+	@OneToMany(fetch = FetchType.EAGER)
+	@OrderBy(value = "order desc")
+	private List<AdminResource> adminResources = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -97,11 +101,11 @@ public class AdminAccess {
 		this.adminGroup = adminGroup;
 	}
 
-	public Set<AdminResource> getAdminResources() {
+	public List<AdminResource> getAdminResources() {
 		return adminResources;
 	}
 
-	public void setAdminResources(Set<AdminResource> adminResources) {
+	public void setAdminResources(List<AdminResource> adminResources) {
 		this.adminResources = adminResources;
 	}
 
