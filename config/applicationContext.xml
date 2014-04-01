@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:task="http://www.springframework.org/schema/task"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
@@ -12,7 +10,12 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
-	<context:component-scan base-package="com.sniper.survey.dao.impl,com.sniper.survey.service.impl,com.sniper.survey.struts2.action"></context:component-scan>
+
+	<context:component-scan
+		base-package="com.sniper.survey.dao.impl
+											,com.sniper.survey.service.impl
+											,com.sniper.survey.struts2.action" />
+
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${jdbc.driverClass}"></property>
@@ -26,51 +29,68 @@
 		<property name="acquireIncrement" value="${c3p0.acquireIncrement}"></property>
 	</bean>
 
-	<!-- 1、配置SessionFactory（可以自动完成） -->
-	<bean id="sessionFactory" 
+	<!-- 呢目的会话工厂bean(spring整合hinernate的核心入口) -->
+	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>	
-		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>			
-		<property name="mappingDirectoryLocations">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+		<!-- 注解 -->
+		<property name="packagesToScan">
 			<list>
-				<value>classpath:com/sniper/survey/model/</value>
+				<value>com.sniper.survey.model</value>
 			</list>
 		</property>
-	</bean>
+		<!-- xx.hbm.xml形式 -->
+		<!-- <property name="mappingDirectoryLocations">
+			<list>
+				<value>classpath:com.sniper.survey.model</value>
+			</list>
+		</property> -->
 
-	<bean id="transactionManager" 
+	</bean>
+	<!-- hibernate事务管理器,用来在service层面上实现事务管理,实现平台无关行 -->
+	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 	<!-- 事物通知 -->
-	<!-- rollback-for回滚事物，果存在一个事务，则支持当前事务。如果没有事务则开启  -->
+	<!-- rollback-for回滚事物，果存在一个事务，则支持当前事务。如果没有事务则开启 -->
 	<!-- aopalliance-1.0 需要这个包否则报错，这个包在struts里面 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="save*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception"/>		
-			<tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception"/>
-			<tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception"/>
-			<tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT" rollback-for="Exception"/>
-			
-			<tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" rollback-for="Exception"/>
-			<tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" rollback-for="Exception"/> 
-			<tx:method name="find*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" rollback-for="Exception"/> 
-			
-			<!-- <tx:method name="*" propagation="NOT_SUPPORTED" isolation="DEFAULT" read-only="true"/> -->
-			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
-		</tx:attributes>  
+			<tx:method name="save*" propagation="REQUIRED" isolation="DEFAULT"
+				rollback-for="Exception" />
+			<tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT"
+				rollback-for="Exception" />
+			<tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT"
+				rollback-for="Exception" />
+			<tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT"
+				rollback-for="Exception" />
+
+			<tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT"
+				read-only="true" rollback-for="Exception" />
+			<tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT"
+				read-only="true" rollback-for="Exception" />
+			<tx:method name="find*" propagation="REQUIRED" isolation="DEFAULT"
+				read-only="true" rollback-for="Exception" />
+
+			<!-- <tx:method name="*" propagation="NOT_SUPPORTED" isolation="DEFAULT" 
+				read-only="true"/> -->
+			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" />
+		</tx:attributes>
 	</tx:advice>
 	<!-- 事物切入 -->
 	<!-- <aop:config proxy-target-class="true"> -->
-		<!-- * *.*Service.*.*(..)) 解释 * 返回值类型 *任何包和子包..包和类的结合 包含service. *r任何方法(..)参数不显-->
-		<!-- <aop:pointcut id="cut" expression="execution(* *.*Service.*.*(..))" /> -->
-		<!-- <aop:pointcut id="cut" expression="execution(* com.sniper.survey.service.impl.*.*(..))" /> -->
-		<!-- <aop:advisor advice-ref="txAdvice" pointcut-ref="cut" />
-	</aop:config> -->
-	
+	<!-- * *.*Service.*.*(..)) 解释 * 返回值类型 *任何包和子包..包和类的结合 包含service. *r任何方法(..)参数不显 -->
+	<!-- <aop:pointcut id="cut" expression="execution(* *.*Service.*.*(..))" 
+		/> -->
+	<!-- <aop:pointcut id="cut" expression="execution(* com.sniper.survey.service.impl.*.*(..))" 
+		/> -->
+	<!-- <aop:advisor advice-ref="txAdvice" pointcut-ref="cut" /> </aop:config> -->
+	<!-- 切入点通知 -->
 	<aop:config>
-		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *.*Service.*.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))" />
 	</aop:config>
 
 </beans>

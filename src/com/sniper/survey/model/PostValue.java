@@ -2,8 +2,6 @@ package com.sniper.survey.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -26,7 +24,7 @@ public class PostValue {
 	
 	// @Transient
 	//维护这post表这是个反向属性
-	@OneToOne(mappedBy = "post")
+	@OneToOne
 	@PrimaryKeyJoinColumn
 	private Post post;
 

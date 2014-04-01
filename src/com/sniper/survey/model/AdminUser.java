@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "mc_admin_users")
+@Table(name = "mc_admin_user")
 public class AdminUser {
 
 	@Id
@@ -28,9 +27,8 @@ public class AdminUser {
 	private String nickName;
 	// 状态
 	@Column(name = "au_status")
-	private Short status = 1;
-	@Column(name = "au_group")
-	private Short group;
+	private int status = 1;
+
 	// 密码加密随机字符串
 	@Column(name = "au_rand")
 	private String rand;
@@ -38,8 +36,8 @@ public class AdminUser {
 	@Column(name = "au_ctime")
 	private Date ctime;
 	// 对应用户组
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "au_group", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "au_group", referencedColumnName = "ag_value")
 	private AdminGroup adminGroup;
 
 	public Integer getId() {
@@ -74,20 +72,12 @@ public class AdminUser {
 		this.nickName = nickName;
 	}
 
-	public Short getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(Short status) {
-		this.status = status;
-	}
-
-	public Short getGroup() {
-		return group;
-	}
-
-	public void setGroup(Short group) {
-		this.group = group;
+	public void setStatus(int i) {
+		this.status = i;
 	}
 
 	public String getRand() {

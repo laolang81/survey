@@ -4,10 +4,11 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sniper.survey.dao.BaseDao;
 
@@ -18,13 +19,13 @@ import com.sniper.survey.dao.BaseDao;
  * 
  * @param <T>
  */
-public class BaseDaoImpl<T> implements BaseDao<T> {
+@SuppressWarnings("unchecked")
+public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
 	// 声明反射用，获取的类反射类型
 	private Class<T> clazz;
 	// 注入session
-	//@Resource
-	@Autowired
+	@Resource
 	private SessionFactory sessionFactory;
 
 	public BaseDaoImpl() {
@@ -52,14 +53,16 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 
 	// 增删改使用的session
 	public Session getCurrentSession() {
+		System.out.println(sessionFactory);
+		System.out.println("getCurrentSession");
 		return sessionFactory.getCurrentSession();
 	}
 
 	// 查询使用的session
 	public Session getOpenSesion() {
 		System.out.println(sessionFactory);
-		System.out.println("sssssssss");
-		//return null;
+		System.out.println("getOpenSesion");
+		// return null;
 		return sessionFactory.openSession();
 	}
 
@@ -97,7 +100,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 			query.setParameter(i, Object[i]);
 		}
 		query.executeUpdate();
-
 	}
 
 	/*
@@ -105,26 +107,27 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	 * 
 	 * @see com.sniper.survey.dao.BaseDao#loadEntity(java.lang.Integer)
 	 */
+
 	@Override
 	public T loadEntity(Integer id) {
-		return (T) this.getOpenSesion().load(clazz, id);
+		System.out.println(clazz);
+		return (T) this.getCurrentSession().load(clazz, id);
 
 	}
 
 	/**
 	 * 不能产生代理，记录为空没有异常
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public T getEntity(Integer id) {
 
-		return (T) this.getOpenSesion().get(clazz, id);
+		return (T) sessionFactory.getCurrentSession().get(clazz, id);
 	}
 
 	@Override
 	public List<T> findEntityByHQL(String hql, Object... Object) {
 
-		Query query = this.getOpenSesion().createQuery(hql);
+		Query query = this.getCurrentSession().createQuery(hql);
 		for (int i = 0; i < Object.length; i++) {
 			query.setParameter(i, Object[i]);
 		}

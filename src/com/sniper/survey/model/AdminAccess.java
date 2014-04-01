@@ -1,9 +1,5 @@
 package com.sniper.survey.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,13 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "mc_admin_accesss")
+@Table(name = "mc_admin_access")
 public class AdminAccess {
 
 	@Id
@@ -26,24 +20,14 @@ public class AdminAccess {
 	private Integer id;
 	@Column(name = "aa_resource")
 	private String resource;
-	@Column(name = "aa_action")
+	@Column(name = "aa_action", columnDefinition = "text")
 	private String action;
 	@Column(name = "aa_act")
 	private String act;
 	@Column(name = "aa_group")
-	private Short group;
+	private String group;
 	@Column(name = "aa_note")
 	private String note;
-
-	// 对应用户组
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "au_group", nullable = false)
-	private AdminGroup adminGroup;
-
-	// mappedBy表示有那边维护，就写那边的类名,
-	@OneToMany(fetch = FetchType.EAGER)
-	@OrderBy(value = "order desc")
-	private List<AdminResource> adminResources = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -77,11 +61,11 @@ public class AdminAccess {
 		this.act = act;
 	}
 
-	public Short getGroup() {
+	public String getGroup() {
 		return group;
 	}
 
-	public void setGroup(Short group) {
+	public void setGroup(String group) {
 		this.group = group;
 	}
 
@@ -92,21 +76,4 @@ public class AdminAccess {
 	public void setNote(String note) {
 		this.note = note;
 	}
-
-	public AdminGroup getAdminGroup() {
-		return adminGroup;
-	}
-
-	public void setAdminGroup(AdminGroup adminGroup) {
-		this.adminGroup = adminGroup;
-	}
-
-	public List<AdminResource> getAdminResources() {
-		return adminResources;
-	}
-
-	public void setAdminResources(List<AdminResource> adminResources) {
-		this.adminResources = adminResources;
-	}
-
 }

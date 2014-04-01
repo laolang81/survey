@@ -65,7 +65,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	@Override
 	public T getEntity(Integer id) {
-
+		
 		return dao.getEntity(id);
 	}
 

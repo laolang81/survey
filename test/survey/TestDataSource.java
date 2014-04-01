@@ -17,18 +17,22 @@ public class TestDataSource {
 
 	private static ChannelService cs;
 
-	//@Before
+	@Before
 	public void iniChannelService() {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		cs = (ChannelService) ctx.getBean("channelService");
 	}
-
 	@Test
-	public void getConnection() {
+	public void save()
+	{
+		Channel channel = new Channel();
+		System.out.println(cs);
+		System.out.println(cs.getEntity(1));
+	}
+	
+	public void setFile() {
 
-		//Channel channel = new Channel();
 		
-		//System.out.println(cs.getEntity(1));
 		
 		String path = "G:\\JSP\\上硅谷\\数据采集系统 视频教程【主讲：徐培成】";
 		File file = new File(path);

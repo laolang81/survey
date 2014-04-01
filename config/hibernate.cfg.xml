@@ -24,6 +24,8 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- hibernate单独使用时配置和spring不需要配置 -->
 		<!-- <property name="current_session_context_class">thread</property> -->
+		<property name="current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</property>
+		<!-- <property name="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property> -->
 		<!-- 设置事务隔离级别 -->
 		<!-- <property name="hibernate.connection.isolation">2</property> -->
 
@@ -35,11 +37,11 @@
 		<!-- 批量插入是，每次插入的批次大小，对oracle有效，mysql无效 -->
 		<!-- <property name="hibernate.jdbc.batch_size">30</property> -->
 		<!-- 启用二级缓存 -->
-		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<!-- <property name="hibernate.cache.use_second_level_cache">true</property> -->
 		<!-- 配置二级缓存 -->
-		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+		<!-- <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property> -->
 		<!-- 启用查询缓存 -->
-		<property name="cache.use_query_cache">true</property>
+		<!-- <property name="cache.use_query_cache">true</property> -->
 		
 		
 		
