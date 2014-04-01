@@ -37,17 +37,17 @@ public class UserAction extends BaseAction<AdminUser> implements
 
 	public String index()
 	{
-		/*System.out.println(model);
+		System.out.println(model);
 		
 		AdminGroup adminGroup = new AdminGroup();
 		adminGroup.setName("超级管理员");
 		adminGroup.setValue("administrator");
-		adminGroup.setNote("超级管理员");*/
+		adminGroup.setNote("超级管理员");
 		
-		//adminGroupService.saveEntiry(adminGroup);
-		//adminGroup = adminGroupService.getEntity(1);
-		//System.out.println(adminGroupService);
-		//System.out.println(adminGroup);
+		adminGroupService.saveEntiry(adminGroup);
+		adminGroup = adminGroupService.getEntity(1);
+		System.out.println(adminGroupService);
+		System.out.println(adminGroup);
 		//model.setAdminGroup(1);
 		//model.setId(1);
 		/*model.setName("admin");
