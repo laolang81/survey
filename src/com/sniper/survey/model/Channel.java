@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "mc_channel")
@@ -23,11 +25,13 @@ public class Channel {
 	private String fid;
 	@Column(name = "cl_order")
 	private int order;
-	@Column(name = "cl_stime")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "cl_stime", updatable = false)
 	private Date stime;
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "cl_letime")
 	private Date letime;
-	@Column(name = "cl_uid")
+	@Column(name = "cl_uid", updatable = false)
 	private Integer uid;
 	@Column(name = "cl_status")
 	private Short status;

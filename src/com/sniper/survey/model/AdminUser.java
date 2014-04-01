@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "mc_admin_user")
@@ -33,7 +35,8 @@ public class AdminUser {
 	@Column(name = "au_rand")
 	private String rand;
 	// 创建时间
-	@Column(name = "au_ctime")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "au_ctime", updatable = false)
 	private Date ctime;
 	// 对应用户组
 	@ManyToOne

@@ -39,7 +39,7 @@ public class Post {
 	private Integer id;
 	@Column(name = "pt_name")
 	private String name;
-	@Column(name = "pt_uid")
+	@Column(name = "pt_uid", updatable = false)
 	private Integer uid;
 	@Column(name = "pt_tags")
 	private String tags;
@@ -55,7 +55,7 @@ public class Post {
 	@Column(name = "pt_letime")
 	private Date letime;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "pt_stime")
+	@Column(name = "pt_stime", updatable = false)
 	private Date stime;
 	@Column(name = "pt_attachment")
 	private String attachment;
