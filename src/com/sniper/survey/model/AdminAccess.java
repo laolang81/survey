@@ -2,7 +2,6 @@ package com.sniper.survey.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,10 +23,13 @@ public class AdminAccess {
 	private String action;
 	@Column(name = "aa_act")
 	private String act;
-	@Column(name = "aa_group")
-	private String group;
+
 	@Column(name = "aa_note")
 	private String note;
+
+	/*@ManyToOne
+	@JoinColumn(name = "aa_group", referencedColumnName = "ag_note")
+	private AdminGroup adminGroup;*/
 
 	public Integer getId() {
 		return id;
@@ -61,14 +63,6 @@ public class AdminAccess {
 		this.act = act;
 	}
 
-	public String getGroup() {
-		return group;
-	}
-
-	public void setGroup(String group) {
-		this.group = group;
-	}
-
 	public String getNote() {
 		return note;
 	}
@@ -76,4 +70,13 @@ public class AdminAccess {
 	public void setNote(String note) {
 		this.note = note;
 	}
+
+	/*public AdminGroup getAdminGroup() {
+		return adminGroup;
+	}
+
+	public void setAdminGroup(AdminGroup adminGroup) {
+		this.adminGroup = adminGroup;
+	}*/
+
 }
