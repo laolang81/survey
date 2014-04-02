@@ -105,11 +105,39 @@ public class Rbac extends AbstractChildren {
 		return false;
 	}
 
+	/**
+	 * 检查权限
+	 * 
+	 * @param role
+	 * @param permission
+	 * @return
+	 */
 	public boolean isGranted(RoleInterface role, String permission) {
-		if (role.hasPermission(permission)) {
-			return true;
+
+		if (role == null) {
+			return false;
 		}
-		return false;
+		return role.hasPermission(permission);
+	}
+
+	/**
+	 * 
+	 * @param role
+	 * @param permission
+	 * @param asserts
+	 * @return
+	 */
+	public boolean isGranted(RoleInterface role, String permission,
+			boolean asserts) {
+
+		if (role == null) {
+			return false;
+		}
+		if (asserts) {
+			return role.getParent().hasPermission(permission)
+					|| role.hasPermission(permission);
+		}
+		return role.hasPermission(permission);
 	}
 
 }

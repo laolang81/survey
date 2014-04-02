@@ -27,7 +27,6 @@ public abstract class AbstractRole extends AbstractChildren implements RoleInter
 		if (perimissions.get(permission) != null) {
 			return true;
 		}
-
 		return false;
 	}
 

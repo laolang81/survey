@@ -20,18 +20,24 @@ public class TestRbac {
 		foo.addChild(foo1);
 		foo.addChild(foo2);
 		
+		
+		
 		rbac.addRole(foo);
 		rbac.addRole(foo3);
 		
 		
 		//System.out.println(rbac.getRole("foo").getName());
-		String resource = "/admin/user/edit";
+		String resource = "/admin/user/list";
 		String resource2 = "/admin/user/add";
+		String resource3 = "/admin/user/edit";
+		String resource4 = "/admin/user/delete";
 		
 		foo.addPermission(resource);
+		foo2.addPermission(resource2);
 		
 		System.out.println(rbac.isGranted(foo, resource));
 		System.out.println(rbac.isGranted(foo, resource2));
+		System.out.println(rbac.isGranted(foo2, resource));
 		
 		System.out.println(rbac.isGranted(foo3, resource));
 		System.out.println(rbac.isGranted(foo3, resource2));

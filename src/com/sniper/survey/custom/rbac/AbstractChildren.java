@@ -32,7 +32,8 @@ public abstract class AbstractChildren {
 		}
 		return false;
 	}
-	public RoleInterface getChildren(){
+
+	public RoleInterface getChildren() {
 		return children.get(index);
 	}
 }
