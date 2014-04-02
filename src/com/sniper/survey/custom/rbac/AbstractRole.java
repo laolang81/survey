@@ -15,7 +15,7 @@ public abstract class AbstractRole extends AbstractChildren implements
 	// 当前角色名称
 	protected String name;
 	// 权限列表,
-	protected Map<String, Boolean> perimissions = new HashMap<>();
+	protected static Map<String, Boolean> perimissions = new HashMap<>();
 
 	public String getName() {
 		return name;
@@ -59,9 +59,9 @@ public abstract class AbstractRole extends AbstractChildren implements
 	public RoleInterface addChild(RoleInterface child) {
 
 		child.setParent(this);
-		
+
 		childrens.add(child);
-		
+
 		return this;
 
 	}
