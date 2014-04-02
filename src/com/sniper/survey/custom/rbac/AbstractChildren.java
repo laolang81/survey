@@ -5,13 +5,12 @@ import java.util.List;
 
 public abstract class AbstractChildren {
 
-	// 下级角色列表
+	// 角色列表
 	protected Integer index = 0;
-	protected List<RoleInterface> children = new ArrayList<>();
+	protected static List<RoleInterface> childrens = new ArrayList<>();
 
 	public RoleInterface current() {
-
-		return children.get(index);
+		return childrens.get(index) != null ? childrens.get(index) : null;
 	}
 
 	public void next() {
@@ -23,17 +22,26 @@ public abstract class AbstractChildren {
 	}
 
 	public boolean valid() {
-		return children.get(index) == null ? false : true;
+		return childrens.get(index) == null ? false : true;
 	}
 
-	public boolean hasChildren() {
+	public boolean hasChildrens() {
 		if (this.valid() && (this.current() instanceof RoleInterface)) {
 			return true;
 		}
 		return false;
 	}
 
-	public RoleInterface getChildren() {
-		return children.get(index);
+	public RoleInterface getchildren() {
+		return childrens.get(index);
 	}
+
+	public List<RoleInterface> getChildrens() {
+		return childrens;
+	}
+
+	public void addChildren(RoleInterface role) {
+		childrens.add(role);
+	}
+
 }

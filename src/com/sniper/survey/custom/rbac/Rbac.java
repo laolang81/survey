@@ -1,5 +1,13 @@
 package com.sniper.survey.custom.rbac;
 
+import java.util.List;
+
+/**
+ * 角色功能主要实现
+ * 
+ * @author sniper
+ * 
+ */
 public class Rbac extends AbstractChildren {
 
 	protected boolean createMissingRoles = false;
@@ -13,23 +21,38 @@ public class Rbac extends AbstractChildren {
 		return this;
 	}
 
+	/**
+	 * 添加角色
+	 * 
+	 * @param childName
+	 * @return
+	 */
 	public Rbac addRole(String childName) {
-
-		RoleInterface child = new Role(childName);
-		children.add(child);
+		if (childName != null) {
+			RoleInterface child = new Role(childName);
+			childrens.add(child);
+		}
 		return this;
 	}
 
+	/**
+	 * 添加
+	 * 
+	 * @param childName
+	 * @param parent
+	 * @return
+	 */
 	public Rbac addRole(String childName, String parent) {
 
 		RoleInterface child = new Role(childName);
 
 		if (parent != null) {
 			if (isCreateMissingRoles() && !this.hasRole(parent)) {
-				this.getRole(parent).addChild(child);
+				this.addRole(parent);
 			}
+			this.getRole(parent).addChild(child);
 		}
-		children.add(child);
+		childrens.add(child);
 		return this;
 	}
 
@@ -40,16 +63,17 @@ public class Rbac extends AbstractChildren {
 		if (parent != null && parent.length > 0) {
 			for (int i = 0; i < parent.length; i++) {
 				if (isCreateMissingRoles() && !this.hasRole(parent[i])) {
-					this.getRole(parent[i]).addChild(child);
+					this.addRole(parent[i]);
 				}
+				this.getRole(parent[i]).addChild(child);
 			}
 		}
-		children.add(child);
+		childrens.add(child);
 		return this;
 	}
 
 	public Rbac addRole(RoleInterface child) {
-		children.add(child);
+		childrens.add(child);
 		return this;
 	}
 
@@ -57,10 +81,11 @@ public class Rbac extends AbstractChildren {
 
 		if (parent != null) {
 			if (isCreateMissingRoles() && !this.hasRole(parent)) {
-				this.getRole(parent).addChild(child);
+				this.addRole(parent);
 			}
+			this.getRole(parent).addChild(child);
 		}
-		children.add(child);
+		childrens.add(child);
 		return this;
 	}
 
@@ -69,11 +94,12 @@ public class Rbac extends AbstractChildren {
 		if (parent != null && parent.length > 0) {
 			for (int i = 0; i < parent.length; i++) {
 				if (isCreateMissingRoles() && !this.hasRole(parent[i])) {
-					this.getRole(parent[i]).addChild(child);
+					this.addRole(parent[i]);
 				}
+				this.getRole(parent[i]).addChild(child);
 			}
 		}
-		children.add(child);
+		childrens.add(child);
 		return this;
 	}
 
@@ -88,19 +114,40 @@ public class Rbac extends AbstractChildren {
 	}
 
 	public RoleInterface getRole(String roleName) {
-
-		for (RoleInterface role : children) {
+		for (RoleInterface role : childrens) {
 			if (role.getName().equalsIgnoreCase(roleName)) {
 				return role;
 			}
 		}
 		return null;
-
 	}
 
+	/**
+	 * 
+	 * @param roleName
+	 * @param permission
+	 * @return
+	 */
 	public boolean isGranted(String roleName, String permission) {
-		if (getRole(roleName).hasPermission(permission)) {
-			return true;
+		RoleInterface role = getRole(roleName);
+		try {
+			if (role.hasPermission(permission)) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(role);
+			System.out.println("-------");
+		}
+		try {
+			// 获取父角色
+			role.getParents(role);
+			List<RoleInterface> parents = role.getParents();
+			for (RoleInterface parent : parents) {
+				if (parent.hasPermission(permission)) {
+					return true;
+				}
+			}
+		} catch (Exception e) {
 		}
 		return false;
 	}
@@ -114,12 +161,22 @@ public class Rbac extends AbstractChildren {
 	 */
 	public boolean isGranted(RoleInterface role, String permission) {
 
-		if (role == null) {
-			return false;
+		if (role.hasPermission(permission)) {
+			return true;
 		}
-		return role.hasPermission(permission);
+		try {
+			// 获取父角色
+			role.getParents(role);
+			List<RoleInterface> parents = role.getParents();
+			for (RoleInterface parent : parents) {
+				if (parent.hasPermission(permission)) {
+					return true;
+				}
+			}
+		} catch (Exception e) {
+		}
+		return false;
 	}
-
 	/**
 	 * 
 	 * @param role
@@ -130,14 +187,16 @@ public class Rbac extends AbstractChildren {
 	public boolean isGranted(RoleInterface role, String permission,
 			boolean asserts) {
 
-		if (role == null) {
-			return false;
-		}
-		if (asserts) {
-			return role.getParent().hasPermission(permission)
-					|| role.hasPermission(permission);
-		}
 		return role.hasPermission(permission);
+	}
+	
+	public void showChildren()
+	{
+		for (RoleInterface role : childrens) {
+			System.out.println(role);
+			System.out.println(role.getName());		
+		}
+		System.out.println("------------------");
 	}
 
 }

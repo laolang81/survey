@@ -6,6 +6,4 @@ public class Role extends AbstractRole {
 		this.name = name;
 	}
 
-	
-
 }
