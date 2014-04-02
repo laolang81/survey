@@ -16,8 +16,9 @@
 			<result name="{1}">user/{1}.jsp</result>
 		</action>
 
-		<action name="login.*" class="com.sniper.survey.struts2.action.LoginAction">
-			<result name="{1}">login/{1}.jsp)</result>
+		<action name="login*" class="com.sniper.survey.struts2.action.LoginAction" method="{1}">
+			<result name="{1}">login/{1}.jsp</result>
+			
 		</action>
 	</package>
 </struts>
