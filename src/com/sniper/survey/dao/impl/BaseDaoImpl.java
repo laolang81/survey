@@ -66,33 +66,33 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		return sessionFactory.openSession();
 	}
 
-	@Override
+	
 	public void saveEntiry(T t) {
 
 		this.getCurrentSession().save(t);
 	}
 
-	@Override
+	
 	public void saveOrUpdateEntiry(T t) {
 
 		this.getCurrentSession().saveOrUpdate(t);
 
 	}
 
-	@Override
+	
 	public void updateEntiry(T t) {
 
 		this.getCurrentSession().update(t);
 
 	}
 
-	@Override
+	
 	public void deleteEntiry(T t) {
 
 		this.getCurrentSession().delete(t);
 	}
 
-	@Override
+	
 	public void batchEntiryByHQL(String hql, Object... Object) {
 
 		Query query = this.getCurrentSession().createQuery(hql);
@@ -108,7 +108,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	 * @see com.sniper.survey.dao.BaseDao#loadEntity(java.lang.Integer)
 	 */
 
-	@Override
+	
 	public T loadEntity(Integer id) {
 		System.out.println(clazz);
 		return (T) this.getCurrentSession().load(clazz, id);
@@ -118,13 +118,13 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	/**
 	 * 不能产生代理，记录为空没有异常
 	 */
-	@Override
+	
 	public T getEntity(Integer id) {
 
 		return (T) sessionFactory.getCurrentSession().get(clazz, id);
 	}
 
-	@Override
+	
 	public List<T> findEntityByHQL(String hql, Object... Object) {
 
 		Query query = this.getCurrentSession().createQuery(hql);

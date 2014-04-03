@@ -19,8 +19,7 @@ import com.sniper.survey.util.DataUtil;
 //加注解
 @Controller
 @Scope("prototype")
-public class UserAction extends BaseAction<AdminUser> implements
-		ServletRequestAware {
+public class UserAction extends BaseAction<AdminUser> {
 	
 	/**
 	 * 
@@ -37,30 +36,28 @@ public class UserAction extends BaseAction<AdminUser> implements
 
 	public String index()
 	{
-		System.out.println(model);
 		
-		AdminGroup adminGroup = new AdminGroup();
-		adminGroup.setName("超级管理员");
-		adminGroup.setValue("administrator");
-		adminGroup.setNote("超级管理员");
 		
-		adminGroupService.saveEntiry(adminGroup);
-		adminGroup = adminGroupService.getEntity(1);
-		System.out.println(adminGroupService);
-		System.out.println(adminGroup);
-		//model.setAdminGroup(1);
+		AdminGroup adminGroup = adminGroupService.getEntity(1);
+		
+		//System.out.println(adminGroup.getName());
+		AdminUser adminUser = new AdminUser();
+		
+		System.out.println(adminUser);
+		System.out.println(model.getClass());
+		/*adminUser.setAdminGroup(adminGroup);
 		//model.setId(1);
-		/*model.setName("admin");
-		model.setNickName("原始管理员");
-		model.setCtime(new Date());
+		adminUser.setName("admin");
+		adminUser.setNickName("原始管理员");
+		adminUser.setCtime(new Date());
 		String rand = "1456";
-		model.setRand(rand);
-		model.setPassword(DataUtil.md5("admin" + rand));
-		model.setStatus(1);
+		adminUser.setRand(rand);
+		adminUser.setPassword(DataUtil.md5("admin" + rand));
+		adminUser.setStatus(1);
+		System.out.println(adminUser);
+		adminUserService.saveEntiry(adminUser);
 		
-		adminUserService.saveEntiry(model);*/
-		
-		//System.out.println(adminUserService.getEntity(1));
+		System.out.println(adminUserService.getEntity(1));*/
 		
 		
 		String methodName = request.getMethod();
@@ -107,10 +104,6 @@ public class UserAction extends BaseAction<AdminUser> implements
 		}
 	}
 
-	@Override
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-
-	}
+	
 
 }

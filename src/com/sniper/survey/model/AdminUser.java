@@ -21,7 +21,7 @@ public class AdminUser {
 	@Column(name = "au_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(name = "au_name")
+	@Column(name = "au_name", unique = true)
 	private String name;
 	@Column(name = "au_password")
 	private String password;

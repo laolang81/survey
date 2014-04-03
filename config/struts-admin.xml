@@ -8,7 +8,7 @@
 		<!-- <default-action-ref name="*/index" /> <action name="index"> index.htm为项目根目录的默认页面 
 			<result>*/index.jsp</result> </action> -->
 
-		<action name="user/*" class="com.sniper.survey.struts2.action.UserAction"
+		<action name="user-*" class="com.sniper.survey.struts2.action.UserAction"
 			method="{1}">
 			<result name="{1}">user/{1}.jsp</result>
 		</action>

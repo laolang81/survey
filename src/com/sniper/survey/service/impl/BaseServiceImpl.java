@@ -17,61 +17,53 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	private BaseDao<T> dao;
 
-	
 	public BaseDao<T> getDao() {
 		return dao;
 	}
+
 	// 注入
 	@Resource
 	public void setDao(BaseDao<T> dao) {
 		this.dao = dao;
 	}
 
-	@Override
 	public void saveEntiry(T t) {
 		dao.saveEntiry(t);
 
 	}
 
-	@Override
 	public void saveOrUpdateEntiry(T t) {
 		dao.saveOrUpdateEntiry(t);
 
 	}
 
-	@Override
 	public void updateEntiry(T t) {
 		dao.updateEntiry(t);
 
 	}
 
-	@Override
 	public void deleteEntiry(T t) {
 		dao.deleteEntiry(t);
 
 	}
 
-	@Override
 	public void batchEntiryByHQL(String hql, Object... Object) {
 		dao.batchEntiryByHQL(hql, Object);
 
 	}
 
-	@Override
 	public T loadEntity(Integer id) {
 
 		return dao.loadEntity(id);
 	}
 
-	@Override
 	public T getEntity(Integer id) {
-		
+
 		return dao.getEntity(id);
 	}
 
-	@Override
 	public List<T> findEntityByHQL(String hql, Object... Object) {
-	
+
 		return dao.findEntityByHQL(hql, Object);
 	}
 
