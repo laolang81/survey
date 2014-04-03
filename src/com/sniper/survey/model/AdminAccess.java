@@ -25,9 +25,12 @@ public class AdminAccess {
 	@Column(name = "aa_note")
 	private String note;
 
-	/*@ManyToOne
-	@JoinColumn(name = "aa_group", referencedColumnName = "ag_note")
-	private AdminGroup adminGroup;*/
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name = "aa_group", referencedColumnName = "ag_note") private
+	 * AdminGroup adminGroup;
+	 */
 
 	public Integer getId() {
 		return id;
@@ -69,12 +72,11 @@ public class AdminAccess {
 		this.note = note;
 	}
 
-	/*public AdminGroup getAdminGroup() {
-		return adminGroup;
-	}
-
-	public void setAdminGroup(AdminGroup adminGroup) {
-		this.adminGroup = adminGroup;
-	}*/
+	/*
+	 * public AdminGroup getAdminGroup() { return adminGroup; }
+	 * 
+	 * public void setAdminGroup(AdminGroup adminGroup) { this.adminGroup =
+	 * adminGroup; }
+	 */
 
 }

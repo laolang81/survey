@@ -17,7 +17,7 @@ public class AdminGroup {
 	private Integer id;
 	@Column(name = "ag_name", unique = true)
 	private String name;
-	@Column(name = "ag_value")
+	@Column(name = "ag_value", unique = true)
 	private String value;
 	@Column(name = "ag_fid")
 	private Integer fid;
