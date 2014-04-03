@@ -8,13 +8,11 @@
 		<!-- <default-action-ref name="*/index" /> <action name="index"> index.htm为项目根目录的默认页面 
 			<result>*/index.jsp</result> </action> -->
 
-		<action name="user-*" class="com.sniper.survey.struts2.action.UserAction"
-			method="{1}">
+		<action name="user-*" class="userAction" method="{1}">
 			<result name="{1}">user/{1}.jsp</result>
 		</action>
 
-		<action name="login-*" class="com.sniper.survey.struts2.action.LoginAction"
-			method="{1}">
+		<action name="login-*" class="loginAction" method="{1}">
 			<result name="{1}">login/{1}.jsp</result>
 		</action>
 	</package>
@@ -22,11 +20,10 @@
 	<package name="sniperSurveyAJAX" extends="json-default"
 		namespace="/admin">
 
-		<action name="login-login" class="com.sniper.survey.struts2.action.LoginAction"
-			method="login">	
+		<action name="login-login" class="loginAction" method="login">
 			<result type="json">
 				<param name="root">result</param>
-			</result> 
+			</result>
 
 		</action>
 	</package>
