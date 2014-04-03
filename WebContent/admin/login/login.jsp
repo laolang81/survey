@@ -7,7 +7,7 @@
 
 <title>用户登录</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<script type="text/javascript" src="/myfiles/js/jquery-1.9.1.min.js"></script>
 <style type="text/css">
 *{font: 12px Segoe UI,Tahoma,Arial,Verdana,simsun,sans-serif,"Microsoft YaHei"; margin:0; padding:0; vertical-align:text-top}
 label{color: #777777;font-size: 14px;display: block;overflow: hidden;}

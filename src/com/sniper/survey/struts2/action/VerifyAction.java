@@ -24,6 +24,15 @@ public class VerifyAction extends ActionSupport implements SessionAware {
 
 	// Struts2中Map类型的session
 	private Map<String, Object> session;
+	private String d;
+
+	public String getD() {
+		return d;
+	}
+
+	public void setD(String d) {
+		this.d = d;
+	}
 
 	// 图片流
 	private ByteArrayInputStream imageStream;

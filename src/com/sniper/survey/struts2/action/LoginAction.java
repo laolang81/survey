@@ -1,7 +1,6 @@
 package com.sniper.survey.struts2.action;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -20,12 +19,14 @@ public class LoginAction extends BaseAction<AdminUser> implements
 
 	private HttpServletRequest request;
 	private static final long serialVersionUID = 1L;
+	
+	private String account;
+	private String password;
+	private String verify;
+	private String submit;
 
 	public String index() throws IOException {
-		String filePath = request.getServletContext().getRealPath("/");
-		InputStream in = new FileInputStream(filePath
-				+ "WEB-INF/file/shades.ttf");
-		System.out.println(in.available());
+		
 		return "index";
 	}
 

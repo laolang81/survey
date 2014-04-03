@@ -5,8 +5,8 @@
 <struts>
 	<constant name="struts.devMode" value="true"></constant>
 
-	<package name="sniperSurvey" extends="struts-default">
-		
+	<package name="sniperSurvey" extends="struts-default" namespace="/">
+
 		<action name="verify" class="com.sniper.survey.struts2.action.VerifyAction">
 			<result name="success" type="stream">
 				<param name="contentType">image/jpeg</param>
