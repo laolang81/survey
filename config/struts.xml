@@ -4,8 +4,9 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<constant name="struts.devMode" value="true"></constant>
-
-	<package name="sniperSurvey" extends="struts-default" namespace="/">
+	<constant name="struts.action.extension" value="do,action,html,,"></constant>
+	<package name="sniperSurvey" extends="struts-default"
+		namespace="/">
 
 		<action name="verify" class="com.sniper.survey.struts2.action.VerifyAction">
 			<result name="success" type="stream">
