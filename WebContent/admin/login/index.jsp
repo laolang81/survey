@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-
 <title>用户登录</title>
 <base
 	href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/">
