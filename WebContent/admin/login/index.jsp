@@ -23,11 +23,14 @@ h1 a{display: block;height: 67px;overflow: hidden;padding-bottom: 15px;text-inde
 input:-moz-placeholder{color: #ccc;}
 form{FILTER: alpha(opacity = 70);opacity: 0.7;background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #E5E5E5;box-shadow: 0 4px 10px -1px rgba(200, 200, 200, 0.7);font-weight: normal;padding: 26px 24px 30px;overflow: hidden;}
 body form p{float:left;display: block;}
-body form .input{box-shadow: 1px 1px 2px rgba(200, 200, 200, 0.2) inset;font-family: "HelveticaNeue-Light", "Helvetica Neue Light","Helvetica Neue", sans-serif;margin-bottom: 10px;margin-top: 2px;outline: medium none;vertical-align: middle;background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #E6E6E6;border-radius: 6px;color: #333333;display: block;font-size: 18px;font-weight: bold;height: 20px;line-height: 20px;padding: 12px 10px;}
+body form .input{box-shadow: 1px 1px 2px rgba(200, 200, 200, 0.2) inset;font-family: "HelveticaNeue-Light", "Helvetica Neue Light","Helvetica Neue", sans-serif;margin-bottom: 10px;margin-top: 2px;outline: medium none;vertical-align: middle;background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #E6E6E6;border-radius: 6px;color: #333333;display: block;font-size: 18px;font-weight: bold;height: 20px;line-height: 20px;padding: 12px 10px;width:278px;}
+body form .verify{float:left;width: 100px;}
 input[type="text"],input[type="password"]{background-color: #FFFFFF;border-color: #DFDFDF;color: #555555;}
 input[type="text"]:focus,input[type="password"]:focus{background: none repeat scroll 0 0 #FDFDFD;border-color: rgba(82, 168, 236, 0.8);box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8pxrgba(82, 168, 236, 0.6);outline: 0 none}
 .my_log_bom{background: #ff5500;color: #FFF;font-weight: bold;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);border: 1px solid;border-radius: 10px;cursor: pointer;font-family: sans-serif;font-size: 14px;padding: 4px 10px;text-decoration: none;}
 #backtoblog{margin: 0 0 0 16px;padding: 16px 16px 0;text-shadow: 0 1px 0 #FFFFFF;}
+#result{margin-left:10px; line-height:30px; color:#F00;}
+#verifyImg{cursor: pointer;float:left}
 </style>
 
 </head>
@@ -97,26 +100,26 @@ input[type="text"]:focus,input[type="password"]:focus{background: none repeat sc
 		<h1>
 			<a href="" title="请管理员们登录">请管理员们登录</a>
 		</h1>
-		<s:form id="login" name="login" method="post" theme="simple">
-			
+		<s:form id="login" name="login" method="post">
+			<p>
 			<s:textfield label="UserName" id="account" name="account" cssClass="input"
 				placeholder="登录名称" />
-			
+			</p>
+			<p>
 			<s:password label="PassWord" id="password" name="password" cssClass="input"
 				placeholder="登录密码" />
+			</p>
 			<p>
-			<s:textfield label="验证码" name="verify" cssClass="input" size="5" cssStyle="float:left"
+			<s:textfield label="验证码" name="verify" cssClass="input verify"
 				placeholder="验证码" />
-			<img alt="" src="<s:url action="verify" namespace="/" />" class="fl" id="verifyImg" onclick="fleshVerify()" style="cursor: pointer;float:left">
+			<img alt="" src="<s:url action="verify" namespace="/" />" class="fl" id="verifyImg" onclick="fleshVerify()">
 			</p>
 			<p>
 			<input type="button" onclick="onlogin();" value="登 录" class="my_log_bom" id="button" name="submit">
-			<span id="result" style="margin-left:10px; line-height:30px; color:#F00;"></span>
+			<span id="result"></span>
 			</p>
 
 		</s:form>
-
-		
 		<p id="backtoblog">
 			<a href="" title="回首页">← 回到 首页</a>
 		</p>

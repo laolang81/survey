@@ -33,6 +33,8 @@ public class UserAction extends BaseAction<AdminUser> {
 	
 	@Resource
 	private AdminGroupService adminGroupService;
+	
+	
 
 	public String index()
 	{
@@ -41,10 +43,7 @@ public class UserAction extends BaseAction<AdminUser> {
 		AdminGroup adminGroup = adminGroupService.getEntity(1);
 		
 		//System.out.println(adminGroup.getName());
-		AdminUser adminUser = new AdminUser();
-		
-		System.out.println(adminUser);
-		System.out.println(model.getClass());
+		System.out.println(model);
 		/*adminUser.setAdminGroup(adminGroup);
 		//model.setId(1);
 		adminUser.setName("admin");
@@ -60,8 +59,8 @@ public class UserAction extends BaseAction<AdminUser> {
 		System.out.println(adminUserService.getEntity(1));*/
 		
 		
-		String methodName = request.getMethod();
-		System.out.println(methodName);
+		
+		
 		return "index";
 	}
 	

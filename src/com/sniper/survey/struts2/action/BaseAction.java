@@ -10,7 +10,6 @@ import com.opensymphony.xwork2.Preparable;
 public abstract class BaseAction<T> extends ActionSupport implements
 		ModelDriven<T>, Preparable {
 
-	
 	private static final long serialVersionUID = 1L;
 
 	public T model;
@@ -28,7 +27,12 @@ public abstract class BaseAction<T> extends ActionSupport implements
 				// 获取地一个参数
 				Type arg = args[0];
 				if (arg instanceof Class) {
-					model = (T) arg;
+					Class clazz =  (Class<T>) arg;
+					try {
+						model = (T) clazz.newInstance();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -45,7 +49,7 @@ public abstract class BaseAction<T> extends ActionSupport implements
 	}
 
 	@Override
-	public  T getModel(){
+	public T getModel() {
 		return model;
 	}
 

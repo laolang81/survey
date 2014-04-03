@@ -5,6 +5,7 @@
 <struts>
 	<constant name="struts.devMode" value="true"></constant>
 	<constant name="struts.action.extension" value="do,action,html,,"></constant>
+	<constant name="struts.ui.theme" value="simple"></constant>
 	<package name="sniperSurvey" extends="struts-default"
 		namespace="/">
 
