@@ -1,9 +1,5 @@
 package com.sniper.survey.struts2.action;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -25,7 +21,7 @@ public class LoginAction extends BaseAction<AdminUser> implements
 	private String verify;
 	private String submit;
 
-	public String index() throws IOException {
+	public String index() {
 		
 		return "index";
 	}
