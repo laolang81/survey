@@ -10,9 +10,7 @@ import com.opensymphony.xwork2.Preparable;
 public abstract class BaseAction<T> extends ActionSupport implements
 		ModelDriven<T>, Preparable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	public T model;

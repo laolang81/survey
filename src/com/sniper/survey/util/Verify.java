@@ -6,19 +6,14 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-
-import org.springframework.web.context.ServletConfigAware;
-
 import com.sun.image.codec.jpeg.ImageFormatException;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import com.sun.org.apache.bcel.internal.util.ClassPath;
 
 /**
  * 工具类，生成验证码图片
@@ -29,6 +24,16 @@ import com.sun.org.apache.bcel.internal.util.ClassPath;
  */
 public class Verify {
 
+	private static String webRootPath;
+
+	static {
+		PathUtil p = new PathUtil();
+		try {
+			webRootPath = p.getWebInfPath();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * 获取随机类
 	 */
@@ -64,7 +69,7 @@ public class Verify {
 	 * @throws Exception
 	 */
 	public static BufferedImage createImage(String VerifyCode) throws Exception {
-		
+
 		// 验证码长度
 		int codeLength = VerifyCode.length();
 		// 字体大小
@@ -87,11 +92,11 @@ public class Verify {
 		// 绘制图像对象
 		Graphics g = image.createGraphics();
 
-		// 读取字体字节流
-		InputStream in = Verify.class.getClassLoader().getResourceAsStream(
-				"shades.ttf");
+		InputStream in = new FileInputStream(webRootPath + "/file/shades.ttf");
+		// InputStream in = new FileInputStream("WEB-INF/file/shades.ttf");
+
 		RegisterFont gf = new RegisterFont(in);
-		
+
 		String fonrname = gf.reginterFont();
 		g.setFont(new Font(fonrname, Font.ITALIC, fSize));
 		// 设置背景色
@@ -179,4 +184,5 @@ public class Verify {
 		// 输出字节流
 		return inputStream;
 	}
+
 }
