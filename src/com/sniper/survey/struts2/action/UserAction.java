@@ -52,45 +52,41 @@ public class UserAction extends BaseAction<AdminUser> {
 	private PostValueService postValueService;
 
 	public String index() {
-		
+
 		String securityCode = VerifyCode.getSecurityCode(5,
 				VerifyCode.SecurityCodeLevel.Hard, false).toLowerCase();
-		
+
 		Tags tags = new Tags();
-		tags.setName("标签一" + securityCode);
+		tags.setName("标签二" + securityCode);
 		tags.setOrder(new Date().getTime());
 		tags.setUid(1);
 		tags.setCtime(new Date());
-		tagsService.saveEntiry(tags);
-		
+		// tagsService.saveEntiry(tags);
+
 		Channel channel = new Channel();
-		channel.setName("栏目测试插入" + securityCode);
+		channel.setName("栏目测试插入二" + securityCode);
 		channel.setOrder(new Date().getTime());
-		channelService.saveEntiry(channel);
-		
-	
-		
+		// channelService.saveEntiry(channel);
+
+
 		Post post = new Post();
-		post.setName("文章标题");
+		post.setName("文章标题二");
 		post.setUid(1);
-		//post.setPostValue(postValue);
 		post.getChannels().add(channel);
 		post.getTags().add(tags);
 		
-		postService.saveEntiry(post);
-		
 		PostValue postValue = new PostValue();
-		postValue.setPost(post);
-		postValue.setValue("文章内容");
-		postValueService.saveEntiry(postValue);
-		
+		postValue.setValue("文章内容二");	
+		post.setPostValue(postValue);
+		//postValue.setId(post.getId());
+		//postValueService.savePersist(postValue);
+		postService.savePersist(post);
 		System.out.println(postService.getEntity(post.getId()));
-		
 
 		// AdminGroup adminGroup = adminGroupService.getEntity(1);
 
 		// System.out.println(adminGroup.getName());
-		System.out.println(model);
+		
 		/*
 		 * adminUser.setAdminGroup(adminGroup); //model.setId(1);
 		 * adminUser.setName("admin"); adminUser.setNickName("原始管理员");
@@ -109,8 +105,10 @@ public class UserAction extends BaseAction<AdminUser> {
 	@SkipValidation
 	public String add() {
 
-		// String methodName = request.getMethod();
-		// System.out.println();
+		Post post = new Post();
+		post.setId(1);
+		postService.deleteEntiry(post);
+		
 		return "add";
 
 	}

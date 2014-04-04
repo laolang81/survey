@@ -17,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -88,21 +87,24 @@ public class Post {
 
 	// optional是否允许该字段为null,该属性应该根据数据库表的外键约束来确定,默认为true
 	// @OneToOne(cascade = CascadeType.ALL)
-	//
-	// @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE })
-	// @PrimaryKeyJoinColumn
-	// @JoinColumn(name = "pt_pe_id", unique = true)
+	/**
+	 * 单向@OneToOne,
+	 * post包含postValue
+	 * 双向就是相互包含
+	 * cascade的意思是对应的操作函数 比如remove对应delete
+	 */
+	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+	//@PrimaryKeyJoinColumn(referencedColumnName = "pe_id")
+	@JoinColumn(name = "pt_pe_id", unique = true)
 	// 默认为延迟加载,由于这里是主键关联，在住表删除时，次表没变化，是个bug
-	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL}, mappedBy = "post")
-	@PrimaryKeyJoinColumn
 	private PostValue postValue;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	// referencedColumnName为每个表关联列，主键不用写
 	@JoinTable(name = "mc_post_node", joinColumns = @JoinColumn(name = "pn_pid"), inverseJoinColumns = @JoinColumn(name = "pn_cid"))
 	private Set<Channel> channels = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@JoinTable(name = "mc_post_tags", joinColumns = @JoinColumn(name = "pmt_pid"), inverseJoinColumns = @JoinColumn(name = "pmt_tid"))
 	private List<Tags> tags = new ArrayList<>();
 
