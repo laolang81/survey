@@ -19,7 +19,7 @@ public class Tags {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "mt_id")
 	private Integer id;
-	@Column(name = "mt_name")
+	@Column(name = "mt_name", unique = true)
 	private String name;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "mt_ctime")
