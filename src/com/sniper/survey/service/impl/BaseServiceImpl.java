@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Query;
+
 import com.sniper.survey.dao.BaseDao;
 import com.sniper.survey.service.BaseService;
 
@@ -37,6 +39,12 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	}
 
+	@Override
+	public void savePersist(T t) {
+		dao.savePersist(t);
+
+	}
+
 	public void updateEntiry(T t) {
 		dao.updateEntiry(t);
 
@@ -67,4 +75,12 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return dao.findEntityByHQL(hql, Object);
 	}
 
+	@Override
+	public Query findEntityByHQLQuery(String hql, Object... Object) {
+		Query query = dao.findEntityByHQLQuery(hql, Object);
+		for (int i = 0; i < Object.length; i++) {
+			query.setParameter(i, Object[i]);
+		}
+		return query;
+	}
 }

@@ -41,11 +41,8 @@
 			</list>
 		</property>
 		<!-- xx.hbm.xml形式 -->
-		<!-- <property name="mappingDirectoryLocations">
-			<list>
-				<value>classpath:com.sniper.survey.model</value>
-			</list>
-		</property> -->
+		<!-- <property name="mappingDirectoryLocations"> <list> <value>classpath:com.sniper.survey.model</value> 
+			</list> </property> -->
 
 	</bean>
 	<!-- hibernate事务管理器,用来在service层面上实现事务管理,实现平台无关行 -->

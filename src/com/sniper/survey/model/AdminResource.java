@@ -22,7 +22,7 @@ public class AdminResource {
 	@Column(name = "ar_fid")
 	private Integer fid;
 	@Column(name = "ar_order")
-	private Integer order;
+	private Long order;
 	@Column(name = "ar_is_url")
 	private Short isUrl;
 	@Column(name = "ar_note")
@@ -60,11 +60,11 @@ public class AdminResource {
 		this.fid = fid;
 	}
 
-	public Integer getOrder() {
+	public Long getOrder() {
 		return order;
 	}
 
-	public void setOrder(Integer order) {
+	public void setOrder(Long order) {
 		this.order = order;
 	}
 

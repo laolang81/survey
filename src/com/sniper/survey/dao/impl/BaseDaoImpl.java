@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.Query;
+import org.hibernate.ReplicationMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -53,46 +54,47 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
 	// 增删改使用的session
 	public Session getCurrentSession() {
-		System.out.println(sessionFactory);
-		System.out.println("getCurrentSession");
 		return sessionFactory.getCurrentSession();
 	}
 
 	// 查询使用的session
 	public Session getOpenSesion() {
-		System.out.println(sessionFactory);
-		System.out.println("getOpenSesion");
-		// return null;
 		return sessionFactory.openSession();
 	}
 
-	
 	public void saveEntiry(T t) {
 
 		this.getCurrentSession().save(t);
 	}
 
-	
 	public void saveOrUpdateEntiry(T t) {
 
 		this.getCurrentSession().saveOrUpdate(t);
 
 	}
 
-	
+	@Override
+	public void savePersist(T t) {
+		this.getCurrentSession().persist(t);
+
+	}
+
+	@Override
+	public void saveReplicata(T t, ReplicationMode obj) {
+		this.getCurrentSession().replicate(t, obj);
+	}
+
 	public void updateEntiry(T t) {
 
 		this.getCurrentSession().update(t);
 
 	}
 
-	
 	public void deleteEntiry(T t) {
 
 		this.getCurrentSession().delete(t);
 	}
 
-	
 	public void batchEntiryByHQL(String hql, Object... Object) {
 
 		Query query = this.getCurrentSession().createQuery(hql);
@@ -108,7 +110,6 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	 * @see com.sniper.survey.dao.BaseDao#loadEntity(java.lang.Integer)
 	 */
 
-	
 	public T loadEntity(Integer id) {
 		System.out.println(clazz);
 		return (T) this.getCurrentSession().load(clazz, id);
@@ -118,13 +119,12 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	/**
 	 * 不能产生代理，记录为空没有异常
 	 */
-	
+
 	public T getEntity(Integer id) {
 
 		return (T) sessionFactory.getCurrentSession().get(clazz, id);
 	}
 
-	
 	public List<T> findEntityByHQL(String hql, Object... Object) {
 
 		Query query = this.getCurrentSession().createQuery(hql);
@@ -132,6 +132,15 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 			query.setParameter(i, Object[i]);
 		}
 		return query.list();
+	}
+	
+	@Override
+	public Query findEntityByHQLQuery(String hql, Object... Object) {
+		Query query = this.getCurrentSession().createQuery(hql);
+		for (int i = 0; i < Object.length; i++) {
+			query.setParameter(i, Object[i]);
+		}
+		return query;
 	}
 
 }

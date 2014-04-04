@@ -1,7 +1,9 @@
 package com.sniper.survey.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -41,14 +43,13 @@ public class Post {
 	private String name;
 	@Column(name = "pt_uid", updatable = false)
 	private Integer uid;
-	@Column(name = "pt_tags")
-	private String tags;
+
 	@Column(name = "pt_status")
 	private Integer status;
 	@Column(name = "pt_last_edit_ip")
 	private String lastEditIp;
 	@Column(name = "pt_order")
-	private Integer order;
+	private Long order;
 	@Column(name = "pt_source")
 	private String source;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -92,14 +93,18 @@ public class Post {
 	// @PrimaryKeyJoinColumn
 	// @JoinColumn(name = "pt_pe_id", unique = true)
 	// 默认为延迟加载,由于这里是主键关联，在住表删除时，次表没变化，是个bug
-	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "post")
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL}, mappedBy = "post")
 	@PrimaryKeyJoinColumn
 	private PostValue postValue;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	// referencedColumnName为每个表关联列，主键不用写
 	@JoinTable(name = "mc_post_node", joinColumns = @JoinColumn(name = "pn_pid"), inverseJoinColumns = @JoinColumn(name = "pn_cid"))
 	private Set<Channel> channels = new HashSet<>();
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "mc_post_tags", joinColumns = @JoinColumn(name = "pmt_pid"), inverseJoinColumns = @JoinColumn(name = "pmt_tid"))
+	private List<Tags> tags = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -125,14 +130,6 @@ public class Post {
 		this.uid = uid;
 	}
 
-	public String getTags() {
-		return tags;
-	}
-
-	public void setTags(String tags) {
-		this.tags = tags;
-	}
-
 	public Integer getStatus() {
 		return status;
 	}
@@ -149,11 +146,11 @@ public class Post {
 		this.lastEditIp = lastEditIp;
 	}
 
-	public Integer getOrder() {
+	public Long getOrder() {
 		return order;
 	}
 
-	public void setOrder(Integer order) {
+	public void setOrder(Long order) {
 		this.order = order;
 	}
 
@@ -291,6 +288,14 @@ public class Post {
 
 	public Post() {
 
+	}
+
+	public List<Tags> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tags> tags) {
+		this.tags = tags;
 	}
 
 }

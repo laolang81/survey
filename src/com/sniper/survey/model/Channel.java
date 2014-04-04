@@ -24,7 +24,7 @@ public class Channel {
 	@Column(name = "cl_fid")
 	private String fid;
 	@Column(name = "cl_order")
-	private int order;
+	private Long order;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "cl_stime", updatable = false)
 	private Date stime;
@@ -44,7 +44,7 @@ public class Channel {
 	private String attachement;
 	@Column(name = "cl_note")
 	private String note;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -69,11 +69,11 @@ public class Channel {
 		this.fid = fid;
 	}
 
-	public int getOrder() {
+	public Long getOrder() {
 		return order;
 	}
 
-	public void setOrder(int order) {
+	public void setOrder(Long order) {
 		this.order = order;
 	}
 
