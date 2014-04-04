@@ -7,18 +7,21 @@
 		namespace="/admin">
 		<!-- <default-action-ref name="*/index" /> <action name="index"> index.htm为项目根目录的默认页面 
 			<result>*/index.jsp</result> </action> -->
-		
+
 		<interceptors>
 			<!-- 注册拦截器 -->
-			<interceptor name="loginInterceptor" class="com.sniper.survey.struts2.action.LoginInterceptor"/>
+			<interceptor name="loginInterceptor"
+				class="com.sniper.survey.struts2.action.LoginInterceptor" />
 			<!-- 定义拦截器栈 -->
 			<interceptor-stack name="surveyStack">
-				<interceptor-ref name="loginInterceptor"/>
-				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 		</interceptors>
-		<!--  -->
-		<default-interceptor-ref name="surveyStack"/>
+		<!-- -->
+		<default-interceptor-ref name="surveyStack" />
+
+		<default-action-ref name="userLogin" />
 		<!-- 定义默认全局login返回值 -->
 		<global-results>
 			<result name="login">login/index.jsp</result>
@@ -27,6 +30,9 @@
 			<result name="{1}">user/{1}.jsp</result>
 		</action>
 
+		<action name="userLogin" class="loginAction" method="index">
+			<result name="index">login/index.jsp</result>
+		</action>
 		<action name="login-*" class="loginAction" method="{1}">
 			<result name="{1}">login/{1}.jsp</result>
 		</action>
