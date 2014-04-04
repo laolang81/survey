@@ -47,7 +47,6 @@ public class PostValue {
 	
 	// 维护这post表这是个反向属性,一般被拥有方被定义,文章内容一般不执行什么操作,属于被拥有放
 	@OneToOne(mappedBy = "postValue")
-	//@JoinColumn(name = "pe_id", unique = true)
 	private Post post;
 
 	public Post getPost() {
