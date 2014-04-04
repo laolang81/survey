@@ -32,7 +32,6 @@ public class UserAction extends BaseAction<AdminUser> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private HttpServletRequest request;
 
 	@Resource
 	private AdminUserService adminUserService;
