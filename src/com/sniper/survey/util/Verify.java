@@ -68,6 +68,7 @@ public class Verify {
 	 * @return BufferedImage 图片
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unused")
 	public static BufferedImage createImage(String VerifyCode) throws Exception {
 
 		// 验证码长度
@@ -84,6 +85,7 @@ public class Verify {
 		// 图片高度
 		int height = fWidth + padding * 2;
 		Color color = getRandomColor();
+		// 当前颜色反之
 		Color reverse = getReverseColor(color);
 
 		// 创建一个彩色图片
@@ -93,7 +95,6 @@ public class Verify {
 		Graphics g = image.createGraphics();
 
 		InputStream in = new FileInputStream(webRootPath + "/file/shades.ttf");
-		// InputStream in = new FileInputStream("WEB-INF/file/shades.ttf");
 
 		RegisterFont gf = new RegisterFont(in);
 
