@@ -94,7 +94,6 @@ public class Post {
 	 * cascade的意思是对应的操作函数 比如remove对应delete
 	 */
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
-	//@PrimaryKeyJoinColumn(referencedColumnName = "pe_id")
 	@JoinColumn(name = "pt_pe_id", unique = true)
 	// 默认为延迟加载,由于这里是主键关联，在住表删除时，次表没变化，是个bug
 	private PostValue postValue;
