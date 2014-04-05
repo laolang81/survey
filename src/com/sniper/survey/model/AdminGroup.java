@@ -64,4 +64,11 @@ public class AdminGroup {
 		this.note = note;
 	}
 
+	public AdminGroup(String name, String value) {
+		super();
+		this.name = name;
+		this.value = value;
+	}
+
+	
 }

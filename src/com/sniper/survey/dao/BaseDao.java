@@ -46,6 +46,8 @@ public interface BaseDao<T> {
 	 * @param t
 	 */
 	public void savePersist(T t);
+	
+	public void saveMerge(T t);
 
 	/**
 	 * obj有四个可选值
@@ -65,6 +67,7 @@ public interface BaseDao<T> {
 	public T getEntity(Integer id);
 
 	public List<T> findEntityByHQL(String hql, Object... Object);
+	public List<T> findEntityByHQL(String hql, int firstResult, int maxResult, Object... Object);
 	
 	public Query 	findEntityByHQLQuery(String hql, Object... Object);
 

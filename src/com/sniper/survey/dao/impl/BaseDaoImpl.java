@@ -80,6 +80,10 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	@Override
+	public void saveMerge(T t) {
+		this.getCurrentSession().merge(t);
+	}
+	@Override
 	public void saveReplicata(T t, ReplicationMode obj) {
 		this.getCurrentSession().replicate(t, obj);
 	}
@@ -132,6 +136,16 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 			query.setParameter(i, Object[i]);
 		}
 		return query.list();
+	}
+	
+	@Override
+	public List<T> findEntityByHQL(String hql, int firstResult, int maxResult,
+			Object... Object) {
+		Query query = this.getCurrentSession().createQuery(hql);
+		for (int i = 0; i < Object.length; i++) {
+			query.setParameter(i, Object[i]);
+		}
+		return query.setFirstResult(firstResult).setMaxResults(maxResult).list();
 	}
 	
 	@Override

@@ -1,8 +1,10 @@
-package com.sniper.survey.struts2.action;
+package com.sniper.survey.struts2.interceptor;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.sniper.survey.model.AdminUser;
+import com.sniper.survey.struts2.action.BaseAction;
+import com.sniper.survey.struts2.action.LoginAction;
 
 /**
  * 登录拦截器
@@ -18,13 +20,11 @@ public class LoginInterceptor implements Interceptor {
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -35,7 +35,7 @@ public class LoginInterceptor implements Interceptor {
 		System.out.println(arg0.getProxy().getMethod());
 		BaseAction action = (BaseAction) arg0.getAction();
 		System.out.println(action.getClass().getName());
-		if(action instanceof LoginAction){
+		/*if(action instanceof LoginAction){
 			
 			return arg0.invoke();
 		}else{
@@ -45,7 +45,8 @@ public class LoginInterceptor implements Interceptor {
 			}else{
 				return arg0.invoke();
 			}
-		}
+		}*/
+		return arg0.invoke();
 		
 	}
 

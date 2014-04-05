@@ -27,6 +27,8 @@ public class AdminUser {
 	private String password;
 	@Column(name = "au_nickName")
 	private String nickName;
+	@Column(name = "au_email")
+	private String email;
 	// 状态
 	@Column(name = "au_status")
 	private int status = 1;
@@ -73,6 +75,14 @@ public class AdminUser {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public int getStatus() {

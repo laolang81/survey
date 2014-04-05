@@ -1,5 +1,7 @@
 package com.sniper.survey.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -14,6 +16,13 @@ public class AdminGroupServiceImpl extends BaseServiceImpl<AdminGroup> implement
 	public void setDao(BaseDao<AdminGroup> dao) {
 		
 		super.setDao(dao);
+	}
+
+	@Override
+	public List<AdminGroup> getGroupSelectList() {
+		String hql = "SELECT new AdminGroup(g.value, g.name) FROM AdminGroup g";
+		List<AdminGroup> adminGroups = this.findEntityByHQL(hql);
+		return adminGroups;
 	}
 	
 	

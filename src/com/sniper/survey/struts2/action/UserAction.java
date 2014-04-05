@@ -1,26 +1,21 @@
 package com.sniper.survey.struts2.action;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.sniper.survey.model.AdminGroup;
 import com.sniper.survey.model.AdminUser;
-import com.sniper.survey.model.Channel;
-import com.sniper.survey.model.Post;
-import com.sniper.survey.model.PostValue;
-import com.sniper.survey.model.Tags;
 import com.sniper.survey.service.impl.AdminGroupService;
 import com.sniper.survey.service.impl.AdminUserService;
-import com.sniper.survey.service.impl.ChannelService;
-import com.sniper.survey.service.impl.PostService;
-import com.sniper.survey.service.impl.PostValueService;
-import com.sniper.survey.service.impl.TagsService;
-import com.sniper.survey.util.VerifyCode;
+import com.sniper.survey.util.ValidateUtil;
 
 //加注解
 @Controller
@@ -32,84 +27,84 @@ public class UserAction extends BaseAction<AdminUser> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-
 	@Resource
 	private AdminUserService adminUserService;
 
 	@Resource
 	private AdminGroupService adminGroupService;
+	// 用户组列表
+	private List<AdminGroup> adminGroupsSelect;
+	
+	private static List<Integer> status = new ArrayList<>();
+	
+	static{
+		status.add(1);
+		status.add(2);
+	}
+	// 验证用户密码
+	private String confirmPassword;
 
-	@Resource
-	private PostService postService;
-
-	@Resource
-	private TagsService tagsService;
-	@Resource
-	private ChannelService channelService;
-
-	@Resource
-	private PostValueService postValueService;
-
-	public String index() {
-
-		String securityCode = VerifyCode.getSecurityCode(5,
-				VerifyCode.SecurityCodeLevel.Hard, false).toLowerCase();
-
-		Tags tags = new Tags();
-		tags.setName("标签二" + securityCode);
-		tags.setOrder(new Date().getTime());
-		tags.setUid(1);
-		tags.setCtime(new Date());
-		// tagsService.saveEntiry(tags);
-
-		Channel channel = new Channel();
-		channel.setName("栏目测试插入二" + securityCode);
-		channel.setOrder(new Date().getTime());
-		// channelService.saveEntiry(channel);
-
-
-		Post post = new Post();
-		post.setName("文章标题二");
-		post.setUid(1);
-		post.getChannels().add(channel);
-		post.getTags().add(tags);
-		
-		PostValue postValue = new PostValue();
-		postValue.setValue("文章内容二");	
-		post.setPostValue(postValue);
-		//postValue.setId(post.getId());
-		//postValueService.savePersist(postValue);
-		postService.savePersist(post);
-		System.out.println(postService.getEntity(post.getId()));
-
-		// AdminGroup adminGroup = adminGroupService.getEntity(1);
-
-		// System.out.println(adminGroup.getName());
-		
-		/*
-		 * adminUser.setAdminGroup(adminGroup); //model.setId(1);
-		 * adminUser.setName("admin"); adminUser.setNickName("原始管理员");
-		 * adminUser.setCtime(new Date()); String rand = "1456";
-		 * adminUser.setRand(rand); adminUser.setPassword(DataUtil.md5("admin" +
-		 * rand)); adminUser.setStatus(1); System.out.println(adminUser);
-		 * adminUserService.saveEntiry(adminUser);
-		 * 
-		 * System.out.println(adminUserService.getEntity(1));
-		 */
-
-		return "index";
+	public String getConfirmPassword() {
+		return confirmPassword;
 	}
 
-	// 跳过校验
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	
+	public List<AdminGroup> getAdminGroupsSelect() {
+		return adminGroupsSelect;
+	}
+
+	public void setAdminGroupsSelect(List<AdminGroup> adminGroupsSelect) {
+		this.adminGroupsSelect = adminGroupsSelect;
+	}
+
+	/**
+	 * 用户列表
+	 * 
+	 * @return
+	 */
+	public String list() {
+
+		return SUCCESS;
+	}
+
+	/**
+	 * 添加
+	 * 
+	 * @return
+	 */
 	@SkipValidation
-	public String add() {
-
-		Post post = new Post();
-		post.setId(1);
-		postService.deleteEntiry(post);
+	public String doAdd() {
 		
-		return "add";
+		setAdminGroupsSelect(adminGroupService.getGroupSelectList());
+		
+		for(AdminGroup g: adminGroupsSelect){
+			System.out.println(g.getName());
+			System.out.println(g.getValue());
+		}
+		System.out.println(adminGroupsSelect.iterator());
 
+		return INPUT;
+	}
+	/**
+	 * 默认prepare拦截器先调用do开头的
+	 */
+	public void prepareDoAdd()
+	{
+		//设置用户组
+		//request.setAttribute("adminGroup", );
+	}
+	/**
+	 * 不同方法而已
+	 * @return
+	 */
+	public String prepareAdd() {
+		
+		
+		return SUCCESS;
 	}
 
 	public String save() {
@@ -135,10 +130,37 @@ public class UserAction extends BaseAction<AdminUser> {
 	@Override
 	public void validate() {
 		// 非空
+		if (!ValidateUtil.isValid(model.getName())) {
+			addFieldError("name", "用户名必填项");
+		}
+
+		if (!ValidateUtil.isValid(model.getNickName())) {
+			addFieldError("nickName", "昵称必填项");
+		}
+
+		if (!ValidateUtil.isValid(model.getEmail())) {
+			addFieldError("email", "用户Email必填项");
+		}
+		// 当用户密码存在时候
+		// 当用户添加时密码为必须
+		// 当修改时密码为非必须
+
+		if (ValidateUtil.isValid(model.getPassword())) {
+			if (model.getPassword().equals(confirmPassword)) {
+				addFieldError("password", "两次密码输入不一至");
+			}
+		}
 
 		if (hasErrors()) {
 			return;
 		}
+
+		// 验证用户名是否注册
+		if (adminUserService.isRegisted(model.getName())) {
+			addFieldError("name", "用户已被占用");
+		}
 	}
+
+	
 
 }

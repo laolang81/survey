@@ -11,7 +11,7 @@
 		<interceptors>
 			<!-- 注册拦截器 -->
 			<interceptor name="loginInterceptor"
-				class="com.sniper.survey.struts2.action.LoginInterceptor" />
+				class="com.sniper.survey.struts2.interceptor.LoginInterceptor" />
 			<!-- 定义拦截器栈 -->
 			<interceptor-stack name="surveyStack">
 				<interceptor-ref name="loginInterceptor" />
@@ -26,16 +26,42 @@
 		<global-results>
 			<result name="login">login/index.jsp</result>
 		</global-results>
-		<action name="user-*" class="userAction" method="{1}">
-			<result name="{1}">user/{1}.jsp</result>
+		<!-- 后台基本CURD的通配符配置 -->
+		<action name="*List" class="{1}Action" method="list">
+			<result name="success">{1}/list.jsp</result>
 		</action>
 
+		<action name="*PrepareAdd" class="{1}Action" method="prepareAdd">
+			<result name="input">{1}/prepareAdd.jsp</result>
+		</action>
+
+		<action name="*DoAdd" class="{1}Action" method="doAdd">
+			<result name="input">{1}/prepareAdd.jsp</result>
+			<result name="list" type="redirectAction">{1}List</result>
+		</action>
+
+		<action name="*PrepareUpdate" class="{1}Action" method="prepareUpdate">
+			<result name="input">{1}/prepareUpdate.jsp</result>
+		</action>
+
+		<action name="*DoUpdate" class="{1}Action" method="doUpdate">
+			<result name="input">{1}/prepareUpdate.jsp</result>
+			<result name="list" type="redirectAction">{1}List</result>
+		</action>
+
+		<action name="*DoDelete" class="{1}Action" method="doDelete">
+			<result name="list" type="redirectAction">{1}List</result>
+		</action>
+
+
+
 		<action name="userLogin" class="loginAction" method="index">
-			<result name="index">login/index.jsp</result>
+			<result name="login">login/index.jsp</result>
 		</action>
-		<action name="login-*" class="loginAction" method="{1}">
-			<result name="{1}">login/{1}.jsp</result>
+		<action name="logout" class="loginAction" method="logout">
+			<result name="logout" type="redirectAction">userLogin</result>
 		</action>
+		
 	</package>
 
 	<package name="sniperSurveyAJAX" extends="json-default"
@@ -45,7 +71,11 @@
 			<result type="json">
 				<param name="root">result</param>
 			</result>
-
+		</action>
+		<action name="*DoAjaxDelete" class="{1}Action" method="doAjaxDelete">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
 		</action>
 	</package>
 </struts>

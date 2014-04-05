@@ -256,3 +256,13 @@ select {border-radius: 0 0 0 0;border-width: 1px; background-color: #FFFFFF; bor
 .meneame A:active{BACKGROUND-COLOR: #fff}
 .meneame SPAN.current{color: #999999;cursor: pointer; background-color: #F5F5F5;}
 .meneame SPAN.disabled{cursor: pointer;}
+
+/* 分割线 */
+.SFrom  { overflow: hidden; width: auto; }
+.SFrom ul { overflow: hidden; width: auto; }
+.SFrom ul li{ overflow: hidden;width: auto;padding: 2px 0;}
+.SFrom ul li>span{ padding: 5px 0;text-indent: 10px;line-height: 20px;display:inline-block;position:relative;zoom:1;vertical-align:middle; }
+.SFrom .w50{ width: 50px; }
+.SFrom .w100{ width: 100px; }
+.SFrom .w150{ width: 150px; }
+.SFrom .m150{ margin-left: 150px; }

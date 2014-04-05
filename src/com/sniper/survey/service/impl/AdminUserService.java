@@ -5,4 +5,5 @@ import com.sniper.survey.service.BaseService;
 
 public interface AdminUserService extends BaseService<AdminUser> {
 
+	public boolean isRegisted(String name);
 }

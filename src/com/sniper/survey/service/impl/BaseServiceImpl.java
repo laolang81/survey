@@ -44,6 +44,10 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		dao.savePersist(t);
 
 	}
+	@Override
+	public void saveMerge(T t) {
+		dao.saveMerge(t);
+	}
 
 	public void updateEntiry(T t) {
 		dao.updateEntiry(t);
@@ -77,10 +81,6 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	@Override
 	public Query findEntityByHQLQuery(String hql, Object... Object) {
-		Query query = dao.findEntityByHQLQuery(hql, Object);
-		for (int i = 0; i < Object.length; i++) {
-			query.setParameter(i, Object[i]);
-		}
-		return query;
+		return dao.findEntityByHQLQuery(hql, Object);
 	}
 }

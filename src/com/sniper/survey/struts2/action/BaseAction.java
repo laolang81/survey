@@ -52,5 +52,7 @@ public abstract class BaseAction<T> extends ActionSupport implements
 	public T getModel() {
 		return model;
 	}
-
+	
+	// 定义基本的CURD操作
+	
 }
