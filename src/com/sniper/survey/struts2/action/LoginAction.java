@@ -59,7 +59,7 @@ public class LoginAction extends BaseAction<AdminUser> {
 
 	public String index() {
 
-		return "index";
+		return "login";
 	}
 
 	public String login() {

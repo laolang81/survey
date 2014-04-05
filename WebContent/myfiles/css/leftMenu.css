@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+
+.leftMenu {
+	width: 14.8936%;
+	float: left;
+}
+
+.leftMenu .sidebar-nav {
+	border-radius: 5px;
+	box-shadow: 0 0 10px #BDBDBD;
+	margin-bottom: 0;
+	min-height: 0;
+	padding-bottom: 0;
+}
+
+.leftMen .nav {
+	list-style: none outside none;
+	margin-bottom: 18px;
+	margin-left: 0;
+}
