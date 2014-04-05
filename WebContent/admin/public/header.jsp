@@ -43,5 +43,6 @@
 		</ul>	
 	</div>
 </div>
-<div class="body-main">
-<jsp:include page="../public/left.jsp"/>
+<div class="container-fluid">
+	<div class="body-main">
+	<jsp:include page="../public/left.jsp"/>
