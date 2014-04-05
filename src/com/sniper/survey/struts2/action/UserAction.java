@@ -35,12 +35,6 @@ public class UserAction extends BaseAction<AdminUser> {
 	// 用户组列表
 	private List<AdminGroup> adminGroupsSelect;
 	
-	private static List<Integer> status = new ArrayList<>();
-	
-	static{
-		status.add(1);
-		status.add(2);
-	}
 	// 验证用户密码
 	private String confirmPassword;
 
@@ -79,14 +73,7 @@ public class UserAction extends BaseAction<AdminUser> {
 	@SkipValidation
 	public String doAdd() {
 		
-		setAdminGroupsSelect(adminGroupService.getGroupSelectList());
 		
-		for(AdminGroup g: adminGroupsSelect){
-			System.out.println(g.getName());
-			System.out.println(g.getValue());
-		}
-		System.out.println(adminGroupsSelect.iterator());
-
 		return INPUT;
 	}
 	/**
@@ -95,7 +82,8 @@ public class UserAction extends BaseAction<AdminUser> {
 	public void prepareDoAdd()
 	{
 		//设置用户组
-		//request.setAttribute("adminGroup", );
+		setAdminGroupsSelect(adminGroupService.getGroupSelectList());
+		
 	}
 	/**
 	 * 不同方法而已
