@@ -31,7 +31,17 @@ public class UserAction extends BaseAction<AdminUser> {
 	private AdminGroupService adminGroupService;
 	// 用户组列表
 	private List<AdminGroup> adminGroupsSelect;
-	
+
+	public Integer id;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	// 验证用户密码
 	private String confirmPassword;
 
@@ -43,7 +53,6 @@ public class UserAction extends BaseAction<AdminUser> {
 		this.confirmPassword = confirmPassword;
 	}
 
-	
 	public List<AdminGroup> getAdminGroupsSelect() {
 		return adminGroupsSelect;
 	}
@@ -69,26 +78,29 @@ public class UserAction extends BaseAction<AdminUser> {
 	 */
 	@SkipValidation
 	public String doAdd() {
-		
-		
+		//添加完毕之后自动定向到编辑页面
+		this.id = model.getId();
+		//要保持关联
+		//model.setAdminGroup(adminGroup);
 		return INPUT;
 	}
+
 	/**
 	 * 默认prepare拦截器先调用do开头的
 	 */
-	public void prepareDoAdd()
-	{
-		//设置用户组
+	public void prepareDoAdd() {
+		// 设置用户组
 		setAdminGroupsSelect(adminGroupService.getGroupSelectList());
-		
+
 	}
+
 	/**
 	 * 不同方法而已
+	 * 
 	 * @return
 	 */
 	public String prepareAdd() {
-		
-		
+
 		return SUCCESS;
 	}
 
@@ -145,7 +157,5 @@ public class UserAction extends BaseAction<AdminUser> {
 			addFieldError("name", "用户已被占用");
 		}
 	}
-
-	
 
 }

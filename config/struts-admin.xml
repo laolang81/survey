@@ -15,7 +15,10 @@
 			<!-- 定义拦截器栈 -->
 			<interceptor-stack name="surveyStack">
 				<interceptor-ref name="loginInterceptor" />
-				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="defaultStack" >
+					<!-- 在刷新模型model,解决懒加载最好的方法 -->
+					<param name="modelDriven.refreshModelBeforeResult">true</param>
+				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
 		<!-- -->
@@ -37,7 +40,15 @@
 
 		<action name="*DoAdd" class="{1}Action" method="doAdd">
 			<result name="input">{1}/prepareAdd.jsp</result>
-			<result name="list" type="redirectAction">{1}List</result>
+			<result name="list" type="redirectAction">
+				<param name="namespace">/admin</param>
+				<param name="actionName">{1}List</param>
+			</result>
+			<result name="edit" type="redirectAction">
+				<param name="namespace">/admin</param>
+				<param name="actionName">{1}PrepareUpdate</param>
+				<param name="id">${id}</param>
+			</result>
 		</action>
 
 		<action name="*PrepareUpdate" class="{1}Action" method="prepareUpdate">
@@ -46,11 +57,17 @@
 
 		<action name="*DoUpdate" class="{1}Action" method="doUpdate">
 			<result name="input">{1}/prepareUpdate.jsp</result>
-			<result name="list" type="redirectAction">{1}List</result>
+			<result name="list" type="redirectAction">
+				<param name="namespace">/admin</param>
+				<param name="actionName">{1}List</param>
+			</result>
 		</action>
 
 		<action name="*DoDelete" class="{1}Action" method="doDelete">
-			<result name="list" type="redirectAction">{1}List</result>
+			<result name="list" type="redirectAction">
+				<param name="namespace">/admin</param>
+				<param name="actionName">{1}List</param>
+			</result>
 		</action>
 
 

@@ -14,6 +14,16 @@
 		<param-value>classpath:beans.xml</param-value>
 	</context-param>
 
+	<!-- spring试图模型session开启,该过滤器view渲染时始终开始session，一劳永逸解决蓝加载问题 ,该过滤器必须配置在struts2之前,不推荐使用 -->
+	<!-- <filter>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+
 	<filter>
 		<filter-name>struts2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
