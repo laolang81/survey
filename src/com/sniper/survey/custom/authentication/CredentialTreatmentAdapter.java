@@ -53,6 +53,25 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 	@Override
 	protected Query authenticateCreateSelect() {
 
+		
+		/* if (empty($this->credentialTreatment) || (strpos($this->credentialTreatment, '?') === false)) {
+	            $this->credentialTreatment = '?';
+	        }
+
+	        $credentialExpression = new SqlExpr(
+	            '(CASE WHEN ?' . ' = ' . $this->credentialTreatment . ' THEN 1 ELSE 0 END) AS ?',
+	            array($this->credentialColumn, $this->credential, 'zend_auth_credential_match'),
+	            array(SqlExpr::TYPE_IDENTIFIER, SqlExpr::TYPE_VALUE, SqlExpr::TYPE_IDENTIFIER)
+	        );
+
+	        // get select
+	        $dbSelect = clone $this->getDbSelect();
+	        $dbSelect->from($this->tableName)
+	            ->columns(array('*', $credentialExpression))
+	            ->where(new SqlOp($this->identityColumn, '=', $this->identity));
+
+	        return $dbSelect;*/
+	        
 		if (this.credentialTreatment.isEmpty()
 				|| (this.credentialTreatment.indexOf("?") == -1)) {
 			this.credentialTreatment = "?";
