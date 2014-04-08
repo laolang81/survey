@@ -1,5 +1,7 @@
 package com.sniper.survey.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mc_admin_group")
-public class AdminGroup {
+public class AdminGroup implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -70,5 +72,11 @@ public class AdminGroup {
 		this.value = value;
 	}
 
+	public AdminGroup() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 	
 }

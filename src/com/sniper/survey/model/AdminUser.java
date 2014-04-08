@@ -1,9 +1,11 @@
 package com.sniper.survey.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,10 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "mc_admin_user")
-public class AdminUser {
+public class AdminUser{
 
 	@Id
 	@Column(name = "au_id")
@@ -41,9 +44,12 @@ public class AdminUser {
 	@Column(name = "au_ctime", updatable = false)
 	private Date ctime;
 	// 对应用户组
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "au_group", referencedColumnName = "ag_value")
 	private AdminGroup adminGroup;
+	
+	@Transient
+	private String credentialTreatment;
 
 	public Integer getId() {
 		return id;
@@ -116,5 +122,18 @@ public class AdminUser {
 	public void setAdminGroup(AdminGroup adminGroup) {
 		this.adminGroup = adminGroup;
 	}
+
+	public String getCredentialTreatment() {
+		if(credentialTreatment != null){
+			credentialTreatment = "(MD5(CONCAT(password,rand)) AND status=1) as credentialTreatment";
+		}
+		return credentialTreatment;
+	}
+
+	public void setCredentialTreatment(String credentialTreatment) {
+		this.credentialTreatment = credentialTreatment;
+	}
+	
+	
 
 }

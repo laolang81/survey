@@ -8,6 +8,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.sniper.survey.custom.authentication.DbTable;
 import com.sniper.survey.model.AdminGroup;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminGroupService;
@@ -68,6 +69,8 @@ public class UserAction extends BaseAction<AdminUser> {
 	 */
 	public String list() {
 
+	
+		
 		return SUCCESS;
 	}
 
@@ -78,8 +81,23 @@ public class UserAction extends BaseAction<AdminUser> {
 	 */
 	@SkipValidation
 	public String doAdd() {
+		
+		//DbTable<AdminUser> dbTable = new DbTable<>(adminUserService, "username", "password");
+		//dbTable.setCredential("admin");
+		
+		
+		/*String sql = "SELECT auth FROM AdminUser auth";
+		List<AdminUser> adminUsers  = adminUserService.findEntityByHQL(sql, null);
+		for(AdminUser user: adminUsers){
+			System.out.println(user.getName());
+			//System.out.println(user.getAdminGroup());
+		}
+		
+		//System.out.println(adminUsers);
+		
+		//System.out.println(model.getClass().getSimpleName());
 		//添加完毕之后自动定向到编辑页面
-		this.id = model.getId();
+		this.id = model.getId();*/
 		//要保持关联
 		//model.setAdminGroup(adminGroup);
 		return INPUT;

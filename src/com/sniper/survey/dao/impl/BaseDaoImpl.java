@@ -83,6 +83,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	public void saveMerge(T t) {
 		this.getCurrentSession().merge(t);
 	}
+
 	@Override
 	public void saveReplicata(T t, ReplicationMode obj) {
 		this.getCurrentSession().replicate(t, obj);
@@ -102,8 +103,10 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	public void batchEntiryByHQL(String hql, Object... Object) {
 
 		Query query = this.getCurrentSession().createQuery(hql);
-		for (int i = 0; i < Object.length; i++) {
-			query.setParameter(i, Object[i]);
+		if (Object != null && Object.length > 0) {
+			for (int i = 0; i < Object.length; i++) {
+				query.setParameter(i, Object[i]);
+			}
 		}
 		query.executeUpdate();
 	}
@@ -132,28 +135,36 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	public List<T> findEntityByHQL(String hql, Object... Object) {
 
 		Query query = this.getCurrentSession().createQuery(hql);
-		for (int i = 0; i < Object.length; i++) {
-			query.setParameter(i, Object[i]);
+		if (Object != null && Object.length > 0) {
+			for (int i = 0; i < Object.length; i++) {
+				query.setParameter(i, Object[i]);
+			}
 		}
 		return query.list();
 	}
-	
+
 	@Override
 	public List<T> findEntityByHQL(String hql, int firstResult, int maxResult,
 			Object... Object) {
 		Query query = this.getCurrentSession().createQuery(hql);
-		for (int i = 0; i < Object.length; i++) {
-			query.setParameter(i, Object[i]);
+		if (Object != null && Object.length > 0) {
+			for (int i = 0; i < Object.length; i++) {
+				query.setParameter(i, Object[i]);
+			}
 		}
-		return query.setFirstResult(firstResult).setMaxResults(maxResult).list();
+		return query.setFirstResult(firstResult).setMaxResults(maxResult)
+				.list();
 	}
-	
+
 	@Override
 	public Query findEntityByHQLQuery(String hql, Object... Object) {
 		Query query = this.getCurrentSession().createQuery(hql);
-		for (int i = 0; i < Object.length; i++) {
-			query.setParameter(i, Object[i]);
+		if (Object != null && Object.length > 0) {
+			for (int i = 0; i < Object.length; i++) {
+				query.setParameter(i, Object[i]);
+			}
 		}
+
 		return query;
 	}
 
