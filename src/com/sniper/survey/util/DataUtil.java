@@ -1,5 +1,10 @@
 package com.sniper.survey.util;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.security.MessageDigest;
 
 public class DataUtil {
@@ -22,5 +27,33 @@ public class DataUtil {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	/**
+	 * 深度复制序列化
+	 * @param src
+	 * @return
+	 */
+	public static Serializable deeplyCopy(Serializable src)
+	{
+		
+		try {
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(outputStream);
+			oos.writeObject(src);
+			oos.close();
+			outputStream.close();
+			
+			byte[] bytes = outputStream.toByteArray();
+			ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+			ObjectInputStream ois = new ObjectInputStream(inputStream);
+			Serializable copy = (Serializable) ois.readObject();
+			inputStream.close();
+			ois.close();
+			return copy;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return src;
+		
 	}
 }
