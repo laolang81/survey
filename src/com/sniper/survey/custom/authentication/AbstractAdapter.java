@@ -141,14 +141,15 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	 */
 	@Override
 	public AuthenticateResultInfoInterface authenticate() {
-		this.authenticateSetup();
-		Query query = this.authenticateCreateSelect();
-		List<T> resultIdentities = this.authenticateQuerySelect(query);
+		authenticateSetup();
+		Query query = authenticateCreateSelect();
+		List<T> resultIdentities = authenticateQuerySelect(query);
 		AuthenticateResultInfoInterface authResult = null;
-		if ((authResult = this.authenticateValidateResultSet(resultIdentities)) != null) {
+		if ((authResult = authenticateValidateResultSet(resultIdentities)) != null) {
 			return authResult;
 		}
 		for (T t : resultIdentities) {
+			
 			authResult = authenticateValidateResult(t);
 			if (authResult.isValid()) {
 				break;
@@ -159,7 +160,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 
 	/**
 	 * 返回结果
-	 * 
+	 * 这里只检查用户读取的记录是否准确，不检查密码验证
 	 * @param resultIdentities
 	 * @return
 	 */
@@ -196,8 +197,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	 */
 	private List<T> authenticateQuerySelect(Query query) {
 
-		List<T> list = query.list();
-		return list;
+		return query.list();
 	}
 
 	private void authenticateSetup() {

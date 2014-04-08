@@ -44,6 +44,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		dao.savePersist(t);
 
 	}
+
 	@Override
 	public void saveMerge(T t) {
 		dao.saveMerge(t);
@@ -82,5 +83,10 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	@Override
 	public Query findEntityByHQLQuery(String hql, Object... Object) {
 		return dao.findEntityByHQLQuery(hql, Object);
+	}
+
+	@Override
+	public Query findEntityBySQLQuery(String sql) {
+		return dao.findEntityBySQLQuery(sql);
 	}
 }

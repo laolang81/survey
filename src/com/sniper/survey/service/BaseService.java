@@ -30,4 +30,6 @@ public interface BaseService<T> {
 	public List<T> findEntityByHQL(String hql, Object... Object);
 
 	public Query findEntityByHQLQuery(String hql, Object... Object);
+	
+	public Query findEntityBySQLQuery(String sql);
 }

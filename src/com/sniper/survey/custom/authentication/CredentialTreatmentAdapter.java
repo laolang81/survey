@@ -8,13 +8,7 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 
 	private String credentialTreatment = null;
 
-	public String getCredentialTreatment() {
-		return credentialTreatment;
-	}
 
-	public void setCredentialTreatment(String credentialTreatment) {
-		this.credentialTreatment = credentialTreatment;
-	}
 
 	public CredentialTreatmentAdapter() {
 	}
@@ -35,8 +29,18 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 
 	@Override
 	protected AuthenticateResultInfoInterface authenticateValidateResult(T t) {
-		if (t == null) {
+		
+		/*if ($resultIdentity['zend_auth_credential_match'] != '1') {
+            $this->authenticateResultInfo['code']       = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
+            $this->authenticateResultInfo['messages'][] = 'Supplied credential is invalid.';
+            return $this->authenticateCreateAuthResult();
+        }
 
+        unset($resultIdentity['zend_auth_credential_match']);*/
+		
+        
+		if (t == null) {
+			
 			this.authenticateResultInfo
 					.setCode(Result.FAILURE_CREDENTIAL_INVALID);
 			this.authenticateResultInfo.getMessage().add(
@@ -76,12 +80,13 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 				|| (this.credentialTreatment.indexOf("?") == -1)) {
 			this.credentialTreatment = "?";
 		}
+		
+		String sqlExpr = "(CASE WHEN ? = " + this.credentialTreatment + " THEN 1 ELSE 0 END) AS ?";
 
 		String tname = getModel().getClass().getSimpleName();
-		String hql = "SELECT auth FROM " + tname + " auth WHERE "
-				+ getIdentityColunm() + "= ? AND " + getCredentialcolumn();
-		Query query = getService().findEntityByHQLQuery(hql, getIdentity(),
-				getCredential());
+		String hql = "SELECT *, " + sqlExpr +" FROM " + tname + " auth WHERE "
+				+ getIdentityColunm() + "= ? ";
+		Query query = getService().findEntityByHQLQuery(hql, getCredentialcolumn(), getCredential(), "auth", getIdentity());
 		return query;
 
 	}

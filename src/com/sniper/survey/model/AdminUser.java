@@ -49,7 +49,7 @@ public class AdminUser{
 	private AdminGroup adminGroup;
 	
 	@Transient
-	private String credentialTreatment;
+	private String auth;
 
 	public Integer getId() {
 		return id;
@@ -123,16 +123,8 @@ public class AdminUser{
 		this.adminGroup = adminGroup;
 	}
 
-	public String getCredentialTreatment() {
-		if(credentialTreatment != null){
-			credentialTreatment = "(MD5(CONCAT(password,rand)) AND status=1) as credentialTreatment";
-		}
-		return credentialTreatment;
-	}
+	
 
-	public void setCredentialTreatment(String credentialTreatment) {
-		this.credentialTreatment = credentialTreatment;
-	}
 	
 	
 
