@@ -84,7 +84,7 @@
 	<package name="sniperSurveyAJAX" extends="json-default"
 		namespace="/admin">
 
-		<action name="login-login" class="loginAction" method="login">
+		<action name="loginValid" class="loginAction" method="login">
 			<result type="json">
 				<param name="root">result</param>
 			</result>

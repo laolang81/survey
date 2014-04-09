@@ -47,8 +47,7 @@ public class AdminUser {
 	@JoinColumn(name = "au_group", referencedColumnName = "ag_value")
 	private AdminGroup adminGroup;
 
-	@Transient
-	private Integer auth;
+	
 
 	public Integer getId() {
 		return id;
@@ -122,12 +121,6 @@ public class AdminUser {
 		this.adminGroup = adminGroup;
 	}
 
-	public Integer getAuth() {
-		return auth;
-	}
-
-	public void setAuth(Integer auth) {
-		this.auth = auth;
-	}
+	
 
 }

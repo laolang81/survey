@@ -48,17 +48,17 @@ input[type="text"]:focus,input[type="password"]:focus{background: none repeat sc
 		function onlogin() {
 			var u = $('#account').val();
 			var p = $('#password').val();
-			var y = $('#verify').val();
+			var y = $('#login_verify').val();
 			//$("#button").attr("disabled","true");
 
 			$.ajax({
 				type : "post",
 				dataType : 'json',
-				url : '<s:url action="login-login" />',
+				url : '<s:url action="loginValid" namespace="/admin" />',
 				data : {
+					passwd : p,
 					account : u,
-					password : p,
-					verify : y
+					verifycode : y
 				},
 				beforeSend : function(XMLHttpRequest) {
 					$('#button').val('正在登录...');
@@ -67,9 +67,9 @@ input[type="text"]:focus,input[type="password"]:focus{background: none repeat sc
 					var data = $.parseJSON(data);
 					
 					
-					alert(data.a)
+					//alert(data.a)
 					if (data != null && data.message == 1)
-						window.location = '<s:url action="login-login" namespace="/admin" />';
+						window.location = '<s:url action="userDoAdd" namespace="/admin" />';
 					else {
 						//alert(data.message);
 						$('#result').html(data.message);

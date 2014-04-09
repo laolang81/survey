@@ -3,14 +3,16 @@ package com.sniper.survey.custom.authentication;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Table;
 
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.hibernate.transform.Transformers;
 
 import com.sniper.survey.service.BaseService;
 
+@SuppressWarnings("rawtypes")
 public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 
 	/**
@@ -35,7 +37,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	 * 尸体类
 	 */
 	private T model;
-	Class<T> clazz;
+	protected Class<T> clazz;
 
 	/**
 	 * $ambiguityIdentity - Flag to indicate same Identity can be used with
@@ -93,6 +95,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 		this.authenticateResultInfo = authenticateResultInfo;
 	}
 
+	@SuppressWarnings("unchecked")
 	public T getModel() {
 
 		if (model != null) {
@@ -133,7 +136,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	 * @return
 	 */
 	abstract protected AuthenticateResultInfoInterface authenticateValidateResult(
-			T t);
+			Map t);
 
 	/**
 	 * 执行查询
@@ -149,14 +152,20 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	public AuthenticateResultInfoInterface authenticate() {
 		authenticateSetup();
 		SQLQuery query = authenticateCreateSelect();
-		List<T> resultIdentities = authenticateQuerySelect(query);
+		// 获取转成对象,者获取的是用户对象数据
+		List<Map> resultIdentities = authenticateQuerySelectMap(query);
+		/*System.out.println("authenticate");
+		System.out.println(resultIdentities);*/
 		AuthenticateResultInfoInterface authResult = null;
+		// 检测用户获取的数量是否等于1，这里只检测用户数量是否唯一，不唯一报错
 		if ((authResult = authenticateValidateResultSet(resultIdentities)) != null) {
 			return authResult;
 		}
-		for (T t : resultIdentities) {
-			System.out.println(t);
-			authResult = authenticateValidateResult(t);
+		// 检测用户密码是否正确，auth等于1表示用户密码正确
+		for (Map m : resultIdentities) {
+			/*System.out.println("0===");
+			System.out.println(m);*/
+			authResult = authenticateValidateResult(m);
 			if (authResult.isValid()) {
 				break;
 			}
@@ -171,9 +180,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	 * @return
 	 */
 	private AuthenticateResultInfoInterface authenticateValidateResultSet(
-			List<T> resultIdentities) {
-
-
+			List<Map> resultIdentities) {
 
 		if (resultIdentities.size() < 1) {
 			authenticateResultInfo.setCode(Result.FAILURE_IDENTITY_NOT_FOUND);
@@ -200,13 +207,26 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	}
 
 	/**
+	 * 获取对象数据
 	 * 
 	 * @param query
 	 * @return
 	 */
-	private List<T> authenticateQuerySelect(Query query) {
+	@SuppressWarnings("unchecked")
+	private List<T> authenticateQuerySelect(SQLQuery query) {
+		return query.addEntity(clazz).list();
+	}
 
-		return query.list();
+	/**
+	 * 获取map数据
+	 * 
+	 * @param query
+	 * @return
+	 */
+	@SuppressWarnings({ "unused", "unchecked" })
+	private List<Map> authenticateQuerySelectMap(SQLQuery query) {
+		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
+				.list();
 	}
 
 	private void authenticateSetup() {

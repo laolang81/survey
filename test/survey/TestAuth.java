@@ -1,7 +1,11 @@
 package survey;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
+import org.hibernate.transform.Transformers;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -19,26 +23,46 @@ public class TestAuth {
 
 	@Resource
 	private AdminUserService adminUserService;
-	
+
 	@Before
 	public void iniChannelService() {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
 		adminUserService = (AdminUserService) ctx.getBean("adminUserService");
 	}
-	
+
 	@Test
 	public void test() {
-		DbTable dbTable = new DbTable(adminUserService, "au_name", "au_password","MD5(CONCAT(?,au_rand)) AND au_status=1");
-		dbTable.setCredential(DataUtil.md5("admin"));
+
+		/*System.out.println(DataUtil.md5("admin"));
+		String sql = "SELECT *, (CASE WHEN au_password = ? THEN 1 ELSE 0 END) AS auth FROM mc_admin_user AS u WHERE au_name=  ?";
+		List<Map> maps = adminUserService.findEntityBySQLQuery(sql)
+				.setString(0, "21232F297A57A5A743894A0E4A801FC3")
+				.setString(1, "admin")
+				.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+
+		for (Map m : maps) {
+			System.out.println(m);
+			String name = m.getClass().getSimpleName();
+			System.out.println(name);
+
+		}*/
+
+		// DbTable dbTable = new DbTable(adminUserService, "au_name",
+		// "au_password","MD5(CONCAT(?,au_rand)) AND au_status=1");
+
+		DbTable dbTable = new DbTable(adminUserService, "au_name",
+				"au_password", null);
+		dbTable.setCredential("21232F297A57A5A743894A0E4A801FC3");
 		dbTable.setIdentity("admin");
-		
+
 		AuthenticationServiceInterface auth = new AuthenticationService();
-		AuthenticateResultInfoInterface result =  auth.authenticate(dbTable);
+		AuthenticateResultInfoInterface result = auth.authenticate(dbTable);
 		System.out.println(result.getCode());
 		System.out.println(result.getObj().toString());
 		
-		AdminUser adminUser = (AdminUser) result.getObj();
+		/*AdminUser adminUser = (AdminUser) result.getObj();
 		System.out.println(adminUser.getName());
+		System.out.println(adminUser.getNickName());*/
 		System.out.println(dbTable);
 	}
 

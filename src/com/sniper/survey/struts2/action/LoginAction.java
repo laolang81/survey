@@ -1,6 +1,7 @@
 package com.sniper.survey.struts2.action;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -8,6 +9,8 @@ import javax.annotation.Resource;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.transform.ResultTransformer;
+import org.hibernate.transform.Transformers;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -26,9 +29,9 @@ public class LoginAction extends BaseAction<AdminUser> {
 	private static final long serialVersionUID = 1L;
 
 	private String account;
-	private String password;
-	private String verify;
-	
+	private String passwd;
+	private String verifycode;
+
 	@Resource
 	private AdminUserService adminUserService;
 
@@ -43,20 +46,22 @@ public class LoginAction extends BaseAction<AdminUser> {
 		this.account = account;
 	}
 
-	public String getPassword() {
-		return password;
+	
+
+	public String getPasswd() {
+		return passwd;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
 	}
 
-	public String getVerify() {
-		return verify;
+	public String getVerifycode() {
+		return verifycode;
 	}
 
-	public void setVerify(String verify) {
-		this.verify = verify;
+	public void setVerifycode(String verifycode) {
+		this.verifycode = verifycode;
 	}
 
 	@JSON(name = "RESULT")
@@ -74,25 +79,41 @@ public class LoginAction extends BaseAction<AdminUser> {
 	}
 
 	public String login() {
+		System.out.println(DataUtil.md5("admin"));
+		String sql = "SELECT *, (CASE WHEN au_password = \"21232F297A57A5A743894A0E4A801FC3\" THEN 1 ELSE 0 END) AS auth FROM mc_admin_user AS u WHERE au_name=  \"admin\"";
+		List<Map> maps =  adminUserService.findEntityBySQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 		
-		DbTable dbTable = new DbTable(adminUserService, "au_name", "au_password","MD5(CONCAT(?,au_rand)) AND au_status=1");
-		dbTable.setCredential(DataUtil.md5(this.password));
+		for(Map m: maps){
+			System.out.println(m);
+			String name = m.getClass().getSimpleName();
+			System.out.println(name);
+			
+		}
+		
+		//21232F297A57A5A743894A0E4A801FC3
+		
+		//DbTable dbTable = new DbTable(adminUserService, "au_name",
+				//"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
+		
+		DbTable dbTable = new DbTable(adminUserService, "au_name",
+				"au_password", null);
+		dbTable.setCredential(DataUtil.md5(this.passwd));
 		dbTable.setIdentity(this.account);
-		
+
 		AuthenticationServiceInterface auth = new AuthenticationService();
-		AuthenticateResultInfoInterface loginResult =  auth.authenticate(dbTable);
+		AuthenticateResultInfoInterface loginResult = auth
+				.authenticate(dbTable);
 		System.out.println(loginResult.getCode());
 		
-		switch(loginResult.getCode().getCode())
-		{
+		switch (loginResult.getCode().getCode()) {
 		case 0:
 		case 1:
 		case -1:
 		case -2:
 		case -3:
-			
+
 		}
-		
+
 		// 用一个Map做例子
 		Map<String, String> map = new HashMap<String, String>();
 
