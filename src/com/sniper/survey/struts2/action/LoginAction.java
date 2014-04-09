@@ -18,6 +18,7 @@ import com.sniper.survey.custom.authentication.AuthenticateResultInfoInterface;
 import com.sniper.survey.custom.authentication.AuthenticationService;
 import com.sniper.survey.custom.authentication.AuthenticationServiceInterface;
 import com.sniper.survey.custom.authentication.DbTable;
+import com.sniper.survey.custom.authentication.ResultInterface;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminUserService;
 import com.sniper.survey.util.DataUtil;
@@ -79,7 +80,7 @@ public class LoginAction extends BaseAction<AdminUser> {
 	}
 
 	public String login() {
-		System.out.println(DataUtil.md5("admin"));
+		/*System.out.println(DataUtil.md5("admin"));
 		String sql = "SELECT *, (CASE WHEN au_password = \"21232F297A57A5A743894A0E4A801FC3\" THEN 1 ELSE 0 END) AS auth FROM mc_admin_user AS u WHERE au_name=  \"admin\"";
 		List<Map> maps =  adminUserService.findEntityBySQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 		
@@ -88,7 +89,7 @@ public class LoginAction extends BaseAction<AdminUser> {
 			String name = m.getClass().getSimpleName();
 			System.out.println(name);
 			
-		}
+		}*/
 		
 		//21232F297A57A5A743894A0E4A801FC3
 		
@@ -96,7 +97,7 @@ public class LoginAction extends BaseAction<AdminUser> {
 				//"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
 		
 		DbTable dbTable = new DbTable(adminUserService, "au_name",
-				"au_password", null);
+				"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
 		dbTable.setCredential(DataUtil.md5(this.passwd));
 		dbTable.setIdentity(this.account);
 
@@ -104,13 +105,13 @@ public class LoginAction extends BaseAction<AdminUser> {
 		AuthenticateResultInfoInterface loginResult = auth
 				.authenticate(dbTable);
 		System.out.println(loginResult.getCode());
-		
-		switch (loginResult.getCode().getCode()) {
-		case 0:
-		case 1:
-		case -1:
-		case -2:
-		case -3:
+		ResultInterface codeNum = loginResult.getCode();
+		switch (codeNum.getCode()) {
+			case 0:
+			case 1:
+			case -1:
+			case -2:
+			case -3:
 
 		}
 

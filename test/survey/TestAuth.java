@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.xml.crypto.Data;
 
 import org.hibernate.transform.Transformers;
 import org.junit.Before;
@@ -47,12 +48,14 @@ public class TestAuth {
 
 		}*/
 
-		// DbTable dbTable = new DbTable(adminUserService, "au_name",
-		// "au_password","MD5(CONCAT(?,au_rand)) AND au_status=1");
-
-		DbTable dbTable = new DbTable(adminUserService, "au_name",
-				"au_password", null);
-		dbTable.setCredential("21232F297A57A5A743894A0E4A801FC3");
+		 DbTable dbTable = new DbTable(adminUserService, "au_name",
+		 "au_password","MD5(CONCAT(?,au_rand)) AND au_status=1");
+		 
+		 System.out.println(DataUtil.md5("21232F297A57A5A743894A0E4A801FC31456").toLowerCase());
+		/*DbTable dbTable = new DbTable(adminUserService, "au_name",
+				"au_password", null);*/
+		 System.out.println(DataUtil.md5("admin").toLowerCase());
+		dbTable.setCredential(DataUtil.md5("admin"));
 		dbTable.setIdentity("admin");
 
 		AuthenticationServiceInterface auth = new AuthenticationService();

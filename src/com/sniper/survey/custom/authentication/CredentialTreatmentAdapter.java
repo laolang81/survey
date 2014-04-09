@@ -133,6 +133,8 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 				//.addScalar("auth", IntegerType.INSTANCE)
 				.setString(0, getCredential())
 				.setString(1, getIdentity());
+		
+		
 				
 				//.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		/*System.out.println("1==>" + getCredentialcolumn());
