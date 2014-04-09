@@ -1,9 +1,13 @@
 package com.sniper.survey.custom.authentication;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import javax.persistence.Table;
+
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 
 import com.sniper.survey.service.BaseService;
 
@@ -25,12 +29,13 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	/**
 	 * 返回结果
 	 */
-	public AuthenticateResultInfoInterface authenticateResultInfo = null;
+	public AuthenticateResultInfoInterface authenticateResultInfo = new AuthenticateResultInfo();
 
 	/**
 	 * 尸体类
 	 */
 	private T model;
+	Class<T> clazz;
 
 	/**
 	 * $ambiguityIdentity - Flag to indicate same Identity can be used with
@@ -42,15 +47,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	private boolean ambiguityIdentity = false;
 
 	public AbstractAdapter() {
-		ParameterizedType Type = (ParameterizedType) this.getClass()
-				.getGenericSuperclass();
 
-		Class clazz = (Class<T>) Type.getActualTypeArguments()[0];
-		try {
-			model = (T) clazz.newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public AbstractAdapter(BaseService service, String identityColunm,
@@ -97,10 +94,19 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	}
 
 	public T getModel() {
+
 		if (model != null) {
 			return model;
 		}
+		ParameterizedType Type = (ParameterizedType) this.getClass()
+				.getGenericSuperclass();
+		clazz = (Class<T>) Type.getActualTypeArguments()[0];
+		try {
+			model = (T) clazz.newInstance();
+		} catch (Exception e) {
+			e.printStackTrace();
 
+		}
 		return model;
 
 	}
@@ -134,7 +140,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	 * 
 	 * @return
 	 */
-	abstract protected Query authenticateCreateSelect();
+	abstract protected SQLQuery authenticateCreateSelect();
 
 	/**
 	 * 执行验证
@@ -142,14 +148,14 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	@Override
 	public AuthenticateResultInfoInterface authenticate() {
 		authenticateSetup();
-		Query query = authenticateCreateSelect();
+		SQLQuery query = authenticateCreateSelect();
 		List<T> resultIdentities = authenticateQuerySelect(query);
 		AuthenticateResultInfoInterface authResult = null;
 		if ((authResult = authenticateValidateResultSet(resultIdentities)) != null) {
 			return authResult;
 		}
 		for (T t : resultIdentities) {
-			
+			System.out.println(t);
 			authResult = authenticateValidateResult(t);
 			if (authResult.isValid()) {
 				break;
@@ -159,13 +165,16 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	}
 
 	/**
-	 * 返回结果
-	 * 这里只检查用户读取的记录是否准确，不检查密码验证
+	 * 返回结果 这里只检查用户读取的记录是否准确，不检查密码验证
+	 * 
 	 * @param resultIdentities
 	 * @return
 	 */
 	private AuthenticateResultInfoInterface authenticateValidateResultSet(
 			List<T> resultIdentities) {
+
+
+
 		if (resultIdentities.size() < 1) {
 			authenticateResultInfo.setCode(Result.FAILURE_IDENTITY_NOT_FOUND);
 			authenticateResultInfo.getMessage().add(
@@ -187,7 +196,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 		return new AuthenticateResultInfo(
 				this.authenticateResultInfo.getCode(),
 				this.authenticateResultInfo.getMessage(),
-				this.authenticateResultInfo.getService());
+				this.authenticateResultInfo.getObj());
 	}
 
 	/**
@@ -202,10 +211,29 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 
 	private void authenticateSetup() {
 
-		getAuthenticateResultInfo().setCode(Result.FAILURE);
-		getAuthenticateResultInfo().getMessage().add("not found");
-		getAuthenticateResultInfo().setService(this.service);
+		this.authenticateResultInfo.setCode(Result.FAILURE);
+		this.authenticateResultInfo.getMessage().add("null");
+		this.authenticateResultInfo.setObj(getModel());
 
+	}
+
+	/**
+	 * 获取表名字
+	 * 
+	 * @param classtype
+	 * @return
+	 */
+	public String getTableName(Class classtype) {
+		Annotation[] anno = classtype.getAnnotations();
+		String tableName = "";
+		for (int i = 0; i < anno.length; i++) {
+			if (anno[i] instanceof Table) {
+				Table table = (Table) anno[i];
+				System.out.println(table.name());
+				tableName = table.name();
+			}
+		}
+		return tableName;
 	}
 
 }

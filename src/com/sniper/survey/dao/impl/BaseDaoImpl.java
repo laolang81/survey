@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.hibernate.Query;
 import org.hibernate.ReplicationMode;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -167,10 +168,10 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
 		return query;
 	}
-	
+
 	@Override
-	public Query findEntityBySQLQuery(String sql) {
-		Query query = this.getCurrentSession().createSQLQuery(sql);
+	public SQLQuery findEntityBySQLQuery(String sql) {
+		SQLQuery query = this.getOpenSesion().createSQLQuery(sql);
 		return query;
 	}
 }

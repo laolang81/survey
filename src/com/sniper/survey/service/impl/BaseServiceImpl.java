@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 
 import com.sniper.survey.dao.BaseDao;
 import com.sniper.survey.service.BaseService;
@@ -86,7 +87,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	@Override
-	public Query findEntityBySQLQuery(String sql) {
+	public SQLQuery findEntityBySQLQuery(String sql) {
 		return dao.findEntityBySQLQuery(sql);
 	}
 }

@@ -1,6 +1,6 @@
 package com.sniper.survey.custom.authentication;
 
-import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 
 import com.sniper.survey.service.BaseService;
 
@@ -8,14 +8,13 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 
 	private String credentialTreatment = null;
 
-
-
 	public CredentialTreatmentAdapter() {
+		super();
 	}
 
 	/**
 	 * 构造器
-	 * 
+	 * 用户参数赋值
 	 * @param service
 	 * @param identityColunm
 	 * @param credentialcolumn
@@ -24,23 +23,15 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 			String identityColunm, String credentialcolumn,
 			String credentialTreatment) {
 		super(service, identityColunm, credentialcolumn);
-		this.credentialTreatment = credentialcolumn;
+		this.credentialTreatment = credentialTreatment;
+
 	}
 
 	@Override
 	protected AuthenticateResultInfoInterface authenticateValidateResult(T t) {
 		
-		/*if ($resultIdentity['zend_auth_credential_match'] != '1') {
-            $this->authenticateResultInfo['code']       = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
-            $this->authenticateResultInfo['messages'][] = 'Supplied credential is invalid.';
-            return $this->authenticateCreateAuthResult();
-        }
-
-        unset($resultIdentity['zend_auth_credential_match']);*/
-		
-        
 		if (t == null) {
-			
+
 			this.authenticateResultInfo
 					.setCode(Result.FAILURE_CREDENTIAL_INVALID);
 			this.authenticateResultInfo.getMessage().add(
@@ -48,6 +39,8 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 			return authenticateCreateAuthResult();
 		}
 		setModel(t);
+		
+		this.authenticateResultInfo.setObj(t);
 		this.authenticateResultInfo.setCode(Result.SUCCESS);
 		this.authenticateResultInfo.getMessage().add(
 				"Authentication successful.");
@@ -55,38 +48,26 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 	}
 
 	@Override
-	protected Query authenticateCreateSelect() {
+	protected SQLQuery authenticateCreateSelect() {
 
-		
-		/* if (empty($this->credentialTreatment) || (strpos($this->credentialTreatment, '?') === false)) {
-	            $this->credentialTreatment = '?';
-	        }
-
-	        $credentialExpression = new SqlExpr(
-	            '(CASE WHEN ?' . ' = ' . $this->credentialTreatment . ' THEN 1 ELSE 0 END) AS ?',
-	            array($this->credentialColumn, $this->credential, 'zend_auth_credential_match'),
-	            array(SqlExpr::TYPE_IDENTIFIER, SqlExpr::TYPE_VALUE, SqlExpr::TYPE_IDENTIFIER)
-	        );
-
-	        // get select
-	        $dbSelect = clone $this->getDbSelect();
-	        $dbSelect->from($this->tableName)
-	            ->columns(array('*', $credentialExpression))
-	            ->where(new SqlOp($this->identityColumn, '=', $this->identity));
-
-	        return $dbSelect;*/
-	        
-		if (this.credentialTreatment.isEmpty()
+		if (this.credentialTreatment == null
 				|| (this.credentialTreatment.indexOf("?") == -1)) {
 			this.credentialTreatment = "?";
 		}
-		
-		String sqlExpr = "(CASE WHEN ? = " + this.credentialTreatment + " THEN 1 ELSE 0 END) AS ?";
 
-		String tname = getModel().getClass().getSimpleName();
-		String hql = "SELECT *, " + sqlExpr +" FROM " + tname + " auth WHERE "
+		String sqlExpr = "(CASE WHEN ? = " + this.credentialTreatment
+				+ " THEN 1 ELSE 0 END) AS ?";
+
+
+		String hql = "SELECT *, " + sqlExpr + " FROM "
+				+ getTableName(getModel().getClass()) + " as u WHERE "
 				+ getIdentityColunm() + "= ? ";
-		Query query = getService().findEntityByHQLQuery(hql, getCredentialcolumn(), getCredential(), "auth", getIdentity());
+
+		SQLQuery query = (SQLQuery) getService().findEntityBySQLQuery(hql)
+				.addEntity("u", clazz).setParameter(0, getCredentialcolumn())
+				.setParameter(1, getCredential()).setParameter(2, "auth")
+				.setParameter(3, getIdentity());
+		
 		return query;
 
 	}

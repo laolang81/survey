@@ -1,6 +1,5 @@
 package com.sniper.survey.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,7 +17,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "mc_admin_user")
-public class AdminUser{
+public class AdminUser {
 
 	@Id
 	@Column(name = "au_id")
@@ -47,9 +46,9 @@ public class AdminUser{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "au_group", referencedColumnName = "ag_value")
 	private AdminGroup adminGroup;
-	
+
 	@Transient
-	private String auth;
+	private Integer auth;
 
 	public Integer getId() {
 		return id;
@@ -123,9 +122,12 @@ public class AdminUser{
 		this.adminGroup = adminGroup;
 	}
 
-	
+	public Integer getAuth() {
+		return auth;
+	}
 
-	
-	
+	public void setAuth(Integer auth) {
+		this.auth = auth;
+	}
 
 }

@@ -1,12 +1,14 @@
 package com.sniper.survey.custom.authentication;
 
-public interface AuthenticationServiceInterface {
+import org.apache.struts2.interceptor.SessionAware;
+
+public interface AuthenticationServiceInterface extends SessionAware {
 	/**
 	 * Authenticates and provides an authentication result
 	 * 
 	 * @return Result
 	 */
-	public void authenticate();
+	public AuthenticateResultInfoInterface authenticate(BaseAdapterInterface adapter);
 
 	/**
 	 * Returns true if and only if an identity is available
@@ -20,7 +22,7 @@ public interface AuthenticationServiceInterface {
 	 * 
 	 * @return mixed|null
 	 */
-	public boolean getIdentity();
+	public Object getIdentity();
 
 	/**
 	 * Clears the identity

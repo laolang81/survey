@@ -1,10 +1,12 @@
 package com.sniper.survey.custom.authentication;
 
+import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.BaseService;
 
-public class DbTable<T> extends CredentialTreatmentAdapter<T> {
+public class DbTable extends CredentialTreatmentAdapter<AdminUser> {
 
 	public DbTable() {
+		super();
 	}
 
 	public DbTable(BaseService service, String identityColunm,

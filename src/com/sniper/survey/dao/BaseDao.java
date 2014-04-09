@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.ReplicationMode;
+import org.hibernate.SQLQuery;
 
 /**
  * 主控操作和关联操作的先后顺序是“先保存one，再保存many；先删除many，再删除one；先update主控方，再update被动方”
@@ -71,6 +72,6 @@ public interface BaseDao<T> {
 
 	public Query findEntityByHQLQuery(String hql, Object... Object);
 	
-	public Query findEntityBySQLQuery(String sql);
+	public SQLQuery findEntityBySQLQuery(String sql);
 
 }

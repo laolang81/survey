@@ -1,32 +1,32 @@
 package com.sniper.survey.custom.authentication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.sniper.survey.service.BaseService;
 
 public class AuthenticateResultInfo implements AuthenticateResultInfoInterface {
 
-	private Result code;
-	private List<String> message;
-	private BaseService service;
+	private ResultInterface code;
+	private List<String> message = new ArrayList<>();
+	private Object obj;
 
 	public AuthenticateResultInfo() {
 		super();
 	}
 
-	public AuthenticateResultInfo(Result code, List<String> message,
-			BaseService service) {
+	public AuthenticateResultInfo(ResultInterface resultInterface, List<String> message, Object obj) {
 		super();
-		this.code = code;
+		this.code = resultInterface;
 		this.message = message;
-		this.service = service;
+		this.obj = obj;
 	}
 
-	public Result getCode() {
+	public ResultInterface getCode() {
 		return code;
 	}
 
-	public void setCode(Result code) {
+	public void setCode(ResultInterface code) {
 		this.code = code;
 	}
 
@@ -38,18 +38,18 @@ public class AuthenticateResultInfo implements AuthenticateResultInfoInterface {
 		this.message = message;
 	}
 
-	public BaseService getService() {
-		return service;
-	}
-
-	public void setService(BaseService service) {
-		this.service = service;
-	}
-
 	@Override
 	public boolean isValid() {
 
 		return (code.getCode() > 0) ? true : false;
+	}
+
+	public Object getObj() {
+		return obj;
+	}
+
+	public void setObj(Object obj) {
+		this.obj = obj;
 	}
 
 }

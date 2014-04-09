@@ -1,25 +1,21 @@
 package com.sniper.survey.custom.authentication;
 
-import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 
-public class CallbackCheckAdapter extends AbstractAdapter {
-
-	/**
-	 * 查询用户的列表
-	 */
+public class CallbackCheckAdapter<T> extends AbstractAdapter<T> {
+	
 	@Override
-	protected Query authenticateCreateSelect() {
-		String tname = getModel().getClass().getSimpleName();
-		String hql = "SELECT auth FROM " + tname + " auth WHERE "
-				+ getIdentityColunm() + "= ? ";
-		Query query = getService().findEntityByHQLQuery(hql, getIdentity());
-		return query;
-	}
-
-	@Override
-	protected AuthenticateResultInfoInterface authenticateValidateResult(Object t) {
+	protected AuthenticateResultInfoInterface authenticateValidateResult(T t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	protected SQLQuery authenticateCreateSelect() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

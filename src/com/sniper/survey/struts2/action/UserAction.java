@@ -8,11 +8,16 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.sniper.survey.custom.authentication.AuthenticateResultInfoInterface;
+import com.sniper.survey.custom.authentication.AuthenticationService;
+import com.sniper.survey.custom.authentication.AuthenticationServiceInterface;
 import com.sniper.survey.custom.authentication.DbTable;
+import com.sniper.survey.custom.authentication.Result;
 import com.sniper.survey.model.AdminGroup;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminGroupService;
 import com.sniper.survey.service.impl.AdminUserService;
+import com.sniper.survey.util.DataUtil;
 import com.sniper.survey.util.ValidateUtil;
 
 //加注解
@@ -82,22 +87,18 @@ public class UserAction extends BaseAction<AdminUser> {
 	@SkipValidation
 	public String doAdd() {
 		
-		//DbTable<AdminUser> dbTable = new DbTable<>(adminUserService, "username", "password");
-		//dbTable.setCredential("admin");
+		//select md5("21232F297A57A5A743894A0E4A801FC31456"); 91f99af155ccba7488bbdbe3ca8e0dd6
+		//select concat(md5("admin"),"1456");21232f297a57a5a743894a0e4a801fc31456
+		//select md5(concat(md5("admin"),"1456")); 919e8405b90e3b50d7e1239a962c5e1f
+		//System.out.println(DataUtil.md5("admin"));
+		//System.out.println(DataUtil.md5("21232F297A57A5A743894A0E4A801FC31456"));
+		//System.out.println(DataUtil.md5( DataUtil.md5("admin") + "1456" ));
 		
 		
-		/*String sql = "SELECT auth FROM AdminUser auth";
-		List<AdminUser> adminUsers  = adminUserService.findEntityByHQL(sql, null);
-		for(AdminUser user: adminUsers){
-			System.out.println(user.getName());
-			//System.out.println(user.getAdminGroup());
-		}
 		
-		//System.out.println(adminUsers);
 		
-		//System.out.println(model.getClass().getSimpleName());
 		//添加完毕之后自动定向到编辑页面
-		this.id = model.getId();*/
+		this.id = model.getId();
 		//要保持关联
 		//model.setAdminGroup(adminGroup);
 		return INPUT;

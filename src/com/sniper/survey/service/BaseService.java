@@ -3,6 +3,7 @@ package com.sniper.survey.service;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 
 public interface BaseService<T> {
 
@@ -31,5 +32,5 @@ public interface BaseService<T> {
 
 	public Query findEntityByHQLQuery(String hql, Object... Object);
 	
-	public Query findEntityBySQLQuery(String sql);
+	public SQLQuery findEntityBySQLQuery(String sql);
 }

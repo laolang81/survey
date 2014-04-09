@@ -3,13 +3,21 @@ package com.sniper.survey.struts2.action;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.sniper.survey.custom.authentication.AuthenticateResultInfoInterface;
+import com.sniper.survey.custom.authentication.AuthenticationService;
+import com.sniper.survey.custom.authentication.AuthenticationServiceInterface;
+import com.sniper.survey.custom.authentication.DbTable;
 import com.sniper.survey.model.AdminUser;
+import com.sniper.survey.service.impl.AdminUserService;
+import com.sniper.survey.util.DataUtil;
 
 @Controller
 @Scope("prototype")
@@ -20,6 +28,9 @@ public class LoginAction extends BaseAction<AdminUser> {
 	private String account;
 	private String password;
 	private String verify;
+	
+	@Resource
+	private AdminUserService adminUserService;
 
 	// 存放返回结果
 	private String result;
@@ -63,7 +74,25 @@ public class LoginAction extends BaseAction<AdminUser> {
 	}
 
 	public String login() {
-
+		
+		DbTable dbTable = new DbTable(adminUserService, "au_name", "au_password","MD5(CONCAT(?,au_rand)) AND au_status=1");
+		dbTable.setCredential(DataUtil.md5(this.password));
+		dbTable.setIdentity(this.account);
+		
+		AuthenticationServiceInterface auth = new AuthenticationService();
+		AuthenticateResultInfoInterface loginResult =  auth.authenticate(dbTable);
+		System.out.println(loginResult.getCode());
+		
+		switch(loginResult.getCode().getCode())
+		{
+		case 0:
+		case 1:
+		case -1:
+		case -2:
+		case -3:
+			
+		}
+		
 		// 用一个Map做例子
 		Map<String, String> map = new HashMap<String, String>();
 
