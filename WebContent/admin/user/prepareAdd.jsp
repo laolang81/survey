@@ -14,7 +14,7 @@
 		<legend>Legend</legend>
 		<label><s:text name="username" /></label>
 		<div data-role="input-control" class="input-control text">
-			<s:textfield name="name" id="username" placeholder="type text" />
+			<s:textfield name="name" id="username" placeholder="type text" size="100" />
 			<span class="help-inline" title=""><s:fielderror name="name" /></span>
 			<button tabindex="-1" class="btn-clear" type="button"></button>
 		</div>
