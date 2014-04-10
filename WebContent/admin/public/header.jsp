@@ -27,7 +27,6 @@
 <script src="myfiles/Plugin/Metro/docs/js/jquery/jquery.widget.min.js"></script>
 <script src="myfiles/Plugin/Metro/docs/js/metro.min.js"></script>
 <script src="myfiles/Plugin/Metro/docs/js/jquery/jquery.mousewheel.js"></script>
-<script src="myfiles/Plugin/Metro/docs/js/jquery/jquery.mousewheel.js"></script>
 <script src="myfiles/Plugin/Metro/docs/js/prettify/prettify.js"></script>
 </head>
 <body class="metro">
