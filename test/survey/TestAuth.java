@@ -1,12 +1,7 @@
 package survey;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Resource;
-import javax.xml.crypto.Data;
 
-import org.hibernate.transform.Transformers;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -16,7 +11,6 @@ import com.sniper.survey.custom.authentication.AuthenticateResultInfoInterface;
 import com.sniper.survey.custom.authentication.AuthenticationService;
 import com.sniper.survey.custom.authentication.AuthenticationServiceInterface;
 import com.sniper.survey.custom.authentication.DbTable;
-import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminUserService;
 import com.sniper.survey.util.DataUtil;
 
@@ -31,6 +25,8 @@ public class TestAuth {
 		adminUserService = (AdminUserService) ctx.getBean("adminUserService");
 	}
 
+	
+	
 	@Test
 	public void test() {
 

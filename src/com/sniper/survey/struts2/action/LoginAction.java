@@ -1,16 +1,14 @@
 package com.sniper.survey.struts2.action;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
 import net.sf.json.JSONObject;
 
+import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.json.annotations.JSON;
-import org.hibernate.transform.ResultTransformer;
-import org.hibernate.transform.Transformers;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -21,11 +19,12 @@ import com.sniper.survey.custom.authentication.DbTable;
 import com.sniper.survey.custom.authentication.ResultInterface;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminUserService;
+import com.sniper.survey.util.BeanToMapUtil;
 import com.sniper.survey.util.DataUtil;
 
 @Controller
 @Scope("prototype")
-public class LoginAction extends BaseAction<AdminUser> {
+public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,11 +32,15 @@ public class LoginAction extends BaseAction<AdminUser> {
 	private String passwd;
 	private String verifycode;
 
+	private Map<String, Object> sessionMap;
+
 	@Resource
 	private AdminUserService adminUserService;
 
 	// 存放返回结果
 	private String result;
+	// 存放返回之前的结果
+	private Map<String, String> resultMap = new HashMap<String, String>();
 
 	public String getAccount() {
 		return account;
@@ -46,8 +49,6 @@ public class LoginAction extends BaseAction<AdminUser> {
 	public void setAccount(String account) {
 		this.account = account;
 	}
-
-	
 
 	public String getPasswd() {
 		return passwd;
@@ -67,6 +68,7 @@ public class LoginAction extends BaseAction<AdminUser> {
 
 	@JSON(name = "RESULT")
 	public String getResult() {
+
 		return result;
 	}
 
@@ -80,58 +82,97 @@ public class LoginAction extends BaseAction<AdminUser> {
 	}
 
 	public String login() {
-		/*System.out.println(DataUtil.md5("admin"));
-		String sql = "SELECT *, (CASE WHEN au_password = \"21232F297A57A5A743894A0E4A801FC3\" THEN 1 ELSE 0 END) AS auth FROM mc_admin_user AS u WHERE au_name=  \"admin\"";
-		List<Map> maps =  adminUserService.findEntityBySQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
-		
-		for(Map m: maps){
-			System.out.println(m);
-			String name = m.getClass().getSimpleName();
-			System.out.println(name);
-			
-		}*/
-		
-		//21232F297A57A5A743894A0E4A801FC3
-		
-		//DbTable dbTable = new DbTable(adminUserService, "au_name",
-				//"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
-		
+
+		// 用户验证
 		DbTable dbTable = new DbTable(adminUserService, "au_name",
 				"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
 		dbTable.setCredential(DataUtil.md5(this.passwd));
 		dbTable.setIdentity(this.account);
 
+		// 调用用户验证,及其用户管理
 		AuthenticationServiceInterface auth = new AuthenticationService();
+		auth.setSession(sessionMap);
 		AuthenticateResultInfoInterface loginResult = auth
 				.authenticate(dbTable);
-		System.out.println(loginResult.getCode());
+		// System.out.println(loginResult.getCode());
 		ResultInterface codeNum = loginResult.getCode();
 		switch (codeNum.getCode()) {
-			case 0:
-			case 1:
-			case -1:
-			case -2:
-			case -3:
+		case 0:
+			resultMap.put("result", "0");
+			resultMap.put("message", "登录失败");
+			resultMap.put("id", "account");
+			break;
+		case 1:
+			// 登录成功,写入session
+			// 这里session返回的是一个map数据,不过可以封装成对象
+			AdminUser user = null;
+			try {				
+				resultMap.put("result", "1");
+				resultMap.put("message", "登录成功");
+				resultMap.put("id", "1");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+		case -1:
+			resultMap.put("result", "-1");
+			resultMap.put("message", "用户名不存在");
+			resultMap.put("id", "account");
+			break;
+		case -2:
+			resultMap.put("result", "-2");
+			resultMap.put("message", "用户未知");
+			resultMap.put("id", "account");
+			break;
+		case -3:
+			resultMap.put("result", "-3");
+			resultMap.put("message", "密码不匹配");
+			resultMap.put("id", "password");
+			break;
+		}
+		setResultMapJson(resultMap);
+		return SUCCESS;
+	}
 
+	public String prepareDoLogin() {
+
+		if (this.account == null || this.account.isEmpty()) {
+			resultMap.put("message", "用户名必须");
+			resultMap.put("id", "account");
 		}
 
-		// 用一个Map做例子
-		Map<String, String> map = new HashMap<String, String>();
+		if (this.passwd == null || this.passwd.isEmpty()) {
+			resultMap.put("message", "密码必须");
+			resultMap.put("id", "password");
+		}
 
-		// 为map添加一条数据，记录一下页面传过来loginName
-		map.put("name", this.account);
-		map.put("a", "1111");
-		map.put("b", "2222");
-		map.put("c", "3333");
+		if (this.verifycode == null || this.verifycode.isEmpty()) {
+			resultMap.put("message", "验证码必须");
+			resultMap.put("id", "login_verify");
+		}
+		return SUCCESS;
+
+	}
+
+	/**
+	 * 将map专程json
+	 * 
+	 * @param map
+	 */
+	private void setResultMapJson(Map<String, String> map) {
 		// 将要返回的map对象进行json处理
 		JSONObject json = JSONObject.fromObject(map);
-		result = json.toString();
-
-		return SUCCESS;
+		setResult(json.toString());
 	}
 
 	public String logout() {
 		return "logiout";
+	}
+
+	@Override
+	public void setSession(Map<String, Object> arg0) {
+		this.sessionMap = arg0;
+
 	}
 
 }

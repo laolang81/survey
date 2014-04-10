@@ -8,8 +8,9 @@ import com.sniper.survey.struts2.action.LoginAction;
 
 /**
  * 登录拦截器
+ * 
  * @author laolang
- *
+ * 
  */
 public class LoginInterceptor implements Interceptor {
 
@@ -20,36 +21,34 @@ public class LoginInterceptor implements Interceptor {
 
 	@Override
 	public void destroy() {
-		
+
 	}
 
 	@Override
 	public void init() {
-		
+
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public String intercept(ActionInvocation arg0) throws Exception {
-	
+
 		System.out.println(arg0.getProxy().getMethod());
 		BaseAction action = (BaseAction) arg0.getAction();
 		System.out.println(action.getClass().getName());
-		/*if(action instanceof LoginAction){
-			
+		if (action instanceof LoginAction) {
+
 			return arg0.invoke();
-		}else{
-			AdminUser adminUser = (AdminUser) arg0.getInvocationContext().getSession().get("adminUser");
-			if(adminUser == null){
+		} else {
+			AdminUser adminUser = (AdminUser) arg0.getInvocationContext()
+					.getSession().get("user");
+			if (adminUser == null) {
 				return "login";
-			}else{
+			} else {
 				return arg0.invoke();
 			}
-		}*/
-		return arg0.invoke();
-		
-	}
+		}
 
-	
+	}
 
 }

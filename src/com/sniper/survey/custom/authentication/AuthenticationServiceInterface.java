@@ -1,5 +1,7 @@
 package com.sniper.survey.custom.authentication;
 
+import java.util.Map;
+
 import org.apache.struts2.interceptor.SessionAware;
 
 public interface AuthenticationServiceInterface extends SessionAware {
@@ -8,7 +10,8 @@ public interface AuthenticationServiceInterface extends SessionAware {
 	 * 
 	 * @return Result
 	 */
-	public AuthenticateResultInfoInterface authenticate(BaseAdapterInterface adapter);
+	public AuthenticateResultInfoInterface authenticate(
+			BaseAdapterInterface adapter);
 
 	/**
 	 * Returns true if and only if an identity is available
@@ -30,4 +33,5 @@ public interface AuthenticationServiceInterface extends SessionAware {
 	 * @return void
 	 */
 	public void clearIdentity();
+
 }

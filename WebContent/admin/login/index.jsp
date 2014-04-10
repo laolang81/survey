@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -14,22 +14,129 @@
 <script type="text/javascript"
 	src="myfiles/js/jquery.backstretch.min.js"></script>
 <style type="text/css">
-*{font: 12px Segoe UI, Tahoma, Arial, Verdana, simsun, sans-serif,"Microsoft YaHei";margin: 0;padding: 0;vertical-align: text-top}
-label{color: #777777;font-size: 14px;display: block;overflow: hidden;}
-h1 a{display: block;height: 67px;overflow: hidden;padding-bottom: 15px;text-indent: -9999px;width: 326px;}
-.my_login{margin: 7em auto;width: 350px;}
-::-webkit-input-placeholder{color: #ccc;}
-input:-moz-placeholder{color: #ccc;}
-form{FILTER: alpha(opacity = 70);opacity: 0.7;background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #E5E5E5;box-shadow: 0 4px 10px -1px rgba(200, 200, 200, 0.7);font-weight: normal;padding: 26px 24px 30px;overflow: hidden;}
-body form p{float:left;display: block;}
-body form .input{box-shadow: 1px 1px 2px rgba(200, 200, 200, 0.2) inset;font-family: "HelveticaNeue-Light", "Helvetica Neue Light","Helvetica Neue", sans-serif;margin-bottom: 10px;margin-top: 2px;outline: medium none;vertical-align: middle;background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #E6E6E6;border-radius: 6px;color: #333333;display: block;font-size: 18px;font-weight: bold;height: 20px;line-height: 20px;padding: 12px 10px;width:278px;}
-body form .verify{float:left;width: 100px;}
-input[type="text"],input[type="password"]{background-color: #FFFFFF;border-color: #DFDFDF;color: #555555;}
-input[type="text"]:focus,input[type="password"]:focus{background: none repeat scroll 0 0 #FDFDFD;border-color: rgba(82, 168, 236, 0.8);box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8pxrgba(82, 168, 236, 0.6);outline: 0 none}
-.my_log_bom{background: #ff5500;color: #FFF;font-weight: bold;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);border: 1px solid;border-radius: 10px;cursor: pointer;font-family: sans-serif;font-size: 14px;padding: 4px 10px;text-decoration: none;}
-#backtoblog{margin: 0 0 0 16px;padding: 16px 16px 0;text-shadow: 0 1px 0 #FFFFFF;}
-#result{margin-left:10px; line-height:30px; color:#F00;}
-#verifyImg{cursor: pointer;float:left}
+* {
+	font: 12px Segoe UI, Tahoma, Arial, Verdana, simsun, sans-serif,
+		"Microsoft YaHei";
+	margin: 0;
+	padding: 0;
+	vertical-align: text-top
+}
+
+label {
+	color: #777777;
+	font-size: 14px;
+	display: block;
+	overflow: hidden;
+}
+
+h1 a {
+	display: block;
+	height: 67px;
+	overflow: hidden;
+	padding-bottom: 15px;
+	text-indent: -9999px;
+	width: 326px;
+}
+
+.my_login {
+	margin: 7em auto;
+	width: 350px;
+}
+
+::-webkit-input-placeholder {
+	color: #ccc;
+}
+
+input:-moz-placeholder {
+	color: #ccc;
+}
+
+form {
+	FILTER: alpha(opacity = 70);
+	opacity: 0.7;
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #E5E5E5;
+	box-shadow: 0 4px 10px -1px rgba(200, 200, 200, 0.7);
+	font-weight: normal;
+	padding: 26px 24px 30px;
+	overflow: hidden;
+}
+
+body form p {
+	float: left;
+	display: block;
+}
+
+body form .input {
+	box-shadow: 1px 1px 2px rgba(200, 200, 200, 0.2) inset;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light",
+		"Helvetica Neue", sans-serif;
+	margin-bottom: 10px;
+	margin-top: 2px;
+	outline: medium none;
+	vertical-align: middle;
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #E6E6E6;
+	border-radius: 6px;
+	color: #333333;
+	display: block;
+	font-size: 18px;
+	font-weight: bold;
+	height: 20px;
+	line-height: 20px;
+	padding: 12px 10px;
+	width: 278px;
+}
+
+body form .verify {
+	float: left;
+	width: 100px;
+}
+
+input[type="text"],input[type="password"] {
+	background-color: #FFFFFF;
+	border-color: #DFDFDF;
+	color: #555555;
+}
+
+input[type="text"]:focus,input[type="password"]:focus {
+	background: none repeat scroll 0 0 #FDFDFD;
+	border-color: rgba(82, 168, 236, 0.8);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8pxrgba(82, 168,
+		236, 0.6);
+	outline: 0 none
+}
+
+.my_log_bom {
+	background: #ff5500;
+	color: #FFF;
+	font-weight: bold;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+	border: 1px solid;
+	border-radius: 10px;
+	cursor: pointer;
+	font-family: sans-serif;
+	font-size: 14px;
+	padding: 4px 10px;
+	text-decoration: none;
+}
+
+#backtoblog {
+	margin: 0 0 0 16px;
+	padding: 16px 16px 0;
+	text-shadow: 0 1px 0 #FFFFFF;
+}
+
+#result {
+	margin-left: 10px;
+	line-height: 30px;
+	color: #F00;
+}
+
+#verifyImg {
+	cursor: pointer;
+	float: left
+}
 </style>
 
 </head>
@@ -50,43 +157,40 @@ input[type="text"]:focus,input[type="password"]:focus{background: none repeat sc
 			var p = $('#password').val();
 			var y = $('#login_verify').val();
 			//$("#button").attr("disabled","true");
-
+			
 			$.ajax({
-				type : "post",
-				dataType : 'json',
-				url : '<s:url action="loginValid" namespace="/admin" />',
-				data : {
-					passwd : p,
-					account : u,
-					verifycode : y
-				},
-				beforeSend : function(XMLHttpRequest) {
-					$('#button').val('正在登录...');
-				},
-				success : function(data, textStatus) {
-					var data = $.parseJSON(data);
-					
-					
-					//alert(data.a)
-					if (data != null && data.message == 1)
-						window.location = '<s:url action="userDoAdd" namespace="/admin" />';
-					else {
-						//alert(data.message);
-						$('#result').html(data.message);
-						$('#button').val('登录');
-						if (data.id != 0)
-							$('#' + data.id).focus();
-						fleshVerify();
-					}
-				},
-				complete : function(XMLHttpRequest, textStatus) {
-					$('#button').val('登录');
-				},
-				error : function() {
-					$('#result').html('登录错误...');
-					$('#button').val('登录');
-				}
-			});
+						type : "post",
+						dataType : 'json',
+						url : '<s:url action="loginValid" namespace="/admin" />',
+						data : {
+							passwd : p,
+							account : u,
+							verifycode : y
+						},
+						beforeSend : function(XMLHttpRequest) {
+							$('#button').val('正在登录...');
+						},
+						success : function(data, textStatus) {
+							var data = $.parseJSON(data);
+							if (data != null && data.id == 1)
+								window.location = '<s:url action="userDoAdd" namespace="/admin" />';
+							else {
+								//alert(data.message);
+								$('#result').html(data.message);
+								$('#button').val('登录');
+								if (data.id != 0)
+									$('#' + data.id).focus();
+								fleshVerify();
+							}
+						},
+						complete : function(XMLHttpRequest, textStatus) {
+							$('#button').val('登录');
+						},
+						error : function() {
+							$('#result').html('登录错误...');
+							$('#button').val('登录');
+						}
+					});
 		}
 		function fleshVerify() {
 			var timenow = new Date().getTime();
@@ -101,21 +205,23 @@ input[type="text"]:focus,input[type="password"]:focus{background: none repeat sc
 		</h1>
 		<s:form id="login" name="login" method="post">
 			<p>
-			<s:textfield label="UserName" id="account" name="account" cssClass="input"
-				placeholder="登录名称" />
+				<s:textfield label="UserName" id="account" name="account" value="admin"
+					cssClass="input" placeholder="登录名称" />
 			</p>
 			<p>
-			<s:password label="PassWord" id="password" name="password" cssClass="input"
-				placeholder="登录密码" />
+				<s:password label="PassWord" id="password" name="password" value="admin"
+					cssClass="input" placeholder="登录密码" />
 			</p>
 			<p>
-			<s:textfield label="验证码" name="verify" cssClass="input verify"
-				placeholder="验证码" />
-			<img alt="" src="<s:url action="verify" namespace="/" />" class="fl" id="verifyImg" onclick="fleshVerify()">
+				<s:textfield label="验证码" name="verify" cssClass="input verify" value="123"
+					placeholder="验证码" />
+				<img alt="" src="<s:url action="verify" namespace="/" />" class="fl"
+					id="verifyImg" onclick="fleshVerify()">
 			</p>
 			<p>
-			<input type="button" onclick="onlogin();" value="登 录" class="my_log_bom" id="button" name="submit">
-			<span id="result"></span>
+				<input type="button" onclick="onlogin();" value="登 录"
+					class="my_log_bom" id="button" name="submit"> <span
+					id="result"></span>
 			</p>
 
 		</s:form>
@@ -129,14 +235,13 @@ input[type="text"]:focus,input[type="password"]:focus{background: none repeat sc
 				"http://www.shandongbusiness.gov.cn/public/attachment/kindeditor/image/20140108/6c4c88a205dd312d0e66daae2c4c4375.jpg",
 				"http://www.shandongbusiness.gov.cn/public/attachment/kindeditor/image/20140108/09689b61a08a7df12faf79f25996b870.jpg" ];
 
-	
 		$(images).each(function() {
 			$('<img/>')[0].src = this;
-		});		
-		var index = 0;		
+		});
+		var index = 0;
 		$.backstretch(images[index], {
 			speed : 800
-		});	
+		});
 		setInterval(function() {
 			index = (index >= images.length - 1) ? 0 : index + 1;
 			$.backstretch(images[index]);

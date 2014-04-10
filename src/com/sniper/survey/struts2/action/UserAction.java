@@ -1,9 +1,11 @@
 package com.sniper.survey.struts2.action;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -17,13 +19,14 @@ import com.sniper.survey.model.AdminGroup;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminGroupService;
 import com.sniper.survey.service.impl.AdminUserService;
+import com.sniper.survey.struts2.interceptor.UserAware;
 import com.sniper.survey.util.DataUtil;
 import com.sniper.survey.util.ValidateUtil;
 
 //加注解
 @Controller
 @Scope("prototype")
-public class UserAction extends BaseAction<AdminUser> {
+public class UserAction extends BaseAction<AdminUser> implements SessionAware, UserAware {
 
 	/**
 	 * 
@@ -37,6 +40,10 @@ public class UserAction extends BaseAction<AdminUser> {
 	private AdminGroupService adminGroupService;
 	// 用户组列表
 	private List<AdminGroup> adminGroupsSelect;
+	
+	private Map<String, Object> sessionMap;
+	// 登录用户信息
+	private AdminUser user;
 
 	public Integer id;
 
@@ -66,7 +73,6 @@ public class UserAction extends BaseAction<AdminUser> {
 	public void setAdminGroupsSelect(List<AdminGroup> adminGroupsSelect) {
 		this.adminGroupsSelect = adminGroupsSelect;
 	}
-
 	/**
 	 * 用户列表
 	 * 
@@ -74,11 +80,8 @@ public class UserAction extends BaseAction<AdminUser> {
 	 */
 	public String list() {
 
-	
-		
 		return SUCCESS;
 	}
-
 	/**
 	 * 添加
 	 * 
@@ -87,20 +90,14 @@ public class UserAction extends BaseAction<AdminUser> {
 	@SkipValidation
 	public String doAdd() {
 		
-		//select md5("21232F297A57A5A743894A0E4A801FC31456"); 91f99af155ccba7488bbdbe3ca8e0dd6
-		//select concat(md5("admin"),"1456");21232f297a57a5a743894a0e4a801fc31456
-		//select md5(concat(md5("admin"),"1456")); 919e8405b90e3b50d7e1239a962c5e1f
-		//System.out.println(DataUtil.md5("admin"));
-		//System.out.println(DataUtil.md5("21232F297A57A5A743894A0E4A801FC31456"));
-		//System.out.println(DataUtil.md5( DataUtil.md5("admin") + "1456" ));
-		
-		
-		
-		
-		//添加完毕之后自动定向到编辑页面
+		System.out.println("1111111111");
+		System.out.println(this.sessionMap.get("user"));
+		System.out.println("222222222");
+		System.out.println(this.user);
+		// 添加完毕之后自动定向到编辑页面
 		this.id = model.getId();
-		//要保持关联
-		//model.setAdminGroup(adminGroup);
+		// 要保持关联
+		// model.setAdminGroup(adminGroup);
 		return INPUT;
 	}
 
@@ -175,6 +172,19 @@ public class UserAction extends BaseAction<AdminUser> {
 		if (adminUserService.isRegisted(model.getName())) {
 			addFieldError("name", "用户已被占用");
 		}
+	}
+
+	@Override
+	public void setUser(AdminUser user) {
+
+		this.user = user;
+
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.sessionMap = session;
+		
 	}
 
 }

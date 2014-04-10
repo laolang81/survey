@@ -61,6 +61,7 @@ public class VerifyAction extends ActionSupport implements SessionAware {
 		imageStream = Verify.getImageAsInputStream(securityCode);
 		// 放入session中
 		session.put("sessionVerifyName", securityCode);
+		
 		return SUCCESS;
 	}
 

@@ -1,23 +1,30 @@
 package com.sniper.survey.custom.authentication;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.catalina.ant.FindLeaksTask;
-import org.apache.struts2.interceptor.SessionAware;
+public class AuthenticationService implements AuthenticationServiceInterface {
 
-public class AuthenticationService implements AuthenticationServiceInterface{
-
-	private Map<String, Object> session = new HashMap<>();
+	private Map<String, Object> sessionMap;
 	/**
 	 * 登录session
+	 * 储存用户session的名称,这个必须和userAware用的变量一样,和登录拦截其的用户获取名称一样
 	 */
-	private String storage = "sniper_auth";
+	private String storage = "user";
 
 	/**
 	 * 登录处理结果
 	 */
 	private BaseAdapterInterface adapter;
+
+	public AuthenticationService() {
+		super();
+
+	}
+
+	public AuthenticationService(Map<String, Object> sessionMap) {
+		super();
+		this.sessionMap = sessionMap;
+	}
 
 	@Override
 	public AuthenticateResultInfoInterface authenticate(
@@ -26,24 +33,27 @@ public class AuthenticationService implements AuthenticationServiceInterface{
 		if (adapter != null) {
 			this.adapter = adapter;
 		}
-		if (this.adapter == null) {
-
+		AuthenticateResultInfoInterface resultInfoInterface = null;
+		try {
+			resultInfoInterface = this.adapter.authenticate();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		AuthenticateResultInfoInterface resultInfoInterface = this.adapter.authenticate();
-		
-		if(this.hasIdentity()){
+
+		// 由于session无法获取取消
+		if (this.hasIdentity()) {
 			this.clearIdentity();
 		}
-		if(resultInfoInterface.isValid()){
-			this.session.put(getStorage(), resultInfoInterface.getObj());
+		if (resultInfoInterface.isValid()) {
+			getSession().put(getStorage(), resultInfoInterface.getObj());
 		}
 		return resultInfoInterface;
-
 	}
 
 	@Override
 	public boolean hasIdentity() {
-		if (session.get(getStorage()) != null) {
+
+		if (getSession().get(getStorage()) != null) {
 			return true;
 		}
 		return false;
@@ -51,27 +61,32 @@ public class AuthenticationService implements AuthenticationServiceInterface{
 
 	@Override
 	public Object getIdentity() {
-		
-		if (session.get(getStorage()) != null) {
-			return session.get(getStorage());
+
+		if (getSession().get(getStorage()) != null) {
+			return getSession().get(getStorage());
 		}
 		return false;
 	}
 
 	@Override
 	public void clearIdentity() {
-		session.put(getStorage(), null);
-		session.clear();
+		getSession().put(getStorage(), null);
+		getSession().clear();
 	}
 
 	@Override
 	public void setSession(Map<String, Object> arg0) {
-		this.session = arg0;
+		this.sessionMap = arg0;
+	
 
 	}
 
 	public Map<String, Object> getSession() {
-		return session;
+		if (sessionMap == null) {
+			throw new NullPointerException(
+					"The session is empty, please call setSession (session) assignment");
+		}
+		return sessionMap;
 	}
 
 	public String getStorage() {

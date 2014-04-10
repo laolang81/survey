@@ -17,6 +17,8 @@ public class BeanToMapUtil {
 	 *            要转化的类型
 	 * @param map
 	 *            包含属性值的 map
+	 * @param prefix
+	 *            一般对象和表字段都有所不同,这里是字段和对象属性通过前缀来区分的
 	 * @return 转化出来的 JavaBean 对象
 	 * @throws IntrospectionException
 	 *             如果分析类属性失败
@@ -39,7 +41,6 @@ public class BeanToMapUtil {
 		for (int i = 0; i < propertyDescriptors.length; i++) {
 			PropertyDescriptor descriptor = propertyDescriptors[i];
 			String propertyName = descriptor.getName();
-			//String propertyNamePrefix = propertyName.substring(prefix.length(), propertyName.length());
 			String propertyNamePrefix = prefix + propertyName;
 			if (map.containsKey(propertyNamePrefix)) {
 				// 下面一句可以 try 起来，这样当一个属性赋值失败的时候就不会影响其他属性赋值。
