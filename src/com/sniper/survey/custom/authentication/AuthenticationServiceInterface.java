@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
 
-public interface AuthenticationServiceInterface extends SessionAware {
+public interface AuthenticationServiceInterface {
 	/**
 	 * Authenticates and provides an authentication result
 	 * 
@@ -33,5 +33,13 @@ public interface AuthenticationServiceInterface extends SessionAware {
 	 * @return void
 	 */
 	public void clearIdentity();
+
+	public void setStorage(String storage);
+
+	public String getStorage();
+
+	public void setSession(Map<String, Object> session);
+
+	public Map<String, Object> getSession();
 
 }

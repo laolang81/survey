@@ -13,17 +13,18 @@
 <script type="text/javascript" src="myfiles/js/jquery-1.9.1.min.js"></script>
 <!-- <link href="myfiles/css/admin.css" media="screen" rel="stylesheet"
 	type="text/css"> -->
+<link href="myfiles/Plugin/font-awesome/css/font-awesome.min.css"
+	media="screen" rel="stylesheet" type="text/css">
+<link rel="stylesheet"
+	href="myfiles/Plugin/Metro/css/metro-bootstrap.css">
+<link href="myfiles/Plugin/Metro/docs/css/iconFont.css" rel="stylesheet">
 <link href="myfiles/css/topHeader.css" media="screen" rel="stylesheet"
 	type="text/css">
 <link href="myfiles/css/leftMenu.css" media="screen" rel="stylesheet"
 	type="text/css">
 <link href="myfiles/css/centerBody.css" media="screen" rel="stylesheet"
 	type="text/css">
-<link href="myfiles/Plugin/font-awesome/css/font-awesome.min.css"
-	media="screen" rel="stylesheet" type="text/css">
-<link rel="stylesheet"
-	href="myfiles/Plugin/Metro/css/metro-bootstrap.css">
-<link href="myfiles/Plugin/Metro/docs/css/iconFont.css" rel="stylesheet">
+
 <script src="myfiles/Plugin/Metro/docs/js/jquery/jquery.widget.min.js"></script>
 <script src="myfiles/Plugin/Metro/docs/js/metro.min.js"></script>
 <script src="myfiles/Plugin/Metro/docs/js/jquery/jquery.mousewheel.js"></script>
@@ -95,8 +96,9 @@
 							<li><a href="#">Products</a></li>
 							<li><a href="#">Download</a></li>
 							<li><a href="#">Support</a></li>
-							<li><a href="#">Buy Now</a></li>
+							<li><a href='<s:url action="logout"/>'>Logout</a></li>
 						</ul>
+
 					</div>
 					<span class="element-divider place-right"></span>
 					<button class="element image-button image-left place-right">

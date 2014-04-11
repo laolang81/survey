@@ -249,7 +249,6 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 		for (int i = 0; i < anno.length; i++) {
 			if (anno[i] instanceof Table) {
 				Table table = (Table) anno[i];
-				System.out.println(table.name());
 				tableName = table.name();
 			}
 		}

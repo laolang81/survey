@@ -93,23 +93,6 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 		// .addScalar("auth", IntegerType.INSTANCE)
 				.setString(0, getCredential()).setString(1, getIdentity());
 
-		// .setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
-		/*
-		 * System.out.println("1==>" + getCredentialcolumn());
-		 * System.out.println("2==>" + getCredential());
-		 * System.out.println("3==>" + getIdentity()); List<Map> maps =
-		 * query.list();
-		 * 
-		 * for(Map m: maps){ System.out.println("4=>>>"); System.out.println(m);
-		 * }
-		 * 
-		 * 
-		 * hql = "SELECT *, (CASE WHEN "+getCredentialcolumn()+" = \"" +
-		 * getCredential() + "\" THEN 1 ELSE 0 END) AS auth FROM " +
-		 * getTableName(clazz) + " as u WHERE " + getIdentityColunm() + "=  \""
-		 * + getIdentity() + "\""; System.out.println(hql);
-		 */
-
 		return query;
 
 	}

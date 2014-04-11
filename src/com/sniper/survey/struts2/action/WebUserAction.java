@@ -19,7 +19,7 @@ import com.sniper.survey.util.ValidateUtil;
 //加注解
 @Controller
 @Scope("prototype")
-public class UserAction extends BaseAction<AdminUser> implements UserAware {
+public class WebUserAction extends BaseAction<AdminUser> implements UserAware {
 
 	private static final long serialVersionUID = 1L;
 
@@ -77,6 +77,15 @@ public class UserAction extends BaseAction<AdminUser> implements UserAware {
 	 */
 	public String list() {
 
+		return SUCCESS;
+	}
+	/**
+	 * 返回ajax获取的数据
+	 * @return
+	 */
+	public String doAjaxList()
+	{
+		
 		return SUCCESS;
 	}
 

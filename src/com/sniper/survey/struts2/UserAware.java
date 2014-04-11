@@ -1,4 +1,4 @@
-package com.sniper.survey.struts2.interceptor;
+package com.sniper.survey.struts2;
 
 import com.sniper.survey.model.AdminUser;
 

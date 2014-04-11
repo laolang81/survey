@@ -3,6 +3,8 @@ package com.sniper.survey.struts2.interceptor;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.sniper.survey.model.AdminUser;
+import com.sniper.survey.struts2.MethodAware;
+import com.sniper.survey.struts2.UserAware;
 import com.sniper.survey.struts2.action.BaseAction;
 import com.sniper.survey.struts2.action.LoginAction;
 
@@ -28,24 +30,33 @@ public class LoginInterceptor implements Interceptor {
 	public void init() {
 
 	}
-
+	
 	@SuppressWarnings("rawtypes")
 	@Override
-	public String intercept(ActionInvocation arg0) throws Exception {
+	public String intercept(ActionInvocation ai) throws Exception {
 
-		System.out.println(arg0.getProxy().getMethod());
-		BaseAction action = (BaseAction) arg0.getAction();
-		System.out.println(action.getClass().getName());
+		//System.out.println(arg0.getProxy().getMethod());
+		BaseAction action = (BaseAction) ai.getAction();
+		//System.out.println(action.getClass().getName());
+		if(action instanceof MethodAware){
+			String method = ai.getProxy().getMethod();
+			action.setMethod(method);
+		}
+		
 		if (action instanceof LoginAction) {
-
-			return arg0.invoke();
+			return ai.invoke();
 		} else {
-			AdminUser adminUser = (AdminUser) arg0.getInvocationContext()
+			AdminUser adminUser = (AdminUser) ai.getInvocationContext()
 					.getSession().get("user");
 			if (adminUser == null) {
 				return "login";
 			} else {
-				return arg0.invoke();
+				//放行,注入用户对象
+				if(action instanceof UserAware){
+					((UserAware) action).setUser(adminUser);;
+					
+				}
+				return ai.invoke();
 			}
 		}
 

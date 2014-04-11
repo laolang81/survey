@@ -15,7 +15,7 @@
 }
 
 .container-fluid {
-padding:20px;
+	padding: 20px;
 }
 
 .body-main:before,.body-main:after {
@@ -41,7 +41,7 @@ padding:20px;
 }
 
 .body-main .span10 {
-	width: 82.9787%;
+	width: 82.9787% !important;
 }
 
 .body-main [class*="span"] {
@@ -53,11 +53,44 @@ padding:20px;
 	width: 100%;
 }
 
-.span10 {
-	width: 780px;
-}
 
 [class*="span"] {
 	float: left;
 	margin-left: 20px;
 }
+
+/* 列表 */
+.list_content:before {
+	color: #999999 !important;
+	content: "example";
+	font-family: 'Segoe UI Semibold_', 'Open Sans Bold', Verdana, Arial,
+		Helvetica, sans-serif;
+	font-size: 1.4rem;
+	font-weight: bold;
+	left: -21px;
+	letter-spacing: 0.02em;
+	line-height: 1.4rem;
+	margin: 5px 10px;
+	position: absolute;
+	top: 30px;
+	transform: rotate(-90deg);
+}
+
+.list_content:before,.list_content:after {
+	content: "";
+	display: table;
+}
+
+.list_content:after {
+	clear: both;
+}
+
+.list_content {
+	background-color: #FDFDFD !important;
+	border: 1px solid #CCCCCC;
+	margin: 0 0 10px;
+	min-height: 100px;
+	padding: 20px 40px 20px 60px;
+	position: relative;
+}
+

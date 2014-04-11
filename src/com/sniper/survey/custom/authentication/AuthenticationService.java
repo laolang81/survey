@@ -4,10 +4,12 @@ import java.util.Map;
 
 public class AuthenticationService implements AuthenticationServiceInterface {
 
+	/**
+	 * session 来源于struts2的注入
+	 */
 	private Map<String, Object> sessionMap;
 	/**
-	 * 登录session
-	 * 储存用户session的名称,这个必须和userAware用的变量一样,和登录拦截其的用户获取名称一样
+	 * 登录session 储存用户session的名称,这个必须和userAware用的变量一样,和登录拦截其的用户获取名称一样
 	 */
 	private String storage = "user";
 
@@ -77,7 +79,6 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		this.sessionMap = arg0;
-	
 
 	}
 

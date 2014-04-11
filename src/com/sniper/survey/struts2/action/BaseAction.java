@@ -6,13 +6,18 @@ import java.lang.reflect.Type;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
+import com.sniper.survey.struts2.MethodAware;
 
 public abstract class BaseAction<T> extends ActionSupport implements
-		ModelDriven<T>, Preparable {
+		ModelDriven<T>, Preparable, MethodAware {
 
 	private static final long serialVersionUID = 1L;
 
 	public T model;
+	/**
+	 * 获取用户提交的方式
+	 */
+	private String method;
 
 	public BaseAction() {
 		// 得到泛型话的超类，
@@ -52,7 +57,20 @@ public abstract class BaseAction<T> extends ActionSupport implements
 	public T getModel() {
 		return model;
 	}
+	/**
+	 * 获取用户的提交方式
+	 * get
+	 * post
+	 */
+	@Override
+	public void setMethod(String method) {
+		
+		this.method = method;
+		
+	}
 	
-	// 定义基本的CURD操作
+	public String getMethod() {
+		return method;
+	}
 	
 }

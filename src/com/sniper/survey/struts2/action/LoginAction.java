@@ -83,15 +83,21 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 
 	public String login() {
 
+		if(resultMap.size()>1){
+			setResultMapJson();
+			return SUCCESS;
+		}
 		// 用户验证
 		DbTable dbTable = new DbTable(adminUserService, "au_name",
 				"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
 		dbTable.setCredential(DataUtil.md5(this.passwd));
 		dbTable.setIdentity(this.account);
 
-		// 调用用户验证,及其用户管理
+		// 调用用户验证,及其用户管理,需要注入session,否则无法完用户session的保存工作
 		AuthenticationServiceInterface auth = new AuthenticationService();
 		auth.setSession(sessionMap);
+		auth.setStorage("user");
+		
 		AuthenticateResultInfoInterface loginResult = auth
 				.authenticate(dbTable);
 		// System.out.println(loginResult.getCode());
@@ -103,10 +109,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			resultMap.put("id", "account");
 			break;
 		case 1:
-			// 登录成功,写入session
-			// 这里session返回的是一个map数据,不过可以封装成对象
-			AdminUser user = null;
-			try {				
+			try {
 				resultMap.put("result", "1");
 				resultMap.put("message", "登录成功");
 				resultMap.put("id", "1");
@@ -130,27 +133,29 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			resultMap.put("id", "password");
 			break;
 		}
-		setResultMapJson(resultMap);
+		setResultMapJson();
 		return SUCCESS;
 	}
 
-	public String prepareDoLogin() {
-
+	public void prepareDoLogin() {
+		
 		if (this.account == null || this.account.isEmpty()) {
 			resultMap.put("message", "用户名必须");
 			resultMap.put("id", "account");
+			return ;
 		}
-
+		
 		if (this.passwd == null || this.passwd.isEmpty()) {
 			resultMap.put("message", "密码必须");
 			resultMap.put("id", "password");
+			return ;
 		}
 
 		if (this.verifycode == null || this.verifycode.isEmpty()) {
 			resultMap.put("message", "验证码必须");
 			resultMap.put("id", "login_verify");
+			return ;
 		}
-		return SUCCESS;
 
 	}
 
@@ -159,14 +164,20 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	 * 
 	 * @param map
 	 */
-	private void setResultMapJson(Map<String, String> map) {
+	private void setResultMapJson() {
 		// 将要返回的map对象进行json处理
-		JSONObject json = JSONObject.fromObject(map);
+		JSONObject json = JSONObject.fromObject(resultMap);
 		setResult(json.toString());
 	}
-
+	/**
+	 * 清空登录信息
+	 * @return
+	 */
 	public String logout() {
-		return "logiout";
+		AuthenticationServiceInterface auth = new AuthenticationService();
+		auth.setSession(sessionMap);
+		auth.clearIdentity();
+		return "login";
 	}
 
 	@Override

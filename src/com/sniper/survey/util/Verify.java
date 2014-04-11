@@ -24,16 +24,28 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  */
 public class Verify {
 
-	private static String webRootPath;
-
+	// 字体名称
+	private static String fontName;
 	static {
-		PathUtil p = new PathUtil();
+		InputStream in = null;
 		try {
-			webRootPath = p.getWebInfPath();
-		} catch (IllegalAccessException e) {
+			PathUtil p = new PathUtil();
+			String webRootPath = p.getWebInfPath();
+			in = new FileInputStream(webRootPath + "/file/shades.ttf");
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+
+		RegisterFont gf = new RegisterFont(in);
+
+		try {
+			fontName = gf.reginterFont();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * 获取随机类
 	 */
@@ -41,12 +53,13 @@ public class Verify {
 
 	/**
 	 * 获取随即颜色
-	 * 
+	 * 生成155-255的数字
 	 * @return
 	 */
 	public static Color getRandomColor() {
-		return new Color(random.nextInt(255), random.nextInt(255),
-				random.nextInt(255), random.nextInt(255));
+		
+		return new Color(random.nextInt(100), random.nextInt(100),
+				random.nextInt(100), random.nextInt(100) + 155);
 	}
 
 	/**
@@ -69,7 +82,7 @@ public class Verify {
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unused")
-	public static BufferedImage createImage(String VerifyCode) throws Exception {
+	public static BufferedImage createImage(String VerifyCode) {
 
 		// 验证码长度
 		int codeLength = VerifyCode.length();
@@ -94,12 +107,7 @@ public class Verify {
 		// 绘制图像对象
 		Graphics g = image.createGraphics();
 
-		InputStream in = new FileInputStream(webRootPath + "/file/shades.ttf");
-
-		RegisterFont gf = new RegisterFont(in);
-
-		String fonrname = gf.reginterFont();
-		g.setFont(new Font(fonrname, Font.ITALIC, fSize));
+		g.setFont(new Font(fontName, Font.ITALIC, fSize));
 		// 设置背景色
 		// g.setColor(color);
 		g.setColor(Color.WHITE);
