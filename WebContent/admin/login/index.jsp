@@ -161,7 +161,7 @@ input[type="text"]:focus,input[type="password"]:focus {
 			$.ajax({
 						type : "post",
 						dataType : 'json',
-						url : '<s:url action="loginValid" />',
+						url : '<s:url action="loginValid" namespace="/admin"/>',
 						data : {
 							passwd : p,
 							account : u,
@@ -171,9 +171,9 @@ input[type="text"]:focus,input[type="password"]:focus {
 							$('#button').val('正在登录...');
 						},
 						success : function(data, textStatus) {
-							var data = $.parseJSON(data);
+							//var data = $.parseJSON(data);
 							if (data != null && data.id == 1)
-								window.location = '<s:url action="userDoAdd" />';
+								window.location = '<s:url action="userDoAdd" namespace="/admin"/>';
 							else {
 								//alert(data.message);
 								$('#result').html(data.message);

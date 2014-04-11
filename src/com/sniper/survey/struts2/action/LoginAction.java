@@ -37,10 +37,9 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	@Resource
 	private AdminUserService adminUserService;
 
-	// 存放返回结果
-	private String result;
+	
 	// 存放返回之前的结果
-	private Map<String, String> resultMap = new HashMap<String, String>();
+	private Map<String, String> result = new HashMap<String, String>();
 
 	public String getAccount() {
 		return account;
@@ -66,13 +65,14 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		this.verifycode = verifycode;
 	}
 
-	@JSON(name = "RESULT")
-	public String getResult() {
-
+	
+	
+	@JSON(serialize = false)
+	public Map<String, String> getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(Map<String, String> result) {
 		this.result = result;
 	}
 
@@ -83,8 +83,8 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 
 	public String login() {
 
-		if(resultMap.size()>1){
-			setResultMapJson();
+		if(result.size()>1){
+			//setResultMapJson();
 			return SUCCESS;
 		}
 		// 用户验证
@@ -100,60 +100,60 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		
 		AuthenticateResultInfoInterface loginResult = auth
 				.authenticate(dbTable);
-		// System.out.println(loginResult.getCode());
+		
 		ResultInterface codeNum = loginResult.getCode();
 		switch (codeNum.getCode()) {
 		case 0:
-			resultMap.put("result", "0");
-			resultMap.put("message", "登录失败");
-			resultMap.put("id", "account");
+			result.put("result", "0");
+			result.put("message", "登录失败");
+			result.put("id", "account");
 			break;
 		case 1:
 			try {
-				resultMap.put("result", "1");
-				resultMap.put("message", "登录成功");
-				resultMap.put("id", "1");
+				result.put("result", "1");
+				result.put("message", "登录成功");
+				result.put("id", "1");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case -1:
-			resultMap.put("result", "-1");
-			resultMap.put("message", "用户名不存在");
-			resultMap.put("id", "account");
+			result.put("result", "-1");
+			result.put("message", "用户名不存在");
+			result.put("id", "account");
 			break;
 		case -2:
-			resultMap.put("result", "-2");
-			resultMap.put("message", "用户未知");
-			resultMap.put("id", "account");
+			result.put("result", "-2");
+			result.put("message", "用户未知");
+			result.put("id", "account");
 			break;
 		case -3:
-			resultMap.put("result", "-3");
-			resultMap.put("message", "密码不匹配");
-			resultMap.put("id", "password");
+			result.put("result", "-3");
+			result.put("message", "密码不匹配");
+			result.put("id", "password");
 			break;
 		}
-		setResultMapJson();
+		//setresultJson();
 		return SUCCESS;
 	}
 
 	public void prepareDoLogin() {
 		
 		if (this.account == null || this.account.isEmpty()) {
-			resultMap.put("message", "用户名必须");
-			resultMap.put("id", "account");
+			result.put("message", "用户名必须");
+			result.put("id", "account");
 			return ;
 		}
 		
 		if (this.passwd == null || this.passwd.isEmpty()) {
-			resultMap.put("message", "密码必须");
-			resultMap.put("id", "password");
+			result.put("message", "密码必须");
+			result.put("id", "password");
 			return ;
 		}
 
 		if (this.verifycode == null || this.verifycode.isEmpty()) {
-			resultMap.put("message", "验证码必须");
-			resultMap.put("id", "login_verify");
+			result.put("message", "验证码必须");
+			result.put("id", "login_verify");
 			return ;
 		}
 
@@ -166,8 +166,8 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	 */
 	private void setResultMapJson() {
 		// 将要返回的map对象进行json处理
-		JSONObject json = JSONObject.fromObject(resultMap);
-		setResult(json.toString());
+		//JSONObject json = JSONObject.fromObject(resultMap);
+		//setResult(json.toString());
 	}
 	/**
 	 * 清空登录信息

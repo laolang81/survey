@@ -11,7 +11,7 @@
 	<package name="sniperSurvey" extends="struts-default"
 		namespace="/">
 
-		<action name="verify" class="com.sniper.survey.struts2.action.VerifyAction">
+		<action name="verify" class="verifyAction">
 			<result name="success" type="stream">
 				<param name="contentType">image/jpeg</param>
 				<param name="inputName">imageStream</param>

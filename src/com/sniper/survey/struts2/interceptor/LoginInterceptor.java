@@ -49,15 +49,16 @@ public class LoginInterceptor implements Interceptor {
 			AdminUser adminUser = (AdminUser) ai.getInvocationContext()
 					.getSession().get("user");
 			if (adminUser == null) {
-				return "login";
+				//return "login";
 			} else {
 				//放行,注入用户对象
 				if(action instanceof UserAware){
 					((UserAware) action).setUser(adminUser);;
 					
 				}
-				return ai.invoke();
+				//return ai.invoke();
 			}
+			return ai.invoke();
 		}
 
 	}

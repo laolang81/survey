@@ -96,7 +96,7 @@
 							<li><a href="#">Products</a></li>
 							<li><a href="#">Download</a></li>
 							<li><a href="#">Support</a></li>
-							<li><a href='<s:url action="logout"/>'>Logout</a></li>
+							<li><a href='<s:url action="userLogout" namespace="/admin" />'>Logout</a></li>
 						</ul>
 
 					</div>

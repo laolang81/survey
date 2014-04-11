@@ -30,22 +30,22 @@
 			</tr>
 		</tfoot>
 	</table>
-
+	
 	<script>
 		$(function() {
 			$('#dataTables-1').dataTable({
 				"bProcessing" : true,
-				"sAjaxSource" : "data/dataTables-objects.txt",
+				"sAjaxSource" : '<s:url action="webUserdoajaxlist" namespace="/admin" />',
 				"aoColumns" : [ {
-					"mData" : "engine"
+					"mData" : "nickName"
 				}, {
-					"mData" : "browser"
+					"mData" : "password"
 				}, {
-					"mData" : "platform"
+					"mData" : "email"
 				}, {
-					"mData" : "version"
+					"mData" : "ctime"
 				}, {
-					"mData" : "grade"
+					"mData" : "nickName"
 				} ]
 			});
 		});

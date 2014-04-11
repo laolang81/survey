@@ -1,46 +1,33 @@
 package com.sniper.survey.struts2.action;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONObject;
+
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.sniper.survey.model.AdminGroup;
-import com.sniper.survey.model.AdminUser;
-import com.sniper.survey.service.impl.AdminGroupService;
-import com.sniper.survey.service.impl.AdminUserService;
+import com.sniper.survey.model.WebUser;
 import com.sniper.survey.service.impl.WebUserService;
-import com.sniper.survey.struts2.UserAware;
-import com.sniper.survey.util.ValidateUtil;
 
 //加注解
 @Controller
 @Scope("prototype")
-public class WebUserAction extends BaseAction<AdminUser> implements UserAware {
+public class WebUserAction extends BaseAction<WebUser> {
 
 	private static final long serialVersionUID = 1L;
 
 	@Resource
-	private AdminUserService adminUserService;
-
-	@Resource
-	private AdminGroupService adminGroupService;
-	
-	@Resource
 	private WebUserService webUserService;
-	// 用户组列表
-	private List<AdminGroup> adminGroupsSelect;
-	
 
-	// 登录用户信息
-	private AdminUser user;
-	
-	//
-	private AdminGroup adminGroup;
-
+	private Map<String, List<WebUser>> result = new HashMap<>();
+	//private String result;
 	public Integer id;
 
 	public Integer getId() {
@@ -50,24 +37,15 @@ public class WebUserAction extends BaseAction<AdminUser> implements UserAware {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	// 验证用户密码
-	private String confirmPassword;
-
-	public String getConfirmPassword() {
-		return confirmPassword;
+	
+	
+	@JSON(serialize = false)
+	public Map<String, List<WebUser>> getResult() {
+		return result;
 	}
 
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-
-	public List<AdminGroup> getAdminGroupsSelect() {
-		return adminGroupsSelect;
-	}
-
-	public void setAdminGroupsSelect(List<AdminGroup> adminGroupsSelect) {
-		this.adminGroupsSelect = adminGroupsSelect;
+	public void setResult(Map<String, List<WebUser>> result) {
+		this.result = result;
 	}
 
 	/**
@@ -77,15 +55,20 @@ public class WebUserAction extends BaseAction<AdminUser> implements UserAware {
 	 */
 	public String list() {
 
+		List<WebUser> users = webUserService.getUserList();
+		System.out.println(users);
 		return SUCCESS;
 	}
+
 	/**
 	 * 返回ajax获取的数据
+	 * 
 	 * @return
 	 */
-	public String doAjaxList()
-	{
-		
+	public String doAjaxList() {
+		List<WebUser> users = webUserService.getUserList();
+		result.put("aaData", users);
+		//setResultMapJson();
 		return SUCCESS;
 	}
 
@@ -97,9 +80,6 @@ public class WebUserAction extends BaseAction<AdminUser> implements UserAware {
 	@SkipValidation
 	public String doAdd() {
 
-		
-		
-		
 		// 添加完毕之后自动定向到编辑页面
 		this.id = model.getId();
 		// 要保持关联
@@ -108,17 +88,16 @@ public class WebUserAction extends BaseAction<AdminUser> implements UserAware {
 	}
 
 	/**
-	 * 默认prepare拦截器先调用do开头的
-	 * 做一些准备或者可以提前处理的工作
+	 * 默认prepare拦截器先调用do开头的 做一些准备或者可以提前处理的工作
 	 */
 	public void prepareDoAdd() {
 
 		// 添加
 		if (getMethod().equalsIgnoreCase("post")) {
 			System.out.println(model);
-		}else{
+		} else {
 			// 设置用户组
-			setAdminGroupsSelect(adminGroupService.getGroupSelectList());
+
 		}
 	}
 
@@ -152,50 +131,11 @@ public class WebUserAction extends BaseAction<AdminUser> implements UserAware {
 
 	}
 
-	@Override
-	public void validate() {
-		// 非空
-		if (!ValidateUtil.isValid(model.getName())) {
-			addFieldError("name", "用户名必填项");
-		}
-
-		if (!ValidateUtil.isValid(model.getNickName())) {
-			addFieldError("nickName", "昵称必填项");
-		}
-
-		if (!ValidateUtil.isValid(model.getEmail())) {
-			addFieldError("email", "用户Email必填项");
-		}
-		// 当用户密码存在时候
-		// 当用户添加时密码为必须
-		// 当修改时密码为非必须
-
-		if (ValidateUtil.isValid(model.getPassword())) {
-			if (model.getPassword().equals(confirmPassword)) {
-				addFieldError("password", "两次密码输入不一至");
-			}
-		}
-
-		if (hasErrors()) {
-			return;
-		}
-
-		// 验证用户名是否注册
-		if (adminUserService.isRegisted(model.getName())) {
-			addFieldError("name", "用户已被占用");
-		}
+	private void setResultMapJson() {
+		// 将要返回的map对象进行json处理
+		/*JSONObject json = JSONObject.fromObject(resultMap);
+		System.out.println(json.toString());
+		setResult(json.toString());*/
 	}
 
-	@Override
-	public void setUser(AdminUser user) {
-		this.user = user;
-	}
-
-	public AdminGroup getAdminGroup() {
-		return adminGroup;
-	}
-
-	public void setAdminGroup(AdminGroup adminGroup) {
-		this.adminGroup = adminGroup;
-	}
 }

@@ -31,14 +31,14 @@
 		<default-action-ref name="userLogin" />
 		<!-- 定义默认全局login返回值 -->
 		<global-results>
-			<result name="login">login/index.jsp</result>
+			<result name="login">/admin/login/index.jsp</result>
 		</global-results>
 		<!-- 后台基本CURD的通配符配置 -->
-		<action name="*List" class="{1}Action" method="list">
+		<action name="*List*" class="{1}Action" method="list">
 			<result name="success">{1}/list.jsp</result>
 			<result name="input">{1}/list.jsp</result>
 		</action>
-
+		
 		<action name="*PrepareAdd" class="{1}Action" method="prepareAdd">
 			<result name="input">{1}/prepareAdd.jsp</result>
 		</action>
@@ -76,31 +76,34 @@
 		</action>
 
 		<action name="userLogin" class="loginAction" method="index">
-			<result name="login">login/index.jsp</result>
+			<result name="login">/admin/login/index.jsp</result>
 		</action>
-		<action name="logout" class="loginAction" method="logout">
+		<action name="userLogout" class="loginAction" method="logout">
 			<result name="logout" type="redirectAction">userLogin</result>
 		</action>
 
 	</package>
-
+	<!--  -->
+	<!-- struts-default -->
 	<package name="sniperSurveyAJAX" extends="json-default"
 		namespace="/admin">
 
 		<default-interceptor-ref name="paramsPrepareParamsStack" />
 
 		<action name="loginValid" class="loginAction" method="login">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
 
+		<!-- 普通ajax列表获取,每个类只有一个不过可以同参数获取不同的结果 -->
+		<action name="*doajaxlist" class="{1}Action" method="doAjaxList">
 			<result type="json">
 				<param name="root">result</param>
 			</result>
 		</action>
 		
-		<!-- 用于ajax列表请求,删除请求,或者方法名称 ,地一个表示action的名称,第二个表示action的方法-->
-		<action name="*DoAjax*" class="{1}Action" method="{1}doAjax{2}">
-			<result type="json">
-				<param name="root">result</param>
-			</result>
-		</action>
+		
+
 	</package>
 </struts>
