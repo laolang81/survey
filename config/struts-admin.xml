@@ -74,7 +74,15 @@
 				<param name="actionName">{1}List</param>
 			</result>
 		</action>
-
+		<!-- xls下载 -->
+		<action name="collectionWebUser" class="collectionWebUserAction">
+			<result name="success" type="stream">
+				<param name="contentType">applicatiopn/vnd.ms-execl</param>
+				<param name="inputName">is</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		
 		<action name="userLogin" class="loginAction" method="index">
 			<result name="login">/admin/login/index.jsp</result>
 		</action>
