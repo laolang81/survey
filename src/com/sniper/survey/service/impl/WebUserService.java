@@ -7,5 +7,5 @@ import com.sniper.survey.service.BaseService;
 
 public interface WebUserService extends BaseService<WebUser> {
 
-	public List<WebUser> getUserList();
+	public List<WebUser> getUserList(int length, int start);
 }

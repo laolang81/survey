@@ -27,6 +27,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return dao;
 	}
 
+	@SuppressWarnings("unchecked")
 	public BaseServiceImpl() {
 		ParameterizedType type = (ParameterizedType) this.getClass()
 				.getGenericSuperclass();
@@ -51,7 +52,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	public void saveOrUpdateEntiry(T t) {
-		dao.saveOrUpdateEntiry(t);
+		dao.saveOrUpdateEntiry(t); 
 
 	}
 
@@ -109,7 +110,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	@Override
 	public Object uniqueResult(String hql, Object... objects) {
 
-		return dao.uniqueResult(hql, objects);
+		return this.findEntityByHQLQuery(hql, objects).uniqueResult();
 	}
 
 	@Override

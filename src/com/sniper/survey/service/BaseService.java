@@ -5,6 +5,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 
+import com.sniper.survey.model.WebUser;
+
 public interface BaseService<T> {
 
 	// 写操作
@@ -39,4 +41,6 @@ public interface BaseService<T> {
 
 	// 查询所有实体
 	public List<T> findAllEntitles();
+
+	
 }

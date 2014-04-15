@@ -1,67 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <s:include value="../public/header.jsp"></s:include>
 
-<s:form action="userDoAdd" namespace="/admin" method="post"
-	id="surveyAdd" cssClass="SFrom">
+<s:form action="rightDoSaveUpdate" namespace="/admin" method="post"
+	id="doAdd" cssClass="SFrom">
 	<s:hidden name="id" />
+	<s:hidden name="code" />
+	<s:hidden name="pos" />
 	<fieldset>
 		<legend>Legend</legend>
-		<label><s:text name="username" /></label>
-		<div data-role="input-control" class="input-control text">
-			<s:textfield name="name" id="username" placeholder="type text"
-				size="100" />
+		<label>名称</label>
+		<div data-role="input-control" class="input-control text size3">
+			<s:textfield name="name" cssClass="size3" id="username"
+				placeholder="type text" size="100" />
 			<span class="help-inline" title=""><s:fielderror
 					fieldName="name" /></span>
 			<button tabindex="-1" class="btn-clear" type="button"></button>
 		</div>
 
-		<label><s:text name="username" /></label>
-		<div data-role="input-control" class="input-control text">
-			<s:textfield name="url" id="url" />
+		<label>Public</label>
+		<div class="input-control checkbox size3" data-role="input-control">
+			<label><s:checkbox name="isPublic"  /> <span
+				class="check"></span><s:fielderror fieldName="isPublic" /></span> </label>
+		</div>
+
+		<label>Menu</label>
+		<div class="input-control checkbox size3" data-role="input-control">
+			<label><s:checkbox name="isMenu"  /> <span
+				class="check"></span><s:fielderror fieldName="isMenu" /></span> </label>
+		</div>
+
+		<label>Url</label>
+		<div data-role="input-control" class="input-control text size7">
+			<s:textfield name="url" cssClass="size7" id="url" />
 			<span class="help-inline" title=""><s:fielderror
 					fieldName="url" /></span>
 			<button tabindex="-1" class="btn-clear" type="button"></button>
 		</div>
 
-		<label>Label name</label>
-		<div data-role="input-control" class="input-control password">
-			<s:password name="desc" id="desc" placeholder="type password" />
+		<label>desc描述</label>
+
+		<div class="input-control textarea">
+			<s:textarea cols="20" rows="2" name="desc" id="desc" />
 			<span class="help-inline" title=""><s:fielderror
 					fieldName="desc" /></span>
-			<button tabindex="-1" class="btn-reveal" type="button"></button>
 		</div>
-
-		<label>Label name</label>
-		<div data-role="input-control" class="input-control password">
-			<s:password name="pos" id="pos"
-				placeholder="type password" />
-			<span class="help-inline" title=""><s:fielderror
-					fieldName="pos" /></span>
-			<button tabindex="-1" class="btn-reveal" type="button"></button>
-		</div>
-
-		<label><s:text name="email" /></label>
-		<div data-role="input-control" class="input-control text">
-			<s:textfield name="code" id="code" />
-			<span class="help-inline" title=""><s:fielderror
-					fieldName="code" /></span>
-			<button tabindex="-1" class="btn-clear" type="button"></button>
-		</div>
-		<label><s:text name="user group" /></label>
-		<div data-role="input-control" class="input-control select">
-			<s:select list="adminGroupsSelect" listKey="value" listValue="name"
-				name="au_group"></s:select>
-		</div>
-		
-
-
 
 		<input type="submit" class="button success" value="Submit">
-
 
 	</fieldset>
 </s:form>

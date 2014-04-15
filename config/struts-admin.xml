@@ -38,7 +38,7 @@
 			<result name="success">{1}/list.jsp</result>
 			<result name="input">{1}/list.jsp</result>
 		</action>
-		
+
 		<action name="*PrepareAdd" class="{1}Action" method="prepareAdd">
 			<result name="input">{1}/prepareAdd.jsp</result>
 		</action>
@@ -74,6 +74,23 @@
 				<param name="actionName">{1}List</param>
 			</result>
 		</action>
+
+		<action name="*DoSaveUpdate" class="{1}Action" method="doSaveUpdate">
+			<result name="list" type="redirectAction">
+				<param name="namespace">/admin</param>
+				<param name="actionName">{1}List</param>
+			</result>
+			<result name="add" type="redirectAction">
+				<param name="namespace">/admin</param>
+				<param name="actionName">{1}DoAdd</param>
+			</result>
+
+			<result name="edit" type="redirectAction">
+				<param name="namespace">/admin</param>
+				<param name="actionName">{1}DoEdit</param>
+				<param name="id">${id}</param>
+			</result>
+		</action>
 		<!-- xls下载 -->
 		<action name="collectionWebUser" class="collectionWebUserAction">
 			<result name="success" type="stream">
@@ -82,7 +99,7 @@
 				<param name="bufferSize">1024</param>
 			</result>
 		</action>
-		
+
 		<action name="userLogin" class="loginAction" method="index">
 			<result name="login">/admin/login/index.jsp</result>
 		</action>
@@ -91,7 +108,7 @@
 		</action>
 
 	</package>
-	<!--  -->
+	<!-- -->
 	<!-- struts-default -->
 	<package name="sniperSurveyAJAX" extends="json-default"
 		namespace="/admin">
@@ -110,8 +127,8 @@
 				<param name="root">result</param>
 			</result>
 		</action>
-		
-		
+
+
 
 	</package>
 </struts>

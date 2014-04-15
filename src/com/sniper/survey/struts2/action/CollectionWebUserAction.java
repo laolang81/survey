@@ -72,8 +72,8 @@ public class CollectionWebUserAction extends BaseAction<WebUser> {
 	 */
 	public String list() {
 
-		List<WebUser> users = webUserService.getUserList();
-		System.out.println(users);
+		//List<WebUser> users = webUserService.getUserList();
+		//System.out.println(users);
 		return SUCCESS;
 	}
 	

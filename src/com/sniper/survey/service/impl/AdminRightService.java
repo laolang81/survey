@@ -11,4 +11,7 @@ import com.sniper.survey.service.BaseService;
 public interface AdminRightService extends BaseService<AdminRight> {
 
 	
+	public void addRgiht();
+	
+	public void saveOrUpdate(AdminRight r);
 }

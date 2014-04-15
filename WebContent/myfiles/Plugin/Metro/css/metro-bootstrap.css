@@ -4056,6 +4056,8 @@ a {
 .metro .navigation-bar .navbar-content .element-divider.place-right,
 .metro .navbar .navbar-content .element-divider.place-right {
   float: right;
+  /* alter add  */
+  margin-right: 2px;
 }
 .metro .navigation-bar .navigation-bar-content .element,
 .metro .navbar .navigation-bar-content .element,
@@ -4085,7 +4087,7 @@ a {
 .metro .navigation-bar .navbar-content .element > a.dropdown-toggle:after,
 .metro .navbar .navbar-content .element > a.dropdown-toggle:after {
   position: absolute;
- /*  left: 100%; */
+  left: 100%;
 }
 .metro .navigation-bar .navigation-bar-content .element > .dropdown-menu,
 .metro .navbar .navigation-bar-content .element > .dropdown-menu,

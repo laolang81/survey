@@ -20,10 +20,12 @@ public class WebUserServiceImpl extends BaseServiceImpl<WebUser> implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<WebUser> getUserList() {
+	public List<WebUser> getUserList(int length, int start) {
 		String hql = "from WebUser c";
-		List<WebUser> users = findEntityByHQLQuery(hql).setFetchSize(0)
-				.setMaxResults(30).list();
+		System.out.println(length);
+		System.out.println(start);
+		List<WebUser> users = findEntityByHQLQuery(hql).setFirstResult(start)
+				.setMaxResults(length).list();
 
 		return users;
 	}

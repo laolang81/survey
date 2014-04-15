@@ -29,6 +29,11 @@ public class WebUserAction extends BaseAction<WebUser> {
 	private Map<String, List<WebUser>> result = new HashMap<>();
 	//private String result;
 	public Integer id;
+	
+	//没也显示多少行
+	public int iDisplayLength;
+	//每页开始行
+	public int iDisplayStart;
 
 	public Integer getId() {
 		return id;
@@ -48,6 +53,22 @@ public class WebUserAction extends BaseAction<WebUser> {
 		this.result = result;
 	}
 
+	public int getiDisplayLength() {
+		return iDisplayLength;
+	}
+
+	public void setiDisplayLength(int iDisplayLength) {
+		this.iDisplayLength = iDisplayLength;
+	}
+
+	public int getiDisplayStart() {
+		return iDisplayStart;
+	}
+
+	public void setiDisplayStart(int iDisplayStart) {
+		this.iDisplayStart = iDisplayStart;
+	}
+
 	/**
 	 * 用户列表
 	 * 
@@ -55,7 +76,7 @@ public class WebUserAction extends BaseAction<WebUser> {
 	 */
 	public String list() {
 
-		List<WebUser> users = webUserService.getUserList();
+		List<WebUser> users = webUserService.getUserList(getiDisplayLength(), getiDisplayStart());
 		System.out.println(users);
 		return SUCCESS;
 	}
@@ -66,7 +87,7 @@ public class WebUserAction extends BaseAction<WebUser> {
 	 * @return
 	 */
 	public String doAjaxList() {
-		List<WebUser> users = webUserService.getUserList();
+		List<WebUser> users = webUserService.getUserList(getiDisplayLength(), getiDisplayStart());
 		result.put("aaData", users);
 		//setResultMapJson();
 		return SUCCESS;

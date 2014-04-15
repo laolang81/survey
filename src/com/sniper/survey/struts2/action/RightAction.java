@@ -1,18 +1,28 @@
 package com.sniper.survey.struts2.action;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+
+import org.apache.struts2.json.annotations.JSON;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
 
-public class RightAction extends BaseAction<AdminRight>{
-	
+@Controller
+@Scope("prototype")
+public class RightAction extends BaseAction<AdminRight> {
+
 	private static final long serialVersionUID = 2799348891231755561L;
 
 	private List<AdminRight> allRight;
-	
+
+	private Map<String, List<AdminRight>> result = new HashMap<>();
+
 	@Resource
 	private AdminRightService adminRightService;
 
@@ -23,16 +33,44 @@ public class RightAction extends BaseAction<AdminRight>{
 	public void setAllRight(List<AdminRight> allRight) {
 		this.allRight = allRight;
 	}
-	
-	public String list()
-	{
+
+	@JSON(serialize = false)
+	public Map<String, List<AdminRight>> getResult() {
+		return result;
+	}
+
+	public void setResult(Map<String, List<AdminRight>> result) {
+		this.result = result;
+	}
+
+	public String list() {
+		this.allRight = adminRightService.findAllEntitles();
 		return SUCCESS;
 	}
-	
-	public String doAdd()
-	{
+
+	/**
+	 * 返回ajax获取的数据
+	 * 
+	 * @return
+	 */
+	public String doAjaxList() {
+		this.allRight = adminRightService.findAllEntitles();
+		result.put("aaData", allRight);
+		return SUCCESS;
+	}
+
+	public String doAdd() {
+
+		return INPUT;
+	}
+
+	public String doSaveUpdate() {
+		//添加100次
 		
-		return SUCCESS;
+		
+		adminRightService.saveOrUpdate(model);
+		return "list";
+
 	}
-	
+
 }
