@@ -32,7 +32,7 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	protected AuthenticateResultInfoInterface authenticateValidateResult(Map m) {
 
@@ -58,7 +58,8 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//System.out.println(m);
+			// System.out.println(m);
+			setModel(t);
 			this.authenticateResultInfo.setObj(t);
 			this.authenticateResultInfo.setCode(Result.SUCCESS);
 			this.authenticateResultInfo.getMessage().add(

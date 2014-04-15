@@ -34,7 +34,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	public AuthenticateResultInfoInterface authenticateResultInfo = new AuthenticateResultInfo();
 
 	/**
-	 * 尸体类
+	 * 实体类
 	 */
 	private T model;
 	protected Class<T> clazz;
@@ -111,7 +111,6 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 
 		}
 		return model;
-
 	}
 
 	public void setModel(T model) {
@@ -154,8 +153,6 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 		SQLQuery query = authenticateCreateSelect();
 		// 获取转成对象,者获取的是用户对象数据
 		List<Map> resultIdentities = authenticateQuerySelectMap(query);
-		/*System.out.println("authenticate");
-		System.out.println(resultIdentities);*/
 		AuthenticateResultInfoInterface authResult = null;
 		// 检测用户获取的数量是否等于1，这里只检测用户数量是否唯一，不唯一报错
 		if ((authResult = authenticateValidateResultSet(resultIdentities)) != null) {
@@ -163,8 +160,6 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 		}
 		// 检测用户密码是否正确，auth等于1表示用户密码正确
 		for (Map m : resultIdentities) {
-			/*System.out.println("0===");
-			System.out.println(m);*/
 			authResult = authenticateValidateResult(m);
 			if (authResult.isValid()) {
 				break;
@@ -194,10 +189,14 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 					"More than one record matches the supplied identity.");
 			return this.authenticateCreateAuthResult();
 		}
-
 		return null;
 	}
 
+	/**
+	 * 返回结果
+	 * 
+	 * @return
+	 */
 	protected AuthenticateResultInfoInterface authenticateCreateAuthResult() {
 
 		return new AuthenticateResultInfo(
@@ -212,7 +211,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	 * @param query
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private List<T> authenticateQuerySelect(SQLQuery query) {
 		return query.addEntity(clazz).list();
 	}
@@ -223,18 +222,20 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	 * @param query
 	 * @return
 	 */
-	@SuppressWarnings({ "unused", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	private List<Map> authenticateQuerySelectMap(SQLQuery query) {
 		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
 				.list();
 	}
 
+	/**
+	 * 返回值初始化
+	 */
 	private void authenticateSetup() {
 
 		this.authenticateResultInfo.setCode(Result.FAILURE);
 		this.authenticateResultInfo.getMessage().add("null");
 		this.authenticateResultInfo.setObj(getModel());
-
 	}
 
 	/**
@@ -254,5 +255,4 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 		}
 		return tableName;
 	}
-
 }
