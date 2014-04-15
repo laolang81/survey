@@ -1,5 +1,6 @@
 package com.sniper.survey.service.impl;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,9 +20,23 @@ import com.sniper.survey.service.BaseService;
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	private BaseDao<T> dao;
+	//
+	private Class<T> clazz;
 
 	public BaseDao<T> getDao() {
 		return dao;
+	}
+
+	public BaseServiceImpl() {
+		ParameterizedType type = (ParameterizedType) this.getClass()
+				.getGenericSuperclass();
+		clazz = (Class<T>) type.getActualTypeArguments()[0];
+	}
+
+	public BaseServiceImpl(BaseDao<T> dao, Class<T> clazz) {
+		super();
+		this.dao = dao;
+		this.clazz = clazz;
 	}
 
 	// 注入
@@ -89,5 +104,17 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	@Override
 	public SQLQuery findEntityBySQLQuery(String sql) {
 		return dao.findEntityBySQLQuery(sql);
+	}
+
+	@Override
+	public Object uniqueResult(String hql, Object... objects) {
+
+		return dao.uniqueResult(hql, objects);
+	}
+
+	@Override
+	public List<T> findAllEntitles() {
+		String hql = "from " + clazz.getSimpleName();
+		return this.findEntityByHQL(hql);
 	}
 }

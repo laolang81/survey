@@ -174,4 +174,16 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		SQLQuery query = this.getOpenSesion().createSQLQuery(sql);
 		return query;
 	}
+
+	@Override
+	public List<T> findAllEntitles(String hql) {
+
+		return this.getCurrentSession().createQuery(hql).list();
+	}
+
+	@Override
+	public Object uniqueResult(String hql, Object... objects) {
+
+		return this.getCurrentSession().createQuery(hql).uniqueResult();
+	}
 }

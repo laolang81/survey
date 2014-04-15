@@ -71,7 +71,13 @@ public interface BaseDao<T> {
 			Object... Object);
 
 	public Query findEntityByHQLQuery(String hql, Object... Object);
-	
+
 	public SQLQuery findEntityBySQLQuery(String sql);
+
+	// 获取唯一的值
+	public Object uniqueResult(String hql, Object... objects);
+
+	// 查询所有实体
+	public List<T> findAllEntitles(String hql);
 
 }

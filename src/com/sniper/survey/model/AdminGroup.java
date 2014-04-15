@@ -1,18 +1,25 @@
 package com.sniper.survey.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "mc_admin_group")
 public class AdminGroup implements Serializable{
-
+	
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ag_id")
@@ -25,6 +32,12 @@ public class AdminGroup implements Serializable{
 	private Integer fid;
 	@Column(name = "ag_note")
 	public String note;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	// @JoinColumn(name = "au_group", referencedColumnName = "ag_value")
+	@JoinTable(name = "mc_admin_group_right", joinColumns = @JoinColumn(name = "gr_gid"), inverseJoinColumns = @JoinColumn(name = "gr_rid"))
+	private Set<AdminRight> adminRight = new HashSet<>();
+
 
 	public Integer getId() {
 		return id;
@@ -64,6 +77,14 @@ public class AdminGroup implements Serializable{
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public Set<AdminRight> getAdminRight() {
+		return adminRight;
+	}
+
+	public void setAdminRight(Set<AdminRight> adminRight) {
+		this.adminRight = adminRight;
 	}
 
 	public AdminGroup(String name, String value) {

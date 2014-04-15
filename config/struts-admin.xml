@@ -34,7 +34,7 @@
 			<result name="login">/admin/login/index.jsp</result>
 		</global-results>
 		<!-- 后台基本CURD的通配符配置 -->
-		<action name="*List*" class="{1}Action" method="list">
+		<action name="*List" class="{1}Action" method="list">
 			<result name="success">{1}/list.jsp</result>
 			<result name="input">{1}/list.jsp</result>
 		</action>

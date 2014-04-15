@@ -1,6 +1,8 @@
 package com.sniper.survey.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,11 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "mc_admin_user")
@@ -43,11 +45,10 @@ public class AdminUser {
 	@Column(name = "au_ctime", updatable = false)
 	private Date ctime;
 	// 对应用户组
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "au_group", referencedColumnName = "ag_value")
-	private AdminGroup adminGroup;
-
-	
+	@ManyToMany(fetch = FetchType.EAGER)
+	// @JoinColumn(name = "au_group", referencedColumnName = "ag_value")
+	@JoinTable(name = "mc_admin_user_group", joinColumns = @JoinColumn(name = "ug_uid"), inverseJoinColumns = @JoinColumn(name = "ug_gid"))
+	private Set<AdminGroup> adminGroup = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -113,14 +114,12 @@ public class AdminUser {
 		this.ctime = ctime;
 	}
 
-	public AdminGroup getAdminGroup() {
+	public Set<AdminGroup> getAdminGroup() {
 		return adminGroup;
 	}
 
-	public void setAdminGroup(AdminGroup adminGroup) {
+	public void setAdminGroup(Set<AdminGroup> adminGroup) {
 		this.adminGroup = adminGroup;
 	}
-
-	
 
 }
