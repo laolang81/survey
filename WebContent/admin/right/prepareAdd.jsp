@@ -22,14 +22,14 @@
 
 		<label>Public</label>
 		<div class="input-control checkbox size3" data-role="input-control">
-			<label><s:checkbox name="isPublic"  /> <span
-				class="check"></span><s:fielderror fieldName="isPublic" /></span> </label>
+			<label><s:checkbox name="isPublic" /> <span class="check"></span>
+				<s:fielderror fieldName="isPublic" /> </label>
 		</div>
 
 		<label>Menu</label>
 		<div class="input-control checkbox size3" data-role="input-control">
-			<label><s:checkbox name="isMenu"  /> <span
-				class="check"></span><s:fielderror fieldName="isMenu" /></span> </label>
+			<label><s:checkbox name="isMenu" /> <span class="check"></span>
+				<s:fielderror fieldName="isMenu" /></label>
 		</div>
 
 		<label>Url</label>
