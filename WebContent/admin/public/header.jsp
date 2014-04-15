@@ -17,15 +17,15 @@
 	media="screen" rel="stylesheet" type="text/css">
 <link rel="stylesheet"
 	href="myfiles/Plugin/Metro/css/metro-bootstrap.css">
+<link href="myfiles/Plugin/Metro/docs/css/iconFont.css" rel="stylesheet">
 
 <link rel="stylesheet"
 	href="myfiles/Plugin/DataTables/media/css/demo_page.css">
 
 <link rel="stylesheet"
 	href="myfiles/Plugin/DataTables/media/css/demo_table.css">
-
-<link href="myfiles/Plugin/Metro/docs/css/iconFont.css" rel="stylesheet">
-
+	
+	
 <link href="myfiles/css/topHeader.css" media="screen" rel="stylesheet"
 	type="text/css">
 <link href="myfiles/css/leftMenu.css" media="screen" rel="stylesheet"
@@ -104,8 +104,7 @@
 							<li><a href="#">Products</a></li>
 							<li><a href="#">Download</a></li>
 							<li><a href="#">Support</a></li>
-							<li><a
-								href='<s:url action="userLogout" namespace="/admin" />'>Logout</a></li>
+							<li><a href='<s:url action="userLogout" namespace="/admin" />'>Logout</a></li>
 						</ul>
 
 					</div>
