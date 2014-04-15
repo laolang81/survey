@@ -7,7 +7,7 @@
 
 <s:form action="userDoAdd" namespace="/admin" method="post"
 	id="surveyAdd" cssClass="SFrom">
-
+	<s:hidden name="id" />
 	<fieldset>
 		<legend>Legend</legend>
 		<label><s:text name="username" /></label>
@@ -21,34 +21,34 @@
 
 		<label><s:text name="username" /></label>
 		<div data-role="input-control" class="input-control text">
-			<s:textfield name="nickName" id="nickName" />
+			<s:textfield name="url" id="url" />
 			<span class="help-inline" title=""><s:fielderror
-					fieldName="nickName" /></span>
+					fieldName="url" /></span>
 			<button tabindex="-1" class="btn-clear" type="button"></button>
 		</div>
 
 		<label>Label name</label>
 		<div data-role="input-control" class="input-control password">
-			<s:password name="password" id="password" placeholder="type password" />
+			<s:password name="desc" id="desc" placeholder="type password" />
 			<span class="help-inline" title=""><s:fielderror
-					fieldName="password" /></span>
+					fieldName="desc" /></span>
 			<button tabindex="-1" class="btn-reveal" type="button"></button>
 		</div>
 
 		<label>Label name</label>
 		<div data-role="input-control" class="input-control password">
-			<s:password name="confirmPassword" id="confirmPassword"
+			<s:password name="pos" id="pos"
 				placeholder="type password" />
 			<span class="help-inline" title=""><s:fielderror
-					fieldName="confirmPassword" /></span>
+					fieldName="pos" /></span>
 			<button tabindex="-1" class="btn-reveal" type="button"></button>
 		</div>
 
 		<label><s:text name="email" /></label>
 		<div data-role="input-control" class="input-control text">
-			<s:textfield name="email" id="email" />
+			<s:textfield name="code" id="code" />
 			<span class="help-inline" title=""><s:fielderror
-					fieldName="email" /></span>
+					fieldName="code" /></span>
 			<button tabindex="-1" class="btn-clear" type="button"></button>
 		</div>
 		<label><s:text name="user group" /></label>
@@ -56,16 +56,7 @@
 			<s:select list="adminGroupsSelect" listKey="value" listValue="name"
 				name="au_group"></s:select>
 		</div>
-		<div>
-			<div data-role="input-control" class="input-control switch">
-
-				<label style="margin-right: 20px" class="inline-block">
-					Switch me <input type="checkbox" checked="checked" value="1"
-					name="status"> <span class="check"></span>
-				</label>
-
-			</div>
-		</div>
+		
 
 
 

@@ -25,5 +25,5 @@ public class AdminRight {
 	private long code;
 	@Column(name = "ar_pos", updatable = false)
 	private int pos;
-
+	
 }

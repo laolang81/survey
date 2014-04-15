@@ -10,11 +10,12 @@ import com.sniper.survey.dao.BaseDao;
 import com.sniper.survey.model.AdminGroup;
 
 @Service("adminGroupService")
-public class AdminGroupServiceImpl extends BaseServiceImpl<AdminGroup> implements AdminGroupService {
+public class AdminGroupServiceImpl extends BaseServiceImpl<AdminGroup>
+		implements AdminGroupService {
 
 	@Resource(name = "adminGroupDao")
 	public void setDao(BaseDao<AdminGroup> dao) {
-		
+
 		super.setDao(dao);
 	}
 
@@ -24,7 +25,5 @@ public class AdminGroupServiceImpl extends BaseServiceImpl<AdminGroup> implement
 		List<AdminGroup> adminGroups = this.findEntityByHQL(hql);
 		return adminGroups;
 	}
-	
-	
-	
+
 }

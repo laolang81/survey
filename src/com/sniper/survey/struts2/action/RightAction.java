@@ -8,9 +8,8 @@ import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
 
 public class RightAction extends BaseAction<AdminRight>{
-
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2799348891231755561L;
 
 	private List<AdminRight> allRight;
 	
@@ -27,6 +26,12 @@ public class RightAction extends BaseAction<AdminRight>{
 	
 	public String list()
 	{
+		return SUCCESS;
+	}
+	
+	public String doAdd()
+	{
+		
 		return SUCCESS;
 	}
 	
