@@ -31,28 +31,29 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight> implement
 	@Override
 	public void saveOrUpdate(AdminRight r) {
 		int pos = 0;
-		long code = 1l;
+		long code = 1L;
 		if(r.getId() == null){
-			String hql = "from AdminRight r order by r.pos desc,r.code desc";
-			List<AdminRight> rights = this.findEntityByHQL(hql);
-			if(!ValidateUtil.isValid(rights)){
+			
+			String hql = "select max(a.pos),max(a.code) from AdminRight a "
+					+ " where a.pos = (select max(aa.pos) from AdminRight aa )";
+			
+			Object[] arr = (Object[]) this.uniqueResult(hql); 
+			Integer topPos = (Integer) arr[0];
+			Long topCode = (Long) arr[1];
+			if(topPos == null){
 				pos = 0;
-				code = 1l;
+				code = 1L;
 			}else{
-				//得到上面的right
-				AdminRight top = rights.get(0);
-				int topPos = top.getPos();
-				long topCode = top.getCode();
-				//判断权限吗是否达到最大值
-				if(topCode >= (1l << 60)){
+				//权限吗检测
+				if(topCode >= (1L << 60)){
 					pos = topPos + 1;
-					code = 1;
+					code = 1L;
 				}else{
 					pos = topPos;
-					code = topCode;
+					code = topCode << 1;
 				}
-				
 			}
+			
 			r.setCode(code);
 			r.setPos(pos);
 		}
