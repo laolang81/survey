@@ -25,6 +25,18 @@ public class RightAction extends BaseAction<AdminRight> {
 
 	@Resource
 	private AdminRightService adminRightService;
+	// 记录编辑id
+	private Integer eid;
+
+	
+
+	public Integer getEid() {
+		return eid;
+	}
+
+	public void setEid(Integer eid) {
+		this.eid = eid;
+	}
 
 	public List<AdminRight> getAllRight() {
 		return allRight;
@@ -65,12 +77,35 @@ public class RightAction extends BaseAction<AdminRight> {
 	}
 
 	public String doSaveUpdate() {
-		//添加100次
-		
-		
+		// 添加100次
 		adminRightService.saveOrUpdate(model);
 		return "list";
+	}
 
+	/**
+	 * 编辑
+	 * 
+	 * @return
+	 */
+	public String doUpdate() {
+		System.out.println(eid);
+		 this.model = adminRightService.getEntity(eid);
+		
+		 System.out.println(model);
+
+		return INPUT;
+	}
+
+	/**
+	 * 删除
+	 * 
+	 * @return
+	 */
+	public String doDelete() {
+		AdminRight right = new AdminRight();
+		right.setId(eid);
+		adminRightService.deleteEntiry(right);
+		return "list";
 	}
 
 }

@@ -5,7 +5,7 @@
 <s:include value="../public/header.jsp"></s:include>
 <script src="myfiles/Plugin/DataTables/media/js/jquery.dataTables.js"></script>
 <div class="list_content">
-	<table class="table striped hovered dataTable" id="dataTables-1">
+	<table class="table striped hovered dataTable" id="dataTables">
 		<thead>
 			<tr>
 				<th class="text-left">ID</th>
@@ -34,40 +34,54 @@
 
 	<script>
 		$(function() {
-			$('#dataTables-1')
+			$('#dataTables')
 					.dataTable(
 							{
+								
 								"bJQueryUI"		: true,
 								"bProcessing" : true,
-								"bServerSide": true,
+								"bServerSide": false,
 								/*使用post方式
 								"fnServerData": function ( sSource, aoData, fnCallback ) {
-						            $.ajax( {
-						                "dataType": 'json',
-						                "type": "POST",
-						                "url": sSource,
-						                "data": aoData,
-						                "success": fnCallback
-						            } );
-						        }*/
-						        "sAjaxSource" : "<s:url action="rightdoajaxlist" namespace="/admin" />",
-								"oLanguage": {
-									//"sUrl": "cn.txt"
-								},
-								
-								"aoColumns" : [ {
-									"mData" : "id"
-								}, {
-									"mData" : "name"
-								}, {
-									"mData" : "url"
-								}, {
-									"mData" : "code"
-								}, {
-									"mData" : "pos"
-								}, {
-									"mData" : "public"
-								} ]
+								    $.ajax( {
+								        "dataType": 'json',
+								        "type": "POST",
+								        "url": sSource,
+								        "data": aoData,
+								        "success": fnCallback
+								    } );
+								}*/
+								"sAjaxSource" : '<s:url action="rightdoajaxlist" namespace="/admin" />',
+								/* "oLanguage" : {
+									"sUrl": "cn.txt"
+								}, */
+								/* "aoColumnDefs": [
+							                        { "sClass": "center", "aTargets": [0,1,2,3,4,5] }
+							                    ], */
+								"aoColumns" : [
+										{
+											"mData" : "id",
+											"mRender" : function(data, type,
+													row) {
+												return '<a href="<s:url action="rightDoUpdate" namespace="/admin" />?eid='
+														+ row.id
+														+ '">'
+														+ row.id + '</a>';
+											}
+											
+											
+
+										}, {
+											"mData" : "name"
+										}, {
+											"mData" : "url"
+										}, {
+											"mData" : "code"
+										}, {
+											"mData" : "pos"
+										}, {
+											"mData" : "public"
+										} ]
 							});
 		});
 	</script>
