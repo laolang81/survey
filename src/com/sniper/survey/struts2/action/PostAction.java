@@ -3,7 +3,6 @@ package com.sniper.survey.struts2.action;
 import java.util.Date;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;

@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONObject;
-
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
@@ -19,7 +17,6 @@ import com.sniper.survey.custom.authentication.DbTable;
 import com.sniper.survey.custom.authentication.ResultInterface;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminUserService;
-import com.sniper.survey.util.BeanToMapUtil;
 import com.sniper.survey.util.DataUtil;
 
 @Controller

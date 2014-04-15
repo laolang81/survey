@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONObject;
-
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;

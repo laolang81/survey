@@ -6,14 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-
-
-
-
-
 import com.sniper.survey.dao.BaseDao;
 import com.sniper.survey.model.AdminRight;
-import com.sniper.survey.util.DataUtil;
 import com.sniper.survey.util.ValidateUtil;
 
 @Service("adminRightService")

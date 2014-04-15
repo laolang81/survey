@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.Validate;
 import org.springframework.stereotype.Service;
 
 import com.sniper.survey.dao.BaseDao;
