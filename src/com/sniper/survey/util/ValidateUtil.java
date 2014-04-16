@@ -47,4 +47,11 @@ public class ValidateUtil {
 		}
 		return false;
 	}
+
+	public static boolean isValid(Class[] paramType) {
+		if (paramType != null && paramType.length > 0) {
+			return true;
+		}
+		return false;
+	}
 }

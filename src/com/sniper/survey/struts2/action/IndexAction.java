@@ -19,10 +19,7 @@ import com.sniper.survey.service.impl.TagsService;
 @Controller
 @Scope("prototype")
 public class IndexAction extends BaseAction<AdminUser> {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 

@@ -26,16 +26,15 @@ public class RightAction extends BaseAction<AdminRight> {
 	@Resource
 	private AdminRightService adminRightService;
 	// 记录编辑id
-	private Integer eid;
+	private Integer updateid;
 
 	
-
-	public Integer getEid() {
-		return eid;
+	public Integer getUpdateid() {
+		return updateid;
 	}
 
-	public void setEid(Integer eid) {
-		this.eid = eid;
+	public void setUpdateid(Integer updateid) {
+		this.updateid = updateid;
 	}
 
 	public List<AdminRight> getAllRight() {
@@ -54,7 +53,10 @@ public class RightAction extends BaseAction<AdminRight> {
 	public void setResult(Map<String, List<AdminRight>> result) {
 		this.result = result;
 	}
-
+	/**
+	 * 数据列表
+	 * @return
+	 */
 	public String list() {
 		this.allRight = adminRightService.findAllEntitles();
 		return SUCCESS;
@@ -65,18 +67,18 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
-	public String doAjaxList() {
+	public String ajaxList() {
 		this.allRight = adminRightService.findAllEntitles();
 		result.put("aaData", allRight);
 		return SUCCESS;
 	}
 
-	public String doAdd() {
+	public String add() {
 
 		return INPUT;
 	}
 
-	public String doSaveUpdate() {
+	public String saveOrUpdate() {
 		// 添加100次
 		adminRightService.saveOrUpdate(model);
 		return "list";
@@ -87,11 +89,11 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
-	public String doUpdate() {
-		System.out.println(eid);
-		 this.model = adminRightService.getEntity(eid);
+	public String update() {
 		
-		 System.out.println(model);
+		this.model = adminRightService.getEntity(updateid);
+		
+		System.out.println(model);
 
 		return INPUT;
 	}
@@ -101,9 +103,9 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
-	public String doDelete() {
+	public String delete() {
 		AdminRight right = new AdminRight();
-		right.setId(eid);
+		right.setId(updateid);
 		adminRightService.deleteEntiry(right);
 		return "list";
 	}

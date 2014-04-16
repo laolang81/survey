@@ -14,8 +14,8 @@ public class GroupAction extends BaseAction<AdminGroup> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public String index()
+	public String list()
 	{
-		return "index";
+		return SUCCESS;
 	}
 }

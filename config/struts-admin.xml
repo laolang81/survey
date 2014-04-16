@@ -34,63 +34,64 @@
 			<result name="login">/admin/login/index.jsp</result>
 		</global-results>
 		<!-- 后台基本CURD的通配符配置 -->
-		<action name="*List" class="{1}Action" method="list">
+		<action name="*list" class="{1}Action" method="list">
 			<result name="success">{1}/list.jsp</result>
 			<result name="input">{1}/list.jsp</result>
 		</action>
 
-		<action name="*PrepareAdd" class="{1}Action" method="prepareAdd">
-			<result name="input">{1}/prepareAdd.jsp</result>
-		</action>
-
-		<action name="*DoAdd" class="{1}Action" method="doAdd">
-			<result name="input">{1}/prepareAdd.jsp</result>
+		<!-- 统一添加操作 -->
+		<action name="*add" class="{1}Action" method="add">
+			<result name="input">{1}/add.jsp</result>
 			<result name="list" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}List</param>
+				<param name="actionName">{1}list</param>
 			</result>
 			<result name="edit" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}PrepareUpdate</param>
-				<param name="id">${id}</param>
+				<param name="actionName">{1}update</param>
+				<param name="updateid">${updateid}</param>
 			</result>
 		</action>
 
-		<action name="*PrepareUpdate" class="{1}Action" method="prepareUpdate">
-			<result name="input">{1}/prepareUpdate.jsp</result>
-		</action>
 
-		<action name="*DoUpdate" class="{1}Action" method="doUpdate">
-			<result name="input">{1}/prepareAdd.jsp</result>
+		<!-- 统一更新操作 -->
+		<action name="*update" class="{1}Action" method="update">
+			<result name="input">{1}/add.jsp</result>
 			<result name="list" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}List</param>
+				<param name="actionName">{1}list</param>
 			</result>
 		</action>
 
-		<action name="*DoDelete" class="{1}Action" method="doDelete">
+		<!-- 统一更新,保存操作 -->
+		<action name="*saveorupdate" class="{1}Action" method="saveOrUpdate">
 			<result name="list" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}List</param>
-			</result>
-		</action>
-
-		<action name="*DoSaveUpdate" class="{1}Action" method="doSaveUpdate">
-			<result name="list" type="redirectAction">
-				<param name="namespace">/admin</param>
-				<param name="actionName">{1}List</param>
+				<param name="actionName">{1}list</param>
 			</result>
 			<result name="add" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}DoAdd</param>
+				<param name="actionName">{1}add</param>
 			</result>
-
-			<result name="edit" type="redirectAction">
+			<!-- 统一设置更新参数id的名称 -->
+			<result name="update" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}DoEdit</param>
-				<param name="id">${id}</param>
+				<param name="actionName">{1}update</param>
+				<param name="updateid">${updateid}</param>
 			</result>
 		</action>
+		<!-- 删除操作,我一般采用ajax方式删除,因为这个返回参数太麻烦 -->
+		<action name="*delete" class="{1}Action" method="delete">
+			<result name="success" type="redirectAction">
+				<param name="namespace">/admin</param>
+				<param name="actionName">{1}list</param>
+			</result>
+			<result name="error" type="redirectAction">
+				<param name="namespace">/admin</param>
+				<param name="actionName">{1}list</param>
+			</result>
+		</action>
+		<!-- 下面是单独设置的配置 -->
 		<!-- xls下载 -->
 		<action name="collectionWebUser" class="collectionWebUserAction">
 			<result name="success" type="stream">
@@ -100,10 +101,10 @@
 			</result>
 		</action>
 
-		<action name="userLogin" class="loginAction" method="index">
+		<action name="login" class="loginAction" method="execute">
 			<result name="login">/admin/login/index.jsp</result>
 		</action>
-		<action name="userLogout" class="loginAction" method="logout">
+		<action name="loginlogout" class="loginAction" method="logout">
 			<result name="logout" type="redirectAction">userLogin</result>
 		</action>
 
@@ -114,19 +115,26 @@
 		namespace="/admin">
 
 		<default-interceptor-ref name="paramsPrepareParamsStack" />
-
-		<action name="loginValid" class="loginAction" method="login">
+		<!-- 用户ajax登录验证 -->
+		<action name="loginajaxvalid" class="loginAction" method="loginAjaxValid">
 			<result type="json">
 				<param name="root">result</param>
 			</result>
 		</action>
 
 		<!-- 普通ajax列表获取,每个类只有一个不过可以同参数获取不同的结果 -->
-		<action name="*doajaxlist" class="{1}Action" method="doAjaxList">
+		<action name="*ajaxlist" class="{1}Action" method="ajaxList">
 			<result type="json">
 				<param name="root">result</param>
 			</result>
 		</action>
+
+		<action name="*ajaxdelete" class="{1}Action" method="ajaxDelete">
+			<result type="json">
+				<param name="root">result</param>
+			</result>
+		</action>
+
 
 
 

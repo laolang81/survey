@@ -34,7 +34,6 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	@Resource
 	private AdminUserService adminUserService;
 
-	
 	// 存放返回之前的结果
 	private Map<String, String> result = new HashMap<String, String>();
 
@@ -62,8 +61,6 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		this.verifycode = verifycode;
 	}
 
-	
-	
 	@JSON(serialize = false)
 	public Map<String, String> getResult() {
 		return result;
@@ -73,15 +70,15 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		this.result = result;
 	}
 
-	public String index() {
-
-		return "login";
+	@Override
+	public String execute() throws Exception {
+		return SUCCESS;
 	}
 
-	public String login() {
+	public String loginAjaxValid() {
 
-		if(result.size()>1){
-			//setResultMapJson();
+		if (result.size() > 1) {
+			// setResultMapJson();
 			return SUCCESS;
 		}
 		// 用户验证
@@ -94,10 +91,10 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		AuthenticationServiceInterface auth = new AuthenticationService();
 		auth.setSession(sessionMap);
 		auth.setStorage("user");
-		
+
 		AuthenticateResultInfoInterface loginResult = auth
 				.authenticate(dbTable);
-		
+
 		ResultInterface codeNum = loginResult.getCode();
 		switch (codeNum.getCode()) {
 		case 0:
@@ -130,44 +127,37 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			result.put("id", "password");
 			break;
 		}
-		//setresultJson();
 		return SUCCESS;
 	}
 
-	public void prepareDoLogin() {
-		
+	/**
+	 * 基本的验证
+	 */
+	public void prepareDoLoginAjaxValid() {
+
 		if (this.account == null || this.account.isEmpty()) {
 			result.put("message", "用户名必须");
 			result.put("id", "account");
-			return ;
+			return;
 		}
-		
+
 		if (this.passwd == null || this.passwd.isEmpty()) {
 			result.put("message", "密码必须");
 			result.put("id", "password");
-			return ;
+			return;
 		}
 
 		if (this.verifycode == null || this.verifycode.isEmpty()) {
 			result.put("message", "验证码必须");
 			result.put("id", "login_verify");
-			return ;
+			return;
 		}
 
 	}
 
 	/**
-	 * 将map专程json
-	 * 
-	 * @param map
-	 */
-	private void setResultMapJson() {
-		// 将要返回的map对象进行json处理
-		//JSONObject json = JSONObject.fromObject(resultMap);
-		//setResult(json.toString());
-	}
-	/**
 	 * 清空登录信息
+	 * 
 	 * @return
 	 */
 	public String logout() {

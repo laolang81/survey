@@ -84,11 +84,12 @@ public class WebUserAction extends BaseAction<WebUser> {
 	 * 
 	 * @return
 	 */
-	public String doAjaxList() {
+	public String ajaxList() {
 		List<WebUser> users = webUserService.getUserList(getiDisplayLength(), getiDisplayStart());
 		result.put("aaData", users);
 		//setResultMapJson();
 		return SUCCESS;
+		
 	}
 
 	/**
@@ -97,7 +98,7 @@ public class WebUserAction extends BaseAction<WebUser> {
 	 * @return
 	 */
 	@SkipValidation
-	public String doAdd() {
+	public String add() {
 
 		// 添加完毕之后自动定向到编辑页面
 		this.id = model.getId();
@@ -120,29 +121,16 @@ public class WebUserAction extends BaseAction<WebUser> {
 		}
 	}
 
-	/**
-	 * 不同方法而已
-	 * 
-	 * @return
-	 */
-	public String prepareAdd() {
-
-		return SUCCESS;
-	}
-
-	public String save() {
-		return null;
-
-	}
-
-	public String edit() {
-		return null;
-
-	}
+	
 
 	public String update() {
 		return null;
 
+	}
+	
+	public String saveUpdate()
+	{
+		return SUCCESS;
 	}
 
 	public String delete() {
@@ -150,11 +138,5 @@ public class WebUserAction extends BaseAction<WebUser> {
 
 	}
 
-	private void setResultMapJson() {
-		// 将要返回的map对象进行json处理
-		/*JSONObject json = JSONObject.fromObject(resultMap);
-		System.out.println(json.toString());
-		setResult(json.toString());*/
-	}
 
 }

@@ -28,28 +28,21 @@ public class UserAction extends BaseAction<AdminUser> implements UserAware {
 
 	@Resource
 	private AdminGroupService adminGroupService;
-	
+
 	@Resource
 	private WebUserService webUserService;
 	// 用户组列表
 	private List<AdminGroup> adminGroupsSelect;
-	
 
 	// 登录用户信息
 	private AdminUser user;
-	
+
 	//
 	private AdminGroup adminGroup;
-
-	public Integer id;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	/**
+	 * 编辑更新记录标识id
+	 */
+	public Integer updateid;
 
 	// 验证用户密码
 	private String confirmPassword;
@@ -86,51 +79,27 @@ public class UserAction extends BaseAction<AdminUser> implements UserAware {
 	 * @return
 	 */
 	@SkipValidation
-	public String doAdd() {
+	public String add() {
 
-		
-		
-		
 		// 添加完毕之后自动定向到编辑页面
-		this.id = model.getId();
+		this.updateid = model.getId();
 		// 要保持关联
 		// model.setAdminGroup(adminGroup);
 		return INPUT;
 	}
 
 	/**
-	 * 默认prepare拦截器先调用do开头的
-	 * 做一些准备或者可以提前处理的工作
+	 * 默认prepare拦截器先调用do开头的 做一些准备或者可以提前处理的工作
 	 */
 	public void prepareDoAdd() {
 
 		// 添加
 		if (getMethod().equalsIgnoreCase("post")) {
 			System.out.println(model);
-		}else{
+		} else {
 			// 设置用户组
 			setAdminGroupsSelect(adminGroupService.getGroupSelectList());
 		}
-	}
-
-	/**
-	 * 不同方法而已
-	 * 
-	 * @return
-	 */
-	public String prepareAdd() {
-
-		return SUCCESS;
-	}
-
-	public String save() {
-		return null;
-
-	}
-
-	public String edit() {
-		return null;
-
 	}
 
 	public String update() {
