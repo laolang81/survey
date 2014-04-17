@@ -14,14 +14,22 @@
 			<!-- 注册拦截器 -->
 			<interceptor name="loginInterceptor"
 				class="com.sniper.survey.struts2.interceptor.LoginInterceptor" />
+			<interceptor name="CatchUrlInterceptor"
+				class="com.sniper.survey.struts2.interceptor.CatchUrlInterceptor" />
 			<!-- 定义拦截器栈 -->
 			<interceptor-stack name="surveyStack">
+				<interceptor-ref name="CatchUrlInterceptor" />
 				<interceptor-ref name="loginInterceptor" />
+				<!-- 权限url -->
 				<interceptor-ref name="defaultStack">
 					<!-- paramsPrepareParamsStack 拦截器,会在prepare之前赋值, 你如果想在prepare获取参数传值就吧defaultStack替换成paramsPrepareParamsStack 
 						modelDriven.refreshModelBeforeResult 设置通过刷新model的形式也可以完成prepare之前的赋值 但是好像refreshModelBeforeResult是能获取model的值对于一般参数还是推荐paramsPrepareParamsStack -->
 					<!-- 在刷新模型model,解决懒加载最好的方法 -->
 					<param name="modelDriven.refreshModelBeforeResult">true</param>
+					<!-- struts2文件上传配置 -->
+					<param name="fileUpload.maxnumsize">60000</param>
+					<param name="fileUpload.allowedExtensions">.jpg,.png,jpeg,.bmp,.gif</param>
+					<param name="fileUpload.allowdTypes">image/jpg,image/jpeg,image/pjpeg,image/gif,image/bmp</param>
 				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
@@ -114,7 +122,34 @@
 	<package name="sniperSurveyAJAX" extends="json-default"
 		namespace="/admin">
 
-		<default-interceptor-ref name="paramsPrepareParamsStack" />
+		<interceptors>
+			<!-- 注册拦截器 -->
+			<interceptor name="loginInterceptor"
+				class="com.sniper.survey.struts2.interceptor.LoginInterceptor" />
+			<interceptor name="CatchUrlInterceptor"
+				class="com.sniper.survey.struts2.interceptor.CatchUrlInterceptor" />
+			<!-- 定义拦截器栈 -->
+			<interceptor-stack name="surveyStack">
+				<interceptor-ref name="CatchUrlInterceptor" />
+				<interceptor-ref name="loginInterceptor" />
+				<!-- 权限url -->
+
+				<interceptor-ref name="defaultStack">
+					<param name="modelDriven.refreshModelBeforeResult">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 定义默认栈 -->
+		<default-interceptor-ref name="surveyStack" />
+
+		<default-action-ref name="userLogin" />
+		<!-- 定义默认全局login返回值 -->
+		<global-results>
+			<result name="login">/admin/login/index.jsp</result>
+		</global-results>
+
+
+		<!-- <default-interceptor-ref name="paramsPrepareParamsStack" /> -->
 		<!-- 用户ajax登录验证 -->
 		<action name="loginajaxvalid" class="loginAction" method="loginAjaxValid">
 			<result type="json">
