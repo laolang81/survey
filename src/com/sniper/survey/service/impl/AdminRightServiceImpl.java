@@ -72,5 +72,14 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 		}
 
 	}
+	/**
+	 * 获取最大权限位
+	 */
+	@Override
+	public int getMaxRightPos() {
+		String hql = "select max(r.pos) from AdminRight r";
+		Integer pos = (Integer) this.uniqueResult(hql);
+		return pos == null ? 0 : pos;
+	}
 
 }

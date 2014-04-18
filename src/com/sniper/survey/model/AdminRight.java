@@ -27,7 +27,7 @@ public class AdminRight {
 	// 权限位
 	@Column(name = "ar_pos", updatable = false)
 	private int pos;
-	// 公共资源
+	// 公共资源所有问都可以访问
 	@Column(name = "ar_is_public")
 	private boolean isPublic;
 	// 显示为menu

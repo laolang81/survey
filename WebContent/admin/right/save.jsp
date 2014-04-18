@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<s:include value="../public/header.jsp"></s:include>
+<s:include value="../public/header.jsp"/>
 
 <s:form action="rightsaveorupdate" namespace="/admin" method="post"
 	id="doAdd" cssClass="SFrom">
@@ -41,7 +41,6 @@
 		</div>
 
 		<label>desc描述</label>
-
 		<div class="input-control textarea">
 			<s:textarea cols="20" rows="2" name="desc" id="desc" />
 			<span class="help-inline" title=""><s:fielderror
@@ -54,4 +53,4 @@
 </s:form>
 
 
-<s:include value="../public/footer.jsp"></s:include>
+<s:include value="../public/footer.jsp"/>

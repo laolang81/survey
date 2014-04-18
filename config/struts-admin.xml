@@ -32,6 +32,7 @@
 		<!-- 定义默认全局login返回值 -->
 		<global-results>
 			<result name="login">/admin/login/index.jsp</result>
+			<result name="error_no_right">/index.jsp</result>
 		</global-results>
 		<!-- 后台基本CURD的通配符配置 -->
 		<action name="*List" class="{1}Action" method="list">

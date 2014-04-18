@@ -16,4 +16,7 @@ public interface AdminRightService extends BaseService<AdminRight> {
 	public void saveOrUpdate(AdminRight r);
 
 	public void appendRightByURL(String url);
+	
+	public int getMaxRightPos();
+	
 }

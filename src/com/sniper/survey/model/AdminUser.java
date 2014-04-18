@@ -43,10 +43,16 @@ public class AdminUser {
 	// 创建时间
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "au_ctime", updatable = false)
-	private Date ctime;
+	private Date ctime = new Date();
+
+	// 权限总和
+	@Column(name = "au_right_num")
+	private long[] rightNum;
+	// 设置为超级管理员
+	@Column(name = "au_super_admin")
+	private boolean superAdmin;
 	// 对应用户组
 	@ManyToMany(fetch = FetchType.EAGER)
-	// @JoinColumn(name = "au_group", referencedColumnName = "ag_value")
 	@JoinTable(name = "mc_admin_user_group", joinColumns = @JoinColumn(name = "ug_uid"), inverseJoinColumns = @JoinColumn(name = "ug_gid"))
 	private Set<AdminGroup> adminGroup = new HashSet<>();
 
@@ -114,12 +120,66 @@ public class AdminUser {
 		this.ctime = ctime;
 	}
 
+	public long[] getRightNum() {
+		return rightNum;
+	}
+
+	public void setRightNum(long[] rightNum) {
+		this.rightNum = rightNum;
+	}
+
+	public boolean isSuperAdmin() {
+		return superAdmin;
+	}
+
+	public void setSuperAdmin(boolean superAdmin) {
+		this.superAdmin = superAdmin;
+	}
+
 	public Set<AdminGroup> getAdminGroup() {
 		return adminGroup;
 	}
 
 	public void setAdminGroup(Set<AdminGroup> adminGroup) {
 		this.adminGroup = adminGroup;
+	}
+
+	/**
+	 * 计算用户权限总和
+	 */
+	public void calucateRightNum() {
+		int pos = 0;
+		long code = 0;
+		for (AdminGroup g : adminGroup) {
+			// 判断超级管理员
+			if ("administratos".equals(g.getValue())) {
+				this.superAdmin = true;
+				adminGroup = null;
+				return;
+			}
+			for (AdminRight r : g.getAdminRight()) {
+				pos = r.getPos();
+				code = r.getCode();
+				rightNum[pos] = rightNum[pos] | code;
+			}
+		}
+		// 释放起源在计算权限总和之后,adminGroup就是没用了
+		adminGroup = null;
+
+	}
+
+	/**
+	 * 判断用户是否具有指定权限
+	 * 
+	 * @param right
+	 * @return
+	 */
+	public boolean hasRight(AdminRight right) {
+		int pos = right.getPos();
+		long code = right.getCode();
+
+		return !((rightNum[pos] & code) == 0);
+
 	}
 
 }
