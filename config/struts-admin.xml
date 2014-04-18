@@ -3,24 +3,19 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-
-
 	<package name="sniperSurveyAdmin" extends="struts-default"
 		namespace="/admin">
-		<!-- <default-action-ref name="*/index" /> <action name="index"> index.htm为项目根目录的默认页面 
-			<result>*/index.jsp</result> </action> -->
 
 		<interceptors>
 			<!-- 注册拦截器 -->
 			<interceptor name="loginInterceptor"
 				class="com.sniper.survey.struts2.interceptor.LoginInterceptor" />
-			<interceptor name="CatchUrlInterceptor"
-				class="com.sniper.survey.struts2.interceptor.CatchUrlInterceptor" />
+			<!-- <interceptor name="CatchUrlInterceptor"
+				class="com.sniper.survey.struts2.interceptor.CatchUrlInterceptor" /> -->
 			<!-- 定义拦截器栈 -->
 			<interceptor-stack name="surveyStack">
-				<interceptor-ref name="CatchUrlInterceptor" />
+				<!-- <interceptor-ref name="CatchUrlInterceptor" /> -->
 				<interceptor-ref name="loginInterceptor" />
-				<!-- 权限url -->
 				<interceptor-ref name="defaultStack">
 					<!-- paramsPrepareParamsStack 拦截器,会在prepare之前赋值, 你如果想在prepare获取参数传值就吧defaultStack替换成paramsPrepareParamsStack 
 						modelDriven.refreshModelBeforeResult 设置通过刷新model的形式也可以完成prepare之前的赋值 但是好像refreshModelBeforeResult是能获取model的值对于一般参数还是推荐paramsPrepareParamsStack -->
@@ -39,32 +34,32 @@
 			<result name="login">/admin/login/index.jsp</result>
 		</global-results>
 		<!-- 后台基本CURD的通配符配置 -->
-		<action name="*list" class="{1}Action" method="list">
+		<action name="*List" class="{1}Action" method="list">
 			<result name="success">{1}/list.jsp</result>
 			<result name="input">{1}/list.jsp</result>
 		</action>
 
 		<!-- 统一添加操作 -->
-		<action name="*save" class="{1}Action" method="save">
-			<result name="input">{1}/add.jsp</result>
+		<action name="*Save" class="{1}Action" method="save">
+			<result name="input">{1}/save.jsp</result>
 			<result name="success" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}list</param>
+				<param name="actionName">{1}List</param>
 			</result>
 			<result name="update" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}update</param>
+				<param name="actionName">{1}Update</param>
 				<param name="updateid">${updateid}</param>
 			</result>
 		</action>
 
 
 		<!-- 统一更新操作 -->
-		<action name="*update" class="{1}Action" method="update">
-			<result name="input">{1}/add.jsp</result>
+		<action name="*Update" class="{1}Action" method="update">
+			<result name="input">{1}/save.jsp</result>
 			<result name="success" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}list</param>
+				<param name="actionName">{1}List</param>
 			</result>
 		</action>
 
@@ -72,28 +67,28 @@
 		<action name="*saveorupdate" class="{1}Action" method="saveOrUpdate">
 			<result name="success" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}list</param>
+				<param name="actionName">{1}List</param>
 			</result>
 			<result name="save" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}save</param>
+				<param name="actionName">{1}Save</param>
 			</result>
 			<!-- 统一设置更新参数id的名称 -->
 			<result name="update" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}update</param>
+				<param name="actionName">{1}Update</param>
 				<param name="updateid">${updateid}</param>
 			</result>
 		</action>
 		<!-- 删除操作,我一般采用ajax方式删除,因为这个返回参数太麻烦 -->
-		<action name="*delete" class="{1}Action" method="delete">
+		<action name="*Delete" class="{1}Action" method="delete">
 			<result name="success" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}list</param>
+				<param name="actionName">{1}List</param>
 			</result>
 			<result name="error" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}list</param>
+				<param name="actionName">{1}List</param>
 			</result>
 		</action>
 		<!-- 下面是单独设置的配置 -->
@@ -106,17 +101,18 @@
 			</result>
 		</action>
 
-		<action name="login" class="loginAction" method="execute">
+		<action name="login" class="loginAction">
+			<result name="success">/admin/login/index.jsp</result>
 			<result name="login">/admin/login/index.jsp</result>
 		</action>
 		<action name="logout" class="loginAction" method="logout">
-			<result name="logout" type="redirectAction">userLogin</result>
+			<result name="logout" type="redirectAction">login</result>
 		</action>
 
 	</package>
 	<!-- -->
 	<!-- struts-default -->
-	<package name="sniperSurveyAJAX" extends="json-default"
+	<package name="sniperSurveyAJAX" extends="struts-default,json-default"
 		namespace="/admin">
 
 		<!-- <interceptors>
@@ -144,24 +140,23 @@
 		<global-results>
 			<result name="login">/admin/login/index.jsp</result>
 		</global-results> -->
-
-
+		
 		<default-interceptor-ref name="paramsPrepareParamsStack" />
 		<!-- 用户ajax登录验证 -->
-		<action name="loginajaxvalid" class="loginAction" method="loginAjaxValid">
+		<action name="loginAjaxValid" class="loginAction" method="loginAjaxValid">
 			<result type="json">
 				<param name="root">result</param>
 			</result>
 		</action>
 
 		<!-- 普通ajax列表获取,每个类只有一个不过可以同参数获取不同的结果 -->
-		<action name="*Ajaxlist" class="{1}Action" method="ajaxList">
+		<action name="*ListAjax" class="{1}Action" method="ajaxList">
 			<result type="json">
 				<param name="root">result</param>
 			</result>
 		</action>
 
-		<action name="*ajaxdelete" class="{1}Action" method="ajaxDelete">
+		<action name="*DeleteAjax" class="{1}Action" method="ajaxDelete">
 			<result type="json">
 				<param name="root">result</param>
 			</result>

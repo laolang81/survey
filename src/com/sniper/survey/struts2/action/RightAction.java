@@ -20,23 +20,14 @@ public class RightAction extends BaseAction<AdminRight> {
 	private static final long serialVersionUID = 2799348891231755561L;
 
 	private List<AdminRight> allRight;
-
+	/**
+	 * ajax返回列表
+	 */
 	private Map<String, List<AdminRight>> result = new HashMap<>();
 
 	@Resource
 	private AdminRightService adminRightService;
-	// 记录编辑id
-	private Integer updateid;
-
 	
-	public Integer getUpdateid() {
-		return updateid;
-	}
-
-	public void setUpdateid(Integer updateid) {
-		this.updateid = updateid;
-	}
-
 	public List<AdminRight> getAllRight() {
 		return allRight;
 	}
@@ -82,9 +73,11 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * @return
 	 */
 	public String saveOrUpdate() {
-		// 添加100次
+		
+		System.out.println(model.getId());
+		setUpdateid(model.getId());
 		adminRightService.saveOrUpdate(model);
-		return "list";
+		return "update";
 	}
 
 	/**
@@ -94,7 +87,7 @@ public class RightAction extends BaseAction<AdminRight> {
 	 */
 	public String update() {
 		
-		this.model = adminRightService.getEntity(updateid);
+		this.model = adminRightService.getEntity(getUpdateid());
 		
 		System.out.println(model);
 
@@ -108,7 +101,7 @@ public class RightAction extends BaseAction<AdminRight> {
 	 */
 	public String delete() {
 		AdminRight right = new AdminRight();
-		right.setId(updateid);
+		right.setId(getUpdateid());
 		adminRightService.deleteEntiry(right);
 		return "list";
 	}

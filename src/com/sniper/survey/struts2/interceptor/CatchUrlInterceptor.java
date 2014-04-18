@@ -50,10 +50,9 @@ public class CatchUrlInterceptor implements Interceptor {
 		ApplicationContext ac = WebApplicationContextUtils
 				.getWebApplicationContext(context2);
 
-		AdminRightService service = (AdminRightService) ac
-				.getBean("adminRightService");
-		service.appendRightByURL(url);
-
+		//AdminRightService service = (AdminRightService) ac.getBean("adminRightService");
+		//service.appendRightByURL(url);
+		System.out.println(url);
 		return invocation.invoke();
 	}
 

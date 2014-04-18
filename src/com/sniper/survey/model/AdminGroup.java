@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mc_admin_group")
-public class AdminGroup implements Serializable{
+public class AdminGroup extends BaseEntity{
 	
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -97,6 +97,8 @@ public class AdminGroup implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
 	
 	
 	

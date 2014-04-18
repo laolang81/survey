@@ -32,7 +32,7 @@ public abstract class BaseAction<T> extends ActionSupport implements
 				// 获取地一个参数
 				Type arg = args[0];
 				if (arg instanceof Class) {
-					Class clazz =  (Class<T>) arg;
+					Class clazz = (Class<T>) arg;
 					try {
 						model = (T) clazz.newInstance();
 					} catch (Exception e) {
@@ -49,7 +49,6 @@ public abstract class BaseAction<T> extends ActionSupport implements
 
 	@Override
 	public void prepare() throws Exception {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -57,20 +56,32 @@ public abstract class BaseAction<T> extends ActionSupport implements
 	public T getModel() {
 		return model;
 	}
+
 	/**
-	 * 获取用户的提交方式
-	 * get
-	 * post
+	 * 获取用户的提交方式 get post
 	 */
 	@Override
 	public void setMethod(String method) {
-		
+
 		this.method = method;
-		
+
 	}
-	
+
 	public String getMethod() {
 		return method;
 	}
-	
+
+	/**
+	 * 记录编辑id
+	 */
+	private Integer updateid;
+
+	public Integer getUpdateid() {
+		return updateid;
+	}
+
+	public void setUpdateid(Integer updateid) {
+		this.updateid = updateid;
+	}
+
 }

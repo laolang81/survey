@@ -4,7 +4,7 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <s:include value="../public/header.jsp"></s:include>
 
-<s:form action="rightDoSaveUpdate" namespace="/admin" method="post"
+<s:form action="rightsaveorupdate" namespace="/admin" method="post"
 	id="doAdd" cssClass="SFrom">
 	<s:hidden name="id" />
 	<s:hidden name="code" />

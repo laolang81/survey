@@ -3,6 +3,10 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <s:include value="../public/header.jsp"></s:include>
+<style type="text/css">
+      @import "myfiles/Plugin/DataTables/media/css/demo_page.css";
+      @import "myfiles/Plugin/DataTables/media/css/demo_table.css";
+</style>
 <script src="myfiles/Plugin/DataTables/media/js/jquery.dataTables.js"></script>
 <div class="list_content">
 	<table class="table striped hovered dataTable" id="dataTables">
@@ -38,7 +42,7 @@
 					.dataTable(
 							{
 								
-								"bJQueryUI"		: true,
+								"bJQueryUI"		: false,
 								"bProcessing" : true,
 								"bServerSide": false,
 								/*使用post方式
@@ -51,7 +55,7 @@
 								        "success": fnCallback
 								    } );
 								}*/
-								"sAjaxSource" : '<s:url action="rightAjaxlist" namespace="/admin" />',
+								"sAjaxSource" : '<s:url action="rightListAjax" namespace="/admin" />',
 								/* "oLanguage" : {
 									"sUrl": "cn.txt"
 								}, */
@@ -63,7 +67,7 @@
 											"mData" : "id",
 											"mRender" : function(data, type,
 													row) {
-												return '<a href="<s:url action="rightupdate" namespace="/admin" />?eid='
+												return '<a href="<s:url action="rightUpdate" namespace="/admin" />?updateid='
 														+ row.id
 														+ '">'
 														+ row.id + '</a>';
