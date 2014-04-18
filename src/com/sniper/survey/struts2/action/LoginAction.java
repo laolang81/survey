@@ -74,7 +74,10 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	public String execute() throws Exception {
 		return SUCCESS;
 	}
-
+	/**
+	 * ajax 登录验证
+	 * @return
+	 */
 	public String loginAjaxValid() {
 
 		if (result.size() > 1) {

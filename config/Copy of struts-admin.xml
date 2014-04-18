@@ -26,7 +26,10 @@
 						modelDriven.refreshModelBeforeResult 设置通过刷新model的形式也可以完成prepare之前的赋值 但是好像refreshModelBeforeResult是能获取model的值对于一般参数还是推荐paramsPrepareParamsStack -->
 					<!-- 在刷新模型model,解决懒加载最好的方法 -->
 					<param name="modelDriven.refreshModelBeforeResult">true</param>
-					
+					<!-- struts2文件上传配置 -->
+					<!-- <param name="fileUpload.maxnumsize">60000</param>
+					<param name="fileUpload.allowedExtensions">.jpg,.png,jpeg,.bmp,.gif</param>
+					<param name="fileUpload.allowdTypes">image/jpg,image/jpeg,image/png,image/gif,image/bmp</param> -->
 				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
@@ -45,13 +48,13 @@
 		</action>
 
 		<!-- 统一添加操作 -->
-		<action name="*save" class="{1}Action" method="save">
+		<action name="*add" class="{1}Action" method="add">
 			<result name="input">{1}/add.jsp</result>
-			<result name="success" type="redirectAction">
+			<result name="list" type="redirectAction">
 				<param name="namespace">/admin</param>
 				<param name="actionName">{1}list</param>
 			</result>
-			<result name="update" type="redirectAction">
+			<result name="edit" type="redirectAction">
 				<param name="namespace">/admin</param>
 				<param name="actionName">{1}update</param>
 				<param name="updateid">${updateid}</param>
@@ -62,7 +65,7 @@
 		<!-- 统一更新操作 -->
 		<action name="*update" class="{1}Action" method="update">
 			<result name="input">{1}/add.jsp</result>
-			<result name="success" type="redirectAction">
+			<result name="list" type="redirectAction">
 				<param name="namespace">/admin</param>
 				<param name="actionName">{1}list</param>
 			</result>
@@ -70,13 +73,13 @@
 
 		<!-- 统一更新,保存操作 -->
 		<action name="*saveorupdate" class="{1}Action" method="saveOrUpdate">
-			<result name="success" type="redirectAction">
+			<result name="list" type="redirectAction">
 				<param name="namespace">/admin</param>
 				<param name="actionName">{1}list</param>
 			</result>
-			<result name="save" type="redirectAction">
+			<result name="add" type="redirectAction">
 				<param name="namespace">/admin</param>
-				<param name="actionName">{1}save</param>
+				<param name="actionName">{1}add</param>
 			</result>
 			<!-- 统一设置更新参数id的名称 -->
 			<result name="update" type="redirectAction">

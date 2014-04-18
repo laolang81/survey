@@ -21,9 +21,6 @@ import com.sniper.survey.util.VerifyCode;
 @Scope("prototype")
 public class VerifyAction extends ActionSupport implements SessionAware {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	// Struts2中Map类型的session
 	private Map<String, Object> session;

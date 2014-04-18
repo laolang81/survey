@@ -79,7 +79,7 @@ public class UserAction extends BaseAction<AdminUser> implements UserAware {
 	 * @return
 	 */
 	@SkipValidation
-	public String add() {
+	public String save() {
 
 		// 添加完毕之后自动定向到编辑页面
 		this.updateid = model.getId();
@@ -91,7 +91,7 @@ public class UserAction extends BaseAction<AdminUser> implements UserAware {
 	/**
 	 * 默认prepare拦截器先调用do开头的 做一些准备或者可以提前处理的工作
 	 */
-	public void prepareDoAdd() {
+	public void prepareDoSave() {
 
 		// 添加
 		if (getMethod().equalsIgnoreCase("post")) {

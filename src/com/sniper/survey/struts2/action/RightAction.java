@@ -73,11 +73,14 @@ public class RightAction extends BaseAction<AdminRight> {
 		return SUCCESS;
 	}
 
-	public String add() {
+	public String save() {
 
 		return INPUT;
 	}
-
+	/**
+	 * 更新操作
+	 * @return
+	 */
 	public String saveOrUpdate() {
 		// 添加100次
 		adminRightService.saveOrUpdate(model);
