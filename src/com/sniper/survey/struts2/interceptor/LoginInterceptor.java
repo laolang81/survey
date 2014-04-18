@@ -72,7 +72,7 @@ public class LoginInterceptor implements Interceptor {
 				// 放行,注入用户对象
 				if (action instanceof UserAware) {
 					((UserAware) action).setUser(adminUser);
-					;
+					
 
 				}
 				// 超级管理yaun
