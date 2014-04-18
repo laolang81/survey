@@ -122,34 +122,34 @@
 	<package name="sniperSurveyAJAX" extends="json-default"
 		namespace="/admin">
 
-		<interceptors>
-			<!-- 注册拦截器 -->
+		<!-- <interceptors>
+			注册拦截器
 			<interceptor name="loginInterceptor"
 				class="com.sniper.survey.struts2.interceptor.LoginInterceptor" />
 			<interceptor name="CatchUrlInterceptor"
 				class="com.sniper.survey.struts2.interceptor.CatchUrlInterceptor" />
-			<!-- 定义拦截器栈 -->
+			定义拦截器栈
 			<interceptor-stack name="surveyStack">
 				<interceptor-ref name="CatchUrlInterceptor" />
 				<interceptor-ref name="loginInterceptor" />
-				<!-- 权限url -->
+				权限url
 
 				<interceptor-ref name="defaultStack">
 					<param name="modelDriven.refreshModelBeforeResult">true</param>
 				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-		<!-- 定义默认栈 -->
+		定义默认栈
 		<default-interceptor-ref name="surveyStack" />
 
 		<default-action-ref name="userLogin" />
-		<!-- 定义默认全局login返回值 -->
+		定义默认全局login返回值
 		<global-results>
 			<result name="login">/admin/login/index.jsp</result>
-		</global-results>
+		</global-results> -->
 
 
-		<!-- <default-interceptor-ref name="paramsPrepareParamsStack" /> -->
+		<default-interceptor-ref name="paramsPrepareParamsStack" />
 		<!-- 用户ajax登录验证 -->
 		<action name="loginajaxvalid" class="loginAction" method="loginAjaxValid">
 			<result type="json">
@@ -158,7 +158,7 @@
 		</action>
 
 		<!-- 普通ajax列表获取,每个类只有一个不过可以同参数获取不同的结果 -->
-		<action name="*ajaxlist" class="{1}Action" method="ajaxList">
+		<action name="*Ajaxlist" class="{1}Action" method="ajaxList">
 			<result type="json">
 				<param name="root">result</param>
 			</result>

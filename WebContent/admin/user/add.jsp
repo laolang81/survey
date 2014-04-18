@@ -66,6 +66,10 @@
 
 			</div>
 		</div>
+		
+		<s:optiontransferselect doubleList="adminGroupsSelect" list="adminGroupsSelect" doubleName="name1"
+		leftUpLabel="Up" leftDownLabel="Down" rightUpLabel="RRp" rightDownLabel="RDn" leftTitle="Left" rightTitle="Right"
+		headerKey="" headerValue="---;;;-"   />
 
 
 

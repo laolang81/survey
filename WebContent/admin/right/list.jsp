@@ -51,7 +51,7 @@
 								        "success": fnCallback
 								    } );
 								}*/
-								"sAjaxSource" : '<s:url action="rightdoajaxlist" namespace="/admin" />',
+								"sAjaxSource" : '<s:url action="rightAjaxlist" namespace="/admin" />',
 								/* "oLanguage" : {
 									"sUrl": "cn.txt"
 								}, */
@@ -63,7 +63,7 @@
 											"mData" : "id",
 											"mRender" : function(data, type,
 													row) {
-												return '<a href="<s:url action="rightDoUpdate" namespace="/admin" />?eid='
+												return '<a href="<s:url action="rightupdate" namespace="/admin" />?eid='
 														+ row.id
 														+ '">'
 														+ row.id + '</a>';
