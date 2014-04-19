@@ -73,7 +73,6 @@ public interface BaseDao<T> {
 	public Query findEntityByHQLQuery(String hql, Object... Object);
 
 	public SQLQuery findEntityBySQLQuery(String sql);
-
 	
-
+	public void executeSQL(String hql, Object... Object);
 }

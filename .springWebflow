@@ -4,9 +4,8 @@
 	<pluginVersion><![CDATA[2.6.0.201103160035-RELEASE]]></pluginVersion>
 	<configs>
 		<config>
-			<file>config/sss.xml</file>
-			<name><![CDATA[sss]]></name>
-			<beans-config><![CDATA[1:BeansModel|2:survey|3:config/beans.xml]]></beans-config>
+			<file>config/schedules.xml</file>
+			<name><![CDATA[schedules]]></name>
 		</config>
 	</configs>
 </webflow-project-description>

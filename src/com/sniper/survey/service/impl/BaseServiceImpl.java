@@ -52,7 +52,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	public void saveOrUpdateEntiry(T t) {
-		dao.saveOrUpdateEntiry(t); 
+		dao.saveOrUpdateEntiry(t);
 
 	}
 
@@ -117,5 +117,11 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	public List<T> findAllEntitles() {
 		String hql = "from " + clazz.getSimpleName();
 		return this.findEntityByHQL(hql);
+	}
+
+	@Override
+	public void executeSQL(String hql, Object... Object) {
+		dao.executeSQL(hql, Object);
+
 	}
 }

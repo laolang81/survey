@@ -15,4 +15,10 @@ public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService {
 		super.setDao(dao);
 	}
 
+	@Override
+	public void createLogTable(String tableName) {
+		String sql = "create table if not exists " + tableName + "like mc_logs";
+		this.findEntityBySQLQuery(sql);
+	}
+
 }

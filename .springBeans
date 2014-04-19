@@ -9,6 +9,7 @@
 	<configs>
 		<config>config/demo.xml</config>
 		<config>config/beans.xml</config>
+		<config>config/schedules.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

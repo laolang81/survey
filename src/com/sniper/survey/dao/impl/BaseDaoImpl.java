@@ -156,6 +156,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		return query.setFirstResult(firstResult).setMaxResults(maxResult)
 				.list();
 	}
+
 	/**
 	 * 执行原生sql语句
 	 */
@@ -177,5 +178,16 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		return query;
 	}
 
+	@Override
+	public void executeSQL(String hql, Object... Object) {
+		SQLQuery query = this.getCurrentSession().createSQLQuery(hql);
+		if (Object != null && Object.length > 0) {
+			for (int i = 0; i < Object.length; i++) {
+				query.setParameter(i, Object[i]);
+			}
+			query.executeUpdate();
+		}
+
+	}
 
 }
