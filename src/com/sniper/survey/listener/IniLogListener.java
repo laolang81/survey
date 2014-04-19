@@ -1,4 +1,4 @@
-package com.sniper.suvey.listener;
+package com.sniper.survey.listener;
 
 import java.util.HashMap;
 import java.util.List;
