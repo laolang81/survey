@@ -32,6 +32,6 @@ public class LogUtil {
 			month = month + 12;
 		}
 		
-		return "logs_" + year + "_" + month;
+		return "mc_logs_" + year + "_" + month;
 	}
 }

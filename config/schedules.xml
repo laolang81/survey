@@ -1,7 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<!-- 恩物明细bean -->
+	<bean id="jobDetailBean" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<!-- 通过 任务指定石英任务 -->
+		<property name="jobClass"
+			value="com.sniper.survey.scheduler.CreateLogTableTask" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="logService" value-ref="logService"></entry>
+			</map>
+		</property>
+	</bean>
+	<!-- cron触发器bean，设置石英任务的调度策略 -->
+	<bean id="cronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="jobDetailBean" />
+		<!-- 表达式 * 表示任何时候，？表示不设 -->
+		<property name="cronExpression">
+			<value>0 55 22 19 * ?</value>
+		</property>
+	</bean>
+	<!-- ======================== 调度工厂 ======================== -->
+	<bean id="SpringJobSchedulerFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTriggerBean" />
+			</list>
+		</property>
+	</bean>
 </beans>
