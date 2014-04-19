@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 @Table(name = "mc_channel")
 public class Channel extends BaseEntity{
 
+	private static final long serialVersionUID = -331296954351916696L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "cl_id")

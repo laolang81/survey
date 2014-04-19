@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Table(name = "mc_post_value")
 public class PostValue extends BaseEntity{
 
+	private static final long serialVersionUID = 8437710606525667425L;
 	@Id
 	// @GenericGenerator(name = "generator", strategy = "native", parameters = {
 	// @Parameter(name = "property", value = "post") })

@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "mc_survey_question")
 public class SurveyQuestion extends BaseEntity{
 
+	private static final long serialVersionUID = -2897085975644254403L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "msq_id")

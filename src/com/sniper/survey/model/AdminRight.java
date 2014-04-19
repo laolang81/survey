@@ -11,6 +11,7 @@ import javax.persistence.Table;
 @Table(name = "mc_admin_right")
 public class AdminRight extends BaseEntity{
 
+	private static final long serialVersionUID = 6907715430593817715L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ar_id")

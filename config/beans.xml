@@ -91,14 +91,16 @@
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))" />
 		<aop:aspect id="loggerAspect" ref="logger">
 			<aop:around method="record"
-				pointcut="execution(* *..*Service.save*(..)) 
+				pointcut="(execution(* *..*Service.save*(..)) 
 											or execution(* *..*Service.update*(..))
 											or execution(* *..*Service.delete*(..))
 											or execution(* *..*Service.batch*(..))
 											or execution(* *..*Service.new*(..))
 											or execution(* *..*Service.move*(..)) 
 											or execution(* *..*Service.clear*(..))
-											or execution(* *..*Service.toggle*(..))" />
+											or execution(* *..*Service.toggle*(..)))
+											and !bean(logService)
+											" />
 		</aop:aspect>
 
 	</aop:config>

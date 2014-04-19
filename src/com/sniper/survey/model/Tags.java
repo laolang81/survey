@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 @Table(name = "mc_tags")
 public class Tags extends BaseEntity{
 
+	private static final long serialVersionUID = -6819449707260708869L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "mt_id")

@@ -2,6 +2,7 @@ package com.sniper.survey.model;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 public abstract class BaseEntity implements Serializable {
 
@@ -30,22 +31,24 @@ public abstract class BaseEntity implements Serializable {
 				// 设置私有属性可读可访问
 				f.setAccessible(true);
 				fvalue = f.get(this);
-				// 判断基本数据类型
-				if (ftype.isPrimitive() 
+				// 判断基本数据类型,过滤静态
+				if ((ftype.isPrimitive() 
 						|| ftype == Integer.class
 						|| ftype == Long.class 
 						|| ftype == Short.class
 						|| ftype == Boolean.class 
 						|| ftype == Character.class
 						|| ftype == Double.class 
-						|| ftype == String.class) {
+						|| ftype == String.class)
+						&& !Modifier.isStatic(f.getModifiers())){
 					buffer.append(fname);
 					buffer.append(":");
 					buffer.append(ftype);
+					buffer.append(",");
 				}
 			}
 
-			buffer.append("}");
+			buffer.append("{}");
 			return buffer.toString();
 
 		} catch (Exception e) {

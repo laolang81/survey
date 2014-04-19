@@ -26,6 +26,7 @@ import javax.persistence.TemporalType;
 @Table(name = "mc_post")
 public class Post extends BaseEntity{
 
+	private static final long serialVersionUID = -8153642939179018327L;
 	/*
 	 * @GenericGenerator(name = "generator", strategy = "native", parameters = {
 	 * 

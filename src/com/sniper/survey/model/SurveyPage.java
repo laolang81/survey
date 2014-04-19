@@ -28,6 +28,7 @@ import javax.persistence.TemporalType;
 @Table(name = "mc_survey_page")
 public class SurveyPage extends BaseEntity{
 
+	private static final long serialVersionUID = -4119371995632333205L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ms_id")

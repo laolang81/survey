@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 @Table(name = "mc_web_user")
 public class WebUser extends BaseEntity{
 
+	private static final long serialVersionUID = 3176356213439405202L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "wu_id")

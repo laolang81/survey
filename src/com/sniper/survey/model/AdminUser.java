@@ -21,6 +21,7 @@ import javax.persistence.TemporalType;
 @Table(name = "mc_admin_user")
 public class AdminUser extends BaseEntity{
 
+	private static final long serialVersionUID = -1749860151352757711L;
 	@Id
 	@Column(name = "au_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
