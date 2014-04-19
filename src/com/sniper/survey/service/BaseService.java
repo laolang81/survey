@@ -32,7 +32,7 @@ public interface BaseService<T> {
 
 	public Query findEntityByHQLQuery(String hql, Object... Object);
 
-	public SQLQuery findEntityBySQLQuery(String sql);
+	public SQLQuery findEntityBySQLQuery(String sql, Object... Object);
 
 	// 获取唯一的值
 	public Object uniqueResult(String hql, Object... objects);

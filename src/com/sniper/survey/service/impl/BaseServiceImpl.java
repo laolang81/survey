@@ -103,8 +103,8 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	@Override
-	public SQLQuery findEntityBySQLQuery(String sql) {
-		return dao.findEntityBySQLQuery(sql);
+	public SQLQuery findEntityBySQLQuery(String sql, Object... Object) {
+		return dao.findEntityBySQLQuery(sql, Object);
 	}
 
 	@Override

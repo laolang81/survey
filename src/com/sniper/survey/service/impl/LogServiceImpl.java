@@ -53,6 +53,8 @@ public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService {
 				+ " and table_name like 'mc_logs_%' "
 				+ " and table_name <= '" + tableName + "'"
 				+ " order by table_name desc limit 0," + n;
+		List list = (List) this.findEntityBySQLQuery(sql).uniqueResult();
+		
 		return null;
 	}
 }
