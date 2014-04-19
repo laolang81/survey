@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "mc_admin_user")
-public class AdminUser {
+public class AdminUser extends BaseEntity{
 
 	@Id
 	@Column(name = "au_id")

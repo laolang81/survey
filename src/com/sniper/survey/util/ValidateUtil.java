@@ -64,6 +64,13 @@ public class ValidateUtil {
 		}
 		return false;
 	}
+	
+	public static boolean isValid(Object[] paramType) {
+		if(paramType != null && paramType.length > 0){
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * 
@@ -78,7 +85,7 @@ public class ValidateUtil {
 		if (ValidateUtil.isValid(nameSpace) || "/".equals(actionName)) {
 			nameSpace = "";
 		}
-		// 将超链接参数部分去掉
+		// 将超链接参数部分去掉?=ssssxxx
 		if (actionName.contains("?")) {
 			actionName = actionName.substring(0, actionName.indexOf("?"));
 		}
@@ -86,21 +93,24 @@ public class ValidateUtil {
 		HttpSession session = request.getSession();
 		ServletContext context = session.getServletContext();
 		Map<String, AdminRight> map = (Map<String, AdminRight>) context
-				.getAttribute("all_right_map");
+				.getAttribute("all_rights_map");
 		AdminRight right = map.get(url);
-		if (request == null || right.isPublic()) {
+		if (right == null || right.isPublic()) {
 			return true;
 		} else {
 			AdminUser user = (AdminUser) session.getAttribute("user");
+			//是否登录
 			if (user == null) {
 				return false;
 			} else {
 				if (action != null && action instanceof UserAware) {
 					((UserAware) action).setUser(user);
 				}
+				//超级管理员
 				if (user.isSuperAdmin()) {
 					return true;
 				} else {
+					//有权限
 					if (user.hasRight(right)) {
 						return true;
 					} else {

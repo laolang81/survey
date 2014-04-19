@@ -18,7 +18,8 @@ import com.sniper.survey.service.impl.AdminRightService;
 
 /**
  * sping监听器
- * 
+ * 初始化监听器，咋spring初始化完成后立即调用
+ * 负责完成权限的初始化
  * @author laolang
  * 
  */

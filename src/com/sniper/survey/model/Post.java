@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 //表明类的实体名称默认类名
 @Entity
 @Table(name = "mc_post")
-public class Post {
+public class Post extends BaseEntity{
 
 	/*
 	 * @GenericGenerator(name = "generator", strategy = "native", parameters = {

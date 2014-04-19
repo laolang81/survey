@@ -84,8 +84,23 @@
 		/> -->
 	<!-- <aop:advisor advice-ref="txAdvice" pointcut-ref="cut" /> </aop:config> -->
 	<!-- 切入点通知 -->
+	<!-- 日志记录 -->
+	<bean id="logger" class="com.sniper.survey.advice.Logger" />
+
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))" />
+		<aop:aspect id="loggerAspect" ref="logger">
+			<aop:around method="record"
+				pointcut="execution(* *..*Service.save*(..)) 
+											or execution(* *..*Service.update*(..))
+											or execution(* *..*Service.delete*(..))
+											or execution(* *..*Service.batch*(..))
+											or execution(* *..*Service.new*(..))
+											or execution(* *..*Service.move*(..)) 
+											or execution(* *..*Service.clear*(..))
+											or execution(* *..*Service.toggle*(..))" />
+		</aop:aspect>
+
 	</aop:config>
 
 </beans>

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mc_post_value")
-public class PostValue {
+public class PostValue extends BaseEntity{
 
 	@Id
 	// @GenericGenerator(name = "generator", strategy = "native", parameters = {
