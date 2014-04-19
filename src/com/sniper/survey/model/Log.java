@@ -8,7 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+/**
+ * 大数据处理
+ * 1、分表
+ * 	动态表：每个月生成一个表 logs_2014_4,logs_2014_5用调度
+ * create table logs_2014_4 if not exists like logs
+ * 一般都是提前一两个月生成表
+ * 2、分库
+ * @author laolang
+ *
+ */
 @Entity
 @Table(name = "mc_log")
 public class Log extends BaseEntity {

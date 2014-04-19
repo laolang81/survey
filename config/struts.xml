@@ -4,10 +4,12 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<!-- 定义全局资源包 -->
-	<constant name="struts.custom.i18n.resources" value="i18n"></constant>
-	<constant name="struts.devMode" value="true"></constant>
-	<constant name="struts.action.extension" value="do,action,html,,"></constant>
-	<constant name="struts.ui.theme" value="simple"></constant>
+	<constant name="struts.custom.i18n.resources" value="i18n"/>
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.action.extension" value="do,action,html,,"/>
+	<constant name="struts.ui.theme" value="simple"/>
+	<!-- 允许调用bean静态方法 -->
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
 	<package name="sniperSurvey" extends="struts-default"
 		namespace="/">
 

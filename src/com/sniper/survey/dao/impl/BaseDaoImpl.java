@@ -156,7 +156,9 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		return query.setFirstResult(firstResult).setMaxResults(maxResult)
 				.list();
 	}
-
+	/**
+	 * 执行原生sql语句
+	 */
 	@Override
 	public Query findEntityByHQLQuery(String hql, Object... Object) {
 		Query query = this.getCurrentSession().createQuery(hql);
