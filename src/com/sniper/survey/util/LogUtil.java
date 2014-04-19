@@ -1,5 +1,6 @@
 package com.sniper.survey.util;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 /**
@@ -16,6 +17,9 @@ public class LogUtil {
 	 */
 	public static String generateLogTableName(int offset)
 	{
+		//格式化
+		
+		
 		// Calendar 日历类 
 		Calendar c = Calendar.getInstance();
 		// 2014
@@ -31,7 +35,8 @@ public class LogUtil {
 			year--;
 			month = month + 12;
 		}
-		
-		return "mc_logs_" + year + "_" + month;
+		DecimalFormat format = new DecimalFormat();
+		format.applyPattern("00");
+		return "mc_logs_" + year + "_" + format.format(month);
 	}
 }

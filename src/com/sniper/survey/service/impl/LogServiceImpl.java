@@ -1,5 +1,7 @@
 package com.sniper.survey.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -34,5 +36,23 @@ public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService {
 
 		this.executeSQL(sql, t.getUser(), t.getName(), t.getParams(),
 				t.getResult(), t.getResultMsg(), t.getTime());
+	}
+
+	public void te() {
+		String sql = "select table_name from tables where table_schema = 'jsbc_demo' "
+				+ " and table_name like 'mc_logs_%' and table_name < '2014_8'"
+				+ " order table_name";
+	}
+
+	public List<Log> findNearesLogs(int n) {
+		String tableName = LogUtil.generateLogTableName(0);
+
+		// 查询最近的日志表名称
+		String sql = "select table_name from information_schema.tables "
+				+ " where table_schema = 'jdbc_demo' "
+				+ " and table_name like 'mc_logs_%' "
+				+ " and table_name <= '" + tableName + "'"
+				+ " order by table_name desc limit 0," + n;
+		return null;
 	}
 }
