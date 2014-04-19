@@ -151,7 +151,7 @@ public class AnchorTag extends AbstractClosingTag {
      */
 	@Override
 	public int doEndTag() throws JspException {
-		if(ValidateUtil.hasRight(namespace, action, (HttpServletRequest) pageContext.getRequest())){
+		if(ValidateUtil.hasRight(namespace, action, (HttpServletRequest) pageContext.getRequest(), null)){
 			return super.doEndTag();
 		}else{
 			return SKIP_BODY;

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.model.AdminUser;
+import com.sniper.survey.struts2.UserAware;
+import com.sniper.survey.struts2.action.BaseAction;
 
 /**
  * 校验工具类
@@ -63,8 +65,16 @@ public class ValidateUtil {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param nameSpace
+	 * @param actionName
+	 * @param request
+	 * @param action
+	 * @return
+	 */
 	public static boolean hasRight(String nameSpace, String actionName,
-			HttpServletRequest request) {
+			HttpServletRequest request, BaseAction action) {
 		if (ValidateUtil.isValid(nameSpace) || "/".equals(actionName)) {
 			nameSpace = "";
 		}
@@ -85,6 +95,9 @@ public class ValidateUtil {
 			if (user == null) {
 				return false;
 			} else {
+				if (action != null && action instanceof UserAware) {
+					((UserAware) action).setUser(user);
+				}
 				if (user.isSuperAdmin()) {
 					return true;
 				} else {
