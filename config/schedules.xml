@@ -21,7 +21,7 @@
 		<property name="jobDetail" ref="jobDetailBean" />
 		<!-- 表达式 * 表示任何时候，？表示不设 -->
 		<property name="cronExpression">
-			<value>0 55 22 19 * ?</value>
+			<value>0/1 * * * * ?</value>
 		</property>
 	</bean>
 	<!-- ======================== 调度工厂 ======================== -->

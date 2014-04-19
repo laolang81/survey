@@ -24,15 +24,18 @@ public class CreateLogTableTask extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
 		// 创建日志表
-
-		String tableName = LogUtil.generateLogTableName(0);
+		System.out.println("cron ....... ");
+		/*String tableName = LogUtil.generateLogTableName(0);
 		logService.createLogTable(tableName);
+		System.out.println(tableName + " create");
 		// 下一个月
 		tableName = LogUtil.generateLogTableName(1);
 		logService.createLogTable(tableName);
+		System.out.println(tableName + " create");
 		// 下一个月、
 		tableName = LogUtil.generateLogTableName(2);
 		logService.createLogTable(tableName);
+		System.out.println(tableName + " create");*/
 	}
 
 }
