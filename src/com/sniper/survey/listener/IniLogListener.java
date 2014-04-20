@@ -25,19 +25,19 @@ import com.sniper.survey.util.LogUtil;
  * @author laolang
  * 
  */
-@Component
-@SuppressWarnings("rawtypes")
+
+
 public class IniLogListener implements ApplicationListener {
 
-	@Resource
-	private LogService logService;
+	/*@Resource
+	private LogService logService;*/
 
 	
 
 	@Override
 	public void onApplicationEvent(ApplicationEvent arg0) {
 		// 上下文刷新事件
-		if (arg0 instanceof ContextRefreshedEvent) {
+		/*if (arg0 instanceof ContextRefreshedEvent) {
 			//创建日志表
 			
 			String tableName = LogUtil.generateLogTableName(0);
@@ -50,7 +50,7 @@ public class IniLogListener implements ApplicationListener {
 			logService.createLogTable(tableName);
 			
 			System.out.println("初始化表");
-		}
+		}*/
 
 	}
 
