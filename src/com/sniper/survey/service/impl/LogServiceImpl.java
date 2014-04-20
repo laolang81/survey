@@ -34,7 +34,7 @@ public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService {
 				+ " (ml_user,ml_name,ml_param,ml_result,ml_result_msg,ml_time) "
 				+ "values(?,?,?,?,?,?)";
 
-		this.executeSQL(sql, t.getUser(), t.getName(), t.getParams(),
+		this.executeSQL(Log.class, sql, t.getUser(), t.getName(), t.getParams(),
 				t.getResult(), t.getResultMsg(), t.getTime());
 	}
 

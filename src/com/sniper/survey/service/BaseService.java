@@ -40,5 +40,5 @@ public interface BaseService<T> {
 	// 查询所有实体
 	public List<T> findAllEntitles();
 
-	public void executeSQL(String hql, Object... Object);
+	public void executeSQL(Class clazz, String hql, Object... Object);
 }

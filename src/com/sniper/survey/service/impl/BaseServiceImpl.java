@@ -120,8 +120,8 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	@Override
-	public void executeSQL(String hql, Object... Object) {
-		dao.executeSQL(hql, Object);
+	public void executeSQL(Class clazz, String hql, Object... Object) {
+		dao.executeSQL(clazz, hql, Object);
 
 	}
 }
