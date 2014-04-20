@@ -1,5 +1,7 @@
 package com.sniper.survey.scheduler;
 
+import java.util.Date;
+
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -24,7 +26,7 @@ public class CreateLogTableTask extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext arg0)
 			throws JobExecutionException {
 		// 创建日志表
-		System.out.println("cron ....... ");
+		System.out.println("cron ....... " + new Date());
 		/*String tableName = LogUtil.generateLogTableName(0);
 		logService.createLogTable(tableName);
 		System.out.println(tableName + " create");
