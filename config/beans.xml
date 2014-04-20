@@ -62,6 +62,8 @@
 				rollback-for="Exception" />
 			<tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT"
 				rollback-for="Exception" />
+			<tx:method name="execute*" propagation="REQUIRED" isolation="DEFAULT"
+				rollback-for="Exception" />
 
 			<tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT"
 				read-only="true" rollback-for="Exception" />

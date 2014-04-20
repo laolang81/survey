@@ -27,7 +27,7 @@ public class CreateLogTableTask extends QuartzJobBean {
 			throws JobExecutionException {
 		// 创建日志表
 		System.out.println("cron ....... " + new Date());
-		/*String tableName = LogUtil.generateLogTableName(0);
+		String tableName = LogUtil.generateLogTableName(0);
 		logService.createLogTable(tableName);
 		System.out.println(tableName + " create");
 		// 下一个月
@@ -37,7 +37,7 @@ public class CreateLogTableTask extends QuartzJobBean {
 		// 下一个月、
 		tableName = LogUtil.generateLogTableName(2);
 		logService.createLogTable(tableName);
-		System.out.println(tableName + " create");*/
+		System.out.println(tableName + " create");
 	}
 
 }

@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "mc_log")
-public class Log extends BaseEntity {
+public class Log {
 
 	private static final long serialVersionUID = 8136382862893547457L;
 
@@ -27,7 +27,7 @@ public class Log extends BaseEntity {
 	@GenericGenerator(name = "generator", strategy = "uuid")
 	@GeneratedValue(generator = "generator")
 	@Column(name = "ml_id")
-	private Integer id;
+	private String id;
 	// 操作人
 	@Column(name = "ml_user")
 	private String user;
@@ -47,13 +47,11 @@ public class Log extends BaseEntity {
 	@Column(name = "ml_time")
 	private Date time = new Date();
 
-	@Override
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	@Override
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 
 	}

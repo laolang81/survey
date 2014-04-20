@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.id.UUIDHexGenerator;
 import org.springframework.stereotype.Service;
 
 import com.sniper.survey.dao.BaseDao;
@@ -20,8 +21,8 @@ public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService {
 
 	@Override
 	public void createLogTable(String tableName) {
-		String sql = "create table if not exists " + tableName + "like mc_logs";
-		this.findEntityBySQLQuery(sql);
+		String sql = "create table if not exists " + tableName + " like mc_log";
+		this.executeSQL(null, sql);
 	}
 
 	/**
@@ -31,11 +32,19 @@ public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService {
 	public void saveEntiry(Log t) {
 		String sql = "insert into "
 				+ LogUtil.generateLogTableName(0)
-				+ " (ml_user,ml_name,ml_param,ml_result,ml_result_msg,ml_time) "
-				+ "values(?,?,?,?,?,?)";
-
-		this.executeSQL(Log.class, sql, t.getUser(), t.getName(), t.getParams(),
-				t.getResult(), t.getResultMsg(), t.getTime());
+				+ " (ml_id,ml_user,ml_name,ml_param,ml_result,ml_result_msg,ml_time) "
+				+ "values(?,?,?,?,?,?,?)";
+		UUIDHexGenerator uuid = new UUIDHexGenerator();
+		String id = (String) uuid.generate(null, null);
+		this.executeSQL(Log.class, sql, 
+				id, 
+				t.getUser(), 
+				t.getName(), 
+				t.getParams(),
+				t.getResult(), 
+				t.getResultMsg(), 
+				t.getTime()
+				);
 	}
 
 	public void te() {

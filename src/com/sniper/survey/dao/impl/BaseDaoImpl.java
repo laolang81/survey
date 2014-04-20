@@ -175,28 +175,27 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	@Override
 	public SQLQuery findEntityBySQLQuery(String sql, Object... Object) {
 		SQLQuery query = this.getOpenSesion().createSQLQuery(sql);
+		System.out.println(sql);
 		if (Object != null && Object.length > 0) {
 			for (int i = 0; i < Object.length; i++) {
 				query.setParameter(i, Object[i]);
 			}
 		}
-
 		return query;
 	}
 
 	@Override
 	public void executeSQL(Class clazz, String hql, Object... Object) {
 		SQLQuery query = this.getCurrentSession().createSQLQuery(hql);
-		if(clazz != null){
+		if (clazz != null) {
 			query.addEntity(clazz);
 		}
 		if (Object != null && Object.length > 0) {
 			for (int i = 0; i < Object.length; i++) {
 				query.setParameter(i, Object[i]);
 			}
-			query.executeUpdate();
 		}
-
+		query.executeUpdate();
 	}
 
 }
