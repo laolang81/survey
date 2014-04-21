@@ -5,9 +5,6 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import sun.util.logging.resources.logging;
-
-import com.sniper.survey.model.Log;
 import com.sniper.survey.service.impl.LogService;
 
 public class TestService {

@@ -14,8 +14,8 @@
 	<context:component-scan
 		base-package="com.sniper.survey.dao.impl,com.sniper.survey.service.impl,com.sniper.survey.struts2.action,com.sniper.survey.listener" />
 
-
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<!-- 分库配置 master -->
+	<bean id="dataSource-main" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${jdbc.driverClass}"></property>
 		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
 		<property name="user" value="${jdbc.user}"></property>
@@ -26,11 +26,28 @@
 		<property name="initialPoolSize" value="${c3p0.initialPoolSize}"></property>
 		<property name="acquireIncrement" value="${c3p0.acquireIncrement}"></property>
 	</bean>
+	<!-- 分库配置 slave -->
+	<bean id="dataSource-salve-1" parent="dataSource-main">
+		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+
+	</bean>
+	<!-- 配置数据源路由器 -->
+	<bean id="dataSourceRouter" class="com.sniper.survey.datasource.DataSourceRouter">
+		<property name="targetDataSources">
+			<map>
+				<entry key="odd" value-ref="dataSource-main"></entry>
+				<entry key="even" value-ref="dataSource-salve-1"></entry>
+			</map>
+		</property>
+		<!-- 默认数据源集合 -->
+		<property name="defaultTargetDataSource" ref="dataSource-main"></property>
+	</bean>
 
 	<!-- 呢目的会话工厂bean(spring整合hinernate的核心入口) -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>
+		<!-- 配置路由数据源 -->
+		<property name="dataSource" ref="dataSourceRouter"></property>
 		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
 		<!-- 注解 -->
 		<property name="packagesToScan">
@@ -62,8 +79,8 @@
 				rollback-for="Exception" />
 			<tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT"
 				rollback-for="Exception" />
-			<tx:method name="execute*" propagation="REQUIRED" isolation="DEFAULT"
-				rollback-for="Exception" />
+			<tx:method name="execute*" propagation="REQUIRED"
+				isolation="DEFAULT" rollback-for="Exception" />
 
 			<tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT"
 				read-only="true" rollback-for="Exception" />
