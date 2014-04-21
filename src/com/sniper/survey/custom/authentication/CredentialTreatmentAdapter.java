@@ -32,7 +32,6 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 
 	}
 
-	
 	@Override
 	protected AuthenticateResultInfoInterface authenticateValidateResult(Map m) {
 
@@ -89,9 +88,6 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 				+ " as u WHERE " + getIdentityColunm() + "= ? ";
 
 		SQLQuery query = (SQLQuery) getService().findEntityBySQLQuery(hql)
-		// .setResultTransformer(new AliasToBeanResultTransformer (clazz))
-		// .addEntity("u", clazz)
-		// .addScalar("auth", IntegerType.INSTANCE)
 				.setString(0, getCredential()).setString(1, getIdentity());
 
 		return query;

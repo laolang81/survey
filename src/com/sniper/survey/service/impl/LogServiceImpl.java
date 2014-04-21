@@ -47,7 +47,7 @@ public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService {
 				);
 	}
 
-	public void te() {
+	public void test() {
 		String sql = "select table_name from tables where table_schema = 'jsbc_demo' "
 				+ " and table_name like 'mc_logs_%' and table_name < '2014_8'"
 				+ " order table_name";
@@ -62,8 +62,19 @@ public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService {
 				+ " and table_name like 'mc_logs_%' "
 				+ " and table_name <= '" + tableName + "'"
 				+ " order by table_name desc limit 0," + n;
-		List list = (List) this.findEntityBySQLQuery(sql).uniqueResult();
+		List<String> lists =  this.findEntityBySQLQuery(sql).list();
+		String logSql = "";
+		String logName = "";
+		for(int i = 0; i < lists.size(); i++){
+			logName = lists.get(i);
+			if(i == (lists.size() - 1)){
+				logSql = logSql + "select * from " + logName ;
+			}else{
+				logSql = logSql + "select * from " + logName + "union";
+			}
+		}
 		
-		return null;
+		
+		return this.findEntityBySQLQuery(logSql).list();
 	}
 }

@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import sun.util.logging.resources.logging;
+
 import com.sniper.survey.model.Log;
 import com.sniper.survey.service.impl.LogService;
 
@@ -20,13 +22,9 @@ public class TestService {
 	@Test
 	public void save()
 	{
-		Log log = new Log();
-		log.setName("sssssss");
-		log.setParams("sssssssssssss");
-		log.setResult("sssssssss");
-		log.setResultMsg("ssssssss");
-		cs.saveEntiry(log);
-		
+		System.out.println("-------->");
+		System.out.println(cs.findNearesLogs(1));
+		System.out.println("<--------");
 		
 	}
 	
