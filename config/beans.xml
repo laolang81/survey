@@ -107,8 +107,9 @@
 	<bean id="logger" class="com.sniper.survey.advice.Logger" />
 
 	<aop:config>
-		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))" />
-		<aop:aspect id="loggerAspect" ref="logger">
+		<!-- order 值越大优先值越低 -->
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))" order="1" />
+		<aop:aspect id="loggerAspect" ref="logger" order="0">
 			<aop:around method="record"
 				pointcut="(execution(* *..*Service.save*(..)) 
 											or execution(* *..*Service.update*(..))

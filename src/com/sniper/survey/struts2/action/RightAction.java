@@ -10,6 +10,7 @@ import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.sniper.survey.datasource.RightToken;
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
 
@@ -76,7 +77,16 @@ public class RightAction extends BaseAction<AdminRight> {
 		
 		System.out.println(model.getId());
 		setUpdateid(model.getId());
+		//spring多库分布实例
+		// 绑定token到当前线程
+		RightToken token = new RightToken();
+		token.setRight(getModel());
+		//绑定令牌
+		RightToken.bindToken(token);
+		
 		adminRightService.saveOrUpdate(model);
+		//解除绑定
+		RightToken.unbindToken();
 		return "update";
 	}
 
