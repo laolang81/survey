@@ -85,8 +85,7 @@ public class RightAction extends BaseAction<AdminRight> {
 		RightToken.bindToken(token);
 		
 		adminRightService.saveOrUpdate(model);
-		//解除绑定
-		RightToken.unbindToken();
+		
 		return "update";
 	}
 
