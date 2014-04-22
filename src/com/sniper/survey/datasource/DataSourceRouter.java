@@ -2,8 +2,6 @@ package com.sniper.survey.datasource;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
-import com.sniper.survey.model.AdminRight;
-
 /**
  * 分库数据源路由配置 自定义分布式数据库(数据库路由器)
  * 

@@ -16,6 +16,7 @@ import com.sniper.survey.custom.authentication.AuthenticationServiceInterface;
 import com.sniper.survey.custom.authentication.DbTable;
 import com.sniper.survey.custom.authentication.ResultInterface;
 import com.sniper.survey.model.AdminUser;
+import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.service.impl.AdminUserService;
 import com.sniper.survey.util.DataUtil;
 
@@ -33,6 +34,8 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 
 	@Resource
 	private AdminUserService adminUserService;
+	@Resource
+	private AdminRightService rightService;
 
 	// 存放返回之前的结果
 	private Map<String, String> result = new HashMap<String, String>();
@@ -91,7 +94,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		dbTable.setIdentity(this.account);
 
 		// 调用用户验证,及其用户管理,需要注入session,否则无法完用户session的保存工作
-		AuthenticationServiceInterface auth = new AuthenticationService();
+		AuthenticationServiceInterface auth = new AuthenticationService();		
 		auth.setSession(sessionMap);
 		auth.setStorage("user");
 
@@ -101,6 +104,12 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		ResultInterface codeNum = loginResult.getCode();
 		switch (codeNum.getCode()) {
 		case 0:
+			// 重新保存session，因为源程序已经保存过一次
+			AdminUser user = (AdminUser) auth.getIdentity();
+			int maxPos =  rightService.getMaxRightPos();
+			user.setRightNum(new long[maxPos + 1]);
+			user.calucateRightNum();
+			auth.getSession().put(auth.getStorage(), user);
 			result.put("result", "0");
 			result.put("message", "登录失败");
 			result.put("id", "account");
