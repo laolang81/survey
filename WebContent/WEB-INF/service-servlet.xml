@@ -17,8 +17,7 @@
 	<!-- spring 客户端和服务器代理配置例子 -->
 	
 	<!-- 服务端配置 -->
-	<bean id="WelcomeService" class="com.sniper.survey.spring.service.WelcomeServiceImpl">
-	</bean>
+	<bean id="WelcomeService" class="com.sniper.survey.spring.service.WelcomeServiceImpl"/>
 	<!-- service 到出去 -->
 	<bean name="/ws.service" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="serviceInterface">
