@@ -4,6 +4,17 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
 	<display-name>survey</display-name>
+	
+	<!-- spring mvc配置  -->
+	<servlet>
+		<servlet-name>service</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>service</servlet-name>
+		<url-pattern>*.service</url-pattern>
+	</servlet-mapping>
 
 	<!-- 通过上下文的参数配置string文件的位置 -->
 	<context-param>
@@ -14,10 +25,6 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<!-- spring试图模型session开启,该过滤器view渲染时始终开始session，一劳永逸解决蓝加载问题 ,该过滤器必须配置在struts2之前,不推荐使用 -->
-	<!-- <filter> <filter-name>openSessionInViewFilter</filter-name> <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class> 
-		</filter> <filter-mapping> <filter-name>openSessionInViewFilter</filter-name> 
-		<url-pattern>/*</url-pattern> </filter-mapping> -->
 
 	<filter>
 		<filter-name>struts2</filter-name>
