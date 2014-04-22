@@ -23,10 +23,9 @@ public class Log {
 
 	private static final long serialVersionUID = 8136382862893547457L;
 
-	
 	@Id
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")	
 	@Column(name = "ml_id")
 	private String id;
 	// 操作人
