@@ -38,10 +38,11 @@ function add()
 	id = id + 1;
 	html ='<p><input type="text" id="url'+id+'" value="" /> <input onclick="create(this)" type="button" id="image'+id+'" value="'+id+'" />'+id+'</p>';
 	$('p').last().after(html);
+	create('#image' + id);
 }
 
 	
-function create(input)
+function create1(input)
 {
 	id = $(input).prev().attr('id');
 	id = "#" + id;
@@ -56,7 +57,7 @@ function create(input)
 		
 
 	
-	//K(input).click(function() {
+	
 		editor1.loadPlugin('image', function() {
 			editor1.plugin.imageDialog({
 				showRemote : false,
@@ -67,7 +68,43 @@ function create(input)
 				}
 			});
 		});
-	//});
+	
+}
+
+function create(input)
+{
+	
+	previd = $(input).prev().attr('id');
+	previd = "#" + previd;
+	
+	id = $(input).attr('id');
+	id = "#" + id;
+	
+	var uploadbutton = K.uploadbutton({
+		button : K(id)[0],
+		fieldName : 'imgFile',
+		//url : '../php/upload_json.php?dir=file',
+		extraFileUploadParams : {
+            item_id : 1000,
+            category_id : 1,
+            info : $(id).val()
+   		},
+		afterUpload : function(data) {
+			if (data.error === 0) {
+				var url = K.formatUrl(data.url, 'absolute');
+				K('#url').val(url);
+			} else {
+				alert(data.message);
+			}
+		},
+		afterError : function(str) {
+			alert('自定义错误信息: ' + str);
+		}
+	});
+	uploadbutton.fileBox.change(function(e) {
+		uploadbutton.submit();
+	});
+		
 }
 
 
