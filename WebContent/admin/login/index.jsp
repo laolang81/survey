@@ -10,139 +10,74 @@
 <base
 	href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script type="text/javascript" src="myfiles/js/jquery-1.9.1.min.js"></script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script
+	src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<!-- Bootstrap -->
+<link rel="stylesheet"
+	href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
 <script type="text/javascript"
 	src="myfiles/js/jquery.backstretch.min.js"></script>
 <style type="text/css">
-* {
-	font: 12px Segoe UI, Tahoma, Arial, Verdana, simsun, sans-serif,
-		"Microsoft YaHei";
-	margin: 0;
-	padding: 0;
-	vertical-align: text-top
-}
-
-label {
-	color: #777777;
-	font-size: 14px;
-	display: block;
-	overflow: hidden;
-}
-
-h1 a {
-	display: block;
-	height: 67px;
-	overflow: hidden;
-	padding-bottom: 15px;
-	text-indent: -9999px;
-	width: 326px;
-}
-
-.my_login {
-	margin: 7em auto;
-	width: 350px;
-}
-
-::-webkit-input-placeholder {
-	color: #ccc;
-}
-
-input:-moz-placeholder {
-	color: #ccc;
-}
-
-form {
-	FILTER: alpha(opacity = 70);
-	opacity: 0.7;
-	background: none repeat scroll 0 0 #FFFFFF;
-	border: 1px solid #E5E5E5;
-	box-shadow: 0 4px 10px -1px rgba(200, 200, 200, 0.7);
-	font-weight: normal;
-	padding: 26px 24px 30px;
-	overflow: hidden;
-}
-
-body form p {
-	float: left;
-	display: block;
-}
-
-body form .input {
-	box-shadow: 1px 1px 2px rgba(200, 200, 200, 0.2) inset;
-	font-family: "HelveticaNeue-Light", "Helvetica Neue Light",
-		"Helvetica Neue", sans-serif;
-	margin-bottom: 10px;
-	margin-top: 2px;
-	outline: medium none;
-	vertical-align: middle;
-	background: none repeat scroll 0 0 #FFFFFF;
-	border: 1px solid #E6E6E6;
-	border-radius: 6px;
-	color: #333333;
-	display: block;
-	font-size: 18px;
-	font-weight: bold;
-	height: 20px;
-	line-height: 20px;
-	padding: 12px 10px;
-	width: 278px;
-}
-
-body form .verify {
-	float: left;
-	width: 100px;
-}
-
-input[type="text"],input[type="password"] {
-	background-color: #FFFFFF;
-	border-color: #DFDFDF;
-	color: #555555;
-}
-
-input[type="text"]:focus,input[type="password"]:focus {
-	background: none repeat scroll 0 0 #FDFDFD;
-	border-color: rgba(82, 168, 236, 0.8);
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8pxrgba(82, 168,
-		236, 0.6);
-	outline: 0 none
-}
-
-.my_log_bom {
-	background: #ff5500;
-	color: #FFF;
-	font-weight: bold;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
-	border: 1px solid;
-	border-radius: 10px;
-	cursor: pointer;
-	font-family: sans-serif;
-	font-size: 14px;
-	padding: 4px 10px;
-	text-decoration: none;
-}
-
-#backtoblog {
-	margin: 0 0 0 16px;
-	padding: 16px 16px 0;
-	text-shadow: 0 1px 0 #FFFFFF;
-}
-
-#result {
-	margin-left: 10px;
-	line-height: 30px;
-	color: #F00;
-}
-
-#verifyImg {
-	cursor: pointer;
-	float: left
+.form-signin {
+	margin: 0 auto;
+	max-width: 330px;
+	padding: 15px;
 }
 </style>
 
 </head>
 <body>
+<div class="container">
 
-	<script language="javascript">
+		<form class="form-signin" role="form" name="login">
+			<h2 class="form-signin-heading">Please sign in</h2>
+	
+			<div class="form-group input-group-lg">		
+				<label for="accout">Email address</label>
+				<input type="text" id="accout" name="account" class="form-control"
+					placeholder="Email address" required autofocus>
+			</div>
+			<div class="form-group input-group-lg">
+				<label for="password">Password</label>
+				<input id="password" type="password" name="passwd" class="form-control"
+					placeholder="Password" required>
+			</div>	
+				
+			<div class="form-group input-group-lg" >
+				<label for="exampleInputEmail2" class="col-sm-2 control-label sr-only">输入验证码</label>
+	      		
+	      		<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="输入验证码" id="exampleInputEmail2" class="form-control">
+				
+				<img alt="" style=" margin-left:2%" src="<s:url action="verify" namespace="/" />" class="fl" id="verifyImg" onclick="fleshVerify()">
+					
+			</div>
+			<div class="form-group input-group-lg">
+			<label class="checkbox"> 
+				<input type="checkbox" value="remember-me"> Remember me
+			</label>
+			</div>
+			<span id="result"></span>
+			<button class="btn btn-lg btn-primary btn-block" type="button">Sign in</button>
+		</form>
+
+</div><!-- /container -->
+
+<div id="back-mask" class="back-mask"></div>
+<script language="javascript">
 		$(function() {
 			$("#login").keydown(function(e) {
 				if (e.keyCode == 13) {
@@ -153,30 +88,24 @@ input[type="text"]:focus,input[type="password"]:focus {
 		});
 
 		function onlogin() {
-			var u = $('#account').val();
-			var p = $('#password').val();
-			var y = $('#login_verify').val();
-			//$("#button").attr("disabled","true");
 			
+			var params	= $('input').serialize();
+			
+			//$("#button").attr("disabled","true");
+
 			$.ajax({
 						type : "post",
 						dataType : 'json',
 						url : '<s:url action="loginAjaxValid" namespace="/admin"/>',
-						data : {
-							passwd : p,
-							account : u,
-							verifycode : y
-						},
-						beforeSend : function(XMLHttpRequest) {
-							$('#button').val('正在登录...');
-						},
+						data : params,
+						beforeSend : function(XMLHttpRequest) {$('button[type="button"]').html('正在登录...');},
 						success : function(data, textStatus) {
 							//var data = $.parseJSON(data);
 							if (data != null && data.id == 1)
 								window.location = '<s:url action="rightList" namespace="/admin" />';
 							else {
 								$('#result').html(data.message);
-								$('#button').val('登录');
+								$('button[type="button"]').html('登录');
 								if (data.id != 0)
 									$('#' + data.id).focus();
 								fleshVerify();
@@ -187,7 +116,7 @@ input[type="text"]:focus,input[type="password"]:focus {
 						},
 						error : function() {
 							$('#result').html('登录错误...');
-							$('#button').val('登录');
+							$('button[type="button"]').html('登录');
 						}
 					});
 		}
@@ -196,39 +125,9 @@ input[type="text"]:focus,input[type="password"]:focus {
 			$('#verifyImg').attr("src",
 					'<s:url action="verify" namespace="/" />?d=' + timenow);
 		}
+		$().ready(function(){$('button[type="button"]').click(onlogin);});
+		
 	</script>
-
-	<div class="my_login">
-		<h1>
-			<a href="" title="请管理员们登录">请管理员们登录</a>
-		</h1>
-		<s:form id="login" name="login" method="post">
-			<p>
-				<s:textfield label="UserName" id="account" name="account" value="admin"
-					cssClass="input" placeholder="登录名称" />
-			</p>
-			<p>
-				<s:password label="PassWord" id="password" name="password" value="admin"
-					cssClass="input" placeholder="登录密码" />
-			</p>
-			<p>
-				<s:textfield label="验证码" name="verify" cssClass="input verify" value="123"
-					placeholder="验证码" />
-				<img alt="" src="<s:url action="verify" namespace="/" />" class="fl"
-					id="verifyImg" onclick="fleshVerify()">
-			</p>
-			<p>
-				<input type="button" onclick="onlogin();" value="登 录"
-					class="my_log_bom" id="button" name="submit"> <span
-					id="result"></span>
-			</p>
-
-		</s:form>
-		<p id="backtoblog">
-			<a href="" title="回首页">← 回到 首页</a>
-		</p>
-	</div>
-	<div id="back-mask" class="back-mask"></div>
 	<script type="text/javascript">
 		var images = [
 				"http://www.shandongbusiness.gov.cn/public/attachment/kindeditor/image/20140108/6c4c88a205dd312d0e66daae2c4c4375.jpg",
@@ -246,5 +145,6 @@ input[type="text"]:focus,input[type="password"]:focus {
 			$.backstretch(images[index]);
 		}, 5000);
 	</script>
+
 </body>
 </html>
