@@ -155,13 +155,13 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 
 		if (this.passwd == null || this.passwd.isEmpty()) {
 			result.put("message", "密码必须");
-			result.put("id", "password");
+			result.put("id", "passwd");
 			return;
 		}
 
 		if (this.verifycode == null || this.verifycode.isEmpty()) {
 			result.put("message", "验证码必须");
-			result.put("id", "login_verify");
+			result.put("id", "verifycode");
 			return;
 		}
 

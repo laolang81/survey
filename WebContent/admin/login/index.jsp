@@ -45,7 +45,7 @@
 
 		<form class="form-signin" role="form" name="login">
 			<h2 class="form-signin-heading">Please sign in</h2>
-	
+			
 			<div class="form-group input-group-lg">		
 				<label for="accout">Email address</label>
 				<input type="text" id="accout" name="account" class="form-control"
@@ -70,7 +70,7 @@
 				<input type="checkbox" value="remember-me"> Remember me
 			</label>
 			</div>
-			<span id="result"></span>
+			
 			<button class="btn btn-lg btn-primary btn-block" type="button">Sign in</button>
 		</form>
 
@@ -104,10 +104,15 @@
 							if (data != null && data.id == 1)
 								window.location = '<s:url action="rightList" namespace="/admin" />';
 							else {
-								$('#result').html(data.message);
+								
 								$('button[type="button"]').html('登录');
-								if (data.id != 0)
-									$('#' + data.id).focus();
+								if (data.id != 0){
+									$('input[name="'+data.id+'"]').focus();
+									$('input[name="'+data.id+'"]').attr("placeholder",data.message);
+									$('input[name="'+data.id+'"]').parent().addClass('has-error');
+									
+								}
+									
 								fleshVerify();
 							}
 						},
