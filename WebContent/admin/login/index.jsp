@@ -58,11 +58,9 @@
 			</div>	
 				
 			<div class="form-group input-group-lg" >
-				<label for="exampleInputEmail2" class="col-sm-2 control-label sr-only">输入验证码</label>
-	      		
-	      		<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="输入验证码" id="exampleInputEmail2" class="form-control">
-				
-				<img alt="" style=" margin-left:2%" src="<s:url action="verify" namespace="/" />" class="fl" id="verifyImg" onclick="fleshVerify()">
+				<label for="exampleInputEmail2" class="col-sm-2 control-label sr-only">输入验证码</label>      		
+	      		<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="输入验证码" id="exampleInputEmail2" class="form-control">			
+				<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" namespace="/" />" class="fl" id="verifyImg" onclick="fleshVerify()">
 					
 			</div>
 			<div class="form-group input-group-lg">
@@ -78,78 +76,87 @@
 
 <div id="back-mask" class="back-mask"></div>
 <script language="javascript">
-		$(function() {
-			$("#login").keydown(function(e) {
-				if (e.keyCode == 13) {
-					onlogin();
-					return false;
+	$(function() {
+		$("#login").keydown(function(e) {
+			if (e.keyCode == 13) {
+				onlogin();
+				return false;
+			}
+		});
+	});
+
+	function onlogin() {		
+		var params	= $('input').serialize();
+		$.ajax({
+			type : "post",
+			dataType : 'json',
+			url : '<s:url action="loginAjaxValid" namespace="/admin"/>',
+			data : params,
+			beforeSend : function(XMLHttpRequest) {$('button[type="button"]').html('正在登录...');},
+			success : function(data, textStatus) {
+				//var data = $.parseJSON(data);
+				if (data != null && data.id == 1)
+					window.location = '<s:url action="rightList" namespace="/admin" />';
+				else {
+					
+					$('button[type="button"]').html('登录');
+					if (data.id != 0){
+						var $input = $('input[name="'+data.id+'"]');
+						$input.focus();
+						shake($input.parent(), "has-error", 3);
+						
+					}					
+					fleshVerify();
 				}
-			});
+			},
+			complete : function(XMLHttpRequest, textStatus) {
+				$('#button').val('登录');
+			},
+			error : function() {
+				$('#result').html('登录错误...');
+				$('button[type="button"]').html('登录');
+			}
 		});
+	}
+	
+	function fleshVerify() {
+		var timenow = new Date().getTime();
+		$('#verifyImg').attr("src",
+				'<s:url action="verify" namespace="/" />?d=' + timenow);
+	}
+	$().ready(function(){$('button[type="button"]').click(onlogin);});
+	//闪烁
+	function shake(ele,cls,times){
+		var i = 0,t= false ,o =ele.attr("class")+" ",c ="",times=times||2;
+		if(t) return;
+		t= setInterval(function(){
+			i++;
+			c = i%2 ? o+cls : o;
+			ele.attr("class",c);
+			if(i==2*times){
+				clearInterval(t);
+				ele.removeClass(cls);
+			}
+		},200);
+	};	
+</script>
+<script type="text/javascript">
+	var images = [
+			"http://www.shandongbusiness.gov.cn/public/attachment/kindeditor/image/20140108/6c4c88a205dd312d0e66daae2c4c4375.jpg",
+			"http://www.shandongbusiness.gov.cn/public/attachment/kindeditor/image/20140108/09689b61a08a7df12faf79f25996b870.jpg" ];
 
-		function onlogin() {
-			
-			var params	= $('input').serialize();
-			
-			//$("#button").attr("disabled","true");
-
-			$.ajax({
-						type : "post",
-						dataType : 'json',
-						url : '<s:url action="loginAjaxValid" namespace="/admin"/>',
-						data : params,
-						beforeSend : function(XMLHttpRequest) {$('button[type="button"]').html('正在登录...');},
-						success : function(data, textStatus) {
-							//var data = $.parseJSON(data);
-							if (data != null && data.id == 1)
-								window.location = '<s:url action="rightList" namespace="/admin" />';
-							else {
-								
-								$('button[type="button"]').html('登录');
-								if (data.id != 0){
-									$('input[name="'+data.id+'"]').focus();
-									$('input[name="'+data.id+'"]').attr("placeholder",data.message);
-									$('input[name="'+data.id+'"]').parent().addClass('has-error');
-									
-								}
-									
-								fleshVerify();
-							}
-						},
-						complete : function(XMLHttpRequest, textStatus) {
-							$('#button').val('登录');
-						},
-						error : function() {
-							$('#result').html('登录错误...');
-							$('button[type="button"]').html('登录');
-						}
-					});
-		}
-		function fleshVerify() {
-			var timenow = new Date().getTime();
-			$('#verifyImg').attr("src",
-					'<s:url action="verify" namespace="/" />?d=' + timenow);
-		}
-		$().ready(function(){$('button[type="button"]').click(onlogin);});
-		
-	</script>
-	<script type="text/javascript">
-		var images = [
-				"http://www.shandongbusiness.gov.cn/public/attachment/kindeditor/image/20140108/6c4c88a205dd312d0e66daae2c4c4375.jpg",
-				"http://www.shandongbusiness.gov.cn/public/attachment/kindeditor/image/20140108/09689b61a08a7df12faf79f25996b870.jpg" ];
-
-		$(images).each(function() {
-			$('<img/>')[0].src = this;
-		});
-		var index = 0;
-		$.backstretch(images[index], {
-			speed : 800
-		});
-		setInterval(function() {
-			index = (index >= images.length - 1) ? 0 : index + 1;
-			$.backstretch(images[index]);
-		}, 5000);
-	</script>
+	$(images).each(function() {
+		$('<img/>')[0].src = this;
+	});
+	var index = 0;
+	$.backstretch(images[index], {
+		speed : 800
+	});
+	setInterval(function() {
+		index = (index >= images.length - 1) ? 0 : index + 1;
+		$.backstretch(images[index]);
+	}, 5000);
+</script>
 
 </body>
 </html>
