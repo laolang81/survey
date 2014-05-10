@@ -87,6 +87,8 @@
 
 	function onlogin() {		
 		var params	= $('input').serialize();
+		var bottonname = $('button[type="button"]').html();
+		
 		$.ajax({
 			type : "post",
 			dataType : 'json',
@@ -99,22 +101,19 @@
 					window.location = '<s:url action="rightList" namespace="/admin" />';
 				else {
 					
-					$('button[type="button"]').html('登录');
 					if (data.id != 0){
 						var $input = $('input[name="'+data.id+'"]');
 						$input.focus();
 						shake($input.parent(), "has-error", 3);
-						
 					}					
 					fleshVerify();
 				}
 			},
-			complete : function(XMLHttpRequest, textStatus) {
-				$('#button').val('登录');
+			complete : function(XMLHttpRequest, textStatus) {			
+				$('button[type="button"]').html(bottonname);
 			},
 			error : function() {
-				$('#result').html('登录错误...');
-				$('button[type="button"]').html('登录');
+				$('button[type="button"]').html('Sign Error');
 			}
 		});
 	}

@@ -136,7 +136,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		case -3:
 			result.put("result", "-3");
 			result.put("message", "密码不匹配");
-			result.put("id", "password");
+			result.put("id", "passwd");
 			break;
 		}
 		return SUCCESS;
@@ -148,19 +148,19 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	public void prepareDoLoginAjaxValid() {
 
 		if (this.account == null || this.account.isEmpty()) {
-			result.put("message", "用户名必须");
+			result.put("message", "用户名无效");
 			result.put("id", "account");
 			return;
 		}
 
 		if (this.passwd == null || this.passwd.isEmpty()) {
-			result.put("message", "密码必须");
+			result.put("message", "密码无效");
 			result.put("id", "passwd");
 			return;
 		}
 
 		if (this.verifycode == null || this.verifycode.isEmpty()) {
-			result.put("message", "验证码必须");
+			result.put("message", "验证码无效");
 			result.put("id", "verifycode");
 			return;
 		}
