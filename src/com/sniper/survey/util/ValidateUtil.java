@@ -51,6 +51,7 @@ public class ValidateUtil {
 	 * @param cel
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	public static boolean isValid(Collection cel) {
 		if (cel == null || cel.isEmpty()) {
 			return false;
@@ -58,6 +59,7 @@ public class ValidateUtil {
 		return false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static boolean isValid(Class[] paramType) {
 		if (paramType != null && paramType.length > 0) {
 			return true;
@@ -80,8 +82,10 @@ public class ValidateUtil {
 	 * @param action
 	 * @return
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static boolean hasRight(String nameSpace, String actionName,
 			HttpServletRequest request, BaseAction action) {
+		
 		if (ValidateUtil.isValid(nameSpace) || "/".equals(actionName)) {
 			nameSpace = "";
 		}
@@ -111,6 +115,7 @@ public class ValidateUtil {
 					return true;
 				} else {
 					//有权限
+					
 					if (user.hasRight(right)) {
 						return true;
 					} else {

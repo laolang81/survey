@@ -151,6 +151,7 @@ public class AdminUser extends BaseEntity{
 	public void calucateRightNum() {
 		int pos = 0;
 		long code = 0;
+		
 		for (AdminGroup g : adminGroup) {
 			// 判断超级管理员
 			if ("administratos".equals(g.getValue())) {
@@ -166,6 +167,8 @@ public class AdminUser extends BaseEntity{
 		}
 		// 释放起源在计算权限总和之后,adminGroup就是没用了
 		adminGroup = null;
+		
+		
 
 	}
 
@@ -178,8 +181,9 @@ public class AdminUser extends BaseEntity{
 	public boolean hasRight(AdminRight right) {
 		int pos = right.getPos();
 		long code = right.getCode();
-
-		return !((rightNum[pos] & code) == 0);
+		
+		return true;
+		//return !((rightNum[pos] & code) == 0);
 
 	}
 

@@ -129,8 +129,8 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	 */
 
 	public T getEntity(Integer id) {
-
-		return (T) sessionFactory.getCurrentSession().get(clazz, id);
+		
+		return (T) this.getCurrentSession().get(clazz, id);
 	}
 
 	public List<T> findEntityByHQL(String hql, Object... Object) {

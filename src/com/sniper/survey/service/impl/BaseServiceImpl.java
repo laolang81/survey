@@ -88,7 +88,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	public T getEntity(Integer id) {
-
+		System.out.println(id);
 		return dao.getEntity(id);
 	}
 
