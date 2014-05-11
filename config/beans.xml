@@ -121,7 +121,7 @@
 	<!-- 自定义生成缓存key -->
 	<bean id="surveyKey" class="com.sniper.survey.cache.SurveyKey"></bean>	
 		
-	<cache:advice id="cacheAdvice" cache-manager="cacheManager">
+	<cache:advice id="cacheAdvice" cache-manager="cacheManager" key-generator="surveyKey">
 		<!-- -->
 		<cache:caching cache="SurveyAdminRight">
 			<!-- 缓存方法 保存的key -->
