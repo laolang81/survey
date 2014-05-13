@@ -11,18 +11,24 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 
+
+
 import com.sniper.survey.model.AdminRight;
+import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminRightService;
+import com.sniper.survey.service.impl.AdminUserService;
 
 public class TestService {
 
 	private static AdminRightService cs;
+	private static AdminUserService userService;
 
 	@Before
 	public void iniChannelService() {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
 		cs = (AdminRightService) ctx.getBean("adminRightService");
-		System.out.println("ssssss");
+		userService = (AdminUserService) ctx.getBean("adminUserService");
+		
 	}
 	
 	@Test
@@ -34,9 +40,21 @@ public class TestService {
 		//System.out.println(cs.findAllEntitles());
 		List<AdminRight> rights = cs.findAllEntitles();
 		for(AdminRight r: rights){
-			System.out.println(cs.getEntity(r.getId()));
+			//System.out.println(cs.getEntity(r.getId()));
 		}
 		System.out.println("<--------");
+		
+		AdminUser user = userService.getEntity(1);
+		String name = user.getName();
+		System.out.println("name->");
+		System.out.println(name);
+		System.out.println("getAdminGroup->");
+		System.out.println(user.getAdminGroup());
+		user.calucateRightNum();
+		System.out.println("getRightNum->");
+		System.out.println(user.getRightNum());
+		
+		//System.out.println(userService);
 		
 	}
 	

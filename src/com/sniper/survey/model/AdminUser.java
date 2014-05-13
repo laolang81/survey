@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "mc_admin_user")
@@ -47,14 +48,16 @@ public class AdminUser extends BaseEntity{
 	private Date ctime = new Date();
 
 	// 权限总和
-	@Column(name = "au_right_num")
+	@Column(name = "au_right_num", nullable = false)
+	@Transient
 	private long[] rightNum;
 	// 设置为超级管理员
 	@Column(name = "au_super_admin")
-	private boolean superAdmin;
+	@Transient
+	private Boolean superAdmin;
 	// 对应用户组
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "mc_admin_user_group", joinColumns = @JoinColumn(name = "ug_uid"), inverseJoinColumns = @JoinColumn(name = "ug_gid"))
+	@JoinTable(name = "mc_admin_user_group", joinColumns = @JoinColumn(name = "uid"), inverseJoinColumns = @JoinColumn(name = "gid"))
 	private Set<AdminGroup> adminGroup = new HashSet<>();
 
 	public Integer getId() {
@@ -182,8 +185,8 @@ public class AdminUser extends BaseEntity{
 		int pos = right.getPos();
 		long code = right.getCode();
 		
-		return true;
-		//return !((rightNum[pos] & code) == 0);
+		//return true;
+		return !((rightNum[pos] & code) == 0);
 
 	}
 

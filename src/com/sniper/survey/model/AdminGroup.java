@@ -33,8 +33,7 @@ public class AdminGroup extends BaseEntity{
 	public String note;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	// @JoinColumn(name = "au_group", referencedColumnName = "ag_value")
-	@JoinTable(name = "mc_admin_group_right", joinColumns = @JoinColumn(name = "gr_gid"), inverseJoinColumns = @JoinColumn(name = "gr_rid"))
+	@JoinTable(name = "mc_admin_group_right", joinColumns = @JoinColumn(name = "gid"), inverseJoinColumns = @JoinColumn(name = "rid"))
 	private Set<AdminRight> adminRight = new HashSet<>();
 
 

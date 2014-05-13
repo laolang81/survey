@@ -168,7 +168,6 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 				query.setParameter(i, Object[i]);
 			}
 		}
-
 		return query;
 	}
 
