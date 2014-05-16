@@ -6,19 +6,24 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<title>${attr.title }</title>
+<title>${attr.title}</title>
 <base
 	href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src="myfiles/js/jquery-1.9.1.min.js"></script>
-<!-- <link href="myfiles/css/admin.css" media="screen" rel="stylesheet"
-	type="text/css"> -->
+<script type="text/javascript" src="myfiles/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="myfiles/Plugin/Bootstarp/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="myfiles/Plugin/ztree/js/jquery.ztree.core-3.5.min.js"></script>
+
+<link href="myfiles/Plugin/Bootstarp/css/bootstrap.min.css"
+	media="screen" rel="stylesheet" type="text/css">
+	
 <link href="myfiles/Plugin/font-awesome/css/font-awesome.min.css"
 	media="screen" rel="stylesheet" type="text/css">
-<link rel="stylesheet"
-	href="myfiles/Plugin/Metro/css/metro-bootstrap.css">
-<link href="myfiles/Plugin/Metro/docs/css/iconFont.css" rel="stylesheet">
+	
+<link href="myfiles/Plugin/ztree/css/zTreeStyle/zTreeStyle.css"
+	media="screen" rel="stylesheet" type="text/css">
+	
 
 
 <link href="myfiles/css/topHeader.css" media="screen" rel="stylesheet"
@@ -28,10 +33,8 @@
 <link href="myfiles/css/centerBody.css" media="screen" rel="stylesheet"
 	type="text/css">
 
-<script src="myfiles/Plugin/Metro/docs/js/jquery/jquery.widget.min.js"></script>
-<script src="myfiles/Plugin/Metro/docs/js/metro.min.js"></script>
-<script src="myfiles/Plugin/Metro/docs/js/jquery/jquery.mousewheel.js"></script>
-<script src="myfiles/Plugin/Metro/docs/js/prettify/prettify.js"></script>
+
+
 </head>
 <body class="metro">
 

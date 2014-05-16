@@ -107,8 +107,8 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			// 重新保存session，因为源程序已经保存过一次
 			AdminUser user = (AdminUser) auth.getIdentity();
 			int maxPos =  rightService.getMaxRightPos();
-			user.setRightNum(new long[maxPos + 1]);
-			user.calucateRightNum();
+			user.setRightSum(new long[maxPos + 1]);
+			user.calucateRightSum();
 			auth.getSession().put(auth.getStorage(), user);
 			result.put("result", "0");
 			result.put("message", "登录失败");

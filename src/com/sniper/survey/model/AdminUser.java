@@ -47,19 +47,19 @@ public class AdminUser extends BaseEntity{
 	@Column(name = "au_ctime", updatable = false)
 	private Date ctime = new Date();
 
-	// 权限总和
-	@Column(name = "au_right_num", nullable = false)
-	@Transient
-	private long[] rightNum;
-	// 设置为超级管理员
-	@Column(name = "au_super_admin")
-	@Transient
-	private Boolean superAdmin;
+	
 	// 对应用户组
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "mc_admin_user_group", joinColumns = @JoinColumn(name = "uid"), inverseJoinColumns = @JoinColumn(name = "gid"))
 	private Set<AdminGroup> adminGroup = new HashSet<>();
 
+	// 权限总和
+	@Transient
+	private long[] rightSum;
+	// 设置为超级管理员
+	@Transient
+	private Boolean superAdmin;
+		
 	public Integer getId() {
 		return id;
 	}
@@ -124,12 +124,12 @@ public class AdminUser extends BaseEntity{
 		this.ctime = ctime;
 	}
 
-	public long[] getRightNum() {
-		return rightNum;
+	public long[] getRightSum() {
+		return rightSum;
 	}
 
-	public void setRightNum(long[] rightNum) {
-		this.rightNum = rightNum;
+	public void setRightSum(long[] rightSum) {
+		this.rightSum = rightSum;
 	}
 
 	public boolean isSuperAdmin() {
@@ -151,13 +151,13 @@ public class AdminUser extends BaseEntity{
 	/**
 	 * 计算用户权限总和
 	 */
-	public void calucateRightNum() {
+	public void calucateRightSum() {
 		int pos = 0;
 		long code = 0;
 		
 		for (AdminGroup g : adminGroup) {
 			// 判断超级管理员
-			if ("administratos".equals(g.getValue())) {
+			if ("-1".equals(g.getValue())) {
 				this.superAdmin = true;
 				adminGroup = null;
 				return;
@@ -165,14 +165,11 @@ public class AdminUser extends BaseEntity{
 			for (AdminRight r : g.getAdminRight()) {
 				pos = r.getPos();
 				code = r.getCode();
-				rightNum[pos] = rightNum[pos] | code;
+				rightSum[pos] = rightSum[pos] | code;
 			}
 		}
 		// 释放起源在计算权限总和之后,adminGroup就是没用了
 		adminGroup = null;
-		
-		
-
 	}
 
 	/**
@@ -186,7 +183,7 @@ public class AdminUser extends BaseEntity{
 		long code = right.getCode();
 		
 		//return true;
-		return !((rightNum[pos] & code) == 0);
+		return !((rightSum[pos] & code) == 0);
 
 	}
 

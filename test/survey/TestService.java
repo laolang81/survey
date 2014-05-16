@@ -45,14 +45,19 @@ public class TestService {
 		System.out.println("<--------");
 		
 		AdminUser user = userService.getEntity(1);
-		String name = user.getName();
+		/*String name = user.getName();
 		System.out.println("name->");
 		System.out.println(name);
 		System.out.println("getAdminGroup->");
 		System.out.println(user.getAdminGroup());
-		user.calucateRightNum();
+		user.calucateRightNum();*/
+		
+		int maxPos =  cs.getMaxRightPos();
+		user.setRightSum(new long[maxPos + 1]);
+		// 初始化权限的综合
+		user.calucateRightSum();
 		System.out.println("getRightNum->");
-		System.out.println(user.getRightNum());
+		System.out.println(user.getRightSum());
 		
 		//System.out.println(userService);
 		

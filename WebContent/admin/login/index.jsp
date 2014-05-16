@@ -42,7 +42,8 @@
 <body>
 <div class="container">
 
-	<form class="form-signin" role="form" name="login">
+	<form data-status="正在登录..." data-url="<s:url action="rightList"  namespace="/admin" />" 
+			class="form-signin" role="form" name="login" action="<s:url action="loginAjaxValid" namespace="/admin"/>">
 		<h2 class="form-signin-heading">Please sign in</h2>
 		
 		<div class="form-group input-group-lg">		
@@ -57,15 +58,14 @@
 		</div>	
 			
 		<div class="form-group input-group-lg" >
-			<label for="exampleInputEmail2" class="col-sm-2 control-label sr-only">输入验证码</label>      		
-	     		<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="输入验证码" id="exampleInputEmail2" class="form-control">			
-		<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" namespace="/" />" class="fl" id="verifyImg" onclick="fleshVerify()">
-				
+			<label for="verifycode" class="col-sm-2 control-label sr-only">输入验证码</label>      		
+	     	<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="输入验证码" id="verifycode" class="form-control">			
+			<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" namespace="/" />" class="fl" >
 		</div>
 		<div class="form-group input-group-lg">
-		<label class="checkbox"> 
-			<input type="checkbox" value="remember-me"> Remember me
-		</label>
+			<label class="checkbox"> 
+				<input type="checkbox" value="remember-me"> Remember me
+			</label>
 		</div>
 		
 		<button class="btn btn-lg btn-primary btn-block" type="button">Sign in</button>
@@ -76,53 +76,66 @@
 <div id="back-mask" class="back-mask"></div>
 <script language="javascript">
 	$(function() {
-		$("#login").keydown(function(e) {
-			if (e.keyCode == 13) {
+		$("form").keydown(function(e) {
+			if (e.keyCode == 13) {			
 				onlogin();
-				return false;
 			}
+		});
+		$('form button[type="button"]').click(function(){		
+		    onlogin();
+		});
+		$('form img').click(function(){
+			fleshVerify();
 		});
 	});
 
 	function onlogin() {		
-		var params	= $('input').serialize();
-		var bottonname = $('button[type="button"]').html();
-		
+		var params	= $('form input').serialize();
+		var bottonname = $('form button[type="button"]').html();
+		var posturl = $('form').attr('action');
+		var postredir = $('form').attr('data-url');
+		var datastatus = $('form').attr('data-status');
+	
 		$.ajax({
 			type : "post",
 			dataType : 'json',
-			url : '<s:url action="loginAjaxValid" namespace="/admin"/>',
+			url : posturl,
 			data : params,
-			beforeSend : function(XMLHttpRequest) {$('button[type="button"]').html('正在登录...');},
+			async:true,
+			beforeSend : function(XMLHttpRequest) {$('form button[type="button"]').html(datastatus)},
 			success : function(data, textStatus) {
 				//var data = $.parseJSON(data);
-				if (data != null && data.id == 1)
-					window.location = '<s:url action="rightList" namespace="/admin" />';
-				else {
-					
+				$('form button[type="button"]').html(bottonname);
+				
+				if (data != null && data.id == 1){
+					window.location = postredir;
+				}else {
 					if (data.id != 0){
-						var $input = $('input[name="'+data.id+'"]');
+						var $input = $('form input[name="'+data.id+'"]');
 						$input.focus();
 						shake($input.parent(), "has-error", 3);
-					}					
+					}
 					fleshVerify();
 				}
+				
 			},
-			complete : function(XMLHttpRequest, textStatus) {			
-				$('button[type="button"]').html(bottonname);
+			complete : function(XMLHttpRequest, textStatus) {
+				
+				$('form button[type="button"]').html(bottonname);
+				
 			},
 			error : function() {
-				$('button[type="button"]').html('Sign Error');
+				$('form button[type="button"]').html('Sign Error');
 			}
 		});
 	}
 	
 	function fleshVerify() {
 		var timenow = new Date().getTime();
-		$('#verifyImg').attr("src",
-				'<s:url action="verify" namespace="/" />?d=' + timenow);
+		var src = $('form img').attr("src");
+		$('form img').attr("src", src + '?d=' + timenow);
 	}
-	$().ready(function(){$('button[type="button"]').click(onlogin);});
+
 	//闪烁
 	function shake(ele,cls,times){
 		var i = 0,t= false ,o =ele.attr("class")+" ",c ="",times=times||2;
