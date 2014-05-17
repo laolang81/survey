@@ -84,7 +84,6 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	public String loginAjaxValid() {
 
 		if (result.size() > 1) {
-			// setResultMapJson();
 			return SUCCESS;
 		}
 		// 用户验证
@@ -104,19 +103,27 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		ResultInterface codeNum = loginResult.getCode();
 		switch (codeNum.getCode()) {
 		case 0:
-			// 重新保存session，因为源程序已经保存过一次
-			AdminUser user = (AdminUser) auth.getIdentity();
-			int maxPos =  rightService.getMaxRightPos();
-			user.setRightSum(new long[maxPos + 1]);
-			user.calucateRightSum();
-			auth.getSession().put(auth.getStorage(), user);
+			
 			result.put("result", "0");
 			result.put("message", "登录失败");
 			result.put("id", "account");
 			break;
 		case 1:
 			try {
-				result.put("result", "1");
+				// 重新保存session，因为源程序已经保存过一次
+				
+				AdminUser user = (AdminUser) loginResult.getObj();
+				// 上面无法获取用户组信息，只能重新获取一次
+				user	 = adminUserService.getEntity(user.getId());
+				//获取最大权限位
+				int maxPos =  rightService.getMaxRightPos();
+				user.setRightSum(new long[maxPos + 1]);
+				//计算权限综合
+				user.calucateRightSum();
+				//保存用户xx 
+				auth.getSession().put(auth.getStorage(), user);
+				
+				result.put("result", "10");
 				result.put("message", "登录成功");
 				result.put("id", "1");
 			} catch (Exception e) {

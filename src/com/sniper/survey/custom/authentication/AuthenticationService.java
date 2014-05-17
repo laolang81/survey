@@ -46,9 +46,10 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 		if (this.hasIdentity()) {
 			this.clearIdentity();
 		}
-		if (resultInfoInterface.isValid()) {
+		
+		/*if (resultInfoInterface.isValid()) {
 			getSession().put(getStorage(), resultInfoInterface.getObj());
-		}
+		}*/
 		return resultInfoInterface;
 	}
 

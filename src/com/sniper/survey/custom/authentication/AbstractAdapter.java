@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.persistence.Table;
 
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
 
@@ -128,9 +129,6 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 
 	/**
 	 * 返回结果
-	 * 
-	 * @param t
-	 * 
 	 * @param t
 	 * @return
 	 */
@@ -142,7 +140,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	 * 
 	 * @return
 	 */
-	abstract protected SQLQuery authenticateCreateSelect();
+	abstract protected Query authenticateCreateSelect();
 
 	/**
 	 * 执行验证
@@ -150,7 +148,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	@Override
 	public AuthenticateResultInfoInterface authenticate() {
 		authenticateSetup();
-		SQLQuery query = authenticateCreateSelect();
+		Query query = authenticateCreateSelect();
 		// 获取转成对象,者获取的是用户对象数据
 		List<Map> resultIdentities = authenticateQuerySelectMap(query);
 		AuthenticateResultInfoInterface authResult = null;
@@ -223,7 +221,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	 * @return
 	 */
 	@SuppressWarnings({ "unchecked" })
-	private List<Map> authenticateQuerySelectMap(SQLQuery query) {
+	private List<Map> authenticateQuerySelectMap(Query query) {
 		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
 				.list();
 	}

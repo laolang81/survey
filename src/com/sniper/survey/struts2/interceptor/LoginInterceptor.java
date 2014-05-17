@@ -50,8 +50,8 @@ public class LoginInterceptor implements Interceptor {
 		if(ValidateUtil.hasRight(ns, actionName, ServletActionContext.getRequest(), action)){
 			return ai.invoke();
 		}else{
-			//return "login";
-			return ai.invoke();
+			return "login";
+			//return ai.invoke();
 		}
 	}
 

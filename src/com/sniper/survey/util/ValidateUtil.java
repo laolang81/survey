@@ -86,7 +86,7 @@ public class ValidateUtil {
 	public static boolean hasRight(String nameSpace, String actionName,
 			HttpServletRequest request, BaseAction action) {
 		
-		if (ValidateUtil.isValid(nameSpace) || "/".equals(actionName)) {
+		if (!ValidateUtil.isValid(nameSpace) || "/".equals(actionName)) {
 			nameSpace = "";
 		}
 		// 将超链接参数部分去掉?=ssssxxx
@@ -98,11 +98,13 @@ public class ValidateUtil {
 		ServletContext context = session.getServletContext();
 		Map<String, AdminRight> map = (Map<String, AdminRight>) context
 				.getAttribute("all_rights_map");
+		
 		AdminRight right = map.get(url);
 		if (right == null || right.isPublic()) {
 			return true;
 		} else {
 			AdminUser user = (AdminUser) session.getAttribute("user");
+			
 			//是否登录
 			if (user == null) {
 				return false;
@@ -111,11 +113,12 @@ public class ValidateUtil {
 					((UserAware) action).setUser(user);
 				}
 				//超级管理员
+				System.out.println("---------->");
+				System.out.println(user.isSuperAdmin());
 				if (user.isSuperAdmin()) {
 					return true;
 				} else {
 					//有权限
-					
 					if (user.hasRight(right)) {
 						return true;
 					} else {

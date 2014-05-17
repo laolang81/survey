@@ -30,6 +30,7 @@
 		<property name="minPoolSize" value="${c3p0.minPoolSize}"></property>
 		<property name="initialPoolSize" value="${c3p0.initialPoolSize}"></property>
 		<property name="acquireIncrement" value="${c3p0.acquireIncrement}"></property>
+		
 	</bean>
 	<!-- 分库配置 slave -->
 	<bean id="dataSource-salve-1" parent="dataSource-main">

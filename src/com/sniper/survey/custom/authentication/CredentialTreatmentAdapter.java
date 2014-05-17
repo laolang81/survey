@@ -32,6 +32,7 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected AuthenticateResultInfoInterface authenticateValidateResult(Map m) {
 

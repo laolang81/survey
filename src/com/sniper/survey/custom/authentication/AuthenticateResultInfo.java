@@ -3,8 +3,6 @@ package com.sniper.survey.custom.authentication;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sniper.survey.service.BaseService;
-
 public class AuthenticateResultInfo implements AuthenticateResultInfoInterface {
 
 	private ResultInterface code;
@@ -12,7 +10,7 @@ public class AuthenticateResultInfo implements AuthenticateResultInfoInterface {
 	private Object obj;
 
 	public AuthenticateResultInfo() {
-		super();
+		super(); 
 	}
 
 	public AuthenticateResultInfo(ResultInterface resultInterface, List<String> message, Object obj) {

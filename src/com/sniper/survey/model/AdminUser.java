@@ -27,7 +27,7 @@ public class AdminUser extends BaseEntity{
 	@Column(name = "au_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(name = "au_name", unique = true)
+	@Column(name = "au_name", unique = true, updatable = false)
 	private String name;
 	@Column(name = "au_password")
 	private String password;
@@ -58,7 +58,9 @@ public class AdminUser extends BaseEntity{
 	private long[] rightSum;
 	// 设置为超级管理员
 	@Transient
-	private Boolean superAdmin;
+	private boolean superAdmin = false;
+	
+
 		
 	public Integer getId() {
 		return id;
@@ -140,6 +142,7 @@ public class AdminUser extends BaseEntity{
 		this.superAdmin = superAdmin;
 	}
 
+
 	public Set<AdminGroup> getAdminGroup() {
 		return adminGroup;
 	}
@@ -154,10 +157,9 @@ public class AdminUser extends BaseEntity{
 	public void calucateRightSum() {
 		int pos = 0;
 		long code = 0;
-		
 		for (AdminGroup g : adminGroup) {
 			// 判断超级管理员
-			if ("-1".equals(g.getValue())) {
+			if ("administrator".equals(g.getValue())) {
 				this.superAdmin = true;
 				adminGroup = null;
 				return;

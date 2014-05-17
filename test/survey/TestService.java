@@ -1,37 +1,54 @@
 package survey;
 
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-
-
-
-
-
-
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.model.AdminUser;
+import com.sniper.survey.model.Tags;
 import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.service.impl.AdminUserService;
+import com.sniper.survey.service.impl.TagsService;
 
 public class TestService {
 
 	private static AdminRightService cs;
 	private static AdminUserService userService;
+	private static TagsService tagsService;
 
 	@Before
 	public void iniChannelService() {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
 		cs = (AdminRightService) ctx.getBean("adminRightService");
 		userService = (AdminUserService) ctx.getBean("adminUserService");
+		tagsService = (TagsService) ctx.getBean("tagsService");
 		
 	}
 	
 	@Test
+	public void insert() {
+		
+	
+		
+		
+		for (int i = 0; i < 5; i++) {
+			System.out.println(tagsService);
+			Tags tags = new Tags();
+			tags.setName("1111");
+			tags.setUid(1);
+			tags.setOrder(new Date().getTime());
+			tags.setCtime(new Date());
+			tagsService.saveMerge(tags);
+		}
+	}
+	
 	public void save()
 	{
 		
