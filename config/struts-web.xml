@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="sniperSurveyWeb" extends="struts-default"
+		namespace="/">
+
+		<interceptors>
+			<!-- 注册拦截器 -->
+			<!-- 定义拦截器栈 -->
+			<interceptor-stack name="surveyStack">
+				<interceptor-ref name="defaultStack">
+					<!-- 在刷新模型model,解决懒加载最好的方法 -->
+					<param name="modelDriven.refreshModelBeforeResult">true</param>
+					
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 定义默认栈 -->
+		<default-interceptor-ref name="surveyStack" />
+
+		<default-action-ref name="login" />
+		<!-- 定义默认全局login返回值 -->
+		<global-results>
+			<result name="index">/index.jsp</result>
+			<result name="error_no_right">/index.jsp</result>
+		</global-results>
+		
+		
+	</package>
+	<!-- -->
+	
+</struts>

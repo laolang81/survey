@@ -2,8 +2,6 @@ package com.sniper.survey.custom.authentication;
 
 import java.util.Map;
 
-import org.apache.struts2.interceptor.SessionAware;
-
 public interface AuthenticationServiceInterface {
 	/**
 	 * Authenticates and provides an authentication result

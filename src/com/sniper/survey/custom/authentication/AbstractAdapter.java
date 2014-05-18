@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.persistence.Table;
 
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
 
 import com.sniper.survey.service.BaseService;
@@ -35,9 +34,8 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	public AuthenticateResultInfoInterface authenticateResultInfo = new AuthenticateResultInfo();
 
 	/**
-	 * 实体类
+	 * 实体类行
 	 */
-	private T model;
 	protected Class<T> clazz;
 
 	/**
@@ -50,15 +48,20 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	private boolean ambiguityIdentity = false;
 
 	public AbstractAdapter() {
-
+		
 	}
 
+	@SuppressWarnings("unchecked")
 	public AbstractAdapter(BaseService service, String identityColunm,
 			String credentialcolumn) {
 		super();
 		this.service = service;
 		this.identityColunm = identityColunm;
 		this.credentialcolumn = credentialcolumn;
+		
+		ParameterizedType Type = (ParameterizedType) this.getClass()
+				.getGenericSuperclass();
+		clazz = (Class<T>) Type.getActualTypeArguments()[0];
 	}
 
 	public BaseService getService() {
@@ -96,28 +99,7 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 		this.authenticateResultInfo = authenticateResultInfo;
 	}
 
-	@SuppressWarnings("unchecked")
-	public T getModel() {
-
-		if (model != null) {
-			return model;
-		}
-		ParameterizedType Type = (ParameterizedType) this.getClass()
-				.getGenericSuperclass();
-		clazz = (Class<T>) Type.getActualTypeArguments()[0];
-		try {
-			model = (T) clazz.newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-		return model;
-	}
-
-	public void setModel(T model) {
-		this.model = model;
-	}
-
+	
 	public boolean isAmbiguityIdentity() {
 		return ambiguityIdentity;
 	}
@@ -147,10 +129,13 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	 */
 	@Override
 	public AuthenticateResultInfoInterface authenticate() {
+		//组织默认返回数据
 		authenticateSetup();
+		//利用第三方执行查询
 		Query query = authenticateCreateSelect();
 		// 获取转成对象,者获取的是用户对象数据
 		List<Map> resultIdentities = authenticateQuerySelectMap(query);
+		//存放结果
 		AuthenticateResultInfoInterface authResult = null;
 		// 检测用户获取的数量是否等于1，这里只检测用户数量是否唯一，不唯一报错
 		if ((authResult = authenticateValidateResultSet(resultIdentities)) != null) {
@@ -204,24 +189,15 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	}
 
 	/**
-	 * 获取对象数据
-	 * 
-	 * @param query
-	 * @return
-	 */
-	@SuppressWarnings({ "unchecked", "unused" })
-	private List<T> authenticateQuerySelect(SQLQuery query) {
-		return query.addEntity(clazz).list();
-	}
-
-	/**
 	 * 获取map数据
 	 * 
 	 * @param query
 	 * @return
 	 */
-	@SuppressWarnings({ "unchecked" })
+	
+	@SuppressWarnings("unchecked")
 	private List<Map> authenticateQuerySelectMap(Query query) {
+		
 		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
 				.list();
 	}
@@ -232,8 +208,8 @@ public abstract class AbstractAdapter<T> extends BaseAbstractAdapter {
 	private void authenticateSetup() {
 
 		this.authenticateResultInfo.setCode(Result.FAILURE);
-		this.authenticateResultInfo.getMessage().add("null");
-		this.authenticateResultInfo.setObj(getModel());
+		this.authenticateResultInfo.getMessage().add(null);
+		this.authenticateResultInfo.setObj(null);
 	}
 
 	/**

@@ -60,6 +60,8 @@ public class AdminUser extends BaseEntity{
 	@Transient
 	private boolean superAdmin = false;
 	
+	@Transient
+	private boolean auth;
 
 		
 	public Integer getId() {
@@ -151,6 +153,14 @@ public class AdminUser extends BaseEntity{
 		this.adminGroup = adminGroup;
 	}
 
+	public boolean isAuth() {
+		return auth;
+	}
+
+	public void setAuth(boolean auth) {
+		this.auth = auth;
+	}
+
 	/**
 	 * 计算用户权限总和
 	 */
@@ -188,5 +198,7 @@ public class AdminUser extends BaseEntity{
 		return !((rightSum[pos] & code) == 0);
 
 	}
+	
+	
 
 }

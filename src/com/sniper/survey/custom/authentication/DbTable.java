@@ -12,6 +12,7 @@ public class DbTable extends CredentialTreatmentAdapter<AdminUser> {
 	@SuppressWarnings("rawtypes")
 	public DbTable(BaseService service, String identityColunm,
 			String credentialcolumn, String credentialTreatment) {
+		
 		super(service, identityColunm, credentialcolumn, credentialTreatment);
 	}
 }

@@ -86,17 +86,16 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		if (result.size() > 1) {
 			return SUCCESS;
 		}
-		// 用户验证
+		// 用户验证,只负责用户验证不负责保存
 		DbTable dbTable = new DbTable(adminUserService, "au_name",
 				"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
 		dbTable.setCredential(DataUtil.md5(this.passwd));
 		dbTable.setIdentity(this.account);
-
-		// 调用用户验证,及其用户管理,需要注入session,否则无法完用户session的保存工作
-		AuthenticationServiceInterface auth = new AuthenticationService();		
+		
+		//执行验证
+		AuthenticationServiceInterface auth = new AuthenticationService();
+		//出啊安迪session
 		auth.setSession(sessionMap);
-		auth.setStorage("user");
-
 		AuthenticateResultInfoInterface loginResult = auth
 				.authenticate(dbTable);
 
@@ -110,17 +109,15 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			break;
 		case 1:
 			try {
-				// 重新保存session，因为源程序已经保存过一次
-				
-				AdminUser user = (AdminUser) loginResult.getObj();
-				// 上面无法获取用户组信息，只能重新获取一次
-				user	 = adminUserService.getEntity(user.getId());
+				//获取map数据
+				Map map =  (Map) loginResult.getObj();
+				AdminUser user	 = adminUserService.getEntity((Integer) map.get("au_id"));
 				//获取最大权限位
 				int maxPos =  rightService.getMaxRightPos();
 				user.setRightSum(new long[maxPos + 1]);
 				//计算权限综合
 				user.calucateRightSum();
-				//保存用户xx 
+				//保存用户xx 				
 				auth.getSession().put(auth.getStorage(), user);
 				
 				result.put("result", "10");

@@ -6,7 +6,6 @@ import java.util.Map;
 import org.hibernate.SQLQuery;
 
 import com.sniper.survey.service.BaseService;
-import com.sniper.survey.util.BeanToMapUtil;
 
 @SuppressWarnings("rawtypes")
 public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
@@ -27,12 +26,14 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 	public CredentialTreatmentAdapter(BaseService service,
 			String identityColunm, String credentialcolumn,
 			String credentialTreatment) {
+		
 		super(service, identityColunm, credentialcolumn);
 		this.credentialTreatment = credentialTreatment;
 
 	}
-
-	@SuppressWarnings("unchecked")
+	/**
+	 * 用户信息验证
+	 */
 	@Override
 	protected AuthenticateResultInfoInterface authenticateValidateResult(Map m) {
 
@@ -43,24 +44,13 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 					"Supplied credential is invalid.");
 			return authenticateCreateAuthResult();
 		}
-		// setModel(m);
-		// 密码正确
-		// System.out.println(m.get("auth"));
-		// System.out.println(m.get("auth").getClass().getName());
+
 		BigInteger authbig = (BigInteger) m.get("auth");
 		Integer auth = authbig.intValue();
 
 		if (auth != null && auth == 1) {
 			m.remove("auth");
-			T t = null;
-			try {
-				t = (T) BeanToMapUtil.convertMap(clazz, m, "au_");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			// System.out.println(m);
-			setModel(t);
-			this.authenticateResultInfo.setObj(t);
+			this.authenticateResultInfo.setObj(m);
 			this.authenticateResultInfo.setCode(Result.SUCCESS);
 			this.authenticateResultInfo.getMessage().add(
 					"Authentication successful.");
@@ -73,7 +63,9 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 
 		return authenticateCreateAuthResult();
 	}
-
+	/**
+	 * 用户信息查询
+	 */
 	@Override
 	protected SQLQuery authenticateCreateSelect() {
 
