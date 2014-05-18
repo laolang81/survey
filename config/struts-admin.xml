@@ -34,19 +34,19 @@
 		
 		<!-- 定义默认全局login返回值 -->
 		<global-results>
-			<result name="login">/admin/login/index.jsp</result>
-			<result name="error_no_right">/index.jsp</result>
+			<result name="login">${htmlPath}/login/index.jsp</result>
+			<result name="error_no_right">${htmlPath}/login/index.jsp</result>
 		</global-results>
 		<!-- 后台基本CURD的通配符配置 -->
 		
 		<action name="*List" class="{1}Action" method="list">
-			<result name="success">{1}/list.jsp</result>
-			<result name="input">{1}/list.jsp</result>
+			<result name="success">${htmlPath}/{1}/list.jsp</result>
+			<result name="input">${htmlPath}/{1}/list.jsp</result>
 		</action>
 
 		<!-- 统一添加操作 -->
 		<action name="*Save" class="{1}Action" method="save">
-			<result name="input">{1}/save.jsp</result>
+			<result name="input">${htmlPath}/{1}/save.jsp</result>
 			<result name="success" type="redirectAction">
 				<param name="namespace">/admin</param>
 				<param name="actionName">{1}List</param>
@@ -61,7 +61,7 @@
 
 		<!-- 统一更新操作 -->
 		<action name="*Update" class="{1}Action" method="update">
-			<result name="input">{1}/save.jsp</result>
+			<result name="input">${htmlPath}/{1}/save.jsp</result>
 			<result name="success" type="redirectAction">
 				<param name="namespace">/admin</param>
 				<param name="actionName">{1}List</param>
@@ -107,8 +107,8 @@
 		</action>
 
 		<action name="login" class="loginAction">
-			<result name="success">/admin/login/index.jsp</result>
-			<result name="login">/admin/login/index.jsp</result>
+			<result name="success">${htmlPath}/login/index.jsp</result>
+			<result name="login">${htmlPath}/login/index.jsp</result>
 		</action>
 		<action name="logout" class="loginAction" method="logout">
 			<result name="logout" type="redirectAction">login</result>

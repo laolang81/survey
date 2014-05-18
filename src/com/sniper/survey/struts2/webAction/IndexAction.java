@@ -16,7 +16,7 @@ public class IndexAction extends BaseAction{
 	public String execute() throws Exception {
 		
 		System.out.println("web-index--------");
-		return "home";
+		return SUCCESS;
 	}
 	
 }

@@ -12,13 +12,22 @@ public abstract class BaseAction<T> extends ActionSupport implements
 		ModelDriven<T>, Preparable, MethodAware {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	public T model;
 	/**
 	 * 获取用户提交的方式
 	 */
 	private String method;
 
+	/**
+	 * 定义模板文件地址
+	 */
+	private String htmlPath = "/WEB-INF/admin";
+	
+	public String getHtmlPath() {
+		return htmlPath;
+	}
+	
 	public BaseAction() {
 		// 得到泛型话的超类，
 		Type type = this.getClass().getGenericSuperclass();

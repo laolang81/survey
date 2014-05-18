@@ -8,9 +8,13 @@
 		
 		<!-- 前台必须一对一配置放置和后台冲突 -->
 
+		<action name="index" class="indexAction">
+			<result name="success">${htmlPath}/index/index.jsp</result>
+		</action>
+		
 		<action name="post" class="postAction">
-			<result name="success">/web/post/index.jsp</result>
-			<result name="input">/web/post/index.jsp</result>
+			<result name="success">${htmlPath}/post/index.jsp</result>
+			<result name="input">${htmlPath}/post/index.jsp</result>
 		</action>
 
 

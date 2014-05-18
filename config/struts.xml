@@ -17,9 +17,7 @@
 			<result name="home">index.jsp</result>
 		</global-results>
 
-		<action name="index" class="indexAction">
-			<result>index.jsp</result>
-		</action>
+	
 
 	</package>
 

@@ -10,8 +10,15 @@ public abstract class BaseAction extends ActionSupport implements
 		ModelDriven, Preparable, MethodAware {
 
 	private static final long serialVersionUID = 1L;
-
+	/**
+	 * 定义模板文件地址
+	 */
+	private String htmlPath = "/WEB-INF/web";
 	
+	public String getHtmlPath() {
+		return htmlPath;
+	}
+
 	/**
 	 * 获取用户提交的方式
 	 */
