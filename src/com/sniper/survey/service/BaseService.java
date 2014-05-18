@@ -4,9 +4,16 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 
 public interface BaseService<T> {
-
+	/**
+	 * 获取新的session
+	 * 测试用用
+	 * @return
+	 */
+	public Session getOpenSession();
+	
 	// 写操作
 	public void saveEntiry(T t);
 

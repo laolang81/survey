@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 
 import com.sniper.survey.dao.BaseDao;
 import com.sniper.survey.service.BaseService;
@@ -46,6 +47,11 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		this.dao = dao;
 	}
 
+	@Override
+	public Session getOpenSession() {
+		return dao.getOpenSesion();
+	}
+	
 	public void saveEntiry(T t) {
 		dao.saveEntiry(t);
 

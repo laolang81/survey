@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.ReplicationMode;
 import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 
 /**
  * 主控操作和关联操作的先后顺序是“先保存one，再保存many；先删除many，再删除one；先update主控方，再update被动方”
@@ -15,6 +16,11 @@ import org.hibernate.SQLQuery;
  */
 public interface BaseDao<T> {
 
+	/**
+	 * 测试专用
+	 */
+	public Session getOpenSesion();
+	
 	// 写操作
 	/**
 	 * save会立即执行sql语句 保存一个新的对象

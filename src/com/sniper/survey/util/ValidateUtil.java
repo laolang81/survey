@@ -113,8 +113,6 @@ public class ValidateUtil {
 					((UserAware) action).setUser(user);
 				}
 				//超级管理员
-				System.out.println("---------->");
-				System.out.println(user.isSuperAdmin());
 				if (user.isSuperAdmin()) {
 					return true;
 				} else {

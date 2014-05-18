@@ -53,12 +53,18 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		// clazz = (Class<T>) Type.getActualTypeArguments()[0];
 	}
 
-	// 增删改使用的session
+	/**
+	 * 获取当前session
+	 * @return
+	 */
 	public Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
 
-	// 查询使用的session
+	/**
+	 * 打开session
+	 * @return
+	 */
 	public Session getOpenSesion() {
 		return sessionFactory.openSession();
 	}
@@ -119,7 +125,6 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	 */
 
 	public T loadEntity(Integer id) {
-		System.out.println(clazz);
 		return (T) this.getCurrentSession().load(clazz, id);
 
 	}

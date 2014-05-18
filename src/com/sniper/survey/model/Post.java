@@ -82,12 +82,7 @@ public class Post extends BaseEntity{
 	@Column(name = "pt_language")
 	private Short language;
 
-	// onetoone
-	// @Column(name = "pe_pid")
-	// @JoinColumn(name = "pt_id")
 
-	// optional是否允许该字段为null,该属性应该根据数据库表的外键约束来确定,默认为true
-	// @OneToOne(cascade = CascadeType.ALL)
 	/**
 	 * 单向@OneToOne,
 	 * post包含postValue

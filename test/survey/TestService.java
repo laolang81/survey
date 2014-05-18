@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -35,18 +36,23 @@ public class TestService {
 	@Test
 	public void insert() {
 		
-	
-		
-		
-		for (int i = 0; i < 5; i++) {
-			System.out.println(tagsService);
+		Session session = tagsService.getOpenSession();
+		Transaction transaction = session.beginTransaction();
+				
+		for (int i = 0; i < 50000; i++) {
 			Tags tags = new Tags();
 			tags.setName("1111");
 			tags.setUid(1);
 			tags.setOrder(new Date().getTime());
 			tags.setCtime(new Date());
-			tagsService.saveMerge(tags);
+			session.save(tags);
+			if(i % 30 == 0){
+				session.flush();
+				session.clear();
+			}
 		}
+		transaction.commit();		
+		session.close();
 	}
 	
 	public void save()
