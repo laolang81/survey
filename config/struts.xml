@@ -10,7 +10,7 @@
 	<constant name="struts.ui.theme" value="simple" />
 	<!-- 允许调用bean静态方法 -->
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
-	<package name="default" extends="struts-default">
+	<package name="default" extends="struts-default" namespace="/">
 
 		<default-action-ref name="index" />			
 		<global-results>
@@ -23,8 +23,10 @@
 
 	</package>
 
-
+	<!-- 前台页面 -->
 	<include file="struts-web.xml"></include>
+	<!-- 公共页面 -->
 	<include file="struts-public.xml"></include>
+	<!-- 后台页面 -->
 	<include file="struts-admin.xml"></include>
 </struts>

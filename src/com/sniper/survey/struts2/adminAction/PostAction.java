@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -22,7 +21,7 @@ import com.sniper.survey.service.impl.TagsService;
 import com.sniper.survey.util.VerifyCode;
 
 //加注解
-@Controller
+@Controller("adminPost")
 @Scope("prototype")
 public class PostAction extends BaseAction<AdminUser> {
 
