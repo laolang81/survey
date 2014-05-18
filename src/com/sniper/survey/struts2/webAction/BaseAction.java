@@ -1,4 +1,4 @@
-package com.sniper.survey.struts2.webaction;
+package com.sniper.survey.struts2.webAction;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -38,6 +38,12 @@ public abstract class BaseAction extends ActionSupport implements
 
 	public String getMethod() {
 		return method;
+	}
+
+	@Override
+	public Object getModel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

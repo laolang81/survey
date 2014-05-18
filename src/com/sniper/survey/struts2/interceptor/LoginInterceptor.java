@@ -6,7 +6,7 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.sniper.survey.struts2.MethodAware;
-import com.sniper.survey.struts2.action.BaseAction;
+import com.sniper.survey.struts2.adminAction.BaseAction;
 import com.sniper.survey.util.ValidateUtil;
 
 /**
@@ -36,13 +36,14 @@ public class LoginInterceptor implements Interceptor {
 	@Override
 	public String intercept(ActionInvocation ai) throws Exception {
 
+		
 		BaseAction action = (BaseAction) ai.getAction();
-		// System.out.println(action.getClass().getName());
+		System.out.println(action.getClass().getName());
 		if (action instanceof MethodAware) {
 			String method = ai.getProxy().getMethod();
 			action.setMethod(method);
 		}
-
+		
 		ActionProxy proxy = ai.getProxy();
 		String ns = proxy.getNamespace();
 		String actionName = proxy.getActionName();

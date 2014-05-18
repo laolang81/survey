@@ -25,20 +25,19 @@
 				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
+		
+		
 		<!-- 定义默认栈 -->
 		<default-interceptor-ref name="surveyStack" />
 
 		<default-action-ref name="login" />
+		
 		<!-- 定义默认全局login返回值 -->
 		<global-results>
 			<result name="login">/admin/login/index.jsp</result>
 			<result name="error_no_right">/index.jsp</result>
 		</global-results>
 		<!-- 后台基本CURD的通配符配置 -->
-		
-		<action name="index" class="indexAction">
-			<result name="success">/index.jsp</result>
-		</action>
 		
 		<action name="*List" class="{1}Action" method="list">
 			<result name="success">{1}/list.jsp</result>

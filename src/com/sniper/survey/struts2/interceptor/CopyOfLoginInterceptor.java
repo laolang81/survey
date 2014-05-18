@@ -9,7 +9,7 @@ import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.struts2.MethodAware;
 import com.sniper.survey.struts2.UserAware;
-import com.sniper.survey.struts2.action.BaseAction;
+import com.sniper.survey.struts2.adminAction.BaseAction;
 import com.sniper.survey.util.ValidateUtil;
 
 /**

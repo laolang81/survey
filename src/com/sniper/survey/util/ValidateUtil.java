@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.struts2.UserAware;
-import com.sniper.survey.struts2.action.BaseAction;
+import com.sniper.survey.struts2.adminAction.BaseAction;
 
 /**
  * 校验工具类
@@ -99,6 +99,7 @@ public class ValidateUtil {
 		Map<String, AdminRight> map = (Map<String, AdminRight>) context
 				.getAttribute("all_rights_map");
 		
+		System.out.println(url);
 		AdminRight right = map.get(url);
 		if (right == null || right.isPublic()) {
 			return true;

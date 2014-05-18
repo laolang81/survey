@@ -60,7 +60,7 @@
 		<div class="form-group input-group-lg" >
 			<label for="verifycode" class="col-sm-2 control-label sr-only">输入验证码</label>      		
 	     	<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="输入验证码" id="verifycode" class="form-control">			
-			<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" namespace="/" />" class="fl" >
+			<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" namespace="/public" />" class="fl" >
 		</div>
 		<div class="form-group input-group-lg">
 			<label class="checkbox"> 

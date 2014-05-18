@@ -1,4 +1,4 @@
-package com.sniper.survey.struts2.action;
+package com.sniper.survey.struts2.adminAction;
 
 import java.io.ByteArrayInputStream;
 import java.util.Map;
