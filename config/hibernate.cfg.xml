@@ -25,6 +25,8 @@
 		<!-- hibernate单独使用时配置和spring不需要配置 -->
 		<!-- <property name="current_session_context_class">thread</property> -->
 		<property name="current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</property>
+		<!-- 分页不许带的 -->
+		<property name="jdbc.use_scrollable_resultset">false</property>
 		<!-- <property name="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property> -->
 		<!-- 设置事务隔离级别 -->
 		<!-- <property name="hibernate.connection.isolation">2</property> -->
