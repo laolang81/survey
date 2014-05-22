@@ -8,12 +8,12 @@
 		<div id="footer">
 			<p class="alignleft">
 				<s:text name="Thanks for using"></s:text>
-				<s:property value="#configInfo['cg_webname']"/>(<s:property value="#TimeSpent"/>,<s:property value="#phpMemory"/>)
+				<s:property value="#configInfo['cg_webname']"/>(<s:property value="#attr.TimeSpent"/>,<s:property value="#attr.phpMemory"/>)
 			</p>
 			<p id="footer-upgrade" class="alignright">
 				<s:text name="Version" /><s:property value="#Version"/>
 			</p>
 			
-</div>			
+</div>
 </body>
 </html>

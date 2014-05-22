@@ -15,5 +15,5 @@
 		<li><s:property value="#attr.controllerName"/></li>
 		<li class="active"><s:property value="#attr.actionName"/></li>
 	</ol>
-	<s:property value=#attr.htmlPath"/>
+	111111111111<s:property value=#attr.htmlPath"/>
 </div>

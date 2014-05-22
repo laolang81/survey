@@ -92,7 +92,9 @@
 
 
 	<div class="container">
-	
+	1
 		<s:include value="../public/navigate.jsp"></s:include>
+		2
 		<s:include value="../public/left.jsp"></s:include>
-		<s:include value="../public/footer.jsp"></s:include>
+		3
+	
