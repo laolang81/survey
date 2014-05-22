@@ -85,7 +85,7 @@
 		<div id="adminmenushadow"></div>
 		<div class="separator"></div>
 		<ul id="ztree" class="ztree" style=" overflow:auto;"></ul>
-		<?php echo $this->layoutUserMenu;?>
+		<s:property value="#leftUserMenu" />
 		<div class="separator"></div>
 	</div>
 	

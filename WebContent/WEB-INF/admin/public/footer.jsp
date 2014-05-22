@@ -1,17 +1,14 @@
-	
+<%@ taglib uri="/struts-tags" prefix="s"%>	
 		</div>
 		<!-- /container -->
 		
 		<div id="footer">
 			<p class="alignleft">
 				<s:text name="Thanks for using"></s:text>
-				<?php echo $this->configInfo['cg_webname'];?>
-				(
-				<?php echo $this->TimeSpent,',',$this->phpMemory?>
-				)
+				<s:property value="#configInfo['cg_webname']"/>(<s:property value="#TimeSpent"/>,<s:property value="#phpMemory"/>)
 			</p>
 			<p id="footer-upgrade" class="alignright">
-				<?php echo $this->translate('Version'),' ',$this->Version?>
+				<s:text name="Version" /><s:property value="#Version"/>
 			</p>
 			
 			
