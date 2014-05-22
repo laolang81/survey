@@ -20,6 +20,9 @@
 <link href="myfiles/Plugin/bootstarp/css/bootstrap.min.css"
 	media="screen" rel="stylesheet" type="text/css">
 
+<link href="myfiles/Plugin/bootstarp/css/bootstrap-theme.min.css"
+	media="screen" rel="stylesheet" type="text/css">
+
 <link href="myfiles/Plugin/font-awesome/css/font-awesome.min.css"
 	media="screen" rel="stylesheet" type="text/css">
 
