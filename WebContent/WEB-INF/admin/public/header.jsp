@@ -33,6 +33,7 @@
 </head>
 <body>
 
+	<s:property value="#attr.htmlPath" />
 	<nav class="navbar navbar-default" role="navigation">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
@@ -88,9 +89,10 @@
 		<s:property value="#leftUserMenu" />
 		<div class="separator"></div>
 	</div>
+
+
+	<div class="container">
 	
-	<div class="bodyRight">
-		<jsp:include page="../public/navigate.jsp" />
-		<div class="container">
-			<jsp:include page="../public/left.jsp" />
-		
+		<s:include value="../public/navigate.jsp"></s:include>
+		<s:include value="../public/left.jsp"></s:include>
+		<s:include value="../public/footer.jsp"></s:include>

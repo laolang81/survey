@@ -1,14 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+
 <div id="breadcrumbs">
+
 <!-- → -->
 	<div id="pma_navigation_collapser" title="关闭面板" class="fl">←</div>
-	<ul class="breadcrumb">
+	<ol class="breadcrumb">
 		<li>
 			<i class="fa fa-home"></i>
-			<a href="<?php echo $this->url('admin'); ?>">Home</a>
-			
+			<a href=''>Home</a>
 		</li>
-		<li class="active"><s:property value="#controllerName"/></li>
-		<li class="active"><s:property value="#actionName"/></li>
-	</ul>
+		<li><s:property value="#attr.controllerName"/></li>
+		<li class="active"><s:property value="#attr.actionName"/></li>
+	</ol>
+	<s:property value=#attr.htmlPath"/>
 </div>
