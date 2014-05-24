@@ -6,12 +6,26 @@ import java.lang.reflect.Modifier;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import javax.servlet.ServletContext;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.sniper.survey.service.impl.AdminRightService;
+
 public class ExtractAllrightUtil {
 
 	public static void main(String[] args) throws URISyntaxException {
 
+		ServletContext context2 = ServletActionContext.getServletContext();
+		ApplicationContext ac = WebApplicationContextUtils
+				.getWebApplicationContext(context2);
+		
+		AdminRightService service = (AdminRightService) ac.getBean("adminRightService");
+		
 		ClassLoader classLoader = ExtractAllrightUtil.class.getClassLoader();
-		String name = "com/sniper/survey/struts2/action";
+		String name = "com/sniper/survey/struts2/adminAction";
 		URL url = classLoader.getResource(name);
 		// System.out.println(url.toString());
 		File dir = new File(url.toURI());
@@ -20,7 +34,7 @@ public class ExtractAllrightUtil {
 		for (File f : files) {
 			fname = f.getName();
 			if (fname.endsWith(".class") && !fname.equals("BaseAction.class")) {
-				processAction(fname);
+				processAction(fname, service);
 			}
 		}
 	}
@@ -30,9 +44,9 @@ public class ExtractAllrightUtil {
 	 * 
 	 * @param fname
 	 */
-	private static void processAction(String fname) {
+	private static void processAction(String fname, AdminRightService service) {
 		//
-		String pkgName = "com.sniper.survey.struts2.action";
+		String pkgName = "com.sniper.survey.struts2.adminAction";
 		// 获取类名
 		String simpleClassName = fname.substring(0, fname.indexOf(".class"));
 		String urlName = simpleClassName.substring(0,
@@ -51,24 +65,28 @@ public class ExtractAllrightUtil {
 				retType = m.getReturnType();
 				// 获取方法名称
 				mName = m.getName();
+				
 				// 参数类型
 				paramType = m.getParameterTypes();
 				// getModifiers方法描述付,比如共有私有静态等
 				if (retType == String.class && !ValidateUtil.isValid(paramType)
 						&& Modifier.isPublic(m.getModifiers())) {
+					
+					System.out.println(mName);
+					
 					if (mName.equals("execute")) {
 						url = "/" + DataUtil.toLowerCaseFirstOne(urlName);
 					} else {
 						url = "/" + DataUtil.toLowerCaseFirstOne(urlName)
 								+ DataUtil.toUpperCaseFirstOne(mName);
 					}
-					System.out.println(url);
+					//System.out.println(url);
+					service.appendRightByURL(url);
 
 				}
 			}
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
