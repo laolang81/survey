@@ -11,6 +11,7 @@
 	href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <script type="text/javascript" src="myfiles/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript"
 	src="myfiles/Plugin/Bootstrap/js/bootstrap.min.js"></script>

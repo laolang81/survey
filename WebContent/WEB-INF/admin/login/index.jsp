@@ -11,21 +11,22 @@
 	href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="http://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script
-	src="http://cdn.bootcss.com/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-<!-- Bootstrap -->
-<link rel="stylesheet"
-	href="http://cdn.bootcss.com/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
+<script type="text/javascript" src="myfiles/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript"
+	src="myfiles/Plugin/Bootstrap/js/bootstrap.min.js"></script>
+
+<link href="myfiles/Plugin/Bootstrap/css/bootstrap.min.css"
+	media="screen" rel="stylesheet" type="text/css">
+
+<link href="myfiles/Plugin/Bootstrap/css/bootstrap-theme.min.css"
+	media="screen" rel="stylesheet" type="text/css">
+
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
-	<script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
-	<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<script src="myfiles/Plugin/Bootstrap/js/html5shiv.min.js"></script>
 <![endif]-->
 
 <script type="text/javascript"
