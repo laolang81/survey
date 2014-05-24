@@ -3,6 +3,7 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
+
 <div id="breadcrumbs">
 
 <!-- → -->
@@ -12,8 +13,8 @@
 			<i class="fa fa-home"></i>
 			<a href=''>Home</a>
 		</li>
-		<li><s:property value="#attr.controllerName"/></li>
-		<li class="active"><s:property value="#attr.actionName"/></li>
+		<li>controllerName</li>
+		<li class="active">${param.actionName }</li>
 	</ol>
-	111111111111<s:property value=#attr.htmlPath"/>
+	${attr.htmlPath }${param.htmlPath }
 </div>

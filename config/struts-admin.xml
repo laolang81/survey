@@ -10,8 +10,8 @@
 			<!-- 注册拦截器 -->
 			<interceptor name="loginInterceptor"
 				class="com.sniper.survey.struts2.interceptor.LoginInterceptor" />
-			<!-- <interceptor name="CatchUrlInterceptor"
-				class="com.sniper.survey.struts2.interceptor.CatchUrlInterceptor" /> -->
+			<interceptor name="CatchUrlInterceptor"
+				class="com.sniper.survey.struts2.interceptor.CatchUrlInterceptor" />
 			<!-- 定义拦截器栈 -->
 			<interceptor-stack name="surveyStack">
 				<!-- <interceptor-ref name="CatchUrlInterceptor" /> -->

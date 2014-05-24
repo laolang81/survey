@@ -2,3 +2,4 @@
 	pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+left

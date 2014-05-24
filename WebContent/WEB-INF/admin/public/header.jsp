@@ -17,6 +17,7 @@
 <script type="text/javascript"
 	src="myfiles/Plugin/ztree/js/jquery.ztree.core-3.5.min.js"></script>
 
+
 <link href="myfiles/Plugin/Bootstrap/css/bootstrap.min.css"
 	media="screen" rel="stylesheet" type="text/css">
 
@@ -27,6 +28,10 @@
 	media="screen" rel="stylesheet" type="text/css">
 
 <link href="myfiles/Plugin/ztree/css/zTreeStyle/zTreeStyle.css"
+	media="screen" rel="stylesheet" type="text/css">
+
+
+<link href="myfiles/css/admin.css"
 	media="screen" rel="stylesheet" type="text/css">
 
 
@@ -83,16 +88,12 @@
 	<div id="adminmenuwrap">
 		<div id="adminmenushadow"></div>
 		<div class="separator"></div>
-		<ul id="ztree" class="ztree" style=" overflow:auto;"></ul>
-		<s:property value="#leftUserMenu" />
+		<ul id="ztree" class="ztree" style=" overflow:auto;">${attr.htmlPath }${param.htmlPath }</ul>
+		<s:property value="#attr.leftUserMenu" />
 		<div class="separator"></div>
 	</div>
 
 
 	<div class="container">
-	1
-		<s:include value="../public/navigate.jsp"></s:include>
-		2
-		<s:include value="../public/left.jsp"></s:include>
-		3
+		
 	

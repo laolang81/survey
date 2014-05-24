@@ -55,27 +55,5 @@ public class RegisterFont {
 		return font.getFontName();
 	}
 
-	/*
-	 * public　void registerFont(String url)　 {　 　　var　fontURL　=　new　File(url);　
-	 * 　
-	 * 　var　font　=　java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,　fontURL
-	 * );　 　　var　ge　=　GraphicsEnvironment.getLocalGraphicsEnvironment();　
-	 * 　　var　clazz　=　ge.getClass();　
-	 * 　　var　registerFont　=　clazz.getMethod("registerFont",　font.getClass());　
-	 * 　　var　success　=　(registerFont.invoke(ge,　font))　as　Boolean;　 　
-	 * 　　if(success)　{　 　　　　//text.font　=　Font　{　name:　"创艺简行楷"　size:　36　};　
-	 * 　　}　else　{　 　　　　//println("not　success!");　 　　}　 }　 　
-	 */
-	/*
-	 * var　text:　Text　=　Text　{　
-	 * 　　　　translateX:　bind　(300　-　text.layoutBounds.width)　/　2.0　
-	 * 　　　　content:　"世界，你好！"　 　　　　font:　Font{name:"微软雅黑"　size:　22}　 　　　　}　 　
-	 * var　button　:　Button　=　Button　{　
-	 * 　　translateX:　bind　(300　-　button.layoutBounds.width)　/　2.0　
-	 * 　　text:　"Register　Font"　 　　action:　function()　{　
-	 * 　　　　registerFont("d:/cy23.TTF");　 　　}　 }　 　 var　vBox　=　VBox　{　
-	 * 　　layoutY:　50　 　　spacing:　20　 　　content:　[　text,　button　]　 }　 　 Stage　{　
-	 * 　　title:　"Custom　Font"　 　　resizable:　false　 　　scene:　Scene　{　
-	 * 　　　　width:　300　 　　　　height:　150　 　　　　content:　vBox　 　　}　 }　
-	 */
+	
 }

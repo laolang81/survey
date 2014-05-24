@@ -11,6 +11,7 @@
 				<s:property value="#configInfo['cg_webname']"/>(<s:property value="#attr.TimeSpent"/>,<s:property value="#attr.phpMemory"/>)
 			</p>
 			<p id="footer-upgrade" class="alignright">
+			${attr.htmlPath }
 				<s:text name="Version" /><s:property value="#Version"/>
 			</p>
 			
