@@ -5,7 +5,7 @@
 <struts>
 	<package name="sniperSurveyAdmin" extends="struts-default"
 		namespace="/admin">
-
+		
 		<interceptors>
 			<!-- 注册拦截器 -->
 			<interceptor name="loginInterceptor"
@@ -32,12 +32,20 @@
 
 		<default-action-ref name="login" />
 		
+		
+		
 		<!-- 定义默认全局login返回值 -->
 		<global-results>
 			<result name="login">${htmlPath}/login/index.jsp</result>
 			<result name="error_no_right">${htmlPath}/login/index.jsp</result>
+			<result name="error">${htmlPath}/error/error.jsp</result>
 		</global-results>
 		<!-- 后台基本CURD的通配符配置 -->
+		
+		<!-- 全局指定类型错误配置错误配置 一定要放在 global-results 后面 -->
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.ArithmeticException"></exception-mapping>
+		</global-exception-mappings>
 		
 		<action name="*List" class="{1}Action" method="list">
 			<result name="success">${htmlPath}/{1}/list.jsp</result>

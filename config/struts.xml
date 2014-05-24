@@ -14,15 +14,16 @@
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
 	<package name="default" extends="struts-default" namespace="/">
 
-		<default-action-ref name="index" />			
+		<default-action-ref name="index" />
+			
 		<global-results>
 			<result name="home">index.jsp</result>
 		</global-results>
-
+	
 	
 
 	</package>
-
+	
 	<!-- 前台页面 -->
 	<include file="struts-web.xml"></include>
 	<!-- 公共页面 -->
