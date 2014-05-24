@@ -54,6 +54,8 @@
 
 		<!-- 统一添加操作 -->
 		<action name="*Save" class="{1}Action" method="save">
+		
+			
 			<result name="input">${htmlPath}/{1}/save.jsp</result>
 			<result name="success" type="redirectAction">
 				<param name="namespace">/admin</param>

@@ -75,6 +75,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 
 	@Override
 	public String execute() throws Exception {
+		System.out.println(getText("login.message.error.fiald"));
 		return SUCCESS;
 	}
 	/**
@@ -82,10 +83,11 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	 * @return
 	 */
 	public String loginAjaxValid() {
-
+		
 		if (result.size() > 1) {
 			return SUCCESS;
 		}
+	
 		// 用户验证,只负责用户验证不负责保存
 		DbTable dbTable = new DbTable(adminUserService, "au_name",
 				"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
@@ -104,7 +106,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		case 0:
 			
 			result.put("result", "0");
-			result.put("message", "登录失败");
+			result.put("message", getText("Login fiald"));
 			result.put("id", "account");
 			break;
 		case 1:
