@@ -6,7 +6,7 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<title><s:text name="login.page.title" />%{getText("login.page.title")} </title>
+<title><s:text name="login.page.title"  /></title>
 <base
 	href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,7 +73,7 @@
 	</form>
 
 </div><!-- /container -->
-%{getText('login.page.title) }
+
 <div id="back-mask" class="back-mask"></div>
 <script language="javascript">
 	$(function() {
