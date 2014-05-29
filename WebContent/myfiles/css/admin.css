@@ -1,105 +1,49 @@
 @CHARSET "UTF-8";
-body{font-size:12px;font-family: "宋体","Microsoft YaHei",sans-serif; word-wrap: break-word; }
-a{text-decoration:none; color:#333}
-html,body{height:100%; min-width: 1024px;}
-.clear{clear:both;}.fl{float:left}.fr{float:right}
+
+.fl{float:left}.fr{float:right}
 .mt10{margin-top:10px}.mt5{margin-top:5px}.ml10{margin-left:10px;}.ml5{margin-left:5px;}.mr10{margin-right:10px;}.tlc{text-align: center;}
-#wrap {position: relative;width:100%; margin:0 auto;top:50px;bottom:0px ; min-height: 100%;}
-
-.seach{ width:auto; float:right}
-
-/*body right*/
-.bodyRight{ margin-left:220px; width:auto;  height:100%;min-width: 1000px;}
-/*  */
-#pma_navigation_collapser { background: #fff; color: #555555;cursor: pointer; font-weight: bold; height: 40px;line-height: 39px; text-align: center;text-shadow: 0 1px 0 #FFFFFF;width: 20px;}
-.bodyRightHeader{border-bottom: 1px solid #D0DFE9;height: 32px;margin-left: 2px; border-bottom: 1px solid #D0DFE9;}
-#logo{ float: left;margin: 7px 0; background:url(/favicon.png) no-repeat 0 3px; text-indent:25px; color: #174F69; font-size:16px;}
-#login{float: right;margin: 7px 0;  color: #777777;  margin: 0 20px 0 0; line-height:30px;}
-/*top seach action*/
-.seachMenu{ width:auto; min-width:200px;}
-/*footer*/
-#footer {margin:0 10px;overflow: hidden;border-style: solid;border-top: 1px solid;bottom: 0;left: 0;padding: 10px;position: absolute;right: 0;position: relative;border-color: #B0C8D7;color: #777777;width:auto}
-#footer, #footer a {font-size: 12px;}
-#footer p {line-height: 20px;margin: 0;}
-.alignleft {float: left;}
-.alignright {float: right;}
 
 
 /* header */
-#wpadminbar{ background:url(/myfiles/images/top/img/top_img.jpg) repeat-x;color: #CCCCCC; direction: ltr;
-    		font: 13px/30px sans-serif; height: 50px;left: 0;  min-width: 600px; position: fixed;  top: 0;  width: 100%;  z-index: 99999}
-#wpadminbar h1{float:left;width:230px;height:50px;text-indent:-9999em;border-right:1px solid #0265c8;background:url(/myfiles/images/top/img/logo.jpg) no-repeat 10px 0;}
-#wpadminbar h1 a{padding-left:10px;}
-
-#wpadminbar > ul > li{line-height:50px;background: none repeat scroll 0 center transparent;clear: none;position: relative; z-index: 99999;float:left; border-left: 1px solid #0265c8;}    
-#wpadminbar ul li:before, #wpadminbar ul li:after{ content: normal;}
-#wpadminbar > ul > li a{min-width:20px;text-align: center;border-left: 1px solid #0058AF; display: block; height: 50px; margin: 0;padding: 0 12px;color: #fff;}
-#wpadminbar .li_1{padding-left:45px;background:url(/myfiles/images/top/img/li_bg.jpg) 18px 0px no-repeat;}
-#wpadminbar .li_2{padding-left:45px;background:url(/myfiles/images/top/img/li_bg.jpg) 18px -50px no-repeat;}
-
-#wpadminbar .menuop {position: relative;}
-#wpadminbar .menuop > ul{display: none;background: #FFF; border-color: rgb(223, 223, 223); border-style: solid; min-width: 200px;
-    border-width: 0 1px 1px;box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);  float: none; margin: 0 0 0 -1px;
-    padding: 10px 0 0 0;color:rgb(33, 117, 155);position: absolute;width:150%;}
-
-#wpadminbar .menuop > ul > li{ height: 25px;line-height: 25px; cursor: pointer;text-align: left;text-indent: 10px;color:#333333;}
-#wpadminbar .menuop > ul > li a{ height: 25px;line-height: 25px;color:rgb(33, 117, 155); border:0;color:rgb(33, 117, 155);text-align: left;padding:0px}
+#wpadminbar{background-color: #464646; background-image: -moz-linear-gradient(center bottom , #373737, #464646 5px); color: #CCCCCC; direction: ltr;font: 13px/30px sans-serif; height: 30px;left: 0; min-width: 600px; position: fixed; top: 0; width: 100%; z-index: 99999}
+#wpadminbar > ul > li{background: none repeat scroll 0 center transparent;clear: none;position: relative; z-index: 99999;float:left; border-left: 1px solid #555555;}
+#wpadminbar ul li:before, #wpadminbar ul li:after{content: normal;}
+#icon{background:url(/logo.png) no-repeat 5px 7px; text-indent:25px;}
+#wpadminbar > ul > li a{min-width:20px;text-align: center;border-left: 1px solid #333333; display: block; height: 30px; margin: 0;padding: 0 12px;color: #fff;}
+#wpadminbar .menuop{position: relative;}
+#wpadminbar .menuop > ul{display: none;background: #FFF; border-color: rgb(223, 223, 223); border-style: solid; border-width: 0 1px 1px;box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2); float: none; margin: 0 0 0 -1px; padding: 10px 0 0 0;color:rgb(33, 117, 155);position: absolute;min-width:200px;}
+#wpadminbar .menuop > ul > li{height: 25px;line-height: 25px; cursor: pointer;text-align: left;text-indent: 10px;color:#333333;}
+#wpadminbar .menuop > ul > li a{height: 25px;line-height: 25px;color:rgb(33, 117, 155); border:0;color:rgb(33, 117, 155);text-align: left;padding:0px}
 #wpadminbar .menuop > ul > li a:hover{background:rgb(247, 252, 254);color:rgb(33, 117, 155);}
-#wpadminbar .menuop:hover {background: #FFF;}
+#wpadminbar .menuop:hover{background: #FFF;}
 #wpadminbar .menuop:hover > a{color:rgb(33, 117, 155);color:rgb(51,51,51)}
 #wpadminbar .menuop:hover > ul{display: block;}
 #wpadminbar > ul > li:frist-child , #wpadminbar > ul > li:frist-child a{border-right: 0;}
-#wpadminbar > ul .menudown a:hover{background:#fff;color:rgb(33, 117, 155);}	
-
-/* 顶部滚动 */
-.scroll{position: fixed;right: 145px;top:0px;}
-.scroll ul li{width:600px;}
-.scroll ul li a{color:#fff;line-height:50px;font-size:20px;}
+#wpadminbar > ul .menudown a:hover{background:#fff;color:rgb(33, 117, 155);}
 
 /* menu */
-#adminmenuback, #adminmenuwrap {width: 219px;-moz-user-select: none; }
-.separator{ border-style: solid;border-width: 1px 0;border-color: rgb(207, 207, 207);cursor: inherit;height: 3px;_height:5px; background: none repeat scroll 0 0 rgb(223, 223, 223); overflow:hidden }
-#adminmenushadow, #adminmenuback {background: url("/myfiles/images/word/menu-shadow.png") right top repeat-y;}
-#adminmenuback, #adminmenuwrap {background-color: rgb(236, 236, 236);border-color: #D1E5EE;border-style: solid;border-width: 0 1px 0 0;}
-#adminmenuback {bottom: 0px;position: absolute;top: 0px;z-index: -1; height:auto; left:0px; }
-#adminmenushadow {cursor: col-resize;bottom: 0;position: absolute;right: 0;top: 0;width: 6px;z-index: 20; height:100%;}
-#adminmenuwrap {position: absolute; overflow:hidden; height:auto;left:0px}
-
-
-/* 新版后台CSS */
-#breadcrumbs{overflow: hidden;background-color: #F5F5F5; border-bottom: 1px solid #E5E5E5; display: block; line-height: 39px; min-height: 40px; padding: 0 12px 0 0; position: relative; z-index: 13;}
+#adminmenuback, #adminmenuwrap , .dtree{width: 165px;-moz-user-select: none;}
+.separator{border-style: solid;border-width: 1px 0;border-color: rgb(207, 207, 207);cursor: inherit;height: 3px;_height:5px; background: none repeat scroll 0 0 rgb(223, 223, 223); overflow:hidden}
+#adminmenushadow, #adminmenuback{background: url("/myfiles/images/word/menu-shadow.png") right top repeat-y;}
+#adminmenuback, #adminmenuwrap{background-color: rgb(236, 236, 236);border-color: #D1E5EE;border-style: solid;border-width: 0 1px 0 0;}
+#adminmenuback{bottom: 0px;position: absolute;top: 0px;z-index: -1; height:auto; left:0px;}
+#adminmenushadow{bottom: 0;position: absolute;right: 0;top: 0;width: 6px;z-index: 20; height:100%;cursor:col-resize;}
+#adminmenuwrap{position: absolute; overflow:hidden; height:auto;left:0px;}
+/* 右侧头部导航菜单 */
+#breadcrumbs{margin-bottom: 20px;background-color: #F5F5F5; border-bottom: 1px solid #E5E5E5; display: block; line-height: 39px; min-height: 40px; padding: 0 12px 0 0; position: relative; z-index: 13;}
 .breadcrumb{background-color: transparent; border-radius: 0 0 0 0; color: #333333; display: inline-block; font-size: 13px; line-height: 24px; margin: 0 22px 0 12px; padding: 0;}
-.breadcrumb > li{text-shadow: 0 1px 0 #FFFFFF;}.icon-angle-right:before{ content: "";}
+.breadcrumb > li{text-shadow: 0 1px 0 #FFFFFF;}.icon-angle-right:before{content: "";}
 .breadcrumb > li, .breadcrumb > li.active{color: #555555;}
 .breadcrumb > li{display: inline-block; text-shadow: 0 1px 0 #FFFFFF;}
 .breadcrumb > li > .divider{padding: 0 4px;color: #666; padding: 0 5px;}
 .breadcrumb > li, .breadcrumb > li.active{color: #555555;}
-.breadcrumb .fa-angle-right{color: #B2B6BF; font-size: 14px; height: 22px; margin: 0; padding: 0; position: relative; top: 1px;}
-.breadcrumb .fa-home{font-size: 20px; margin-left: 4px; margin-right: 2px; position: relative; top: 2px;}
+#pma_navigation_collapser{background: #fff; color: #555555;cursor: pointer; font-weight: bold; height: 39px;line-height: 39px; text-align: center;text-shadow: 0 1px 0 #FFFFFF;width: 20px;}
 
-#nav-search{line-height: 24px; position: absolute; right: 22px; top: 5px;}
-#nav-search .form-search{margin-top: 1px;}
-#nav-search-input{border-color: #6FB3E0; border-radius: 4px 4px 4px 4px !important; border-width: 1px; color: #666666 !important; font-size: 13px; height: 18px !important; transition: all 0.15s ease 0s; width: 120px; z-index: 11;}
-#nav-search-icon{ left: 10px;line-height: 30px;position: absolute;color:#666}
+/*body right*/
+.container{width:auto; }
+.container-list{padding:0 20px;}
 
-
-/* 列表页 */
-.alternate, .alt {background-color: #FAFAFA;}
-.alternatehover {background-color:  #F9F9F9; }
-.selected{ background-color: #F1F1F1; }
-.list-form{}
-#page-content {background: none repeat scroll 0 0 #FFFFFF; margin: 0;padding: 8px 20px 24px;}
-
-/* 列表右侧操作列表css */
-.btn-group{position: relative;/* border: 1px solid #DEDEE0;padding: 5px; */}
-.btn-group ul{display: none;  left: -60px; position: absolute; top: 100%; right: 0px; border-radius: 0 0 0 0 !important; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); background-clip: padding-box; background-color: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 6px 6px 6px 6px; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); list-style: none outside none; margin: 2px 0 0;padding: 5px 0; z-index: 1000;}
-.btn-group ul .top{border-bottom: 6px solid #FFFFFF; border-left: 6px solid transparent; border-right: 6px solid transparent; height: 5px;width: 0; left: 60px; position: absolute; top: -11px;}
-.btn-group ul li{}
-.btn-group ul .divider{background-color: #E5E5E5; border-bottom: 1px solid #FFFFFF; height: 1px; margin: 9px 1px; overflow: hidden; padding: 0;}
-.btn-group ul li a{padding:2px 5px;margin:0 4px;display: block;font-weight: normal;}
-.btn-group ul li a:hover{background: #DEDEE0;}
-
-  /* page */
+/* page */
 .meneame{border-radius: 4px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); display: inline-block; margin: 10px 0;line-height: 30px;}
 .meneame A ,.meneame SPAN.current,.meneame SPAN.disabled{-moz-border-bottom-colors: none; -moz-border-left-colors: none; -moz-border-right-colors: none; -moz-border-top-colors: none; background-color: #FFFFFF; border-color: #DDDDDD; border-image: none; border-style: solid; border-width: 1px 1px 1px 0; float: left; line-height: 20px; padding: 4px 12px; text-decoration: none;}
 .meneame A:first-child{border-bottom-left-radius: 4px; border-left-width: 1px;border-top-left-radius: 4px;}
@@ -111,3 +55,7 @@ html,body{height:100%; min-width: 1024px;}
 .meneame SPAN.current{color: #999999;cursor: pointer; background-color: #F5F5F5;}
 .meneame SPAN.disabled{cursor: pointer;}
 
+/*footer*/
+#footer{border: 0 none;margin: 0 10px;overflow: hidden;border-style: solid;border-top: 1px solid;bottom: 0;left: 0;padding: 10px 0;border-color: #B0C8D7;color: #777777;}
+#footer, #footer a{font-size: 12px;}
+#footer p{line-height: 20px;margin: 0;}

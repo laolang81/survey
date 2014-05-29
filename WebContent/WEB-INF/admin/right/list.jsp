@@ -4,9 +4,7 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <s:include value="../public/header.jsp"></s:include>
 
-<s:include value="../public/navigate.jsp">
-	<s:param name="actionName">ddddddddddddddd</s:param>
-</s:include>
+
 
 <style type="text/css">
       @import "myfiles/Plugin/DataTables/media/css/demo_page.css";

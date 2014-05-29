@@ -6,9 +6,8 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<title><s:text name="login.page.title"  /></title>
-<base
-	href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/">
+<title><s:text name="login.page.title" /></title>
+<base href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -43,24 +42,24 @@
 <body>
 <div class="container">
 
-	<form data-status="正在登录..." data-url="<s:url action="rightList"  namespace="/admin" />" 
+	<form data-status='<s:text name="login.loading" />' data-url="<s:url action="rightList"  namespace="/admin" />" 
 			class="form-signin" role="form" name="login" action="<s:url action="loginAjaxValid" namespace="/admin"/>">
-		<h2 class="form-signin-heading">Please sign in</h2>
+		<h2 class="form-signin-heading"><s:text name="login.sign.in"/> </h2>
 		
 		<div class="form-group input-group-lg">		
-			<label for="accout">Email address</label>
+			<label for="accout"><s:text name="login.username"/></label>
 			<input type="text" id="accout" name="account" class="form-control"
-				placeholder="Email address" required autofocus>
+				placeholder="<s:text name="login.username"/>" required autofocus>
 		</div>
 		<div class="form-group input-group-lg">
-			<label for="password">Password</label>
+			<label for="password"><s:text name="login.password"/></label>
 			<input id="password" type="password" name="passwd" class="form-control"
-				placeholder="Password" required>
+				placeholder="<s:text name="login.password"/>" required>
 		</div>	
 			
 		<div class="form-group input-group-lg" >
-			<label for="verifycode" class="col-sm-2 control-label sr-only">输入验证码</label>      		
-	     	<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="输入验证码" id="verifycode" class="form-control">			
+			<label for="verifycode" class="col-sm-2 control-label sr-only"><s:text name="login.message.verity.code"/> </label>      		
+	     	<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="<s:text name="login.message.verity.code"/>" id="verifycode" class="form-control">			
 			<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" namespace="/public" />" class="fl" >
 		</div>
 		<div class="form-group input-group-lg">
@@ -69,7 +68,7 @@
 			</label>
 		</div>
 		
-		<button class="btn btn-lg btn-primary btn-block" type="button">Sign in</button>
+		<button class="btn btn-lg btn-primary btn-block" type="button"><s:text name="login.sign.name"/></button>
 	</form>
 
 </div><!-- /container -->
