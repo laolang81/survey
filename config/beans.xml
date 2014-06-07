@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:cache="http://www.springframework.org/schema/cache"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:task="http://www.springframework.org/schema/task" 
+	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
 
 	<context:component-scan
-		base-package="com.sniper.survey.dao.impl,
-		com.sniper.survey.service.impl,
-		com.sniper.survey.struts2.adminAction,
-		com.sniper.survey.struts2.webAction,
-		com.sniper.survey.listener"  >
-		
-		
-		</context:component-scan>
-
+		base-package="com.sniper.survey.dao.impl,com.sniper.survey.service.impl,com.sniper.survey.struts2.adminAction,com.sniper.survey.struts2.webAction,com.sniper.survey.listener">
+	</context:component-scan>
+	
+	
 	<!-- 分库配置 master -->
-	<bean id="dataSource-main" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<bean id="dataSource_main" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${jdbc.driverClass}"></property>
 		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
 		<property name="user" value="${jdbc.user}"></property>
@@ -37,10 +34,10 @@
 		<property name="minPoolSize" value="${c3p0.minPoolSize}"></property>
 		<property name="initialPoolSize" value="${c3p0.initialPoolSize}"></property>
 		<property name="acquireIncrement" value="${c3p0.acquireIncrement}"></property>
-		
+
 	</bean>
 	<!-- 分库配置 slave -->
-	<bean id="dataSource-salve-1" parent="dataSource-main">
+	<bean id="dataSource_salve_1" parent="dataSource_main">
 		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
 
 	</bean>
@@ -48,12 +45,12 @@
 	<bean id="dataSourceRouter" class="com.sniper.survey.datasource.DataSourceRouter">
 		<property name="targetDataSources">
 			<map>
-				<entry key="odd" value-ref="dataSource-main"></entry>
-				<entry key="even" value-ref="dataSource-salve-1"></entry>
+				<entry key="odd" value-ref="dataSource_main"></entry>
+				<entry key="even" value-ref="dataSource_salve_1"></entry>
 			</map>
 		</property>
 		<!-- 默认数据源集合 -->
-		<property name="defaultTargetDataSource" ref="dataSource-main"></property>
+		<property name="defaultTargetDataSource" ref="dataSource_main"></property>
 	</bean>
 
 	<!-- 呢目的会话工厂bean(spring整合hinernate的核心入口) -->
@@ -127,9 +124,10 @@
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
 		p:config-location="classpath:ehcache.xml" />
 	<!-- 自定义生成缓存key -->
-	<bean id="surveyKey" class="com.sniper.survey.cache.SurveyKey"></bean>	
-		
-	<cache:advice id="cacheAdvice" cache-manager="cacheManager" key-generator="surveyKey">
+	<bean id="surveyKey" class="com.sniper.survey.cache.SurveyKey"></bean>
+
+	<cache:advice id="cacheAdvice" cache-manager="cacheManager"
+		key-generator="surveyKey">
 		<!-- -->
 		<cache:caching cache="SurveyAdminRight">
 			<!-- 缓存方法 保存的key -->
@@ -154,12 +152,14 @@
 		<!-- 事务切入点通知 -->
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))"
 			order="1" />
-		<aop:advisor advice-ref="cacheAdvice" pointcut="execution(* *..*Service.get*(..))
+		<aop:advisor advice-ref="cacheAdvice"
+			pointcut="execution(* *..*Service.get*(..))
 															execution(* *..*Service.find*(..))
 															execution(* *..*Service.load*(..))
 															
-															" order="0"/>	
-			
+															"
+			order="0" />
+
 		<!-- logger切面 -->
 		<aop:aspect id="loggerAspect" ref="logger" order="0">
 			<aop:around method="record"
