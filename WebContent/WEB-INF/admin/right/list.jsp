@@ -2,14 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<s:include value="../public/header.jsp"></s:include>
-
 
 
 <style type="text/css">
       @import "myfiles/Plugin/DataTables/media/css/demo_page.css";
       @import "myfiles/Plugin/DataTables/media/css/demo_table.css";
 </style>
+
 <script src="myfiles/Plugin/DataTables/media/js/jquery.dataTables.js"></script>
 ${attr.htmlPath }
 <div class="list_content">
@@ -39,7 +38,7 @@ ${attr.htmlPath }
 			</tr>
 		</tfoot>
 	</table>
-
+</div>
 	<script>
 		$(function() {
 			$('#dataTables')
@@ -93,5 +92,4 @@ ${attr.htmlPath }
 							});
 		});
 	</script>
-</div>
-<s:include value="../public/footer.jsp"></s:include>
+

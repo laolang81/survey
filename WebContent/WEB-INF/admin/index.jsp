@@ -1,27 +1,21 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'index.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+<!-- 第一个被装饰(目标)页面  -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>被装饰（目标）页面title</title>
+</head>
 
-  </head>
-  
-  <body>index index <br>
-  </body>
+<body>
+	<h4>被装饰（目标）页面body标签内内容。</h4>
+	<h3>使用SiteMesh的好处?</h3>
+	<ul>
+		<li>被装饰（目标）页面和装饰页面完全分离。</li>
+		<li>做到真正的页面复用，一个装饰页面装饰多个被装饰（目标）页面。</li>
+		<li>更容易实现统一的网站风格。</li>
+		<li>还有。。。</li>
+	</ul>
+</body>
 </html>
