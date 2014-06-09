@@ -2,15 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page" %>
 
 
 <style type="text/css">
       @import "myfiles/Plugin/DataTables/media/css/demo_page.css";
       @import "myfiles/Plugin/DataTables/media/css/demo_table.css";
 </style>
-
 <script src="myfiles/Plugin/DataTables/media/js/jquery.dataTables.js"></script>
-${attr.htmlPath }
+<s:property value="#attr.htmlPath"/>
+<s:set name="htmlPath" value="#attr.htmlPath"></s:set>
 <div class="list_content">
 	<table class="table striped hovered dataTable" id="dataTables">
 		<thead>
@@ -92,4 +93,3 @@ ${attr.htmlPath }
 							});
 		});
 	</script>
-
