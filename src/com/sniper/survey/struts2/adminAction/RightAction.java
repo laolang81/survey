@@ -50,7 +50,8 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * @return
 	 */
 	public String list() {
-		this.allRight = adminRightService.findAllEntitles();
+		String hql = "from Right";
+		this.allRight = adminRightService.page(hql, 0, 2);
 		return SUCCESS;
 	}
 

@@ -56,6 +56,18 @@
 .meneame SPAN.disabled{cursor: pointer;}
 
 /*footer*/
-#footer{border: 0 none;margin: 0 10px;overflow: hidden;border-style: solid;border-top: 1px solid;bottom: 0;left: 0;padding: 10px 0;border-color: #B0C8D7;color: #777777;}
+#footer{border: 0 none;overflow: hidden;border-style: solid;border-top: 1px solid;padding: 10px 0;border-color: #B0C8D7;color: #777777;}
 #footer, #footer a{font-size: 12px;}
 #footer p{line-height: 20px;margin: 0;}
+
+.bs-footer {
+    text-align: left;
+}
+.bs-footer {
+    border-top: 1px solid #E5E5E5;
+    color: #777777;
+    margin-top: 100px;
+    padding-bottom: 30px;
+    padding-top: 40px;
+    text-align: center;
+}

@@ -126,6 +126,10 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	@Override
 	public void executeSQL(Class clazz, String hql, Object... Object) {
 		dao.executeSQL(clazz, hql, Object);
-
+	}
+	@Override
+	public List<T> page(String hql, int firstResult, int maxResult,  Object... Object)
+	{
+		return dao.findEntityByHQL(hql, firstResult, maxResult, Object);
 	}
 }

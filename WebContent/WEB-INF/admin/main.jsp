@@ -2,7 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator"
 	prefix="decorator"%>
-
+<%@ taglib uri="/struts-tags" prefix="s"%>
 <%
      response.setHeader("Pragma", "no-cache");
      response.setHeader("Cache-Control", "no-cache");
@@ -40,7 +40,6 @@
 <link href="myfiles/Plugin/ztree/css/zTreeStyle/zTreeStyle.css"
 	media="screen" rel="stylesheet" type="text/css">
 
-
 <link href="myfiles/css/admin.css"
 	media="screen" rel="stylesheet" type="text/css">
 
@@ -53,21 +52,21 @@
 		<button type="button" class="navbar-toggle" data-toggle="collapse"
 			data-target="#bs-example-navbar-collapse-1">
 			<span class="sr-only">Toggle navigation</span>
-			<spanclass="icon-bar"></span>
+			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="#">Brand</a>
+		<a class="navbar-brand" href="">Sniper</a>
 	</div>
 
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse"
 		id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="#">Link</a></li>
+			<li class="active"><a href="#">网站站点</a></li>
 			<li><a href="#">Link</a></li>
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
-				data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+				data-toggle="dropdown">快捷连接 <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="#">Action</a></li>
 					<li><a href="#">Another action</a></li>
@@ -107,31 +106,25 @@
 				
 			</div>
 		</div>
-		<div class="col-md-10" role="main">		
-			<div id="breadcrumbs">				
-				<div id="pma_navigation_collapser" title="关闭面板" class="fl">←</div>
-					<ol class="breadcrumb">
-						<li><i class="fa fa-home"></i><a href=''>Home</a></li>
-						<li>controllerName${attr.htmlPath } </li>
-						<li class="active">${param.actionName }</li>
-					</ol>
-				</div>
-			</div>
+		<div class="col-md-10" role="main">
+			
+			
 			<!-- 从被装饰页面获取body标签内容 -->
 			<decorator:body />
 		</div>
 	</div>
-	<div id="footer" class="bs-footer" role="contentinfo">
-		<p class="alignleft">
+	
+</div>
+<div id="footer" class="bs-footer" role="contentinfo">
+	<div class="container">
+		<p class="text-left">
 			<decorator:getProperty property="Thanks for using"></decorator:getProperty>
 			<decorator:getProperty property="configInfo['cg_webname']"/>(<decorator:getProperty property="attr.TimeSpent"></decorator:getProperty>,<decorator:getProperty property="attr.phpMemory"></decorator:getProperty>)
 		</p>
-		<p id="footer-upgrade" class="alignright">
-		${attr.htmlPath }
-			<decorator:getProperty property="Version"></decorator:getProperty>
+		<p id="footer-upgrade" class="text-right">
+			Version<decorator:getProperty property="Version"></decorator:getProperty>
 		</p>
 	</div>
-	
 </div>
 </body>
 </html>

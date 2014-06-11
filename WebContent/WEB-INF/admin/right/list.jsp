@@ -5,91 +5,36 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page" %>
 
 
-<style type="text/css">
-      @import "myfiles/Plugin/DataTables/media/css/demo_page.css";
-      @import "myfiles/Plugin/DataTables/media/css/demo_table.css";
-</style>
-<script src="myfiles/Plugin/DataTables/media/js/jquery.dataTables.js"></script>
-<s:property value="#attr.htmlPath"/>
-<s:set name="htmlPath" value="#attr.htmlPath"></s:set>
-<div class="list_content">
-	<table class="table striped hovered dataTable" id="dataTables">
-		<thead>
-			<tr>
-				<th class="text-left">ID</th>
-				<th class="text-left">Name</th>
-				<th class="text-left">Url</th>
-				<th class="text-left">Code</th>
-				<th class="text-left">Pos</th>
-				<th class="text-left">Publc</th>
-			</tr>
-		</thead>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th><s:text name="table.id"></s:text></th>
+			<th><s:text name="table.name"></s:text></th>
+			<th><s:text name="table.url"></s:text></th>
+			<th><s:text name="table.isMenu"></s:text></th>
+			<th><s:text name="table.isPublic"></s:text></th>
+			<th><s:text name="table.pos"></s:text></th>
+			<th><s:text name="table.code"></s:text></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+		<s:iterator value="allRight">
+			<td><s:checkbox fieldValue="%{id}" name="id" /> <s:property value="id"/></td>
+			<td><s:property value="name"/></td>
+			<td><s:property value="url"/></td>
+			<td><s:property value="isMenu"/></td>
+			<td><s:property value="isPublic"/></td>
+			<td><s:property value="pos"/></td>
+			<td><s:property value="code"/></td>
+		</tr>
+		</s:iterator>
+			
+		
+		
+	</tbody>
+</table>
 
-		<tbody>
-		</tbody>
+<s:page pageSize="${pm.pageSize}" pageNo="${pm.pageNo}" url="index.action" recordCount="${pm.recordCount}"/>  
 
-		<tfoot>
-			<tr>
-				<th class="text-left">ID</th>
-				<th class="text-left">Name</th>
-				<th class="text-left">Url</th>
-				<th class="text-left">Code</th>
-				<th class="text-left">Pos</th>
-				<th class="text-left">Publc</th>
-			</tr>
-		</tfoot>
-	</table>
-</div>
-	<script>
-		$(function() {
-			$('#dataTables')
-					.dataTable(
-							{
-								
-								"bJQueryUI"		: false,
-								"bProcessing" : true,
-								"bServerSide": false,
-								/*使用post方式
-								"fnServerData": function ( sSource, aoData, fnCallback ) {
-								    $.ajax( {
-								        "dataType": 'json',
-								        "type": "POST",
-								        "url": sSource,
-								        "data": aoData,
-								        "success": fnCallback
-								    } );
-								}*/
-								"sAjaxSource" : '<s:url action="rightListAjax" namespace="/admin" />',
-								/* "oLanguage" : {
-									"sUrl": "cn.txt"
-								}, */
-								/* "aoColumnDefs": [
-							                        { "sClass": "center", "aTargets": [0,1,2,3,4,5] }
-							                    ], */
-								"aoColumns" : [
-										{
-											"mData" : "id",
-											"mRender" : function(data, type,
-													row) {
-												return '<a href="<s:url action="rightUpdate" namespace="/admin" />?updateid='
-														+ row.id
-														+ '">'
-														+ row.id + '</a>';
-											}
-											
-											
 
-										}, {
-											"mData" : "name"
-										}, {
-											"mData" : "url"
-										}, {
-											"mData" : "code"
-										}, {
-											"mData" : "pos"
-										}, {
-											"mData" : "public"
-										} ]
-							});
-		});
-	</script>

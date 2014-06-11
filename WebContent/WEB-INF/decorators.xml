@@ -8,6 +8,6 @@
 
 	<!-- 用来定义装饰器要过滤的页面 -->
 	<decorator name="main" page="main.jsp">
-		<pattern>/*</pattern>
+		<pattern>/admin/*</pattern>
 	</decorator>
 </decorators>

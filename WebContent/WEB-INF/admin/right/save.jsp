@@ -2,55 +2,51 @@
 	pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<s:include value="../public/header.jsp"/>
 
 <s:form action="rightsaveorupdate" namespace="/admin" method="post"
-	id="doAdd" cssClass="SFrom">
+	id="sniperForm" cssClass="form-horizontal" role="form">
 	<s:hidden name="id" />
 	<s:hidden name="code" />
 	<s:hidden name="pos" />
-	<fieldset>
-		<legend>Legend</legend>
-		<label>名称</label>
-		<div data-role="input-control" class="input-control text size3">
-			<s:textfield name="name" cssClass="size3" id="username"
-				placeholder="type text" size="100" />
-			<span class="help-inline" title=""><s:fielderror
-					fieldName="name" /></span>
-			<button tabindex="-1" class="btn-clear" type="button"></button>
+	<div class="form-group">
+		<label for="name" class="col-sm-2 control-label">名称</label>
+		<div class="col-sm-10">
+			<s:textfield name="name" cssClass="form-control" id="name"
+				placeholder="name" />
+			<p class="help-block"><s:fielderror fieldName="name" /></p>
 		</div>
-
-		<label>Public</label>
-		<div class="input-control checkbox size3" data-role="input-control">
-			<label><s:checkbox name="isPublic" /> <span class="check"></span>
-				<s:fielderror fieldName="isPublic" /> </label>
+	</div>
+	<div class="form-group">
+		<label for="name" class="col-sm-2 control-label">isPublic</label>
+		<div class="col-sm-10">
+			<s:checkbox name="isPublic" fieldValue="1"/>
+			<p class="help-block"><s:fielderror fieldName="isPublic" /></p>
 		</div>
-
-		<label>Menu</label>
-		<div class="input-control checkbox size3" data-role="input-control">
-			<label><s:checkbox name="isMenu" /> <span class="check"></span>
-				<s:fielderror fieldName="isMenu" /></label>
+	</div>
+	<div class="form-group">
+		<label for="isMenu" class="col-sm-2 control-label">isMenu</label>
+		<div class="col-sm-10">
+			<s:checkbox name="isMenu" fieldValue="1" />
+			<p class="help-block"><s:fielderror fieldName="isMenu" /></p>
 		</div>
-
-		<label>Url</label>
-		<div data-role="input-control" class="input-control text size7">
-			<s:textfield name="url" cssClass="size7" id="url" />
-			<span class="help-inline" title=""><s:fielderror
-					fieldName="url" /></span>
-			<button tabindex="-1" class="btn-clear" type="button"></button>
+	</div>
+	<div class="form-group">
+		<label for="url" class="col-sm-2 control-label">Url</label>
+		<div class="col-sm-10">
+			<s:textfield name="url" cssClass="form-control" id="url" placeholder="url" />
+			<p class="help-block"><s:fielderror fieldName="url" /></p>
 		</div>
-
-		<label>desc描述</label>
-		<div class="input-control textarea">
-			<s:textarea cols="20" rows="2" name="desc" id="desc" />
-			<span class="help-inline" title=""><s:fielderror
-					fieldName="desc" /></span>
+	</div>
+	<div class="form-group">
+		<label for="desc" class="col-sm-2 control-label">desc描述</label>
+		<div class="col-sm-10">
+			<s:textarea rows="3" name="desc" cssClass="form-control" id="desc" placeholder="desc" />
+			<p class="help-block"><s:fielderror fieldName="url" /></p>
 		</div>
-
-		<input type="submit" class="button success" value="Submit">
-
-	</fieldset>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-12 col-md-offset-2">
+			<button type="submit" class="btn btn-danger">Save</button>
+		</div>
+	</div>
 </s:form>
-
-
-<s:include value="../public/footer.jsp"/>

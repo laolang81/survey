@@ -18,7 +18,7 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 
 	@Override
 	public void addRgiht() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -81,5 +81,5 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 		Integer pos = (Integer) this.uniqueResult(hql);
 		return pos == null ? 0 : pos;
 	}
-
+	
 }
