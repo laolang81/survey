@@ -3,7 +3,7 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://www.freejudge.net/struts/tags" prefix="sniperPage" %>
-
+<%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="sitemesh-page"%>
 
 
 <table class="table table-hover">
