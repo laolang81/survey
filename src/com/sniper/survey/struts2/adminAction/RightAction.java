@@ -76,7 +76,6 @@ public class RightAction extends BaseAction<AdminRight> {
 	 */
 	public String saveOrUpdate() {
 		
-		System.out.println(model.getId());
 		setUpdateid(model.getId());
 		//spring多库分布实例
 		// 绑定token到当前线程
@@ -84,7 +83,6 @@ public class RightAction extends BaseAction<AdminRight> {
 		token.setRight(getModel());
 		//绑定令牌
 		RightToken.bindToken(token);
-		
 		adminRightService.saveOrUpdate(model);
 		
 		return "update";
@@ -98,9 +96,6 @@ public class RightAction extends BaseAction<AdminRight> {
 	public String update() {
 		
 		this.model = adminRightService.getEntity(getUpdateid());
-		
-		System.out.println(model);
-
 		return INPUT;
 	}
 
@@ -115,5 +110,7 @@ public class RightAction extends BaseAction<AdminRight> {
 		adminRightService.deleteEntiry(right);
 		return "list";
 	}
+
+	
 
 }

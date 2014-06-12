@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<decorators defaultdir="/WEB-INF/admin">
+<decorators defaultdir="/WEB-INF/content/admin">
 	<!-- 此处用来定义不需要过滤的页面 -->
 	<excludes>
 		<pattern>/index.jsp*</pattern>

@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page" %>
+<%@ taglib uri="http://www.freejudge.net/struts/tags" prefix="sniperPage" %>
+
 
 
 <table class="table table-hover">
@@ -35,6 +36,6 @@
 	</tbody>
 </table>
 
-<s:page pageSize="${pm.pageSize}" pageNo="${pm.pageNo}" url="index.action" recordCount="${pm.recordCount}"/>  
+<sniperPage:page pageSize="10" pageNo="1" url="admin/right/list.do" recordCount="100"/>  
 
 

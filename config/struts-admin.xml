@@ -31,13 +31,12 @@
 		<default-interceptor-ref name="surveyStack" />
 
 		<default-action-ref name="login" />
-		
-		
+			
 		
 		<!-- 定义默认全局login返回值 -->
 		<global-results>
 			<result name="login">${htmlPath}/login/index.jsp</result>
-			<result name="error_no_right">${htmlPath}/login/index.jsp</result>
+			<result name="error_no_right">${htmlPath}/login/error_no_right.jsp</result>
 			<result name="error">${htmlPath}/error/error.jsp</result>
 		</global-results>
 		<!-- 后台基本CURD的通配符配置 -->
@@ -47,138 +46,10 @@
 			<exception-mapping result="error" exception="java.lang.ArithmeticException"></exception-mapping>
 		</global-exception-mappings>
 		
-		<action name="*List" class="{1}Action" method="list">
-			<result name="success">${htmlPath}/{1}/list.jsp</result>
-			<result name="input">${htmlPath}/{1}/list.jsp</result>
-		</action>
-
-		<!-- 统一添加操作 -->
-		<action name="*Save" class="{1}Action" method="save">
 		
-			
-			<result name="input">${htmlPath}/{1}/save.jsp</result>
-			<result name="success" type="redirectAction">
-				<param name="namespace">/admin</param>
-				<param name="actionName">{1}List</param>
-			</result>
-			<result name="update" type="redirectAction">
-				<param name="namespace">/admin</param>
-				<param name="actionName">{1}Update</param>
-				<param name="updateid">${updateid}</param>
-			</result>
-		</action>
-
-
-		<!-- 统一更新操作 -->
-		<action name="*Update" class="{1}Action" method="update">
-			<result name="input">${htmlPath}/{1}/save.jsp</result>
-			<result name="success" type="redirectAction">
-				<param name="namespace">/admin</param>
-				<param name="actionName">{1}List</param>
-			</result>
-		</action>
-
-		<!-- 统一更新,保存操作 -->
-		<action name="*saveorupdate" class="{1}Action" method="saveOrUpdate">
-			<result name="success" type="redirectAction">
-				<param name="namespace">/admin</param>
-				<param name="actionName">{1}List</param>
-			</result>
-			<result name="save" type="redirectAction">
-				<param name="namespace">/admin</param>
-				<param name="actionName">{1}Save</param>
-			</result>
-			<!-- 统一设置更新参数id的名称 -->
-			<result name="update" type="redirectAction">
-				<param name="namespace">/admin</param>
-				<param name="actionName">{1}Update</param>
-				<param name="updateid">${updateid}</param>
-			</result>
-		</action>
-		<!-- 删除操作,我一般采用ajax方式删除,因为这个返回参数太麻烦 -->
-		<action name="*Delete" class="{1}Action" method="delete">
-			<result name="success" type="redirectAction">
-				<param name="namespace">/admin</param>
-				<param name="actionName">{1}List</param>
-			</result>
-			<result name="error" type="redirectAction">
-				<param name="namespace">/admin</param>
-				<param name="actionName">{1}List</param>
-			</result>
-		</action>
-		<!-- 下面是单独设置的配置 -->
-		<!-- xls下载 -->
-		<action name="collectionWebUser" class="collectionWebUserAction">
-			<result name="success" type="stream">
-				<param name="contentType">applicatiopn/vnd.ms-execl</param>
-				<param name="inputName">is</param>
-				<param name="bufferSize">1024</param>
-			</result>
-		</action>
-
-		<action name="login" class="loginAction">
-			<result name="success">${htmlPath}/login/index.jsp</result>
-			<result name="login">${htmlPath}/login/index.jsp</result>
-		</action>
-		<action name="logout" class="loginAction" method="logout">
-			<result name="logout" type="redirectAction">login</result>
-		</action>
 
 	</package>
 	<!-- -->
 	<!-- struts-default -->
-	<package name="sniperSurveyAJAX" extends="struts-default,json-default"
-		namespace="/admin">
 
-		<!-- <interceptors>
-			
-			<interceptor name="loginInterceptor"
-				class="com.sniper.survey.struts2.interceptor.LoginInterceptor" />
-			<interceptor name="CatchUrlInterceptor"
-				class="com.sniper.survey.struts2.interceptor.CatchUrlInterceptor" />
-			
-			<interceptor-stack name="surveyStack">
-				<interceptor-ref name="CatchUrlInterceptor" />
-				<interceptor-ref name="loginInterceptor" />
-				
-
-				<interceptor-ref name="defaultStack">
-					<param name="modelDriven.refreshModelBeforeResult">true</param>
-				</interceptor-ref>
-			</interceptor-stack>
-		</interceptors>
-		定义默认栈
-		<default-interceptor-ref name="surveyStack" />
-
-		<default-action-ref name="userLogin" />
-		定义默认全局login返回值
-		<global-results>
-			<result name="login">/admin/login/index.jsp</result>
-		</global-results> -->
-		
-		<default-interceptor-ref name="paramsPrepareParamsStack" />
-		<!-- 用户ajax登录验证 -->
-		<action name="loginAjaxValid" class="loginAction" method="loginAjaxValid">
-			<result type="json">
-				<param name="root">result</param>
-			</result>
-		</action>
-
-		<!-- 普通ajax列表获取,每个类只有一个不过可以同参数获取不同的结果 -->
-		<action name="*ListAjax" class="{1}Action" method="ajaxList">
-			<result type="json">
-				<param name="root">result</param>
-			</result>
-		</action>
-
-		<action name="*DeleteAjax" class="{1}Action" method="ajaxDelete">
-			<result type="json">
-				<param name="root">result</param>
-			</result>
-		</action>
-
-
-
-
-	</package>
 </struts>
