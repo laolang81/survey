@@ -6,8 +6,8 @@
 	<!-- 定义全局资源包 -->
 
 	<!-- <constant name="struts.convention.default.parent.package" value="com.sniper.survey.struts2.adminAction"/> -->
-	<!-- <constant name="struts.convention.package.locators.basePackage"
-		value="com.sniper.survey.struts2.*" /> -->
+	<!-- <constant name="struts.convention.package.locators.basePackage" value="com.sniper.survey.struts2.*" 
+		/> -->
 	<constant name="struts.convention.package.locators" value="action" />
 	<constant name="struts.convention.result.path" value="/WEB-INF/content" />
 	<constant name="struts.convention.action.name.separator"
@@ -30,24 +30,59 @@
 	<!-- 上传文件大小限制设置 -->
 	<constant name="struts.multipart.maxSize" value="-1" />
 
-	<!-- <package name="default" extends="struts-default" namespace="/">
+	<package name="basePackage" extends="struts-default">
+		<interceptors>
+			<interceptor-stack name="baseStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="multiselect" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<!-- 配置方法级别的校验 -->
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+					<param name="validateAnnotatedMethodOnly">true</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
 
-		<default-action-ref name="index" />
+		<!-- 配置默认拦截器栈 -->
+		<default-interceptor-ref name="baseStack" />
 
-		<global-results>
-			<result name="home">index.jsp</result>
-		</global-results>
-		未到找Action指向页面
-		<default-action-ref name="errorPage" />
+		<!-- 未到找Action指向页面 -->
+		<!-- <default-action-ref name="errorPage" />
 
 		<action name="errorPage">
-			<result type="redirect">/html/error_page_404.html</result>
-		</action>
+			<result type="redirect">/404.jsp</result>
+		</action> -->
+
+	</package>
+	<package name="default" extends="struts-default" namespace="/">
+	</package>
+	<package name="default" extends="struts-default" namespace="/admin">
+	</package>
+	<!-- <package name="default" extends="struts-default" namespace="/"> <default-action-ref 
+		name="index" /> <global-results> <result name="home">index.jsp</result> </global-results> 
+		未到找Action指向页面 <default-action-ref name="errorPage" /> <action name="errorPage"> 
+		<result type="redirect">/html/error_page_404.html</result> </action> </package> -->
 
 
-	</package> -->
-
-	
 	<!-- 前台页面 -->
 	<!-- <include file="struts-web.xml"></include> -->
 	<!-- 公共页面 -->
