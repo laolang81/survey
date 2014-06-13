@@ -4,7 +4,7 @@
 <html>
 <!-- 第一个被装饰(目标)页面  -->
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
 <title>被装饰（目标）页面title</title>
 </head>
 

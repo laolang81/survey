@@ -10,6 +10,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,12 @@ import com.sniper.survey.service.impl.AdminRightService;
 
 @Controller
 @Scope("prototype")
-@Namespace("/admin")
-@ParentPackage("convention-default")
+@Namespace("/admin/right")
+@ParentPackage("json-default")
+@Results({
+	@Result(name="error",location="{htmlPath}/error/error.jsp")
+})
+
 public class RightAction extends BaseAction<AdminRight> {
 
 	private static final long serialVersionUID = 2799348891231755561L;
@@ -34,7 +39,7 @@ public class RightAction extends BaseAction<AdminRight> {
 
 	@Resource
 	private AdminRightService adminRightService;
-	
+
 	public List<AdminRight> getAllRight() {
 		return allRight;
 	}
@@ -51,11 +56,22 @@ public class RightAction extends BaseAction<AdminRight> {
 	public void setResult(Map<String, List<AdminRight>> result) {
 		this.result = result;
 	}
+	
+	@Action(value = "index", results = { @Result(name = "success", location = "list.jsp") })
+	public String index()
+	{
+		System.out.println("list");
+		String hql = "from AdminRight";
+		this.allRight = adminRightService.page(hql, 0, 2);
+		System.out.println(allRight);
+		return SUCCESS;
+	}
 	/**
 	 * 数据列表
+	 * 
 	 * @return
 	 */
-	@Action(value="list", results = { @Result( name="success", location = "list.jsp")})
+	@Action(value = "list", results = { @Result(name = "success", location = "list.jsp") })
 	public String list() {
 		System.out.println("list");
 		String hql = "from AdminRight";
@@ -69,32 +85,37 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
+	@Action(value = "ajaxlist", results = { @Result(name = "success", type = "json") })
 	public String ajaxList() {
 		this.allRight = adminRightService.findAllEntitles();
 		result.put("aaData", allRight);
 		return SUCCESS;
 	}
-	@Action(value="save", results = { @Result( name="success", location = "save.jsp",type="redirect", params ={ "updateid","%{updateid}"})})
+
+	@Action(value = "save", results = { @Result(name = "success", location = "save.jsp", type = "redirect", params = {
+			"updateid", "%{updateid}" }) })
 	public String save() {
 		System.out.println("save");
 		return INPUT;
 	}
+
 	/**
 	 * 更新操作
+	 * 
 	 * @return
 	 */
-	
+
 	public String saveOrUpdate() {
-		
+
 		setUpdateid(model.getId());
-		//spring多库分布实例
+		// spring多库分布实例
 		// 绑定token到当前线程
 		RightToken token = new RightToken();
 		token.setRight(getModel());
-		//绑定令牌
+		// 绑定令牌
 		RightToken.bindToken(token);
 		adminRightService.saveOrUpdate(model);
-		
+
 		return "update";
 	}
 
@@ -105,7 +126,7 @@ public class RightAction extends BaseAction<AdminRight> {
 	 */
 	@Action("update")
 	public String update() {
-		
+
 		this.model = adminRightService.getEntity(getUpdateid());
 		return INPUT;
 	}
@@ -121,7 +142,5 @@ public class RightAction extends BaseAction<AdminRight> {
 		adminRightService.deleteEntiry(right);
 		return "list";
 	}
-
-	
 
 }
