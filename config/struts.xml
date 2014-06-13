@@ -37,5 +37,6 @@
 	<!-- 指定XSLT Result使用样式表缓存 -->
 	<constant name="struts.xslt.nocache" value="true" />
 
+	
 
 </struts>

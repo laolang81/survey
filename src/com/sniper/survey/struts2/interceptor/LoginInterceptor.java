@@ -6,7 +6,7 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.sniper.survey.struts2.MethodAware;
-import com.sniper.survey.struts2.adminAction.BaseAction;
+import com.sniper.survey.struts2.action.admin.BaseAction;
 import com.sniper.survey.util.ValidateUtil;
 
 /**

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.struts2.UserAware;
-import com.sniper.survey.struts2.adminAction.BaseAction;
+import com.sniper.survey.struts2.action.admin.BaseAction;
 
 /**
  * 校验工具类

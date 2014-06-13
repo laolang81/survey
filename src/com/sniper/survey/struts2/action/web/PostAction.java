@@ -1,4 +1,4 @@
-package com.sniper.survey.struts2.webAction;
+package com.sniper.survey.struts2.action.web;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;

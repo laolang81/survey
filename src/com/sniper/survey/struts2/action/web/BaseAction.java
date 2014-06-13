@@ -1,4 +1,4 @@
-package com.sniper.survey.struts2.webAction;
+package com.sniper.survey.struts2.action.web;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;

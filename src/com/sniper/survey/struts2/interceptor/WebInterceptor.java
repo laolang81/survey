@@ -3,7 +3,7 @@ package com.sniper.survey.struts2.interceptor;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.sniper.survey.struts2.MethodAware;
-import com.sniper.survey.struts2.webAction.BaseAction;
+import com.sniper.survey.struts2.action.web.BaseAction;
 
 /**
  * 登录拦截器

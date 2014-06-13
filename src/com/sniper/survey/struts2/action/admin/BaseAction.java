@@ -1,4 +1,4 @@
-package com.sniper.survey.struts2.adminAction;
+package com.sniper.survey.struts2.action.admin;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
