@@ -13,7 +13,7 @@ public abstract class BaseAction extends ActionSupport implements
 	/**
 	 * 定义模板文件地址
 	 */
-	private String htmlPath = "/WEB-INF/web";
+	private String htmlPath = "/WEB-INF/content/web";
 	
 	public String getHtmlPath() {
 		return htmlPath;

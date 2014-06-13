@@ -7,13 +7,9 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.jws.soap.SOAPBinding.Style;
-
-import org.apache.catalina.startup.SetContextPropertiesRule;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.hssf.usermodel.HSSFDataFormatter;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;

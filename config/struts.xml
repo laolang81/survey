@@ -5,17 +5,14 @@
 <struts>
 	<!-- 定义全局资源包 -->
 
-	<!-- <constant name="struts.convention.default.parent.package" value="com.sniper.survey.struts2.adminAction"/> -->
-	<!-- <constant name="struts.convention.package.locators.basePackage" value="com.sniper.survey.struts2.*" 
-		/> -->
+	<constant name="struts.convention.default.parent.package" value="convention-default"/>
+	<constant name="struts.convention.package.locators.basePackage" value="com.sniper.survey.struts2.action" />
 	<constant name="struts.convention.package.locators" value="action" />
 	<constant name="struts.convention.result.path" value="/WEB-INF/content" />
 	<constant name="struts.convention.action.name.separator"
 		value="-" />
 	<constant name="struts.convention.action.suffix" value="Action" />
 	<constant name="struts.convention.action.mapAllMatches" value="true" />
-	
-
 
 	<constant name="struts.custom.i18n.resources" value="i18n" />
 	<!-- 是否自动加载国际化资源文件 -->
@@ -29,13 +26,15 @@
 	<!-- convention类重新加载 -->
 	<constant name="struts.convention.classes.reload" value="true" />
 	<!-- 浏览器是否缓存静态内容 -->
-	<constant name="struts.serve.static.browserCache" value="true" />
+	<constant name="struts.serve.static.browserCache" value="false" />
 	<!-- 上传文件大小限制设置 -->
 	<constant name="struts.multipart.maxSize" value="-1" />
 	<!-- 指定每次配置文件更改后，自动重新加载 -->
 	<constant name="struts.configuration.xml.reload" value="true" />
 	<!-- 指定XSLT Result使用样式表缓存 -->
 	<constant name="struts.xslt.nocache" value="true" />
+	<!-- 动态方法加载  -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
 
 	
 
