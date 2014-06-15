@@ -3,13 +3,13 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-	<!-- 定义全局资源包 -->
+
 
 	<constant name="struts.convention.default.parent.package"
 		value="convention-default" />
 	<constant name="struts.convention.package.locators.basePackage"
 		value="com.sniper.survey.struts2.action" />
-	<constant name="struts.convention.package.locators" value="action" />
+	<constant name="struts.convention.package.locators" value="struts2,action" />
 	<constant name="struts.convention.result.path" value="/WEB-INF/content" />
 	<constant name="struts.convention.action.name.separator"
 		value="-" />
@@ -38,25 +38,20 @@
 	<!-- 动态方法加载 -->
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
 
-	<!-- 用于CRUD Action的parent package -->
-	<package name="crud-default" extends="convention-default" namespace="/">
-		<!-- 基于paramsPrepareParamsStack, 增加store interceptor保证actionMessage在redirect后不会丢失 -->
+	<package name="default" extends="struts-default">
 		<interceptors>
-			<interceptor-stack name="crudStack">
-				<interceptor-ref name="store">
-					<param name="operationMode">AUTOMATIC</param>
-				</interceptor-ref>
-				<interceptor-ref name="paramsPrepareParamsStack" />
+			<!-- 注册拦截器 -->
+			<interceptor name="loginInterceptor"
+				class="com.sniper.survey.struts2.interceptor.LoginInterceptor" />
+			<interceptor name="CatchUrlInterceptor"
+				class="com.sniper.survey.struts2.interceptor.CatchUrlInterceptor" />
+			<interceptor-stack name="defaultInterceptor">
+				<interceptor-ref name="loginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-
-		<default-interceptor-ref name="crudStack" />
-		<default-action-ref name="index" />
-		<action name="index" class="indexAction" method="index">
-			<result name="success">index.jsp</result>
-		</action>
+		<default-interceptor-ref name="defaultInterceptor"></default-interceptor-ref>
 	</package>
 
-	<!-- 使用Convention插件,实现约定大于配置的零配置文件风格. 特殊的Result路径在Action类中使用@Result设定. -->
 
 </struts>

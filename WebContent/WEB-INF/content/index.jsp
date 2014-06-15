@@ -3,10 +3,11 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="zh-cn">
+<!-- 第一个装饰页面 -->
+<head>
+<meta charset="utf-8">
     <base href="<%=basePath%>">
     
     <title>My JSP 'index.jsp' starting page</title>

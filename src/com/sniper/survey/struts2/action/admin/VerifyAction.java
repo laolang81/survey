@@ -3,6 +3,7 @@ package com.sniper.survey.struts2.action.admin;
 import java.io.ByteArrayInputStream;
 import java.util.Map;
 
+import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -13,17 +14,18 @@ import com.sniper.survey.util.VerifyCode;
 
 /**
  * 提供图片验证码
- * 
- * @version 1.0 2012/08/22
- * @author dongliyang
+ * @author laolang
+ *
  */
 @Controller
 @Scope("prototype")
+@Result(name="success",type="stream",params={"contentType","image/jpeg","inputName","imageStream","bufferSize","2048"})
 public class VerifyAction extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
 	// Struts2中Map类型的session
 	private Map<String, Object> session;
+	
 	private String d;
 
 	public String getD() {

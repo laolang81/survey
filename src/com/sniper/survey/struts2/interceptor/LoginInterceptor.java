@@ -15,6 +15,7 @@ import com.sniper.survey.util.ValidateUtil;
  * @author laolang
  * 
  */
+
 public class LoginInterceptor implements Interceptor {
 
 	/**

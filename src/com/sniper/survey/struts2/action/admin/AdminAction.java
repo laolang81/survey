@@ -1,6 +1,7 @@
 package com.sniper.survey.struts2.action.admin;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -15,7 +16,8 @@ import com.sniper.survey.model.AdminUser;
 @Namespace("/admin")
 @ParentPackage("json-default")
 @Results({
-	@Result(name="error",location="%{htmlPath}/error/error.jsp")
+	@Result(name="error", location="%{htmlPath}/error/error.jsp"),
+	@Result(name="login", location="login", type="redirectAction")
 })
 public class AdminAction extends BaseAction<AdminUser> {
 
@@ -29,8 +31,13 @@ public class AdminAction extends BaseAction<AdminUser> {
 	@Action(value = "index", results = { @Result(name = "success", location = "index.jsp") })
 	public String index() {
 		
+		System.out.println("admin-index");
 		return SUCCESS;
 
+	}
+	@Action("loginss")
+	public String loginss() {
+		return "login";
 	}
 	
 }
