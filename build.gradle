@@ -26,9 +26,6 @@ dependencies {
     	'org.hibernate:hibernate-ehcache:4.3.5.Final',
     	'org.hibernate:hibernate-entitymanager:4.3.5.Final',
     	
-    	//'org.hibernate:hibernate-commons-annotations:4.0.4.Final',
-    	//'org.hibernate:hibernate-commons-annotations:3.2.0.Final',
-    	
     	'org.springframework:spring-aop:4.0.5.RELEASE',
     	'org.springframework:spring-aspects:4.0.5.RELEASE',
     	'org.springframework:spring-beans:4.0.5.RELEASE',
@@ -43,9 +40,9 @@ dependencies {
     	'org.springframework:spring-web:4.0.5.RELEASE',
     	'org.springframework:spring-webmvc:4.0.5.RELEASE',
     	'org.springframework:spring-expression:4.0.5.RELEASE',
-    	'org.springframework.security:spring-security-core:3.2.4.RELEASE',
-    	'org.springframework.security:spring-security-acl:3.2.4.RELEASE',
-    	//'org.springframework:spring-struts:3.2.9.RELEASE',
+    	'org.springframework.security:spring-security-web:3.2.4.RELEASE',
+   		'org.springframework.security:spring-security-config:3.2.4.RELEASE',
+    
     	
     	'org.quartz-scheduler:quartz:2.2.1',
     	'org.quartz-scheduler:quartz-jobs:2.2.1',
@@ -88,8 +85,7 @@ dependencies {
     	//'javax.servlet:javax.servlet-api:3.1.0',
     	'javax.transaction:jta:1.1',
     	
-    	'commons-codec:commons-codec:1.9'
-    	
+    	'commons-codec:commons-codec:1.9' 	
     	
 
     )
