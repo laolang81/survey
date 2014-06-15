@@ -60,7 +60,7 @@
 		<div class="form-group input-group-lg" >
 			<label for="verifycode" class="col-sm-2 control-label sr-only"><s:text name="login.message.verity.code"/> </label>      		
 	     	<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="<s:text name="login.message.verity.code"/>" id="verifycode" class="form-control">			
-			<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" namespace="/public" />" class="fl" >
+			<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" />" class="fl" >
 		</div>
 		<div class="form-group input-group-lg">
 			<label class="checkbox"> 

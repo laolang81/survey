@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -22,11 +23,12 @@ import com.sniper.survey.service.impl.AdminRightService;
 @Controller
 @Scope("prototype")
 @Namespace("/admin/right")
-@ParentPackage("json-default")
+@ParentPackage("default")
+@InterceptorRef("loginInterceptor")
 @Results({
-	@Result(name="error",location="{htmlPath}/error/error.jsp")
+	@Result(name="error", location="%{htmlPath}/error/error.jsp"),
+	@Result(name="login", location="login", params={"namespace","/admin"}, type="redirectAction")
 })
-
 public class RightAction extends BaseAction<AdminRight> {
 
 	private static final long serialVersionUID = 2799348891231755561L;

@@ -3,6 +3,7 @@ package com.sniper.survey.struts2.action.admin;
 import java.io.ByteArrayInputStream;
 import java.util.Map;
 
+import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
@@ -51,6 +52,7 @@ public class VerifyAction extends ActionSupport implements SessionAware {
 		this.session = session;
 	}
 
+	@Action("verify")
 	public String execute() throws Exception {
 		// 如果开启Hard模式，可以不区分大小写
 		String securityCode = VerifyCode.getSecurityCode(5,

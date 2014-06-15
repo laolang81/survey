@@ -20,7 +20,7 @@
 
 
 	<context:component-scan
-		base-package="com.sniper.survey.dao.impl,com.sniper.survey.service.impl,com.sniper.survey.struts2.adminAction,com.sniper.survey.struts2.webAction,com.sniper.survey.listener">
+		base-package="com.sniper.survey.dao.impl,com.sniper.survey.service.impl,com.sniper.survey.struts2.action.*,com.sniper.survey.listener">
 	</context:component-scan>
 
 

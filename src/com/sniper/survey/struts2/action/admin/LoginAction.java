@@ -5,6 +5,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
@@ -22,6 +26,8 @@ import com.sniper.survey.util.DataUtil;
 
 @Controller
 @Scope("prototype")
+@Namespace("/admin")
+@ParentPackage("default")
 public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
@@ -82,6 +88,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	 * ajax 登录验证
 	 * @return
 	 */
+	@Action(value = "loginAjaxValid", results = { @Result(name = "success", type = "json", params={"root","result"}) })
 	public String loginAjaxValid() {
 		
 		if (result.size() > 1) {
