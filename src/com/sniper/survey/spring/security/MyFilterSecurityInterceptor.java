@@ -53,14 +53,8 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 
 	private void invoke(FilterInvocation filterInvocation) throws IOException, ServletException {
 		
-		// object为FilterInvocation对象  
-        // super.beforeInvocation(fi);//源码  
-        // 1.获取请求资源的权限  
-         //执行 Collection<ConfigAttribute> attributes =   
-                        //securityMetadataSource.getAttributes(fi);  
-        // 2.是否拥有权限  
-        // this.accessDecisionManager.decide(authenticated, fi, attributes);  
-        // this.accessDecisionManager.decide(authenticated, fi, attributes);  
+		
+		//最核心方法，这一句，在执行doFilter之前进行权限的检查，而具体的实现已经交给accessDecisionMnger了
 		InterceptorStatusToken token = super.beforeInvocation(filterInvocation);
 		try {
 			filterInvocation.getChain().doFilter(filterInvocation.getRequest(), filterInvocation.getResponse());
@@ -81,7 +75,6 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 	}
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -80,7 +80,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	}
 
 	@Override
-	@Action(value="login",results={@Result(name="success",location="/WEB-INF/content/admin/login/index.ftl",type="freemarker")})
+	@Action(value="login",results={@Result(name="success",location="login/index.jsp",type="dispatcher")})
 	
 	public String execute() throws Exception {
 		System.out.println(getText("login.message.error.fiald"));

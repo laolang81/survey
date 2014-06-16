@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 
-	<http auto-config="true">
+	<http auto-config="true" access-denied-page="403.jsp">
 		
 		<intercept-url pattern="/images/**" filters="none" />
-		<intercept-url pattern="/styles/**" filters="none" />
-		<intercept-url pattern="/coos/**" filters="none" />
 		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/ssq/**" access="ROLE_ADMIN,ROLE_EDITOR" />
-		<intercept-url pattern="/browser/**"
-			access="ROLE_ADMIN,ROLE_EDITOR,ROLE_USER" />
-		<intercept-url pattern="/**"
-			access="ROLE_ADMIN,ROLE_EDITOR,ROLE_USER" />
+		<intercept-url pattern="/browser/**" access="ROLE_ADMIN,ROLE_EDITOR,ROLE_USER" />
+		<!-- <intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_EDITOR,ROLE_USER" /> -->
 
 		<intercept-url pattern="/admin/login" filters="none" />
 		
@@ -23,23 +20,37 @@
 			authentication-failure-url="/admin/login?error=true"
 			default-target-url="/admin" />
 
-		<logout />
-		<remember-me user-service-ref="userDetailsService" />
+		<logout logout-success-url="/admin/login" />
+		<http-basic />
+		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="myFilter"/>
+		
 	</http>
-
-
-	<authentication-provider user-service-ref="userDetailsService">
-		<password-encoder hash="plaintext" />
-	</authentication-provider>
-
-	<beans:bean id="userDetailsService"
-		class="com.coos.ssq.service.impl.UserDetailsServiceLocalImpl">
-		<beans:property name="userManager" ref="userManager" />
+	<!-- 自定义的filter， 必须包含authenticationManager,accessDecisionManager,securityMetadataSource三个属性
+	我们的所有控制将在这三个类中实现 -->
+	<beans:bean id="myFilter" class="com.sniper.survey.spring.security.MyFilterSecurityInterceptor">
+		<beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
+		<beans:property name="accessDecisionManager" ref="myAccessDecisionManagerBean"></beans:property>
+		<beans:property name="securityMetadataSource" ref="securityMetadataSource"></beans:property>
+		
 	</beans:bean>
-
-	<beans:bean id="passwordEncoder"
-		class="org.springframework.security.providers.encoding.Md5PasswordEncoder">
-	</beans:bean>
+	
+	<!-- 认真管理器，实现用户认证的入口，主要实现USerDetailsService 接口即可-->
+	<authentication-manager alias="authenticationManage">
+		<authentication-provider user-service-ref="myUserDetailService">
+			<!-- 如果用户的密码采用加密的话可以 -->
+			<!-- <password-encoder hash="md5"></password-encoder> -->
+		
+		</authentication-provider>
+	
+	</authentication-manager>
+	
+	<beans:bean id="myUserDetailService" class="com.sniper.survey.spring.security.myUserDetailService"/>
+	<!-- 访问决策其，决定那个用户具有的角色，是否足够权限访问  -->
+	<beans:bean id="myAccessDecisionManagerBean" class=""></beans:bean>
+	
+	<beans:bean id="securityMetadataSource" class="com.sniper.survey.spring.security.MyInvocationSecurityMetadataSource"/>
+	
+	
 
 </beans:beans>
 
