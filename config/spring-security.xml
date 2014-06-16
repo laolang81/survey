@@ -22,6 +22,11 @@
 
 		<logout logout-success-url="/admin/login" />
 		<http-basic />
+		<session-management>
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="false"/>
+		</session-management>
+		
+		<!-- 增加一个filter，这点与acrgi是不一样的，不能修改默认的filter了 -->
 		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="myFilter"/>
 		
 	</http>
@@ -39,15 +44,16 @@
 		<authentication-provider user-service-ref="myUserDetailService">
 			<!-- 如果用户的密码采用加密的话可以 -->
 			<!-- <password-encoder hash="md5"></password-encoder> -->
-		
+			<!-- <user-service>
+				<user name="user" password="123" authorities="ROLE_USER"/>
+			</user-service> -->
 		</authentication-provider>
-	
 	</authentication-manager>
-	
+	<!-- 读取用户的密码，角色信息，是否锁定，账号是否过期  -->
 	<beans:bean id="myUserDetailService" class="com.sniper.survey.spring.security.myUserDetailService"/>
 	<!-- 访问决策其，决定那个用户具有的角色，是否足够权限访问  -->
 	<beans:bean id="myAccessDecisionManagerBean" class=""></beans:bean>
-	
+	<!-- 资源数据定义，将所有的资源和权限对应关系建立起来，及定义木易资源可以被大写橘色访问 -->
 	<beans:bean id="securityMetadataSource" class="com.sniper.survey.spring.security.MyInvocationSecurityMetadataSource"/>
 	
 	

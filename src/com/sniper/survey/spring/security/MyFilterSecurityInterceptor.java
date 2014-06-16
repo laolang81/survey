@@ -58,8 +58,6 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 		InterceptorStatusToken token = super.beforeInvocation(filterInvocation);
 		try {
 			filterInvocation.getChain().doFilter(filterInvocation.getRequest(), filterInvocation.getResponse());
-		} catch (Exception e) {
-			// TODO: handle exception
 		} finally{
 			super.afterInvocation(token, null);
 		}
