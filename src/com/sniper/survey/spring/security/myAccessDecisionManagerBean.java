@@ -43,7 +43,7 @@ public class myAccessDecisionManagerBean implements AccessDecisionManager {
 			}
 		}
 		
-		throw new AccessDeniedException("no right");
+		//throw new AccessDeniedException("no right");
 		
 	}
 
