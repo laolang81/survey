@@ -12,8 +12,8 @@
 	
 	<http  access-denied-page="/404.jsp" >
 
-		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
-		<intercept-url pattern="/**" access="ROLE_USER" />
+		<intercept-url pattern="/admin/**" access="ROLE_USER" />
+		<!-- <intercept-url pattern="/**" access="ROLE_USER" /> -->
 
 		<form-login login-page="/admin/login"
 			authentication-failure-url="/admin/login?error=true"
