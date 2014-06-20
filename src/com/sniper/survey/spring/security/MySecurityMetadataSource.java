@@ -40,7 +40,7 @@ public class MySecurityMetadataSource implements
 
 	public MySecurityMetadataSource(AdminRightService adminRightService) {
 		this.adminRightService = adminRightService;
-		loadResourceDefine();
+		//loadResourceDefine();
 	}
 	/**
 	 * 加载所有资源与权限的关系  
@@ -55,7 +55,7 @@ public class MySecurityMetadataSource implements
 			for (AdminRight right : adminRights) {
 				Collection<ConfigAttribute> configAttributes = new ArrayList<>();
 				ConfigAttribute configAttribute = new SecurityConfig(
-						right.getName());
+						right.getUrl());
 				configAttributes.add(configAttribute);
 				rightMap.put(right.getUrl(), configAttributes);
 			}

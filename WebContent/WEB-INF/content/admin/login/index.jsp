@@ -46,16 +46,7 @@
 	<form data-status='<s:text name="login.loading" />' data-url="<s:url action="rightList"  namespace="/admin" />" 
 			class="form-signin" role="form" name="login" action="${loginUrl}">
 		<h2 class="form-signin-heading"><s:text name="login.sign.in"/></h2>
-		<s:if test="${attr.error != null}">
-        <p>
-            Invalid username and password.
-        </p>
-	   </s:if>
-	    <s:if test="${logout != null}">       
-	        <p>
-	            You have been logged out.
-	        </p>
-	    </s:if>
+		
 		<div class="form-group input-group-lg">		
 			<label for="username"><s:text name="login.username"/></label>
 			<input type="text" id="username" name="username" class="form-control"
