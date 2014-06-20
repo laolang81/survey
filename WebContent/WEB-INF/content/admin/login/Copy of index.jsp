@@ -41,24 +41,14 @@
 </head>
 <body>
 <div class="container">
-	<s:url value="/login" namespace="/admin" var="loginUrl"/>
-	
+
 	<form data-status='<s:text name="login.loading" />' data-url="<s:url action="rightList"  namespace="/admin" />" 
-			class="form-signin" role="form" name="login" action="${loginUrl}">
-		<h2 class="form-signin-heading"><s:text name="login.sign.in"/></h2>
-		<s:if test="${attr.error != null}">
-        <p>
-            Invalid username and password.
-        </p>
-	   </s:if>
-	    <s:if test="${logout != null}">       
-	        <p>
-	            You have been logged out.
-	        </p>
-	    </s:if>
+			class="form-signin" role="form" name="login" action="<s:url action="loginAjaxValid" namespace="/admin"/>">
+		<h2 class="form-signin-heading"><s:text name="login.sign.in"/> </h2>
+		
 		<div class="form-group input-group-lg">		
-			<label for="username"><s:text name="login.username"/></label>
-			<input type="text" id="username" name="username" class="form-control"
+			<label for="accout"><s:text name="login.username"/></label>
+			<input type="text" id="accout" name="account" class="form-control"
 				placeholder="<s:text name="login.username"/>" required autofocus>
 		</div>
 		<div class="form-group input-group-lg">
@@ -77,9 +67,7 @@
 				<input type="checkbox" value="remember-me"> Remember me
 			</label>
 		</div>
-		<input type="hidden"                        
-        name="${_csrf.parameterName}"
-        value="${_csrf.token}"/>
+		
 		<button class="btn btn-lg btn-primary btn-block" type="button"><s:text name="login.sign.name"/></button>
 	</form>
 

@@ -1,9 +1,12 @@
 package com.sniper.survey.struts2.action.admin;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -12,6 +15,12 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.custom.authentication.AuthenticateResultInfoInterface;
@@ -19,6 +28,8 @@ import com.sniper.survey.custom.authentication.AuthenticationService;
 import com.sniper.survey.custom.authentication.AuthenticationServiceInterface;
 import com.sniper.survey.custom.authentication.DbTable;
 import com.sniper.survey.custom.authentication.ResultInterface;
+import com.sniper.survey.model.AdminGroup;
+import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.service.impl.AdminUserService;
@@ -32,7 +43,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
 
-	private String account;
+	private String username;
 	private String passwd;
 	private String verifycode;
 
@@ -46,12 +57,12 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	// 存放返回之前的结果
 	private Map<String, String> result = new HashMap<String, String>();
 
-	public String getAccount() {
-		return account;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setAccount(String account) {
-		this.account = account;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPasswd() {
@@ -101,7 +112,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		DbTable dbTable = new DbTable(adminUserService, "au_name",
 				"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
 		dbTable.setCredential(DataUtil.md5(this.passwd));
-		dbTable.setIdentity(this.account);
+		dbTable.setIdentity(this.username);
 		
 		//执行验证
 		AuthenticationServiceInterface auth = new AuthenticationService();
@@ -116,7 +127,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			
 			result.put("result", "0");
 			result.put("message", getText("Login fiald"));
-			result.put("id", "account");
+			result.put("id", "username");
 			break;
 		case 1:
 			try {
@@ -130,6 +141,25 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 				user.calucateRightSum();
 				//保存用户xx 				
 				auth.getSession().put(auth.getStorage(), user);
+		          //spring security 将权限及用户信息存入securityContext
+				
+				Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
+				Set<AdminGroup> groups = user.getAdminGroup();
+
+				for (AdminGroup adminGroup : groups) {
+					Set<AdminRight> adminRights = adminGroup.getAdminRight();
+					for (AdminRight adminRight : adminRights) {
+						authSet.add(new SimpleGrantedAuthority(adminRight.getName()));
+					}
+				}
+				
+				Authentication authentication = new UsernamePasswordAuthenticationToken(  
+						user, user.getPassword(), authSet);
+				SecurityContext securityContext = SecurityContextHolder.getContext();
+				securityContext.setAuthentication(authentication);
+				
+			    sessionMap.put("SPRING_SECURITY_CONTEXT", securityContext);
+						
 				
 				result.put("result", "10");
 				result.put("message", "登录成功");
@@ -141,12 +171,12 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		case -1:
 			result.put("result", "-1");
 			result.put("message", "用户名不存在");
-			result.put("id", "account");
+			result.put("id", "username");
 			break;
 		case -2:
 			result.put("result", "-2");
 			result.put("message", "用户未知");
-			result.put("id", "account");
+			result.put("id", "username");
 			break;
 		case -3:
 			result.put("result", "-3");
@@ -162,9 +192,9 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	 */
 	public void prepareDoLoginAjaxValid() {
 
-		if (this.account == null || this.account.isEmpty()) {
+		if (this.username == null || this.username.isEmpty()) {
 			result.put("message", "用户名无效");
-			result.put("id", "account");
+			result.put("id", "username");
 			return;
 		}
 

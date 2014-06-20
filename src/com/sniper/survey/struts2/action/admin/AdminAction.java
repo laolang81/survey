@@ -1,6 +1,7 @@
 package com.sniper.survey.struts2.action.admin;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -29,7 +30,10 @@ public class AdminAction extends BaseAction<AdminUser> {
 	 * 
 	 * @return
 	 */
-	@Action(value = "index", results = { @Result(name = "success", location = "index.jsp") })
+	@Actions(value = {
+			@Action(value = "", results = { @Result(name = "success", location = "index.jsp") }),
+			@Action(value = "index", results = { @Result(name = "success", location = "index.jsp") })
+	})
 	public String index() {
 		
 		System.out.println("admin-index");

@@ -6,22 +6,23 @@
 
 	<global-method-security pre-post-annotations="enabled" />
 	<http pattern="/admin/login" security="none" />
+	<http pattern="/myfiles/**" security="none" />
 
 	<http auto-config="true" use-expressions="true"
 		access-denied-page="/404.jsp">
 
-		<intercept-url pattern="/admin/**" access="ROLE_USER" />
-		<intercept-url pattern="/https" access="ROLE_USER" />
-
-		<form-login login-page="/admin/login"
+		
+		<form-login/>
+		<!-- <form-login login-page="/admin/login"
 			authentication-failure-url="/admin/login?error=true"
-			default-target-url="/admin" />
+			default-target-url="/admin" /> -->
 
 		<!-- /j_spring_security_logout, 注销页面 -->
 		<logout logout-success-url="/admin/login" delete-cookies="JSESIONID" />
 		<remember-me />
 
 		<http-basic />
+		<csrf/>
 		<!-- 检测session是否可用的地址 max-sessions=1配合单用户登录最大session个数=1 -->
 		<session-management invalid-session-url="/admin/session">
 			<concurrency-control max-sessions="1"
@@ -48,7 +49,8 @@
 	<!-- 认真管理器，实现用户认证的入口，主要实现USerDetailsService 接口即可 -->
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="myUserDetailServiceImpl">
-
+			<password-encoder hash="md5"></password-encoder>
+			
 		</authentication-provider>
 	</authentication-manager>
 

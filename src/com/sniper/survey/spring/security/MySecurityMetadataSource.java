@@ -68,8 +68,6 @@ public class MySecurityMetadataSource implements
 
 	}
 
-	
-
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
 
