@@ -24,7 +24,7 @@ import com.sniper.survey.service.impl.AdminRightService;
 @Scope("prototype")
 @Namespace("/admin/right")
 @ParentPackage("default")
-@InterceptorRef("loginInterceptor")
+//@InterceptorRef("loginInterceptor")
 @Results({
 	@Result(name="error", location="%{htmlPath}/error/error.jsp"),
 	@Result(name="login", location="login", params={"namespace","/admin"}, type="redirectAction")

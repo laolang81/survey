@@ -15,7 +15,7 @@ import com.sniper.survey.model.AdminUser;
 @Scope("prototype")
 @Namespace("/admin")
 @ParentPackage("default")
-@InterceptorRef("loginInterceptor")
+//@InterceptorRef("loginInterceptor")
 @Results({
 	@Result(name="error", location="%{htmlPath}/error/error.jsp"),
 	@Result(name="login", location="login", type="redirectAction")
