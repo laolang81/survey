@@ -30,20 +30,23 @@ public class myAccessDecisionManagerBean implements AccessDecisionManager {
 		}
 		//object is url
 		System.out.println(object.toString());
+		//所请求的资源拥有的权限(一个资源对多个权限)  
 		Iterator<ConfigAttribute> ite = configAttributes.iterator();
 		while(ite.hasNext()){
 			ConfigAttribute ca = ite.next();
-			SecurityConfig config = (SecurityConfig) ca;
-			String needRole = config.getAttribute();
+			//访问所请求资源所需要的权限  
+			String needPermission = ca.getAttribute();
+			System.out.println("needPermission is " + needPermission);  
+			//用户所拥有的权限authentication  
 			for(GrantedAuthority ga:authentication.getAuthorities()){
-				if(needRole.equals(ga.getAuthority())){
+				if(needPermission.equals(ga.getAuthority())){
 					//ga is user's role
 					return;
 				}
 			}
 		}
 		
-		//throw new AccessDeniedException("no right");
+		throw new AccessDeniedException("No Right");
 		
 	}
 

@@ -4,18 +4,26 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-	<!-- <http pattern="/**/*.jpg" security="none" />
+	<http pattern="/**/*.jpg" security="none" />
 	<http pattern="/**/*.png" security="none" />
 	<http pattern="/**/*.gif" security="none" />
 	<http pattern="/**/*.css" security="none" />
-	<http pattern="/**/*.js" security="none" /> -->
-	
-	
+	<http pattern="/**/*.js" security="none" />
 
+
+	<!-- 程序端口映射 -->
+	<port-mappings>
+		<port-mapping http="9080" https="9443" />
+	</port-mappings>
 	<!-- 这个元素用来在你的应用程序中启用基于安全的注解 <global-method-security pre-post-annotations="enabled" 
 		access-decision-manager-ref="myAccessDecisionManager"/> -->
-	<http auto-config="true" access-denied-page="403.jsp" >
+	<http auto-config="true" access-denied-page="403.jsp">
 
+		<!-- 程序端口映射 -->
+		<port-mappings>
+			<port-mapping http="9080" https="9443" />
+		</port-mappings>
+		
 		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/ssq/**" access="ROLE_ADMIN,ROLE_EDITOR" />
 		<intercept-url pattern="/browser/**"
@@ -28,16 +36,15 @@
 		<!-- <remember-me data-source-ref="dataSource" /> -->
 		<form-login login-page="/admin/login"
 			authentication-failure-url="/admin/login?error=true"
-			default-target-url="/admin"  />
+			default-target-url="/admin" always-use-default-target="true" />
 
-		<logout logout-success-url="/admin/login"  />
+		<logout logout-success-url="/admin/login" />
 		<http-basic />
 		<!-- 实现免登陆验证 -->
 		<!-- 只能登陆一次 -->
-		<!-- <session-management invalid-session-url="/admin/session">
-			<concurrency-control max-sessions="1"
-				error-if-maximum-exceeded="true" expired-url="/admin/login" />
-		</session-management> -->
+		<!-- <session-management invalid-session-url="/admin/session"> <concurrency-control 
+			max-sessions="1" error-if-maximum-exceeded="true" expired-url="/admin/login" 
+			/> </session-management> -->
 
 		<!-- 增加一个filter，这点与acrgi是不一样的，不能修改默认的filter了 -->
 		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="securityFilter" />
@@ -53,7 +60,10 @@
 		<beans:property name="securityMetadataSource" ref="securityMetadataSource"></beans:property>
 
 	</beans:bean>
-
+	
+	<!-- 密码加密程序 -->
+	<beans:bean name="bcryptEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<!-- 认真管理器，实现用户认证的入口，主要实现USerDetailsService 接口即可 -->
 	<authentication-manager alias="authenticationManage">
 		<authentication-provider user-service-ref="myUserDetailService">
@@ -74,6 +84,10 @@
 		class="com.sniper.survey.spring.security.MyInvocationSecurityMetadataSource" />
 
 
+	<!-- 如果是代理服务器 删除 JSESSIONID的话 可用下面删除 error-if-maximum-exceeded第二次登录无效 -->
+	<!-- <LocationMatch "tutorial/j_spring_security_logout"> Header always set 
+		Set-Cookie "JSESSIONID=;Path=/tutorial;Expires=Thu, 01 Jan 1970 00:00:00 
+		GMT" </LocationMatch> -->
 
 </beans:beans>
 

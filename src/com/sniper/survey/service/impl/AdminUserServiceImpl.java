@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Service;
 
 import com.sniper.survey.dao.BaseDao;
@@ -36,5 +37,14 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser> implements
 		List<AdminUser> adminUsers = this.findEntityByHQL(hql, name);
 		return ValidateUtil.isValid(adminUsers) ? false : true;
 	}
+	
+	@Override
+	public AdminUser findByName(String username) {
+		
+		String hql = "from AdminUser where name = ?";
+		return (AdminUser) this.uniqueResult(hql, username);
+	}
+	
+	
 
 }

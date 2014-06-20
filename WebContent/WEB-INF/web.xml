@@ -14,8 +14,12 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 
 	</listener>
-
-
+	<!--  单用户登录监听 -->
+	<listener>
+	  <listener-class>
+	    org.springframework.security.web.session.HttpSessionEventPublisher
+	  </listener-class>
+	</listener>
 
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
@@ -23,7 +27,7 @@
 
 	</filter>
 
-	
+
 
 	<filter>
 		<filter-name>sitemesh</filter-name>
@@ -44,12 +48,12 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	
+
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>

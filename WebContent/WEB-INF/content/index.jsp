@@ -26,5 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   ${htmlPath }
    ssssssssssssssss <br>
+    <c:url value="/j_spring_security_logout" var="logoutUrl"/>  
+<li><a href="${logoutUrl}">Log Out</a></li>
   </body>
 </html>
