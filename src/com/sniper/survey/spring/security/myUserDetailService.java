@@ -29,7 +29,11 @@ public class myUserDetailService implements UserDetailsService {
 
 	@Resource
 	private AdminUserService adminUserService;
-
+	
+	public myUserDetailService(AdminUserService adminUserService) {
+		this.adminUserService = adminUserService;
+	}
+	
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {

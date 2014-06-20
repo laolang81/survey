@@ -10,14 +10,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
@@ -35,10 +32,14 @@ public class MySecurityMetadataSource implements
 
 	@Resource
 	private AdminRightService adminRightService;
+	
 	private static Map<String, Collection<ConfigAttribute>> rightMap = null;
-
-
+	
 	public MySecurityMetadataSource() {
+	}
+
+	public MySecurityMetadataSource(AdminRightService adminRightService) {
+		this.adminRightService = adminRightService;
 		loadResourceDefine();
 	}
 	/**
@@ -46,9 +47,11 @@ public class MySecurityMetadataSource implements
 	 */
 	private void loadResourceDefine() {
 		if (rightMap == null) {
+			
 			rightMap = new HashMap<String, Collection<ConfigAttribute>>();
 			List<AdminRight> adminRights = this.adminRightService
 					.findAllEntitles();
+			
 			for (AdminRight right : adminRights) {
 				Collection<ConfigAttribute> configAttributes = new ArrayList<>();
 				ConfigAttribute configAttribute = new SecurityConfig(
@@ -79,7 +82,17 @@ public class MySecurityMetadataSource implements
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object)
 			throws IllegalArgumentException {
+		
 		FilterInvocation filterInvocation = (FilterInvocation) object;
+		String requestUrl = filterInvocation.getRequestUrl(); 
+        System.out.println("requestUrl is " + requestUrl);  
+        if(rightMap == null) {  
+            loadResourceDefine();  
+        }  
+        return rightMap.get(requestUrl);
+        
+        
+		/*FilterInvocation filterInvocation = (FilterInvocation) object;
 		HttpServletRequest request = filterInvocation.getHttpRequest();
 
 		Iterator<String> ite = rightMap.keySet().iterator();
@@ -92,7 +105,7 @@ public class MySecurityMetadataSource implements
 			}
 		}
 
-		return null;
+		return null;*/
 	}
 
 	@Override
