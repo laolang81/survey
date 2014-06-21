@@ -34,6 +34,9 @@ public class AdminRight extends BaseEntity{
 	// 显示为menu
 	@Column(name = "ar_is_menu")
 	private boolean isMenu;
+	
+	@Column(name = "ar_sort")
+	private int sort;
 
 	public Integer getId() {
 		return id;
@@ -97,6 +100,14 @@ public class AdminRight extends BaseEntity{
 
 	public void setMenu(boolean isMenu) {
 		this.isMenu = isMenu;
+	}
+
+	public int getSort() {
+		return sort;
+	}
+
+	public void setSort(int sort) {
+		this.sort = sort;
 	}
 
 }

@@ -41,20 +41,22 @@
 </head>
 <body>
 <div class="container">
-	<s:url value="/login" namespace="/admin" var="loginUrl"/>
 	
-	<form data-status='<s:text name="login.loading" />' data-url="<s:url action="rightList"  namespace="/admin" />" 
-			class="form-signin" role="form" name="login" action="${loginUrl}">
+	<form data-status='<s:text name="login.loading" />' method="post"
+			class="form-signin" role="form" name="login" action="${pageContext.request.contextPath}/j_spring_security_check">
 		<h2 class="form-signin-heading"><s:text name="login.sign.in"/></h2>
-		
+		<s:if test="%{param.error == true }">
+		<p class="error ${param.error == true ? '' : 'hide'}">
+		登陆失败<br>${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}</p>
+		</s:if>
 		<div class="form-group input-group-lg">		
 			<label for="username"><s:text name="login.username"/></label>
-			<input type="text" id="username" name="username" class="form-control"
+			<input type="text" id="username" name="j_username" class="form-control" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}"
 				placeholder="<s:text name="login.username"/>" required autofocus>
 		</div>
 		<div class="form-group input-group-lg">
 			<label for="password"><s:text name="login.password"/></label>
-			<input id="password" type="password" name="passwd" class="form-control"
+			<input id="password" type="password" name="j_password" class="form-control"
 				placeholder="<s:text name="login.password"/>" required>
 		</div>	
 			
@@ -63,15 +65,15 @@
 	     	<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="<s:text name="login.message.verity.code"/>" id="verifycode" class="form-control">			
 			<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" />" class="fl" >
 		</div>
+		
 		<div class="form-group input-group-lg">
 			<label class="checkbox"> 
-				<input type="checkbox" value="remember-me"> Remember me
+				<input type="checkbox" name="_spring_security_remember_me"> Remember me
 			</label>
 		</div>
-		<input type="hidden"                        
-        name="${_csrf.parameterName}"
-        value="${_csrf.token}"/>
-		<button class="btn btn-lg btn-primary btn-block" type="button"><s:text name="login.sign.name"/></button>
+		<input name="_csrf" type="hidden" value="2ca8ee11-ade4-4b57-9338-d6d4b4c4c422" />
+		<input type="hidden" name="${_csrf.parameterName}" value="${token}"/>
+		<button class="btn btn-lg btn-primary btn-block" type="submit"><s:text name="login.sign.name"/></button>
 	</form>
 
 </div><!-- /container -->
@@ -79,14 +81,7 @@
 <div id="back-mask" class="back-mask"></div>
 <script language="javascript">
 	$(function() {
-		$("form").keydown(function(e) {
-			if (e.keyCode == 13) {			
-				onlogin();
-			}
-		});
-		$('form button[type="button"]').click(function(){		
-		    onlogin();
-		});
+	
 		$('form img').click(function(){
 			fleshVerify();
 		});

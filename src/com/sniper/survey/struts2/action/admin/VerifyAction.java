@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
@@ -20,6 +21,7 @@ import com.sniper.survey.util.VerifyCode;
  */
 @Controller
 @Scope("prototype")
+@Namespace("/")
 @Result(name="success",type="stream",params={"contentType","image/jpeg","inputName","imageStream","bufferSize","2048"})
 public class VerifyAction extends ActionSupport implements SessionAware {
 

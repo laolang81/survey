@@ -5,26 +5,30 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 	<global-method-security pre-post-annotations="enabled" />
-	<http pattern="/admin/login" security="none" />
+	
+	<http pattern="/" security="none" />
+	<http pattern="/admin/login" security="none"  />
 	<http pattern="/myfiles/**" security="none" />
 
 	<http auto-config="true" use-expressions="true"
-		access-denied-page="/404.jsp">
-
-		
-		<form-login/>
-		<!-- <form-login login-page="/admin/login"
+		access-denied-page="/403.jsp">
+		<!-- 匿名授权 -->
+		<intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<!-- <form-login/> -->
+		<form-login login-page="/admin/login"
 			authentication-failure-url="/admin/login?error=true"
-			default-target-url="/admin" /> -->
+			default-target-url="/admin" />
 
 		<!-- /j_spring_security_logout, 注销页面 -->
 		<logout logout-success-url="/admin/login" delete-cookies="JSESIONID" />
-		<remember-me />
+		<!-- <remember-me /> -->
 
 		<http-basic />
 		<csrf/>
 		<!-- 检测session是否可用的地址 max-sessions=1配合单用户登录最大session个数=1 -->
-		<session-management invalid-session-url="/admin/session">
+		<!-- session-fixation-protection 解决session伪造  -->
+		<!-- error-if-maximum-exceeded 解决单一登录，不提出第一个登录 -->
+		<session-management session-fixation-protection="none" >
 			<concurrency-control max-sessions="1"
 				error-if-maximum-exceeded="true" />
 		</session-management>
