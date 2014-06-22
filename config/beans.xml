@@ -16,13 +16,9 @@
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
 
-
-
-
 	<context:component-scan
 		base-package="com.sniper.survey.dao.impl,com.sniper.survey.service.impl,com.sniper.survey.struts2.action.*,com.sniper.survey.listener">
 	</context:component-scan>
-
 
 	<!-- 分库配置 master -->
 	<bean id="dataSource_main" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -155,10 +151,9 @@
 			order="1" />
 		<aop:advisor advice-ref="cacheAdvice"
 			pointcut="execution(* *..*Service.get*(..))
-															execution(* *..*Service.find*(..))
-															execution(* *..*Service.load*(..))
-															
-															"
+											execution(* *..*Service.find*(..))
+											execution(* *..*Service.load*(..))
+											"
 			order="0" />
 
 		<!-- logger切面 -->

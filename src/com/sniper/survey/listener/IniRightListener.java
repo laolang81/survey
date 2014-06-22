@@ -35,7 +35,7 @@ public class IniRightListener implements ApplicationListener,
 
 	@Override
 	public void onApplicationEvent(ApplicationEvent arg0) {
-		// 上下文刷新事件
+		// 上下文刷新事件,在spring容器启动之后
 		if (arg0 instanceof ContextRefreshedEvent) {
 			// 查处所有权限
 			List<AdminRight> rights = service.findAllEntitles();
@@ -47,9 +47,7 @@ public class IniRightListener implements ApplicationListener,
 				context.setAttribute("all_rights_map", map);
 				System.out.println("初始化所有权限到appliaction中");
 			}
-
 		}
-
 	}
 
 	@Override

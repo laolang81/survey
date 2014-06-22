@@ -36,6 +36,9 @@ public class IniLogListener implements ApplicationListener {
 
 	@Override
 	public void onApplicationEvent(ApplicationEvent arg0) {
+		
+		System.out.println("初始化表------------");
+		
 		// 上下文刷新事件
 		/*if (arg0 instanceof ContextRefreshedEvent) {
 			//创建日志表
@@ -51,6 +54,7 @@ public class IniLogListener implements ApplicationListener {
 			
 			System.out.println("初始化表");
 		}*/
+		
 
 	}
 
