@@ -54,6 +54,7 @@ public class MySecurityMetadataSource implements
 			for (AdminRight right : adminRights) {
 				
 				Collection<ConfigAttribute> configAttributes = new ArrayList<>();
+				
 				for(AdminGroup adminGroup: right.getAdminGroup()){
 					ConfigAttribute configAttribute = new SecurityConfig(adminGroup.getValue());
 					configAttributes.add(configAttribute);
