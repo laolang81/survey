@@ -23,6 +23,7 @@ import com.sniper.survey.service.impl.AdminRightService;
  * @author laolang
  * 
  */
+
 @Component
 @SuppressWarnings("rawtypes")
 public class IniRightListener implements ApplicationListener,
