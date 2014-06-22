@@ -94,11 +94,10 @@ public class RightAction extends BaseAction<AdminRight> {
 		return SUCCESS;
 	}
 
-	@Action(value = "save", results = { @Result(name = "success", location = "save.jsp", type = "redirect", params = {
-			"updateid", "%{updateid}" }) })
+	@Action(value= "save")
 	public String save() {
 		System.out.println("save");
-		return INPUT;
+		return SUCCESS;
 	}
 
 	/**

@@ -13,6 +13,8 @@ import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+import com.sniper.survey.model.AdminGroup;
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
 
@@ -37,7 +39,7 @@ public class MySecurityMetadataSource implements
 
 	public MySecurityMetadataSource(AdminRightService adminRightService) {
 		this.adminRightService = adminRightService;
-		//loadResourceDefine();
+		loadResourceDefine();
 	}
 	/**
 	 * 加载所有资源与权限的关系  
@@ -50,10 +52,17 @@ public class MySecurityMetadataSource implements
 					.findAllEntitles();
 			
 			for (AdminRight right : adminRights) {
+				
 				Collection<ConfigAttribute> configAttributes = new ArrayList<>();
-				ConfigAttribute configAttribute = new SecurityConfig(
-						right.getName());
-				configAttributes.add(configAttribute);
+				for(AdminGroup adminGroup: right.getAdminGroup()){
+					ConfigAttribute configAttribute = new SecurityConfig(adminGroup.getValue());
+					configAttributes.add(configAttribute);
+				}
+				
+				System.out.println("权限=<--");
+				System.out.println(configAttributes);
+				System.out.println("-->");
+				
 				rightMap.put(right.getUrl(), configAttributes);
 			}
 		}
@@ -79,12 +88,25 @@ public class MySecurityMetadataSource implements
 			throws IllegalArgumentException {
 		
 		FilterInvocation filterInvocation = (FilterInvocation) object;
-		String requestUrl = filterInvocation.getRequestUrl(); 
-        System.out.println("requestUrl is " + requestUrl);  
+		String requestUrl = filterInvocation.getRequestUrl();
+		
+		//requestUrl	= requestUrl.substring(0, requestUrl.lastIndexOf("."));
+       
+       
         if(rightMap == null) {  
             loadResourceDefine();
         }
+        
+        if(requestUrl.indexOf("?") != -1){
+        	requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf("?"));
+        }
+        
+        System.out.println("rightMap <--");
+        System.out.println("requestUrl is " + requestUrl);
+        System.out.println(rightMap);
         System.out.println("rightMap is " +  rightMap.get(requestUrl));
+        System.out.println("-->");
+        
         return rightMap.get(requestUrl);
         
         

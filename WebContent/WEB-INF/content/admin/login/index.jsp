@@ -51,12 +51,12 @@
 		</s:if>
 		<div class="form-group input-group-lg">		
 			<label for="username"><s:text name="login.username"/></label>
-			<input type="text" id="username" name="j_username" class="form-control" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}"
+			<input type="text" id="username" name="username" class="form-control" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}"
 				placeholder="<s:text name="login.username"/>" required autofocus>
 		</div>
 		<div class="form-group input-group-lg">
 			<label for="password"><s:text name="login.password"/></label>
-			<input id="password" type="password" name="j_password" class="form-control"
+			<input id="password" type="password" name="password" class="form-control"
 				placeholder="<s:text name="login.password"/>" required>
 		</div>	
 			

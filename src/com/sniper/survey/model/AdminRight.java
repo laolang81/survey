@@ -1,10 +1,17 @@
 package com.sniper.survey.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -38,6 +45,11 @@ public class AdminRight extends BaseEntity{
 	@Column(name = "ar_sort")
 	private int sort;
 
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "mc_admin_group_right", joinColumns = @JoinColumn(name = "rid"), inverseJoinColumns = @JoinColumn(name = "gid"))
+	private Set<AdminGroup> adminGroup = new HashSet<>();
+	
 	public Integer getId() {
 		return id;
 	}
@@ -108,6 +120,14 @@ public class AdminRight extends BaseEntity{
 
 	public void setSort(int sort) {
 		this.sort = sort;
+	}
+
+	public Set<AdminGroup> getAdminGroup() {
+		return adminGroup;
+	}
+
+	public void setAdminGroup(Set<AdminGroup> adminGroup) {
+		this.adminGroup = adminGroup;
 	}
 
 }

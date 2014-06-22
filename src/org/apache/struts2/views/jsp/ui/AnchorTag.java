@@ -29,7 +29,6 @@ import org.apache.struts2.components.Anchor;
 import org.apache.struts2.components.Component;
 
 import com.opensymphony.xwork2.util.ValueStack;
-import com.sniper.survey.util.ValidateUtil;
 
 /**
  * @see Anchor
@@ -155,12 +154,15 @@ public class AnchorTag extends AbstractClosingTag {
 	 */
 	@Override
 	public int doEndTag() throws JspException {
-		if (ValidateUtil.hasRight(namespace, action,
+		
+		return super.doEndTag();
+		
+		/*if (ValidateUtil.hasRight(namespace, action,
 				(HttpServletRequest) pageContext.getRequest(), null)) {
 			return super.doEndTag();
 		} else {
 			return SKIP_BODY;
-		}
+		}*/
 
 	}
 

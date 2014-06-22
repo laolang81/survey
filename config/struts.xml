@@ -17,7 +17,7 @@
 	<!-- 是否自动加载国际化资源文件 -->
 	<constant name="struts.i18n.reload" value="true" />
 	<constant name="struts.devMode" value="true" />
-	<constant name="struts.action.extension" value="do,action,html,," />
+	<constant name="struts.action.extension" value=",,html,do,action,php,asp,aspx,*" />
 	<constant name="struts.ui.theme" value="simple" />
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<!-- 允许调用bean静态方法 -->
@@ -48,6 +48,11 @@
 			</interceptor-stack>
 		</interceptors>
 		<!-- <default-interceptor-ref name="defaultInterceptor"></default-interceptor-ref> -->
+		
+		<default-action-ref name="notFound" />
+		<action name="notFound">
+			<result>/error/404.jsp</result>
+		</action>
 	</package>
 
 

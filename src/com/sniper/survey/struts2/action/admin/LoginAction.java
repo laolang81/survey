@@ -49,7 +49,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	private static final long serialVersionUID = 1L;
 
 	private String username;
-	private String passwd;
+	private String password;
 	private String verifycode;
 
 	private Map<String, Object> sessionMap;
@@ -70,12 +70,12 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		this.username = username;
 	}
 
-	public String getPasswd() {
-		return passwd;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
+	public void setPassword(String passwd) {
+		this.password = passwd;
 	}
 
 	public String getVerifycode() {
@@ -98,7 +98,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	@Override
 	@Action(value = "login")
 	public String execute() throws Exception {
-		System.out.println(getText("login.message.error.fiald"));
+		//System.out.println(getText("login.message.error.fiald"));
 		return SUCCESS;
 	}
 
@@ -117,7 +117,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		// 用户验证,只负责用户验证不负责保存
 		DbTable dbTable = new DbTable(adminUserService, "au_name",
 				"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
-		dbTable.setCredential(DataUtil.md5(this.passwd));
+		dbTable.setCredential(DataUtil.md5(this.password));
 		dbTable.setIdentity(this.username);
 
 		// 执行验证
@@ -206,7 +206,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			return;
 		}
 
-		if (this.passwd == null || this.passwd.isEmpty()) {
+		if (this.password == null || this.password.isEmpty()) {
 			result.put("message", "密码无效");
 			result.put("id", "passwd");
 			return;

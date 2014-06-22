@@ -16,6 +16,6 @@ public class App {
 			buffer.append(chars[(b >> 4) & 0x0F]);
 			buffer.append(chars[b  & 0x0F]);
 		}
-		return buffer.toString();
+		return buffer.toString().toLowerCase();
 	}
 }

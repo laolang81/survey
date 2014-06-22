@@ -73,10 +73,11 @@ public class myUserDetailService implements UserDetailsService {
 		Set<AdminGroup> groups = adminUser.getAdminGroup();
 		
 		for (AdminGroup adminGroup : groups) {
-			Set<AdminRight> adminRights = adminGroup.getAdminRight();
+			/*Set<AdminRight> adminRights = adminGroup.getAdminRight();
 			for (AdminRight adminRight : adminRights) {
 				authSet.add(new SimpleGrantedAuthority(adminRight.getUrl()));
-			}
+			}*/
+			authSet.add(new SimpleGrantedAuthority(adminGroup.getValue()));
 		}
 		return authSet;
 	}
