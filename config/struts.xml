@@ -47,7 +47,7 @@
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-		<default-interceptor-ref name="defaultInterceptor"></default-interceptor-ref>
+		<!-- <default-interceptor-ref name="defaultInterceptor"></default-interceptor-ref> -->
 	</package>
 
 

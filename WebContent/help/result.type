@@ -1,0 +1,41 @@
+Struts2框架提供的结果类型
+已配置结果类型名	 类 名	 描 述
+dispatcher	 org.apache.struts2.dispatcher.
+ServletDispatcherResult	 默认结果类型，用来呈现JSP页面
+chain	 com.opensymphony.xwork2.
+ActionChainResult	 将action和另外一个action链接起来
+freemarker	 org.apache.struts2.views.freemarker.
+FreemarkerResult	 呈现Freemarker模板
+httpheader	 org.apache.struts2.dispatcher.
+HttpHeaderResult	 返回一个已配置好的HTTP头信息响应
+redirect	 org.apache.struts2.dispatcher.
+ServletRedirectResult	 将用户重定向到一个已配置好的URL
+redirectAction	 org.apache.struts2.dispatcher.
+ServletActionRedirectResult	 将用户重定向到一个已定义好的action
+stream	 org.apache.struts2.dispatcher.
+StreamResult	 将原始数据作为流传递回浏览器端，
+该结果类型对下载的内容和图片非常有用
+velocity	 org.apache.struts2.dispatcher.
+VelocityResult	 呈现Velocity模板
+xslt	 org.apache.struts2.views.xslt.
+XSLTResult	 呈现XML到浏览器，
+该XML可以通过XSL模板进行转换
+plaintext	 org.apache.struts2.dispatcher.
+PlainTextResult	 返回普通文本类容
+
+简单说明一下result的name属性和type属性：
+SUCCESS：Action正确的执行完成，返回相应的视图，success是name属性的默认值。
+NONE：表示Action正确的执行完成，但并不返回任何视图。
+ERROR：表示Action执行失败，返回到错误处理视图。
+INPUT：Action的执行，需要从前端界面获取参数，INPUT就是代表这个参数输入的界面，一般在应用中，会对这些参数进行验证，如果验证没有通过，将自动返回到该视图。
+LOGIN：Action因为用户没有登陆的原因没有正确执行，将返回该登陆视图，要求用户进行登陆验证。
+dispatcher：请求转发，底层调用RequestDispatcher的forward()或include()方法，dispatcher是 type属性的默认值，通常用于转向一个JSP。localtion指定JSP的位置，parse如果为false表示location的值不会被当作 OGNL解析，默认为true。
+redirect：重定向，新页面无法显示Action中的数据，因为底层调用response.sendRedirect("")方法，无法共享请求范围内的数据，参数与dispatcher用法相同。
+redirect-action：重定向到另一个Action，参数与chain用法相同，允许将原Action中的属性指定新名称带入新Action 中，可以在Result标签中添加 <param name=”b”>${a} </param>，这表示原Action中的变量a的值被转给b，下一个Action可以在值栈中使用b来操作，注意如果值是中文，需要做一些编码处理，因为Tomcat默认是不支持URL直接传递中文的！
+velocity：使用velocity模板输出结果，location指定模板的位置（*.vm），parse如果为false，location不被OGNL解析，默认为true。
+xslt：使用XSLT将结果转换为xml输出，location指定*.xslt文件的位置，parse如果为false，location不被 OGNL解析，默认为true。matchingPattern指定想要的元素模式，excludePattern指定拒绝的元素模式，支持正则表达式，默认为接受所有元素。
+httpheader：根据值栈返回自定义的HttpHeader，status指定响应状态（就是指response.sendError(int i)重定向到500等服务器的状态页）。parse如果为false，header的值不会被OGNL解析，headers，加入到header中的值，例如： <param name=”headers.a”>HelloWorld </param>。可以加多个，这些键-值组成HashMap。
+freemaker：用freemaker模板引擎呈现视图，location指定模板（*.ftl）的位置，parse如果为false，location的值不会被OGNL解析。contentType指定以何中类型解析，默认为text/html。
+chain：将action的带着原来的状态请求转发到新的action，两个action共享一个ActionContext，actionName指定转向的新的Action的名字。method指定转向哪个方法，namespace指定新的Action的名称空间，不写表示与原Action在相同的名称空间；skipActions指定一个使用 , 连接的Action的name组成的集合，一般不建议使用这种类型的结果。
+stream：直接向响应中发送原始数据，通常在用户下载时使用，contentType指定流的类型，默认为 text/plain，contentLength以byte计算流的长度，contentDisposition指定文件的位置，通常为 filename=”文件的位置”，input指定InputStream的名字，例如：imageStream，bufferSize指定缓冲区大小，默认为1024字节。
+plaintext：以原始文本显示JSP或者HTML，location指定文件的位置，charSet指定字符集。

@@ -5,7 +5,6 @@
 <%@ taglib uri="http://www.freejudge.net/struts/tags" prefix="sniperPage" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="sitemesh-page"%>
 
-${htmlPath }sssssssss
 <table class="table table-hover">
 	<thead>
 		<tr>

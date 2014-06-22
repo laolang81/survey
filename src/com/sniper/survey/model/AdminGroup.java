@@ -93,11 +93,6 @@ public class AdminGroup extends BaseEntity{
 
 	public AdminGroup() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	
-	
-	
-	
 }

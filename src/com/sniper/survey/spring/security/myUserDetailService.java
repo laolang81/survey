@@ -45,14 +45,16 @@ public class myUserDetailService implements UserDetailsService {
 
 		Collection<GrantedAuthority> authorities = obtionGrantedAuthorities(adminUser);
 
-		boolean enables = true;
 		boolean accountNonExpired = true;
 		boolean credentialsNonExpired = true;
-		boolean accountNonLocked = true;
+		boolean accountNonLocked	= false;
+		if(!adminUser.isLocked()){
+			accountNonLocked = true;
+		}
 
 		// 在数据库中获取信息之后赋值给他们,这里演示一下
 		User user = new User(adminUser.getName(), adminUser.getPassword(),
-				enables, accountNonExpired, credentialsNonExpired,
+				adminUser.isEnables(), accountNonExpired, credentialsNonExpired,
 				accountNonLocked, authorities);
 
 		return user;
@@ -60,7 +62,7 @@ public class myUserDetailService implements UserDetailsService {
 
 	/**
 	 * 取得用户的权限
-	 * 
+	 * 获取当前用户可以查看的地址列表
 	 * @param adminUser
 	 * @return
 	 */
@@ -69,11 +71,11 @@ public class myUserDetailService implements UserDetailsService {
 
 		Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
 		Set<AdminGroup> groups = adminUser.getAdminGroup();
-
+		
 		for (AdminGroup adminGroup : groups) {
 			Set<AdminRight> adminRights = adminGroup.getAdminRight();
 			for (AdminRight adminRight : adminRights) {
-				authSet.add(new SimpleGrantedAuthority(adminRight.getName()));
+				authSet.add(new SimpleGrantedAuthority(adminRight.getUrl()));
 			}
 		}
 		return authSet;

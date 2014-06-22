@@ -63,7 +63,7 @@
 		<div class="form-group input-group-lg" >
 			<label for="verifycode" class="col-sm-2 control-label sr-only"><s:text name="login.message.verity.code"/> </label>      		
 	     	<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="<s:text name="login.message.verity.code"/>" id="verifycode" class="form-control">			
-			<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" />" class="fl" >
+			<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" namespace="/" />" class="fl" >
 		</div>
 		
 		<div class="form-group input-group-lg">
@@ -131,6 +131,10 @@
 	function fleshVerify() {
 		var timenow = new Date().getTime();
 		var src = $('form img').attr("src");
+		var indexof = src.indexOf("?");
+		if(indexof != -1){
+			src	= src.substring(0, src.indexOf("?"));
+		}
 		$('form img').attr("src", src + '?d=' + timenow);
 	}
 

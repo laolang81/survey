@@ -11,16 +11,21 @@
 	<http pattern="/myfiles/**" security="none" />
 
 	<http auto-config="true" use-expressions="true"
-		access-denied-page="/403.jsp">
+		access-denied-page="/admin/errorNotRight">
 		<!-- 匿名授权 -->
-		<intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<!-- <intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/> -->
+		<!-- <intercept-url pattern="/j_spring_security_check" access="none"/> -->
 		<!-- <form-login/> -->
+		<!-- username-parameter="j_username"
+		password-parameter="j_password"
+		login-processing-url="j_spring_security_check" -->
 		<form-login login-page="/admin/login"
 			authentication-failure-url="/admin/login?error=true"
-			default-target-url="/admin" />
+			default-target-url="/admin"
+			 />
 
 		<!-- /j_spring_security_logout, 注销页面 -->
-		<logout logout-success-url="/admin/login" delete-cookies="JSESIONID" />
+		<logout logout-success-url="/admin/login" delete-cookies="JSESSIONID" />
 		<!-- <remember-me /> -->
 
 		<http-basic />
@@ -53,7 +58,10 @@
 	<!-- 认真管理器，实现用户认证的入口，主要实现USerDetailsService 接口即可 -->
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="myUserDetailServiceImpl">
-			<password-encoder hash="md5"></password-encoder>
+			<password-encoder hash="md5">
+				<!-- <salt-source user-property="username"/>
+				<salt-source user-property="password"/> -->
+			</password-encoder>
 			
 		</authentication-provider>
 	</authentication-manager>
@@ -61,7 +69,7 @@
 	<!-- 读取用户的密码，角色信息，是否锁定，账号是否过期 -->
 	<beans:bean id="myUserDetailServiceImpl"
 		class="com.sniper.survey.spring.security.myUserDetailService">
-		<beans:constructor-arg name="adminUserService" ref="adminUserService"></beans:constructor-arg>
+		<beans:constructor-arg name="adminUserService" ref="adminUserService" />
 	</beans:bean>
 
 	<!-- 访问决策其，决定那个用户具有的角色，是否足够权限访问 -->
@@ -70,7 +78,7 @@
 	<!-- 资源数据定义，将所有的资源和权限对应关系建立起来，及定义木易资源可以被大写橘色访问 -->
 	<beans:bean id="securityMetadataSource"
 		class="com.sniper.survey.spring.security.MySecurityMetadataSource">
-		<beans:constructor-arg name="adminRightService" ref="adminRightService"></beans:constructor-arg>
+		<beans:constructor-arg name="adminRightService" ref="adminRightService" />
 	</beans:bean>
 
 

@@ -6,12 +6,12 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
@@ -39,6 +39,11 @@ import com.sniper.survey.util.DataUtil;
 @Scope("prototype")
 @Namespace("/admin")
 @ParentPackage("default")
+@Results({
+		@Result(name = "success", location = "login/index.jsp", type = "dispatcher"),
+		@Result(name = "error_not_right", location = "errorNotRight", type = "redirectAction"),
+		@Result(name = "loginAjaxValid", type = "json", params = { "root",
+				"result" }) })
 public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
@@ -91,32 +96,33 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	}
 
 	@Override
-	@Action(value="login",results={@Result(name="success",location="login/index.jsp",type="dispatcher")})
-	
+	@Action(value = "login")
 	public String execute() throws Exception {
 		System.out.println(getText("login.message.error.fiald"));
 		return SUCCESS;
 	}
+
 	/**
 	 * ajax 登录验证
+	 * 
 	 * @return
 	 */
-	@Action(value = "loginAjaxValid", results = { @Result(name = "success", type = "json", params={"root","result"}) })
+	@Action(value = "loginAjaxValid")
 	public String loginAjaxValid() {
-		
+
 		if (result.size() > 1) {
 			return SUCCESS;
 		}
-	
+
 		// 用户验证,只负责用户验证不负责保存
 		DbTable dbTable = new DbTable(adminUserService, "au_name",
 				"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
 		dbTable.setCredential(DataUtil.md5(this.passwd));
 		dbTable.setIdentity(this.username);
-		
-		//执行验证
+
+		// 执行验证
 		AuthenticationServiceInterface auth = new AuthenticationService();
-		//出啊安迪session
+		// 出啊安迪session
 		auth.setSession(sessionMap);
 		AuthenticateResultInfoInterface loginResult = auth
 				.authenticate(dbTable);
@@ -124,43 +130,45 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		ResultInterface codeNum = loginResult.getCode();
 		switch (codeNum.getCode()) {
 		case 0:
-			
+
 			result.put("result", "0");
 			result.put("message", getText("Login fiald"));
 			result.put("id", "username");
 			break;
 		case 1:
 			try {
-				//获取map数据
-				Map map =  (Map) loginResult.getObj();
-				AdminUser user	 = adminUserService.getEntity((Integer) map.get("au_id"));
-				//获取最大权限位
-				int maxPos =  rightService.getMaxRightPos();
+				// 获取map数据
+				Map map = (Map) loginResult.getObj();
+				AdminUser user = adminUserService.getEntity((Integer) map
+						.get("au_id"));
+				// 获取最大权限位
+				int maxPos = rightService.getMaxRightPos();
 				user.setRightSum(new long[maxPos + 1]);
-				//计算权限综合
+				// 计算权限综合
 				user.calucateRightSum();
-				//保存用户xx 				
+				// 保存用户xx
 				auth.getSession().put(auth.getStorage(), user);
-		          //spring security 将权限及用户信息存入securityContext
-				
+				// spring security 将权限及用户信息存入securityContext
+
 				Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
 				Set<AdminGroup> groups = user.getAdminGroup();
 
 				for (AdminGroup adminGroup : groups) {
 					Set<AdminRight> adminRights = adminGroup.getAdminRight();
 					for (AdminRight adminRight : adminRights) {
-						authSet.add(new SimpleGrantedAuthority(adminRight.getName()));
+						authSet.add(new SimpleGrantedAuthority(adminRight
+								.getName()));
 					}
 				}
-				
-				Authentication authentication = new UsernamePasswordAuthenticationToken(  
+
+				Authentication authentication = new UsernamePasswordAuthenticationToken(
 						user, user.getPassword(), authSet);
-				SecurityContext securityContext = SecurityContextHolder.getContext();
+				SecurityContext securityContext = SecurityContextHolder
+						.getContext();
 				securityContext.setAuthentication(authentication);
-				
-			    sessionMap.put("SPRING_SECURITY_CONTEXT", securityContext);
-						
-				
+
+				sessionMap.put("SPRING_SECURITY_CONTEXT", securityContext);
+
 				result.put("result", "10");
 				result.put("message", "登录成功");
 				result.put("id", "1");
@@ -184,7 +192,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			result.put("id", "passwd");
 			break;
 		}
-		return SUCCESS;
+		return "loginAjaxValid";
 	}
 
 	/**
@@ -217,11 +225,17 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	 * 
 	 * @return
 	 */
+	@Action("logout")
 	public String logout() {
 		AuthenticationServiceInterface auth = new AuthenticationService();
 		auth.setSession(sessionMap);
 		auth.clearIdentity();
 		return "login";
+	}
+
+	@Action(value = "errorNotRight" ,results = {@Result(name = "error_not_right", location = "login/error_no_right.jsp", type = "dispatcher"),})
+	public String errorNotRight() {
+		return "error_not_right";
 	}
 
 	@Override

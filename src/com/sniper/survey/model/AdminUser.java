@@ -35,9 +35,20 @@ public class AdminUser extends BaseEntity{
 	private String nickName;
 	@Column(name = "au_email")
 	private String email;
-	// 状态
-	@Column(name = "au_status")
-	private int status = 1;
+	// 用户是否启用
+	@Column(name = "ENABLES")
+	private boolean enables;
+	//用户过期时间戳
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "USERNAME_EXPIRED")
+	private Date usernameExpired;
+	//密码过期时间
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "PASSWORD_EXPIRED")
+	private Date passwordExpired;
+	//用户是否锁定
+	@Column(name = "LOCKED")
+	private boolean locked;
 
 	// 密码加密随机字符串
 	@Column(name = "au_rand")
@@ -46,7 +57,6 @@ public class AdminUser extends BaseEntity{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "au_ctime", updatable = false)
 	private Date ctime = new Date();
-
 	
 	// 对应用户组
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -104,12 +114,38 @@ public class AdminUser extends BaseEntity{
 		this.email = email;
 	}
 
-	public int getStatus() {
-		return status;
+	
+
+	public boolean isEnables() {
+		return enables;
 	}
 
-	public void setStatus(int i) {
-		this.status = i;
+	public void setEnables(boolean enables) {
+		this.enables = enables;
+	}
+
+	public Date getUsernameExpired() {
+		return usernameExpired;
+	}
+
+	public void setUsernameExpired(Date usernameExpired) {
+		this.usernameExpired = usernameExpired;
+	}
+
+	public Date getPasswordExpired() {
+		return passwordExpired;
+	}
+
+	public void setPasswordExpired(Date passwordExpired) {
+		this.passwordExpired = passwordExpired;
+	}
+
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
 	}
 
 	public String getRand() {

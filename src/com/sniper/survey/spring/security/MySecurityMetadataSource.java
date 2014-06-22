@@ -3,11 +3,8 @@ package com.sniper.survey.spring.security;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -55,16 +52,16 @@ public class MySecurityMetadataSource implements
 			for (AdminRight right : adminRights) {
 				Collection<ConfigAttribute> configAttributes = new ArrayList<>();
 				ConfigAttribute configAttribute = new SecurityConfig(
-						right.getUrl());
+						right.getName());
 				configAttributes.add(configAttribute);
 				rightMap.put(right.getUrl(), configAttributes);
 			}
 		}
 
-		Set<Entry<String, Collection<ConfigAttribute>>> rightSet = rightMap
+		/*Set<Entry<String, Collection<ConfigAttribute>>> rightSet = rightMap
 				.entrySet();
 		Iterator<Entry<String, Collection<ConfigAttribute>>> iterator = rightSet
-				.iterator();
+				.iterator();*/
 
 	}
 
@@ -85,8 +82,9 @@ public class MySecurityMetadataSource implements
 		String requestUrl = filterInvocation.getRequestUrl(); 
         System.out.println("requestUrl is " + requestUrl);  
         if(rightMap == null) {  
-            loadResourceDefine();  
-        }  
+            loadResourceDefine();
+        }
+        System.out.println("rightMap is " +  rightMap.get(requestUrl));
         return rightMap.get(requestUrl);
         
         
