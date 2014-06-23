@@ -7,8 +7,9 @@
 	<global-method-security pre-post-annotations="enabled" />
 	
 	<http pattern="/" security="none" />
-	<http pattern="/admin/login" security="none"  />
+	<http pattern="/admin/login**" security="none"  />
 	<http pattern="/myfiles/**" security="none" />
+	<http pattern="/j_spring_security_check**" security="none" />
 	
 	<http auto-config="true" use-expressions="true"
 		access-denied-page="/admin/errorNotRight">

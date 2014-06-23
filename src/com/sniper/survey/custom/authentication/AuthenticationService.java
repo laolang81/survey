@@ -11,7 +11,7 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 	/**
 	 * 登录session 储存用户session的名称,这个必须和userAware用的变量一样,和登录拦截其的用户获取名称一样
 	 */
-	private String storage = "user";
+	private String storage = "SPRING_SECURITY_CONTEXT";
 
 	/**
 	 * 登录处理结果

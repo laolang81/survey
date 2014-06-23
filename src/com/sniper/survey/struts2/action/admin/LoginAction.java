@@ -29,7 +29,6 @@ import com.sniper.survey.custom.authentication.AuthenticationServiceInterface;
 import com.sniper.survey.custom.authentication.DbTable;
 import com.sniper.survey.custom.authentication.ResultInterface;
 import com.sniper.survey.model.AdminGroup;
-import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.service.impl.AdminUserService;
@@ -42,14 +41,14 @@ import com.sniper.survey.util.DataUtil;
 @Results({
 		@Result(name = "success", location = "login/index.jsp", type = "dispatcher"),
 		@Result(name = "error_not_right", location = "errorNotRight", type = "redirectAction"),
-		@Result(name = "loginAjaxValid", type = "json", params = { "root",
-				"result" }) })
+		 
+		})
 public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
 
 	private String username;
-	private String password;
+	private String passwordtext;
 	private String verifycode;
 
 	private Map<String, Object> sessionMap;
@@ -70,12 +69,12 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPasswordtext() {
+		return passwordtext;
 	}
 
-	public void setPassword(String passwd) {
-		this.password = passwd;
+	public void setPasswordtext(String passwordtext) {
+		this.passwordtext = passwordtext;
 	}
 
 	public String getVerifycode() {
@@ -107,17 +106,39 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	 * 
 	 * @return
 	 */
-	@Action(value = "loginAjaxValid")
+	@Action(value = "loginAjaxValid", results = {@Result(name = "success", type = "json", params = { "root",
+	"result" })} )
+	
 	public String loginAjaxValid() {
-
-		if (result.size() > 1) {
+		
+		if (this.username == null || this.username.isEmpty()) {
+			result.put("code", "0");
+			result.put("message", "用户名无效");
+			result.put("id", "username");
+			return SUCCESS;
+		}
+		System.out.println(this.username);
+		System.out.println(this.verifycode);
+		System.out.println(this.passwordtext);
+		if (this.passwordtext == null || this.passwordtext.isEmpty()) {
+			result.put("code", "0");
+			result.put("message", "密码无效");
+			result.put("id", "password");
 			return SUCCESS;
 		}
 
+		if (this.verifycode == null || this.verifycode.isEmpty()) {
+			result.put("code", "0");
+			result.put("message", "验证码无效");
+			result.put("id", "verifycode");
+			return SUCCESS;
+		}
+		
+		System.out.println(DataUtil.md5(DataUtil.md5(this.passwordtext)+"1456"));
 		// 用户验证,只负责用户验证不负责保存
 		DbTable dbTable = new DbTable(adminUserService, "au_name",
-				"au_password", "MD5(CONCAT(?,au_rand)) AND au_status=1");
-		dbTable.setCredential(DataUtil.md5(this.password));
+				"au_password", "MD5(CONCAT(?,au_rand)) AND ENABLES=1");
+		dbTable.setCredential(DataUtil.md5(this.passwordtext));
 		dbTable.setIdentity(this.username);
 
 		// 执行验证
@@ -128,37 +149,32 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 				.authenticate(dbTable);
 
 		ResultInterface codeNum = loginResult.getCode();
+		System.out.println(codeNum.getCode());
 		switch (codeNum.getCode()) {
 		case 0:
-
-			result.put("result", "0");
+			result.put("code", "0");
 			result.put("message", getText("Login fiald"));
 			result.put("id", "username");
 			break;
 		case 1:
 			try {
 				// 获取map数据
+				@SuppressWarnings("rawtypes")
 				Map map = (Map) loginResult.getObj();
 				AdminUser user = adminUserService.getEntity((Integer) map
 						.get("au_id"));
 				// 获取最大权限位
-				int maxPos = rightService.getMaxRightPos();
-				user.setRightSum(new long[maxPos + 1]);
+				//int maxPos = rightService.getMaxRightPos();
+				//user.setRightSum(new long[maxPos + 1]);
 				// 计算权限综合
-				user.calucateRightSum();
-				// 保存用户xx
-				auth.getSession().put(auth.getStorage(), user);
-				// spring security 将权限及用户信息存入securityContext
-
+				//user.calucateRightSum();
+				// 保存用户xx,提供spring使用
+				System.out.println(user);
 				Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
-				Set<AdminGroup> groups = user.getAdminGroup();
-
+				Set<AdminGroup> groups = user.getAdminGroup();	
+				
 				for (AdminGroup adminGroup : groups) {
-					Set<AdminRight> adminRights = adminGroup.getAdminRight();
-					for (AdminRight adminRight : adminRights) {
-						authSet.add(new SimpleGrantedAuthority(adminRight
-								.getName()));
-					}
+					authSet.add(new SimpleGrantedAuthority(adminGroup.getValue()));
 				}
 
 				Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -166,10 +182,12 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 				SecurityContext securityContext = SecurityContextHolder
 						.getContext();
 				securityContext.setAuthentication(authentication);
+				
+				auth.getSession().put(auth.getStorage(), securityContext);
+				//sessionMap.put("SPRING_SECURITY_CONTEXT", securityContext);
+				// spring security 将权限及用户信息存入securityContext
 
-				sessionMap.put("SPRING_SECURITY_CONTEXT", securityContext);
-
-				result.put("result", "10");
+				result.put("code", "1");
 				result.put("message", "登录成功");
 				result.put("id", "1");
 			} catch (Exception e) {
@@ -177,47 +195,36 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			}
 			break;
 		case -1:
-			result.put("result", "-1");
+			result.put("code", "-1");
 			result.put("message", "用户名不存在");
 			result.put("id", "username");
 			break;
 		case -2:
-			result.put("result", "-2");
+			result.put("code", "-2");
 			result.put("message", "用户未知");
 			result.put("id", "username");
 			break;
 		case -3:
-			result.put("result", "-3");
+			result.put("code", "-3");
 			result.put("message", "密码不匹配");
-			result.put("id", "passwd");
+			result.put("id", "password");
 			break;
+			default:
+				String code = "";
+				code.valueOf(codeNum.getCode());
+				result.put("code", code);
+				result.put("message", getText("Login fiald"));
+				result.put("id", "username");
 		}
-		return "loginAjaxValid";
+		return SUCCESS;
 	}
 
 	/**
 	 * 基本的验证
 	 */
 	public void prepareDoLoginAjaxValid() {
-
-		if (this.username == null || this.username.isEmpty()) {
-			result.put("message", "用户名无效");
-			result.put("id", "username");
-			return;
-		}
-
-		if (this.password == null || this.password.isEmpty()) {
-			result.put("message", "密码无效");
-			result.put("id", "passwd");
-			return;
-		}
-
-		if (this.verifycode == null || this.verifycode.isEmpty()) {
-			result.put("message", "验证码无效");
-			result.put("id", "verifycode");
-			return;
-		}
-
+		
+		
 	}
 
 	/**

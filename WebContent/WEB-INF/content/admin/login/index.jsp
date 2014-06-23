@@ -40,40 +40,36 @@
 
 </head>
 <body>
+
 <div class="container">
-	
-	<form data-status='<s:text name="login.loading" />' method="post"
-			class="form-signin" role="form" name="login" action="${pageContext.request.contextPath}/j_spring_security_check">
-		<h2 class="form-signin-heading"><s:text name="login.sign.in"/></h2>
-		<s:if test="%{param.error == true }">
-		<p class="error ${param.error == true ? '' : 'hide'}">
-		登陆失败<br>${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}</p>
-		</s:if>
+	<${sessionScope.SPRING_SECURITY_LAST_USERNAME }>
+	<form data-status='<s:text name="login.loading" />' data-url="<s:url action="rightList"  namespace="/admin" />" 
+			class="form-signin" role="form" name="login" action="<s:url action="loginAjaxValid" namespace="/admin"/>">
+		<h2 class="form-signin-heading"><s:text name="login.sign.in"/> </h2>
+		
 		<div class="form-group input-group-lg">		
 			<label for="username"><s:text name="login.username"/></label>
-			<input type="text" id="username" name="username" class="form-control" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}"
+			<input type="text" id="username" name="username" class="form-control"
 				placeholder="<s:text name="login.username"/>" required autofocus>
 		</div>
 		<div class="form-group input-group-lg">
 			<label for="password"><s:text name="login.password"/></label>
-			<input id="password" type="password" name="password" class="form-control"
+			<input id="password" type="password" name="passwordtext" class="form-control"
 				placeholder="<s:text name="login.password"/>" required>
 		</div>	
 			
 		<div class="form-group input-group-lg" >
 			<label for="verifycode" class="col-sm-2 control-label sr-only"><s:text name="login.message.verity.code"/> </label>      		
 	     	<input type="text" name="verifycode" style=" display: inline;width: 44%;  float: left;" placeholder="<s:text name="login.message.verity.code"/>" id="verifycode" class="form-control">			
-			<img alt="" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" namespace="/" />" class="fl" >
+			<img alt="<s:text name="login.message.verity.alt"/>" style="cursor: pointer; margin-left:2%" src="<s:url action="verify" namespace="/" />" class="fl" >
 		</div>
-		
 		<div class="form-group input-group-lg">
 			<label class="checkbox"> 
-				<input type="checkbox" name="_spring_security_remember_me"> Remember me
+				<input type="checkbox" value="remember-me"> Remember me
 			</label>
 		</div>
-		<input name="_csrf" type="hidden" value="2ca8ee11-ade4-4b57-9338-d6d4b4c4c422" />
-		<input type="hidden" name="${_csrf.parameterName}" value="${token}"/>
-		<button class="btn btn-lg btn-primary btn-block" type="submit"><s:text name="login.sign.name"/></button>
+		
+		<button class="btn btn-lg btn-primary btn-block" type="button"><s:text name="login.sign.name"/></button>
 	</form>
 
 </div><!-- /container -->
@@ -81,7 +77,14 @@
 <div id="back-mask" class="back-mask"></div>
 <script language="javascript">
 	$(function() {
-	
+		$("form").keydown(function(e) {
+			if (e.keyCode == 13) {			
+				onlogin();
+			}
+		});
+		$('form button[type="button"]').click(function(){		
+		    onlogin();
+		});
 		$('form img').click(function(){
 			fleshVerify();
 		});

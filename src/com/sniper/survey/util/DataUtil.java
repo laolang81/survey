@@ -23,7 +23,7 @@ public class DataUtil {
 				buffer.append(chars[(b >> 4) & 0x0F]);
 				buffer.append(chars[b & 0x0F]);
 			}
-			result = buffer.toString();
+			result = buffer.toString().toLowerCase();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -80,6 +80,7 @@ public class CredentialTreatmentAdapter<T> extends AbstractAdapter<T> {
 		String hql = "SELECT *, " + sqlExpr + " FROM " + getTableName(clazz)
 				+ " as u WHERE " + getIdentityColunm() + "= ? ";
 
+		
 		SQLQuery query = (SQLQuery) getService().findEntityBySQLQuery(hql)
 				.setString(0, getCredential()).setString(1, getIdentity());
 

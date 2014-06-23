@@ -5,7 +5,7 @@
 <struts>
 
 
-	
+
 	<constant name="struts.convention.package.locators.basePackage"
 		value="com.sniper.survey.struts2.action" />
 	<constant name="struts.convention.package.locators" value="struts2,action" />
@@ -42,13 +42,17 @@
 				class="com.sniper.survey.struts2.interceptor.LoginInterceptor" />
 			<interceptor name="CatchUrlInterceptor"
 				class="com.sniper.survey.struts2.interceptor.CatchUrlInterceptor" />
+
 			<interceptor-stack name="defaultInterceptor">
-				<interceptor-ref name="loginInterceptor"></interceptor-ref>
-				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<!-- <interceptor-ref name="loginInterceptor"></interceptor-ref> -->
+				<interceptor-ref name="defaultStack">
+					<param name="modelDriven.refreshModelBeforeResult">true</param>
+				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-		<!-- <default-interceptor-ref name="defaultInterceptor"></default-interceptor-ref> -->
-		
+
+		<default-interceptor-ref name="defaultInterceptor"></default-interceptor-ref>
+
 		<default-action-ref name="notFound" />
 		<action name="notFound">
 			<result>/error/404.jsp</result>
