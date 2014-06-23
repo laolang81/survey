@@ -7,10 +7,11 @@ sniperConfig['baseAdminPath'] = 'doftec';
 sniperConfig['baseAdminConfirm'] = '确定这么做？';
 sniperConfig['baseAdminMessage'] = '<img src="/myfiles/images/admin/loading.gif"/>';
 
+
 function isExitsFunction(funcName) {
 	try {
 		if (typeof (eval(funcName)) == "function") {
-			return true;
+			return true;sni
 		}
 	} catch (e) {
 	}
