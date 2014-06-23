@@ -42,12 +42,12 @@ dependencies {
     	'org.springframework:spring-expression:4.0.5.RELEASE',
     	'org.springframework.security:spring-security-web:3.2.4.RELEASE',
    		'org.springframework.security:spring-security-config:3.2.4.RELEASE',
-   		//'org.springframework.security:spring-security-core:3.2.4.RELEASE',
+   		'org.springframework.security:spring-security-core:3.2.4.RELEASE',
    		//'org.springframework.security:spring-security-remoting:3.2.4.RELEASE',
    		//'org.springframework.security:spring-security-ldap:3.2.4.RELEASE',
-   		//'org.springframework.security:spring-security-acl:3.2.4.RELEASE',
-   		//'org.springframework.security:spring-security-cas:3.2.4.RELEASE',
-   		//'org.springframework.security:spring-security-openid:3.2.4.RELEASE',
+   		'org.springframework.security:spring-security-acl:3.2.4.RELEASE',
+   		'org.springframework.security:spring-security-cas:3.2.4.RELEASE',
+   		'org.springframework.security:spring-security-openid:3.2.4.RELEASE',
     
     	
     	'org.quartz-scheduler:quartz:2.2.1',
