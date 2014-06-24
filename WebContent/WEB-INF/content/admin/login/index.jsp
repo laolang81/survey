@@ -43,7 +43,7 @@
 
 <div class="container">
 	<${sessionScope.SPRING_SECURITY_LAST_USERNAME }>
-	<form data-status='<s:text name="login.loading" />' data-url="<s:url action="rightList"  namespace="/admin" />" 
+	<form data-status='<s:text name="login.loading" />' data-url="<s:url action="list"  namespace="/admin/right" />" 
 			class="form-signin" role="form" name="login" action="<s:url action="loginAjaxValid" namespace="/admin"/>">
 		<h2 class="form-signin-heading"><s:text name="login.sign.in"/> </h2>
 		

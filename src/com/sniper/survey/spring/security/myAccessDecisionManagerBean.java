@@ -35,7 +35,7 @@ public class myAccessDecisionManagerBean implements AccessDecisionManager {
 		while(ite.hasNext()){
 			ConfigAttribute ca = ite.next();
 			//访问所请求资源所需要的权限  
-			String needPermission = ca.getAttribute();
+			String needPermission = ((SecurityConfig)ca).getAttribute();
 			System.out.println("<!--");
 			System.out.println("用户组 is " + needPermission);
 			//System.out.println("authentication:" + authentication);

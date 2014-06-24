@@ -43,7 +43,7 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-
+		System.out.println("经过了sping 拦截器");
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
 		invoke(fi);
 

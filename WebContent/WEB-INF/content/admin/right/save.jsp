@@ -3,7 +3,7 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<s:form action="rightsaveorupdate" namespace="/admin" method="post"
+<s:form action="saveorupdate" namespace="/admin/right" method="post"
 	id="sniperForm" cssClass="form-horizontal" role="form">
 	<s:hidden name="id" />
 	<s:hidden name="code" />

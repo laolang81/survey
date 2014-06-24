@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -64,7 +63,7 @@ public class RightAction extends BaseAction<AdminRight> {
 	{
 		System.out.println("list");
 		String hql = "from AdminRight";
-		this.allRight = adminRightService.page(hql, 0, 2);
+		this.allRight = adminRightService.page(hql, 0, 200);
 		System.out.println(allRight);
 		return SUCCESS;
 	}
@@ -77,7 +76,7 @@ public class RightAction extends BaseAction<AdminRight> {
 	public String list() {
 		System.out.println("list");
 		String hql = "from AdminRight";
-		this.allRight = adminRightService.page(hql, 0, 2);
+		this.allRight = adminRightService.page(hql, 0, 200);
 		System.out.println(allRight);
 		return SUCCESS;
 	}
@@ -99,13 +98,21 @@ public class RightAction extends BaseAction<AdminRight> {
 		System.out.println("save");
 		return SUCCESS;
 	}
-
+	@Action(value= "savedata")
+	public String saveData() {
+		return SUCCESS;
+	}
 	/**
 	 * 更新操作
-	 * 
+	 * redirectAction
 	 * @return
 	 */
-
+	@Action(value = "saveorupdate", results = { 
+			@Result(name="add",location = "save", type = "redirectAction"),
+			@Result(name="edit",location="update", type = "redirectAction")
+			}
+	)
+	
 	public String saveOrUpdate() {
 
 		setUpdateid(model.getId());
@@ -117,7 +124,7 @@ public class RightAction extends BaseAction<AdminRight> {
 		RightToken.bindToken(token);
 		adminRightService.saveOrUpdate(model);
 
-		return "update";
+		return "add";
 	}
 
 	/**
@@ -128,7 +135,7 @@ public class RightAction extends BaseAction<AdminRight> {
 	@Action("update")
 	public String update() {
 
-		this.model = adminRightService.getEntity(getUpdateid());
+		this.model = adminRightService.getEntity(this.model.getId());
 		return INPUT;
 	}
 
