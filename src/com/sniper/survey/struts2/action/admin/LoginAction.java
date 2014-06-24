@@ -210,9 +210,9 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			result.put("id", "password");
 			break;
 			default:
-				String code = "";
-				code.valueOf(codeNum.getCode());
-				result.put("code", code);
+				//String code = "";
+				//code.valueOf(codeNum.getCode());
+				//result.put("code", code);
 				result.put("message", getText("Login fiald"));
 				result.put("id", "username");
 		}
@@ -240,7 +240,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		return "login";
 	}
 
-	@Action(value = "errorNotRight" ,results = {@Result(name = "error_not_right", location = "login/error_no_right.jsp", type = "dispatcher"),})
+	@Action(value = "errorNotRight" ,results = {@Result(name = "error_not_right", location = "login/error_no_right.jsp", type = "dispatcher")})
 	public String errorNotRight() {
 		return "error_not_right";
 	}
