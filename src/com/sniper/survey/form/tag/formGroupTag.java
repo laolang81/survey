@@ -1,4 +1,4 @@
-package com.sniper.survey.form;
+package com.sniper.survey.form.tag;
 
 import java.io.IOException;
 import java.util.Collection;
