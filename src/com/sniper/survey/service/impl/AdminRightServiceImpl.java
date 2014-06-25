@@ -84,5 +84,19 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 		return pos == null ? 0 : pos;
 	}
 	
-	
+	/**
+	 *  获取spring可用的url
+	 * @return
+	 */
+	@Override
+	public List<AdminRight> getSpringRight(){
+		
+		List<AdminRight> adminRights = this.findAllEntitles();
+		for(AdminRight right: adminRights){
+			right.getAdminGroup().size();
+		}
+		return adminRights;
+		
+		
+	}
 }

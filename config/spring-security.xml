@@ -4,17 +4,16 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-	<!-- <global-method-security pre-post-annotations="enabled" /> -->
+	<global-method-security pre-post-annotations="enabled" />
 	
 	<http pattern="/" security="none" />
 	<http pattern="/admin/login**" security="none"  />
 	<http pattern="/myfiles/**" security="none" />
 	<!-- <http pattern="/j_spring_security_check**" security="none" /> -->
 	
-	<http auto-config="true" 
-		access-denied-page="/admin/errorNotRight">
+	<http auto-config="true" access-denied-page="/admin/errorNotRight" >
 		<!-- 匿名授权 -->
-		<intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<intercept-url pattern="/admin/login**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		<!-- <intercept-url pattern="/admin/**" access="isAuthenticated()"/> -->
 		<!-- <intercept-url pattern="/j_spring_security_check" access="none"/> -->
 		<!-- <form-login/> -->
@@ -30,10 +29,10 @@
 
 		<!-- /j_spring_security_logout, 注销页面 -->
 		<logout logout-success-url="/admin/login" delete-cookies="JSESSIONID" />
-		<!-- <remember-me /> -->
+		<remember-me />
 
-		<http-basic />
-		<csrf/>
+		<!-- <http-basic /> -->
+		<!-- <csrf /> -->
 		<!-- 检测session是否可用的地址 max-sessions=1配合单用户登录最大session个数=1 -->
 		<!-- session-fixation-protection 解决session伪造  -->
 		<!-- error-if-maximum-exceeded 解决单一登录，不提出第一个登录 -->
@@ -82,7 +81,7 @@
 	<!-- 资源数据定义，将所有的资源和权限对应关系建立起来，及定义木易资源可以被大写橘色访问 -->
 	<beans:bean id="securityMetadataSource"
 		class="com.sniper.survey.spring.security.MySecurityMetadataSource">
-		<beans:constructor-arg name="adminRightService" ref="adminRightService" />
+		<beans:property name="adminRightService" ref="adminRightService"></beans:property>
 	</beans:bean>
 
 

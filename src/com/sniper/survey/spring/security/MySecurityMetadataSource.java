@@ -13,7 +13,6 @@ import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
-import com.mysql.fabric.xmlrpc.base.Array;
 import com.sniper.survey.model.AdminGroup;
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
@@ -34,13 +33,11 @@ public class MySecurityMetadataSource implements
 	
 	private static Map<String, Collection<ConfigAttribute>> rightMap = null;
 	
-	public MySecurityMetadataSource() {
-	}
-
-	public MySecurityMetadataSource(AdminRightService adminRightService) {
+	
+	public void setAdminRightService(AdminRightService adminRightService) {
 		this.adminRightService = adminRightService;
-		loadResourceDefine();
 	}
+	
 	/**
 	 * 加载所有资源与权限的关系  
 	 */
@@ -49,12 +46,15 @@ public class MySecurityMetadataSource implements
 			
 			rightMap = new HashMap<String, Collection<ConfigAttribute>>();
 			List<AdminRight> adminRights = this.adminRightService
-					.findAllEntitles();
+					.getSpringRight();
+			adminRights.size();
+			//懒加载
+			for(AdminRight right: adminRights){
+				right.getAdminGroup().size();
+			}
 			
 			for (AdminRight right : adminRights) {
-				
 				Collection<ConfigAttribute> configAttributes = new ArrayList<>();
-				
 				for(AdminGroup adminGroup: right.getAdminGroup()){
 					ConfigAttribute configAttribute = new SecurityConfig(adminGroup.getValue());
 					configAttributes.add(configAttribute);

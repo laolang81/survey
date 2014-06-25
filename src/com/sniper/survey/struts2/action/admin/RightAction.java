@@ -61,10 +61,10 @@ public class RightAction extends BaseAction<AdminRight> {
 	@Action(value = "index", results = { @Result(name = "success", location = "list.jsp") })
 	public String index()
 	{
-		System.out.println("list");
+		
 		String hql = "from AdminRight";
 		this.allRight = adminRightService.page(hql, 0, 200);
-		System.out.println(allRight);
+		
 		return SUCCESS;
 	}
 	/**

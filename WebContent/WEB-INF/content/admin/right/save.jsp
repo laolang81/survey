@@ -8,6 +8,7 @@
 	<s:hidden name="id" />
 	<s:hidden name="code" />
 	<s:hidden name="pos" />
+	<input name="_csrf" type="hidden" value="${attr._csrf.token }" />
 	<div class="form-group">
 		<label for="name" class="col-sm-2 control-label">名称</label>
 		<div class="col-sm-10">

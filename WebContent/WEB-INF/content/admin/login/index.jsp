@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -42,11 +43,11 @@
 <body>
 
 <div class="container">
-	<${sessionScope.SPRING_SECURITY_LAST_USERNAME }>
+	${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}
 	<form data-status='<s:text name="login.loading" />' data-url="<s:url action="list"  namespace="/admin/right" />" 
-			class="form-signin" role="form" name="login" action="<s:url action="loginAjaxValid" namespace="/admin"/>">
+			class="form-signin" role="form" name="login" action="j_spring_security_check" method="post">
 		<h2 class="form-signin-heading"><s:text name="login.sign.in"/> </h2>
-		
+		<input name="_csrf" type="hidden" value="${_csrf.token }" />
 		<div class="form-group input-group-lg">		
 			<label for="username"><s:text name="login.username"/></label>
 			<input type="text" id="username" name="username" class="form-control"
@@ -54,7 +55,7 @@
 		</div>
 		<div class="form-group input-group-lg">
 			<label for="password"><s:text name="login.password"/></label>
-			<input id="password" type="password" name="passwordtext" class="form-control"
+			<input id="password" type="password" name="password" class="form-control"
 				placeholder="<s:text name="login.password"/>" required>
 		</div>	
 			
@@ -65,11 +66,11 @@
 		</div>
 		<div class="form-group input-group-lg">
 			<label class="checkbox"> 
-				<input type="checkbox" value="remember-me"> Remember me
+				<input type="checkbox" name="_spring_security_remember_me"> Remember me
 			</label>
 		</div>
 		
-		<button class="btn btn-lg btn-primary btn-block" type="button"><s:text name="login.sign.name"/></button>
+		<button class="btn btn-lg btn-primary btn-block" type="submit"><s:text name="login.sign.name"/></button>
 	</form>
 
 </div><!-- /container -->
