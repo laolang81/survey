@@ -3,6 +3,7 @@ package com.sniper.survey.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,8 +33,8 @@ public class AdminGroup extends BaseEntity{
 	@Column(name = "ag_note")
 	public String note;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "mc_admin_group_right", joinColumns = @JoinColumn(name = "gid"), inverseJoinColumns = @JoinColumn(name = "rid"))
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
+	@JoinTable(name = "mc_admin_group_right", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "right_id"))
 	private Set<AdminRight> adminRight = new HashSet<>();
 
 

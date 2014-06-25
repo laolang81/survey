@@ -83,20 +83,6 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 		Integer pos = (Integer) this.uniqueResult(hql);
 		return pos == null ? 0 : pos;
 	}
-	/**
-	 * 获取每个资源的group
-	 */
-	@Override
-	public List getGroupsByUrl(String url) {
-		
-		String hql ="from AdminRight a left join ";
-		
-		String sql = "select ro.ag_value as role,re.ar_url as url "
-				+ "from role ro join resc_role rr on ro.id=rr.role_id "
-				+ "join resc re on re.id=rr.resc_id "
-				+ "where re.res_string='" + url + "'";
-		
-		return null;
-	}
+	
 	
 }

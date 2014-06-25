@@ -3,6 +3,7 @@ package com.sniper.survey.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,9 +46,8 @@ public class AdminRight extends BaseEntity{
 	@Column(name = "ar_sort")
 	private int sort;
 
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "mc_admin_group_right", joinColumns = @JoinColumn(name = "rid"), inverseJoinColumns = @JoinColumn(name = "gid"))
+	/*mappedBy写在那边那边不维护*/
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, mappedBy = "adminRight")
 	private Set<AdminGroup> adminGroup = new HashSet<>();
 	
 	public Integer getId() {

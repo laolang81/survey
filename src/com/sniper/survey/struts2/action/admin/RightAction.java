@@ -109,22 +109,26 @@ public class RightAction extends BaseAction<AdminRight> {
 	 */
 	@Action(value = "saveorupdate", results = { 
 			@Result(name="add",location = "save", type = "redirectAction"),
-			@Result(name="edit",location="update", type = "redirectAction")
+			@Result(name="edit",location="update", type = "redirectAction", params = {"id","${id}"})
 			}
 	)
-	
 	public String saveOrUpdate() {
-
-		setUpdateid(model.getId());
+		
+		/*if(model.getId().intValue() != 0){
+			setUpdateid(model.getId());
+		}*/
+		
 		// spring多库分布实例
 		// 绑定token到当前线程
-		RightToken token = new RightToken();
-		token.setRight(getModel());
+		//RightToken token = new RightToken();
+		//token.setRight(getModel());
 		// 绑定令牌
-		RightToken.bindToken(token);
+		//RightToken.bindToken(token);
 		adminRightService.saveOrUpdate(model);
-
-		return "add";
+		if(model.getId() == 0){
+			return "add";
+		}
+		return "edit";
 	}
 
 	/**
@@ -132,11 +136,11 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
-	@Action("update")
+	@Action(value = "update", results = { @Result(name="success",location = "save.jsp")})
 	public String update() {
 
 		this.model = adminRightService.getEntity(this.model.getId());
-		return INPUT;
+		return SUCCESS;
 	}
 
 	/**

@@ -21,5 +21,4 @@ public interface AdminRightService extends BaseService<AdminRight> {
 	
 	public int getMaxRightPos();
 	
-	public List getGroupsByUrl(String url);
 }

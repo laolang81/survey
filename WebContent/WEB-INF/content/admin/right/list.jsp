@@ -21,7 +21,12 @@
 		<tr>
 		<s:iterator value="allRight">
 			<td><s:checkbox fieldValue="%{id}" name="id" /> <s:property value="id"/></td>
-			<td><s:property value="name"/></td>
+			
+			<td><s:a action="update" target="_blank">
+				<s:param name="id">${id }</s:param>
+				<s:property value="name"/>
+				</s:a>
+			</td>
 			<td><s:property value="url"/></td>
 			<td><s:property value="isMenu"/></td>
 			<td><s:property value="isPublic"/></td>
