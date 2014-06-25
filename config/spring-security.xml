@@ -31,8 +31,8 @@
 		<logout logout-success-url="/admin/login" delete-cookies="JSESSIONID" />
 		<remember-me />
 
-		<!-- <http-basic /> -->
-		<!-- <csrf /> -->
+		<http-basic />
+		<csrf />
 		<!-- 检测session是否可用的地址 max-sessions=1配合单用户登录最大session个数=1 -->
 		<!-- session-fixation-protection 解决session伪造  -->
 		<!-- error-if-maximum-exceeded 解决单一登录，不提出第一个登录 -->

@@ -48,6 +48,7 @@ dependencies {
    		'org.springframework.security:spring-security-acl:3.2.4.RELEASE',
    		'org.springframework.security:spring-security-cas:3.2.4.RELEASE',
    		'org.springframework.security:spring-security-openid:3.2.4.RELEASE',
+   		'com.allanditzel:spring-security-csrf-token-filter:1.1',
     
     	
     	'org.quartz-scheduler:quartz:2.2.1',
