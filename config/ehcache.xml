@@ -7,7 +7,7 @@
 
 
 	<defaultCache 
-		
+		maxEntriesLocalHeap="10000" 
 		eternal="false"
 		timeToIdleSeconds="120" 
 		timeToLiveSeconds="120" 
