@@ -24,7 +24,7 @@ public abstract class BaseAction<T> extends ActionSupport implements
 	/**
 	 * 定义模板文件地址
 	 */
-	private String htmlPath = "/WEB-INF/content/admin";
+	private String htmlPath = "admin";
 
 	public String getHtmlPath() {
 		return htmlPath;

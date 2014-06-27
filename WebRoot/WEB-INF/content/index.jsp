@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="/struts-tags" prefix="s" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -25,8 +26,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   ${htmlPath }
-   ssssssssssssssss <br>
-    <c:url value="/j_spring_security_logout" var="logoutUrl"/>  
+  <br>
+  ${basePath}
+  <br>
+   	<s:set var="logoutUrl">/j_spring_security_logout</s:set>
 <li><a href="${logoutUrl}">Log Out</a></li>
   </body>
 </html>

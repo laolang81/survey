@@ -7,6 +7,9 @@
      response.setHeader("Pragma", "no-cache");
      response.setHeader("Cache-Control", "no-cache");
      response.setDateHeader("Expires", 0);
+
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -17,8 +20,7 @@
 <title><decorator:title default="默认title" /></title>
 <!-- 从被装饰页面获取head标签内容 -->
 <decorator:head />
-<base
-	href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/">
+<base href="${basePath} /">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script type="text/javascript" src="myfiles/js/jquery-1.11.1.min.js"></script>
@@ -103,6 +105,7 @@
 				<decorator:getProperty property="body.htmlPath" />
 				
 				导航菜单
+				${basePath }
 				
 			</div>
 		</div>
@@ -122,7 +125,7 @@
 			<decorator:getProperty property="configInfo['cg_webname']"/>(<decorator:getProperty property="attr.TimeSpent"></decorator:getProperty>,<decorator:getProperty property="attr.phpMemory"></decorator:getProperty>)
 		</p>
 		<p id="footer-upgrade" class="text-right">
-			Version<decorator:getProperty property="Version"></decorator:getProperty>
+			Version <decorator:getProperty property="Version"></decorator:getProperty>
 		</p>
 	</div>
 </div>
