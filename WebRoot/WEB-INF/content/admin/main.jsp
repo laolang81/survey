@@ -7,9 +7,10 @@
      response.setHeader("Pragma", "no-cache");
      response.setHeader("Cache-Control", "no-cache");
      response.setDateHeader("Expires", 0);
-
+%>
+<%
 	String path = request.getContextPath();
-	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -20,7 +21,7 @@
 <title><decorator:title default="默认title" /></title>
 <!-- 从被装饰页面获取head标签内容 -->
 <decorator:head />
-<base href="${basePath} /">
+<base href="<%= basePath %>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script type="text/javascript" src="myfiles/js/jquery-1.11.1.min.js"></script>
@@ -105,6 +106,7 @@
 				<decorator:getProperty property="body.htmlPath" />
 				
 				导航菜单
+				${htmlPath }
 				${basePath }
 				
 			</div>
