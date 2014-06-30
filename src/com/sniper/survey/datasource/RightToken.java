@@ -10,7 +10,7 @@ import com.sniper.survey.model.AdminRight;
  */
 public class RightToken {
 
-	private static ThreadLocal<RightToken> local = new ThreadLocal<RightToken>();
+	private static ThreadLocal<RightToken> local = new ThreadLocal<>();
 
 	private AdminRight right;
 

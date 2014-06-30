@@ -58,13 +58,11 @@ public class RightAction extends BaseAction<AdminRight> {
 		this.result = result;
 	}
 	
-	@Action(value = "index", results = { @Result(name = "success", location = "list.jsp") })
+	@Action(value = "", results = { @Result(name = "success", location = "list.jsp") })
 	public String index()
 	{
-		
 		String hql = "from AdminRight";
 		this.allRight = adminRightService.page(hql, 0, 200);
-		
 		return SUCCESS;
 	}
 	/**
@@ -74,10 +72,8 @@ public class RightAction extends BaseAction<AdminRight> {
 	 */
 	@Action(value = "list", results = { @Result(name = "success", location = "list.jsp") })
 	public String list() {
-		System.out.println("list");
 		String hql = "from AdminRight";
 		this.allRight = adminRightService.page(hql, 0, 200);
-		System.out.println(allRight);
 		return SUCCESS;
 	}
 
@@ -114,16 +110,12 @@ public class RightAction extends BaseAction<AdminRight> {
 	)
 	public String saveOrUpdate() {
 		
-		/*if(model.getId().intValue() != 0){
-			setUpdateid(model.getId());
-		}*/
-		
 		// spring多库分布实例
 		// 绑定token到当前线程
-		//RightToken token = new RightToken();
-		//token.setRight(getModel());
+		/*RightToken token = new RightToken();
+		token.setRight(getModel());
 		// 绑定令牌
-		//RightToken.bindToken(token);
+		RightToken.bindToken(token);*/
 		adminRightService.saveOrUpdate(model);
 		if(model.getId() == 0){
 			return "add";

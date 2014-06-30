@@ -20,8 +20,7 @@
 	<tbody>
 		<tr>
 		<s:iterator value="allRight">
-			<td><s:checkbox fieldValue="%{id}" name="id" /> <s:property value="id"/></td>
-			
+			<td><s:checkbox fieldValue="%{id}" value="false" name="id" /> <s:property value="id"/></td>
 			<td><s:a action="update" target="_blank">
 				<s:param name="id">${id }</s:param>
 				<s:property value="name"/>
@@ -40,6 +39,6 @@
 	</tbody>
 </table>
 
-<sniperPage:page pageSize="10" pageNo="1" url="admin/right/list.do" recordCount="100"/>  
+<sniperPage:page pageSize="10" pageNo="1" url="admin/right/list" recordCount="100"/>  
 
 

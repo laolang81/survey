@@ -5,6 +5,8 @@ webAppDirName = 'sniper-gradle-demo'
 repositories {
 	 
     mavenCentral()
+   
+   // mavenRepo url: "http://repo.maven.apache.org/maven2"
     
 
 }
@@ -18,8 +20,6 @@ dependencies {
     	'org.slf4j:slf4j-jdk14:1.7.5',
     	'mysql:mysql-connector-java:5.1.31',
     	
-       //'com.mchange:c3p0:0.9.5-pre8',
-       	
        	
     	'org.hibernate:hibernate-core:4.3.5.Final',
     	'org.hibernate:hibernate-c3p0:4.3.5.Final',
@@ -70,7 +70,9 @@ dependencies {
     	'org.apache.struts:struts2-core:2.3.16.3',
     	'es.cenobit.struts2.json:struts2-json-plugin:2.3.16',
     	'org.jfree:jfreechart:1.0.17',
-    	'opensymphony:sitemesh:2.4.2',
+    	//'opensymphony:sitemesh:2.4.2',
+    	'org.sitemesh:sitemesh:3.0-alpha-2',
+    	
     	'org.apache.struts:struts2-sitemesh-plugin:2.3.16.3',
     	'org.apache.struts:struts2-jfreechart-plugin:2.3.16.3',
     	//'org.apache.struts:struts2-osgi-plugin:2.3.16.3',
@@ -104,7 +106,7 @@ dependencies {
 
 task copyJars(type: Copy) {
 	from configurations.runtime
-	into 'WebContent/WEB-INF/lib' // 目标位置
+	into 'WebRoot/WEB-INF/lib' // 目标位置
 }
 
 configurations.all {

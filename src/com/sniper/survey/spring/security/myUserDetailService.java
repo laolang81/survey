@@ -36,7 +36,8 @@ public class myUserDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {
-
+		
+		System.out.println(username);
 		AdminUser adminUser = adminUserService.findByName(username);
 		if (adminUser == null) {
 			throw new UsernameNotFoundException(username);

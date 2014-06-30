@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <s:form action="saveorupdate" namespace="/admin/right" method="post"
 	id="sniperForm" cssClass="form-horizontal" role="form">
 	<s:hidden name="id" />

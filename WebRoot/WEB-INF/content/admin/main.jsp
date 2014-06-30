@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator"
-	prefix="decorator"%>
-<%@ taglib uri="/struts-tags" prefix="s"%>
+
+
 <%
      response.setHeader("Pragma", "no-cache");
      response.setHeader("Cache-Control", "no-cache");
@@ -18,9 +17,9 @@
 <head>
 <meta charset="utf-8">
 <!-- 从被装饰页面获取title标签内容,并设置默认值-->
-<title><decorator:title default="默认title" /></title>
+<title><sitemesh:write property='title'/></title>
 <!-- 从被装饰页面获取head标签内容 -->
-<decorator:head />
+<sitemesh:write property='head'/>
 <base href="<%= basePath %>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -90,7 +89,7 @@
 					<li><a href="#">Another action</a></li>
 					<li><a href="#">Something else here</a></li>
 					<li class="divider"></li>
-					<li><a href="#">Separated link</a></li>
+					<li><a href="j_spring_security_logout">Logout</a></li>
 				</ul></li>
 		</ul>
 	</div>
@@ -103,7 +102,7 @@
 		<div class="col-md-2">
 			<div data-spy="affix" data-offset-top="100" >
 				
-				<decorator:getProperty property="body.htmlPath" />
+				<h1 class='title'>SiteMesh example site: <sitemesh:write property='title'/></h1>
 				
 				导航菜单
 				${htmlPath }
@@ -115,7 +114,7 @@
 			
 			
 			<!-- 从被装饰页面获取body标签内容 -->
-			<decorator:body />
+			<sitemesh:write property='body'/>
 		</div>
 	</div>
 	

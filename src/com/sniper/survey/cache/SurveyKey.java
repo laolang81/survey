@@ -15,7 +15,7 @@ public class SurveyKey implements KeyGenerator {
 		String mName = arg1.getName();
 		String params = StringUtil.arr2Str(arg2);
 		String key = className + "." + mName + "(" + params + ")";
-		System.out.println(key);
+		System.out.println("key:" + key);
 		return key;
 	}
 

@@ -38,13 +38,11 @@ public class myAccessDecisionManagerBean implements AccessDecisionManager {
 			String needPermission = ((SecurityConfig)ca).getAttribute();
 			System.out.println("<!--");
 			System.out.println("用户组 is " + needPermission);
-			//System.out.println("authentication:" + authentication);
 			System.out.println("-->");
 			//用户所拥有的权限authentication  
 			for(GrantedAuthority ga: authentication.getAuthorities()){
 				System.out.println("<!--");
 				System.out.println("需要匹配的用户组:");
-				//System.out.println(needPermission + ":");
 				System.out.println(ga.getAuthority());
 				System.out.println("-->");
 				if(needPermission.equals(ga.getAuthority())){

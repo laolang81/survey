@@ -9,7 +9,7 @@ import com.sniper.survey.model.Survey;
  */
 public class SniperSurveyToken {
 
-	private static ThreadLocal<SniperSurveyToken> local = new ThreadLocal<SniperSurveyToken>();
+	private static ThreadLocal<SniperSurveyToken> local = new ThreadLocal<>();
 	
 	private Survey survey;
 

@@ -132,7 +132,7 @@
 			<cache:cacheable method="load*" />
 			<cache:cacheable method="find*" />
 
-			<!-- 删除缓存的方法 就是当执行下面方法的时候除掉缓存 -->
+			<!-- 删除缓存的方法 就是当执行下面方法的时候除掉缓存 需要配合aop切入点才管用 -->
 			<cache:cache-evict method="save*" all-entries="true" />
 			<cache:cache-evict method="update*" all-entries="true" />
 			<cache:cache-evict method="delete*" all-entries="true" />
@@ -149,10 +149,14 @@
 		<!-- 事务切入点通知 -->
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))"
 			order="1" />
+		<!-- 缓存切入点通知 -->	
 		<aop:advisor advice-ref="cacheAdvice"
 			pointcut="execution(* *..*Service.get*(..))
-											execution(* *..*Service.find*(..))
-											execution(* *..*Service.load*(..))
+											or execution(* *..*Service.find*(..))
+											or execution(* *..*Service.load*(..))
+											or execution(* *..*Service.save*(..))
+											or execution(* *..*Service.update*(..))
+											or execution(* *..*Service.clear*(..))
 											"
 			order="0" />
 

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sniper.survey.dao.BaseDao;
+import com.sniper.survey.datasource.RightToken;
 import com.sniper.survey.model.AdminRight;
 
 @Service("adminRightService")
@@ -21,7 +22,7 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 	@Override
 	public void addRgiht() {
 		
-
+		
 	}
 
 	/**
@@ -56,6 +57,12 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 			r.setCode(code);
 			r.setPos(pos);
 		}
+		//数据源操作demo,可以完成住从
+		RightToken token = new RightToken();
+		token.setRight(r);
+		// 绑定令牌
+		RightToken.bindToken(token);
+		
 		this.saveOrUpdateEntiry(r);
 
 	}
@@ -86,10 +93,12 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 	
 	/**
 	 *  获取spring可用的url
+	 *  加get可能会生成2个缓存
+	 *  此方法为spring security专用
 	 * @return
 	 */
 	@Override
-	public List<AdminRight> getSpringRight(){
+	public List<AdminRight> springRight(){
 		
 		List<AdminRight> adminRights = this.findAllEntitles();
 		for(AdminRight right: adminRights){

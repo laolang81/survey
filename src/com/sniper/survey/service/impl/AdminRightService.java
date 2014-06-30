@@ -21,6 +21,6 @@ public interface AdminRightService extends BaseService<AdminRight> {
 	
 	public int getMaxRightPos();
 	
-	public List<AdminRight> getSpringRight();
+	public List<AdminRight> springRight();
 	
 }

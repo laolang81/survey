@@ -17,12 +17,14 @@ public class DataSourceRouter extends AbstractRoutingDataSource {
 	protected Object determineCurrentLookupKey() {
 		// 得到当前的令牌
 		RightToken token = RightToken.getCurrentToken();
+		System.out.println("经过了 DataSourceRouter");
+		
 		if (token != null) {
 
 			Integer id = token.getRight().getId();
 			// 解除令牌绑定
 			RightToken.unbindToken();
-			
+			System.out.println(id);
 			return ((id % 2) == 0) ? "even" : "odd";
 		}
 		return null;

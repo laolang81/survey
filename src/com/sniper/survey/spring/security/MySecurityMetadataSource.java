@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.sniper.survey.model.AdminGroup;
 import com.sniper.survey.model.AdminRight;
@@ -41,17 +44,13 @@ public class MySecurityMetadataSource implements
 	/**
 	 * 加载所有资源与权限的关系  
 	 */
+	@SuppressWarnings("unused")
 	private void loadResourceDefine() {
 		if (rightMap == null) {
 			
 			rightMap = new HashMap<String, Collection<ConfigAttribute>>();
-			List<AdminRight> adminRights = this.adminRightService
-					.getSpringRight();
-			adminRights.size();
-			//懒加载
-			for(AdminRight right: adminRights){
-				right.getAdminGroup().size();
-			}
+			//spring 自动缓存,
+			List<AdminRight> adminRights = this.adminRightService.springRight();
 			
 			for (AdminRight right : adminRights) {
 				Collection<ConfigAttribute> configAttributes = new ArrayList<>();
@@ -68,17 +67,13 @@ public class MySecurityMetadataSource implements
 			}
 		}
 
-		/*Set<Entry<String, Collection<ConfigAttribute>>> rightSet = rightMap
-				.entrySet();
-		Iterator<Entry<String, Collection<ConfigAttribute>>> iterator = rightSet
-				.iterator();*/
-
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
 
-		return null;
+		return new ArrayList<ConfigAttribute>();
 	}
 
 	/**
@@ -89,42 +84,62 @@ public class MySecurityMetadataSource implements
 			throws IllegalArgumentException {
 		
 		FilterInvocation filterInvocation = (FilterInvocation) object;
+		HttpServletRequest request = filterInvocation.getHttpRequest();
 		String requestUrl = filterInvocation.getRequestUrl();
 		
-		//requestUrl	= requestUrl.substring(0, requestUrl.lastIndexOf("."));
-       
-       
         if(rightMap == null) {  
             loadResourceDefine();
         }
-        
+
         if(requestUrl.indexOf("?") != -1){
         	requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf("?"));
         }
         
-        System.out.println("rightMap <--");
-        System.out.println("requestUrl is " + requestUrl);
-        System.out.println(rightMap);
-        System.out.println("rightMap is " +  rightMap.get(requestUrl));
-        System.out.println("-->");
+        RequestMatcher requestMatcher = new AntPathRequestMatcher(requestUrl);
         
-        return rightMap.get(requestUrl);
-        
-        
-		/*FilterInvocation filterInvocation = (FilterInvocation) object;
-		HttpServletRequest request = filterInvocation.getHttpRequest();
-
-		Iterator<String> ite = rightMap.keySet().iterator();
-
-		if (ite.hasNext()) {
-			String resURL = ite.next();
-			RequestMatcher requestMatcher = new AntPathRequestMatcher(resURL);
-			if (requestMatcher.matches(request)) {
-				return rightMap.get(resURL);
+		if (requestMatcher.matches(request)) {
+			System.out.println(requestUrl);
+			if(rightMap.get(requestUrl) != null){
+				System.out.println("通过");
+				return rightMap.get(requestUrl);
 			}
 		}
+		//throw new AccessDeniedException("errorNotRight");
+		System.out.println("找不到记录");
+		/*FilterInvocation filterInvocation1 = (FilterInvocation) object;
+		HttpServletRequest request = filterInvocation1.getHttpRequest();
 
-		return null;*/
+		Iterator<String> ite = rightMap.keySet().iterator();
+		System.out.println("start");
+		
+		System.out.println(rightMap);
+	    System.out.println(Arrays.asList(ite));
+	       
+		int i = 0;
+		if (ite.hasNext()) {
+			System.out.println(ite.next());
+			String resURL = ite.next();
+			
+			System.out.println(resURL);
+			if(resURL.indexOf("?") != -1){
+				resURL = resURL.substring(0, resURL.lastIndexOf("?"));
+			}
+			System.out.println(resURL);
+			RequestMatcher requestMatcher = new AntPathRequestMatcher(resURL);
+			Boolean boolean1 = requestMatcher.matches(request);
+			System.out.println(boolean1);
+			if (requestMatcher.matches(request)) {
+				System.out.println(i);
+				System.out.println(requestMatcher.matches(request));
+				System.out.println(resURL);
+				return rightMap.get(resURL);
+			}
+			System.out.println(resURL);
+			i++;
+		}
+		System.out.println("end");*/
+
+		return null;
 	}
 
 	@Override

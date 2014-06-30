@@ -12,7 +12,7 @@
 		timeToIdleSeconds="120" 
 		timeToLiveSeconds="120" 
 		diskSpoolBufferSizeMB="30"
-		maxEntriesLocalDisk="10000000" 
+		maxEntriesLocalDisk="100000" 
 		diskExpiryThreadIntervalSeconds="120"
 		memoryStoreEvictionPolicy="LRU">
 		<persistence strategy="localTempSwap" />
@@ -21,7 +21,7 @@
 
 	<cache name="SurveyAdminRight" 
 		maxEntriesLocalHeap="10000"
-		maxEntriesLocalDisk="1000" 
+		maxEntriesLocalDisk="100000" 
 		eternal="false" 
 		diskSpoolBufferSizeMB="20"
 		timeToIdleSeconds="300" 
@@ -33,7 +33,7 @@
 	
 	<cache name="sampleCache1" 
 		maxEntriesLocalHeap="10000"
-		maxEntriesLocalDisk="1000" 
+		maxEntriesLocalDisk="100000" 
 		eternal="false" 
 		diskSpoolBufferSizeMB="20"
 		timeToIdleSeconds="300" 
