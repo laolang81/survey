@@ -15,7 +15,6 @@ import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.sniper.survey.datasource.RightToken;
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
 
@@ -23,11 +22,11 @@ import com.sniper.survey.service.impl.AdminRightService;
 @Scope("prototype")
 @Namespace("/admin/right")
 @ParentPackage("default")
-//@InterceptorRef("loginInterceptor")
+// @InterceptorRef("loginInterceptor")
 @Results({
-	@Result(name="error", location="%{htmlPath}/error/error.jsp"),
-	@Result(name="login", location="login", params={"namespace","/admin"}, type="redirectAction")
-})
+		@Result(name = "error", location = "%{htmlPath}/error/error.jsp"),
+		@Result(name = "login", location = "login", params = { "namespace",
+				"/admin" }, type = "redirectAction") })
 public class RightAction extends BaseAction<AdminRight> {
 
 	private static final long serialVersionUID = 2799348891231755561L;
@@ -57,20 +56,20 @@ public class RightAction extends BaseAction<AdminRight> {
 	public void setResult(Map<String, List<AdminRight>> result) {
 		this.result = result;
 	}
-	
+
 	@Action(value = "", results = { @Result(name = "success", location = "list.jsp") })
-	public String index()
-	{
+	public String index() {
 		String hql = "from AdminRight";
 		this.allRight = adminRightService.page(hql, 0, 200);
 		return SUCCESS;
 	}
+
 	/**
 	 * 数据列表
 	 * 
 	 * @return
 	 */
-	@Action(value = "list", results = { @Result(name = "success", location = "list.jsp") })
+	@Action(value = "list", results = { @Result(name = "success", location = "list.ftl", type = "freemarker") })
 	public String list() {
 		String hql = "from AdminRight";
 		this.allRight = adminRightService.page(hql, 0, 200);
@@ -89,35 +88,36 @@ public class RightAction extends BaseAction<AdminRight> {
 		return SUCCESS;
 	}
 
-	@Action(value= "save")
+	@Action(value = "save", results = { @Result(name = "success", location = "save.ftl", type = "freemarker") })
 	public String save() {
 		System.out.println("save");
 		return SUCCESS;
 	}
-	@Action(value= "savedata")
+
+	@Action(value = "savedata")
 	public String saveData() {
 		return SUCCESS;
 	}
+
 	/**
-	 * 更新操作
-	 * redirectAction
+	 * 更新操作 redirectAction
+	 * 
 	 * @return
 	 */
-	@Action(value = "saveorupdate", results = { 
-			@Result(name="add",location = "save", type = "redirectAction"),
-			@Result(name="edit",location="update", type = "redirectAction", params = {"id","${id}"})
-			}
-	)
+	@Action(value = "saveorupdate", results = {
+			@Result(name = "add", location = "save", type = "redirectAction"),
+			@Result(name = "edit", location = "update", type = "redirectAction", params = {
+					"id", "${id}" }) })
 	public String saveOrUpdate() {
-		
+
 		// spring多库分布实例
 		// 绑定token到当前线程
-		/*RightToken token = new RightToken();
-		token.setRight(getModel());
-		// 绑定令牌
-		RightToken.bindToken(token);*/
+		/*
+		 * RightToken token = new RightToken(); token.setRight(getModel()); //
+		 * 绑定令牌 RightToken.bindToken(token);
+		 */
 		adminRightService.saveOrUpdate(model);
-		if(model.getId() == 0){
+		if (model.getId() == 0) {
 			return "add";
 		}
 		return "edit";
@@ -128,7 +128,7 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
-	@Action(value = "update", results = { @Result(name="success",location = "save.jsp")})
+	@Action(value = "update", results = { @Result(name = "success", location = "save.jsp") })
 	public String update() {
 
 		this.model = adminRightService.getEntity(this.model.getId());

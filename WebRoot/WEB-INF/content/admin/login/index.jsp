@@ -190,9 +190,7 @@
 			}, 200);
 		};
 
-		var images = [
-				"http://www.shandongbusiness.gov.cn/public/attachment/kindeditor/image/20140108/6c4c88a205dd312d0e66daae2c4c4375.jpg",
-				"http://www.shandongbusiness.gov.cn/public/attachment/kindeditor/image/20140108/09689b61a08a7df12faf79f25996b870.jpg" ];
+		var images = [];
 
 		$(images).each(function() {
 			$('<img/>')[0].src = this;

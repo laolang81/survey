@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
-
 <%
      response.setHeader("Pragma", "no-cache");
      response.setHeader("Cache-Control", "no-cache");
@@ -68,10 +67,10 @@
 			<li class="active"><a href="#">网站站点</a></li>
 			<li><a href="#">Link</a></li>
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
-				data-toggle="dropdown">快捷连接 <b class="caret"></b></a>
+				data-toggle="dropdown">权限管理 <b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Action</a></li>
-					<li><a href="#">Another action</a></li>
+					<li><a href="admin/right/list">资源列表</a></li>
+					<li><a href="admin/right/save">资源添加</a></li>
 					<li><a href="#">Something else here</a></li>
 					<li class="divider"></li>
 					<li><a href="#">Separated link</a></li>
@@ -101,13 +100,7 @@
 	<div class="row">
 		<div class="col-md-2">
 			<div data-spy="affix" data-offset-top="100" >
-				
-				<h1 class='title'>SiteMesh example site: <sitemesh:write property='title'/></h1>
-				
 				导航菜单
-				${htmlPath }
-				${basePath }
-				
 			</div>
 		</div>
 		<div class="col-md-10" role="main">

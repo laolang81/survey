@@ -35,7 +35,7 @@ redirect-action：重定向到另一个Action，参数与chain用法相同，允
 velocity：使用velocity模板输出结果，location指定模板的位置（*.vm），parse如果为false，location不被OGNL解析，默认为true。
 xslt：使用XSLT将结果转换为xml输出，location指定*.xslt文件的位置，parse如果为false，location不被 OGNL解析，默认为true。matchingPattern指定想要的元素模式，excludePattern指定拒绝的元素模式，支持正则表达式，默认为接受所有元素。
 httpheader：根据值栈返回自定义的HttpHeader，status指定响应状态（就是指response.sendError(int i)重定向到500等服务器的状态页）。parse如果为false，header的值不会被OGNL解析，headers，加入到header中的值，例如： <param name=”headers.a”>HelloWorld </param>。可以加多个，这些键-值组成HashMap。
-freemaker：用freemaker模板引擎呈现视图，location指定模板（*.ftl）的位置，parse如果为false，location的值不会被OGNL解析。contentType指定以何中类型解析，默认为text/html。
+freemarker：用freemaker模板引擎呈现视图，location指定模板（*.ftl）的位置，parse如果为false，location的值不会被OGNL解析。contentType指定以何中类型解析，默认为text/html。
 chain：将action的带着原来的状态请求转发到新的action，两个action共享一个ActionContext，actionName指定转向的新的Action的名字。method指定转向哪个方法，namespace指定新的Action的名称空间，不写表示与原Action在相同的名称空间；skipActions指定一个使用 , 连接的Action的name组成的集合，一般不建议使用这种类型的结果。
 stream：直接向响应中发送原始数据，通常在用户下载时使用，contentType指定流的类型，默认为 text/plain，contentLength以byte计算流的长度，contentDisposition指定文件的位置，通常为 filename=”文件的位置”，input指定InputStream的名字，例如：imageStream，bufferSize指定缓冲区大小，默认为1024字节。
 plaintext：以原始文本显示JSP或者HTML，location指定文件的位置，charSet指定字符集。

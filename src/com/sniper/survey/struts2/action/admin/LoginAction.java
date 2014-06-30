@@ -41,13 +41,16 @@ import com.sniper.survey.util.DataUtil;
 @Results({
 		@Result(name = "success", location = "login/index.jsp", type = "dispatcher"),
 		@Result(name = "error_not_right", location = "errorNotRight", type = "redirectAction"),
-		 
-		})
+
+})
 public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
 
 	private String username;
+	/**
+	 * passowrd好像是关键词，反映password不能被正常接受
+	 */
 	private String passwordtext;
 	private String verifycode;
 
@@ -59,7 +62,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	private AdminRightService rightService;
 
 	// 存放返回之前的结果
-	private Map<String, String> result = new HashMap<String, String>();
+	private Map<String, String> result = new HashMap<>();
 
 	public String getUsername() {
 		return username;
@@ -95,9 +98,8 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	}
 
 	@Override
-	@Action(value = "login")
+	@Action(value = "login", results = { @Result(name = "success", location = "login/index.ftl", type = "freemarker") })
 	public String execute() throws Exception {
-		//System.out.println(getText("login.message.error.fiald"));
 		return SUCCESS;
 	}
 
@@ -106,11 +108,10 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	 * 
 	 * @return
 	 */
-	@Action(value = "loginAjaxValid", results = {@Result(name = "success", type = "json", params = { "root",
-	"result" })} )
-	
+	@Action(value = "loginAjaxValid", results = { @Result(name = "success", type = "json", params = {
+			"root", "result" }) })
 	public String loginAjaxValid() {
-		
+
 		if (this.username == null || this.username.isEmpty()) {
 			result.put("code", "0");
 			result.put("message", "用户名无效");
@@ -133,8 +134,9 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			result.put("id", "verifycode");
 			return SUCCESS;
 		}
-		
-		System.out.println(DataUtil.md5(DataUtil.md5(this.passwordtext)+"1456"));
+
+		System.out.println(DataUtil.md5(DataUtil.md5(this.passwordtext)
+				+ "1456"));
 		// 用户验证,只负责用户验证不负责保存
 		DbTable dbTable = new DbTable(adminUserService, "au_name",
 				"au_password", "MD5(CONCAT(?,au_rand)) AND ENABLES=1");
@@ -164,17 +166,18 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 				AdminUser user = adminUserService.getEntity((Integer) map
 						.get("au_id"));
 				// 获取最大权限位
-				//int maxPos = rightService.getMaxRightPos();
-				//user.setRightSum(new long[maxPos + 1]);
+				// int maxPos = rightService.getMaxRightPos();
+				// user.setRightSum(new long[maxPos + 1]);
 				// 计算权限综合
-				//user.calucateRightSum();
+				// user.calucateRightSum();
 				// 保存用户xx,提供spring使用
 				System.out.println(user);
 				Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
-				Set<AdminGroup> groups = user.getAdminGroup();	
-				
+				Set<AdminGroup> groups = user.getAdminGroup();
+
 				for (AdminGroup adminGroup : groups) {
-					authSet.add(new SimpleGrantedAuthority(adminGroup.getValue()));
+					authSet.add(new SimpleGrantedAuthority(adminGroup
+							.getValue()));
 				}
 
 				Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -182,9 +185,9 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 				SecurityContext securityContext = SecurityContextHolder
 						.getContext();
 				securityContext.setAuthentication(authentication);
-				
+
 				auth.getSession().put(auth.getStorage(), securityContext);
-				//sessionMap.put("SPRING_SECURITY_CONTEXT", securityContext);
+				// sessionMap.put("SPRING_SECURITY_CONTEXT", securityContext);
 				// spring security 将权限及用户信息存入securityContext
 
 				result.put("code", "1");
@@ -209,12 +212,12 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 			result.put("message", "密码不匹配");
 			result.put("id", "password");
 			break;
-			default:
-				//String code = "";
-				//code.valueOf(codeNum.getCode());
-				//result.put("code", code);
-				result.put("message", getText("Login fiald"));
-				result.put("id", "username");
+		default:
+			// String code = "";
+			// code.valueOf(codeNum.getCode());
+			// result.put("code", code);
+			result.put("message", getText("Login fiald"));
+			result.put("id", "username");
 		}
 		return SUCCESS;
 	}
@@ -223,8 +226,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 	 * 基本的验证
 	 */
 	public void prepareDoLoginAjaxValid() {
-		
-		
+
 	}
 
 	/**
@@ -240,7 +242,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 		return "login";
 	}
 
-	@Action(value = "errorNotRight" ,results = {@Result(name = "error_not_right", location = "login/error_no_right.jsp", type = "dispatcher")})
+	@Action(value = "errorNotRight", results = { @Result(name = "error_not_right", location = "login/error_no_right.jsp", type = "dispatcher") })
 	public String errorNotRight() {
 		return "error_not_right";
 	}
