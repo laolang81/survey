@@ -24,12 +24,12 @@ import com.sniper.survey.service.impl.AdminUserService;
  * @author laolang
  * 
  */
-public class myUserDetailService implements UserDetailsService {
+public class myUserDetail implements UserDetailsService {
 
 	@Resource
 	private AdminUserService adminUserService;
 	
-	public myUserDetailService(AdminUserService adminUserService) {
+	public myUserDetail(AdminUserService adminUserService) {
 		this.adminUserService = adminUserService;
 	}
 	
@@ -37,7 +37,7 @@ public class myUserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {
 		
-		System.out.println(username);
+		System.out.println("myUserDetailService:" + username);
 		AdminUser adminUser = adminUserService.validateByName(username);
 		if (adminUser == null) {
 			throw new UsernameNotFoundException(username);
@@ -51,7 +51,8 @@ public class myUserDetailService implements UserDetailsService {
 		if(!adminUser.isLocked()){
 			accountNonLocked = true;
 		}
-
+		
+		System.out.println("myUserDetailService:" + adminUser.getPassword());
 		// 在数据库中获取信息之后赋值给他们,这里演示一下
 		User user = new User(adminUser.getName(), adminUser.getPassword(),
 				adminUser.isEnables(), accountNonExpired, credentialsNonExpired,
@@ -69,14 +70,10 @@ public class myUserDetailService implements UserDetailsService {
 	private Collection<GrantedAuthority> obtionGrantedAuthorities(
 			AdminUser adminUser) {
 
-		Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
+		Set<GrantedAuthority> authSet = new HashSet<>();
 		Set<AdminGroup> groups = adminUser.getAdminGroup();
 		
 		for (AdminGroup adminGroup : groups) {
-			/*Set<AdminRight> adminRights = adminGroup.getAdminRight();
-			for (AdminRight adminRight : adminRights) {
-				authSet.add(new SimpleGrantedAuthority(adminRight.getUrl()));
-			}*/
 			authSet.add(new SimpleGrantedAuthority(adminGroup.getValue()));
 		}
 		return authSet;

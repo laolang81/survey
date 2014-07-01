@@ -14,9 +14,7 @@ public class DataSourceSwitch {
 
 	public static final ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<>();
 
-	public DataSourceSwitch() {
-		setDataSource(DATA_SOURCE_MASTER);
-	}
+	
 	
 	public static void setDataSource(String dataSourceType) {
 		System.out.println("数据源切换到" + dataSourceType);

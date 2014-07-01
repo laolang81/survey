@@ -151,12 +151,13 @@
 			order="1" />
 		<!-- 缓存切入点通知 -->	
 		<aop:advisor advice-ref="cacheAdvice"
-			pointcut="execution(* *..*Service.get*(..))
+			pointcut="(execution(* *..*Service.get*(..))
 											or execution(* *..*Service.find*(..))
 											or execution(* *..*Service.load*(..))
 											or execution(* *..*Service.save*(..))
 											or execution(* *..*Service.update*(..))
-											or execution(* *..*Service.clear*(..))
+											or execution(* *..*Service.clear*(..)))
+											and !bean(myUserDetail)
 											"
 			order="0" />
 

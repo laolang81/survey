@@ -32,7 +32,7 @@ public class StringUtil {
 			for(Object s: col){
 				str = str + s + ",";
 			}
-			return str.substring(1, str.length() - 1);
+			return str.substring(0, str.length() - 1);
 		}
 		return str;
 		

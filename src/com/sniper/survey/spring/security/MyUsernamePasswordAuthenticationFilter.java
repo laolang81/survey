@@ -10,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.TextEscapeUtils;
 
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminUserService;
@@ -56,7 +55,6 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		}
 
 		//保存最后提交的用户名
-		System.out.println("用户名session保存");
 		request.getSession().setAttribute("SPRING_SECURITY_LAST_USERNAME_KEY", username);
 		
 		if (StringUtils.isEmpty(password)) {
@@ -66,7 +64,6 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		System.out.println("用户名:" + username);
 		AdminUser adminUser = adminUserService.validateByName(username);
 
-		System.out.println(adminUser);
 		if (adminUser == null) {
 			throw new AuthenticationServiceException("用户名不存在");
 		}
@@ -97,15 +94,12 @@ public class MyUsernamePasswordAuthenticationFilter extends
 			throw new AuthenticationServiceException("用户名密码不匹配！");
 		}
 
-		// System.out.println("通过了验证-1");
 		// UsernamePasswordAuthenticationToken实现 Authentication
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 				username, password);
 		// Place the last username attempted into HttpSession for views
 		// 允许子类设置详细属性
-		// System.out.println("通过了验证-2");
 		setDetails(request, authenticationToken);
-		// System.out.println("通过了验证-3");
 		// 运行UserDetailsService的loadUserByUsername 再次封装Authentication
 		return this.getAuthenticationManager().authenticate(authenticationToken);
 	}
@@ -123,13 +117,12 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		System.out.println("验证码已失效");
 		// session.setAttribute(VALIDATE_CODE, null);
 		String validateCodeParamter = obtainValidateCodeParamter(request);
-
-		System.out.println("提交的验证码: " + validateCodeParamter);
-		System.out.println("session中的验证码： " + sessionValidatecode);
-
+		
+		System.out.println(sessionValidatecode + "->" + validateCodeParamter);
+		
 		if (StringUtils.isEmpty(validateCodeParamter)
 				|| !sessionValidatecode.equalsIgnoreCase(validateCodeParamter)) {
-			throw new AuthenticationServiceException("验证码不匹配！");
+			//throw new AuthenticationServiceException("验证码不匹配！");
 		}
 	}
 

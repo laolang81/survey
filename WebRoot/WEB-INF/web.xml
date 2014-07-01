@@ -16,9 +16,7 @@
 	</listener>
 	<!--  单用户登录监听 -->
 	<listener>
-	  <listener-class>
-	    org.springframework.security.web.session.HttpSessionEventPublisher
-	  </listener-class>
+	  <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
 
 	<filter>

@@ -47,7 +47,7 @@
 
 	<div class="container">
 
-
+		
 		<form data-status='<s:text name="login.loading" />'
 			data-url="<s:url action="list"  namespace="/admin/right" />"
 			class="form-signin" role="form" name="login"

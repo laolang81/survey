@@ -38,17 +38,18 @@
 					<button type="button" class="close" data-dismiss="alert">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
-					<#if Session.SPRING_SECURITY_LAST_EXCEPTION.message?exists >
-					${Session.SPRING_SECURITY_LAST_EXCEPTION.message}
+					
+					<#if Session.SPRING_SECURITY_LAST_EXCEPTION.message?exists> 
+						${Session.SPRING_SECURITY_LAST_EXCEPTION.message}
 					<#else>
-					<@s.text name="login.message.error.fiald"/>
+						<@s.text name="login.message.error.fiald"/>
 					</#if>
 				</div>
 			</#if>
 			
 			<div class="form-group input-group-lg">
 				<label for="username"><@s.text name="login.username" /></label>
-				<input type="text" id="username" value="" name="username" class="form-control" placeholder="<@s.text name="login.username"/>" required autofocus>
+				<input type="text" id="username" value="<@s.property value="#session.SPRING_SECURITY_LAST_USERNAME_KEY"/>" name="username" class="form-control" placeholder="<@s.text name="login.username"/>" required autofocus>
 			</div>
 			<div class="form-group input-group-lg">
 				<label for="password"><@s.text name="login.password" /></label>
@@ -81,11 +82,11 @@
 		$(function() {
 			$("form").keydown(function(e) {
 				if (e.keyCode == 13) {
-					onlogin();
+					//onlogin();
 				}
 			});
 			$('form button[type="submit"]').click(function() {
-				onlogin();
+				//onlogin();
 			});
 			$('form img').click(function() {
 				fleshVerify();
@@ -94,7 +95,7 @@
 
 		function onlogin() {
 			var params = $('form input').serialize();
-			var bottonname = $('form button[type="button"]').html();
+			var bottonname = $('form button[type="submit"]').html();
 			var posturl = $('form').attr('action');
 			var postredir = $('form').attr('data-url');
 			var datastatus = $('form').attr('data-status');
@@ -106,11 +107,11 @@
 					data : params,
 					async : true,
 					beforeSend : function(XMLHttpRequest) {
-						$('form button[type="button"]').html(datastatus)
+						$('form button[type="submit"]').html(datastatus)
 					},
 					success : function(data, textStatus) {
 						//var data = $.parseJSON(data);
-						$('form button[type="button"]').html(bottonname);
+						$('form button[type="submit"]').html(bottonname);
 
 						if (data != null && data.id == 1) {
 							window.location = postredir;
@@ -126,11 +127,11 @@
 					},
 					complete : function(XMLHttpRequest, textStatus) {
 
-						$('form button[type="button"]').html(bottonname);
+						$('form button[type="submit"]').html(bottonname);
 
 					},
 					error : function() {
-						$('form button[type="button"]').html('Sign Error');
+						$('form button[type="submit"]').html('Sign Error');
 					}
 				});
 		}
