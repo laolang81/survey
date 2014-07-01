@@ -1,6 +1,6 @@
 <title>权限保存更新</title>
 
-<@s.form action="saveorupdate" namespace="/admin/right" method="post" id="sniperForm" cssClass="form-horizontal" role="form">
+<@s.form action="save"  method="post" id="sniperForm" cssClass="form-horizontal" role="form">
 	<@s.hidden name="id" />
 	<@s.hidden name="code" />
 	<@s.hidden name="pos" />

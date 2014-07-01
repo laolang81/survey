@@ -12,6 +12,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +20,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
 
@@ -30,7 +34,10 @@ import com.sniper.survey.service.impl.AdminRightService;
 @Results({
 		@Result(name = "error", location = "%{htmlPath}/error/error.jsp"),
 		@Result(name = "login", location = "login", params = { "namespace",
-				"/admin" }, type = "redirectAction") })
+				"/admin" }, type = "redirectAction") 
+	}
+)
+
 public class RightAction extends BaseAction<AdminRight> {
 
 	private static final long serialVersionUID = 2799348891231755561L;
@@ -74,6 +81,7 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * @return
 	 */
 	@Action(value = "list", results = { @Result(name = "success", location = "list.ftl", type = "freemarker") })
+	@SkipValidation
 	public String list() {
 		//如果想在程序中获得当前登陆用户对应的对象。
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
@@ -86,7 +94,7 @@ public class RightAction extends BaseAction<AdminRight> {
 		
 		System.out.println(authorities);
 		
-		String hql = "from AdminRight";
+		String hql = "from AdminRight order by sort desc";
 		this.allRight = adminRightService.page(hql, 0, 200);
 		return SUCCESS;
 	}
@@ -103,9 +111,22 @@ public class RightAction extends BaseAction<AdminRight> {
 		return SUCCESS;
 	}
 
-	@Action(value = "save", results = { @Result(name = "success", location = "save.ftl", type = "freemarker") })
+	@Action(value = "save", results = { 
+			@Result(name = "success", location = "save.ftl", type = "freemarker"),
+			@Result(name = "input", location = "save.ftl", type = "freemarker") 
+		}
+	)
+	@Validations(
+			requiredStrings = {
+				@RequiredStringValidator(type=ValidatorType.SIMPLE,trim =true, fieldName = "AdminRight.name", message = "请输入名称"),
+				@RequiredStringValidator(type=ValidatorType.SIMPLE,trim =true, fieldName = "AdminRight.url", message = "请输入资源地址")
+			}
+	)
 	public String save() {
 		System.out.println("save");
+		if(getMethod().equals("POST")){
+			adminRightService.saveEntiry(model);
+		}
 		return SUCCESS;
 	}
 
@@ -122,7 +143,10 @@ public class RightAction extends BaseAction<AdminRight> {
 	@Action(value = "saveorupdate", results = {
 			@Result(name = "add", location = "save", type = "redirectAction"),
 			@Result(name = "edit", location = "update", type = "redirectAction", params = {
-					"id", "${id}" }) })
+					"id", "${id}" }),
+			@Result(name = "input", location = "save", type = "redirectAction") 
+		}
+	)
 	public String saveOrUpdate() {
 
 		// spring多库分布实例
@@ -143,9 +167,15 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
-	@Action(value = "update", results = { @Result(name = "success", location = "save.jsp") })
+	@Action(value = "update", results = { 
+			@Result(name = "success", location = "save.jsp"),
+			@Result(name = "input", location = "save.jsp") 
+		}
+	)
+	
+	@SkipValidation
 	public String update() {
-
+		System.out.println("update");
 		this.model = adminRightService.getEntity(this.model.getId());
 		return SUCCESS;
 	}
@@ -155,6 +185,8 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
+	@Action(value = "delete", results = { @Result(name = "success", location = "save.jsp") })
+	@SkipValidation
 	public String delete() {
 		AdminRight right = new AdminRight();
 		right.setId(getUpdateid());

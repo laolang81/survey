@@ -114,14 +114,17 @@
 	</div>
 	
 </div>
+
+
+
 <div id="footer" class="bs-footer" role="contentinfo">
 	<div class="container">
-		<p class="text-left">
-			<decorator:getProperty property="Thanks for using"></decorator:getProperty>
-			<decorator:getProperty property="configInfo['cg_webname']"/>(<decorator:getProperty property="attr.TimeSpent"></decorator:getProperty>,<decorator:getProperty property="attr.phpMemory"></decorator:getProperty>)
+		<p class="text-right">
+			Thanks for using
+			
 		</p>
 		<p id="footer-upgrade" class="text-right">
-			Version <decorator:getProperty property="Version"></decorator:getProperty>
+			Version 1.0
 		</p>
 	</div>
 </div>
