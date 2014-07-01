@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.sniper.survey.dao.BaseDao;
-import com.sniper.survey.datasource.RightToken;
+import com.sniper.survey.datasource.DataSourceSwitch;
 import com.sniper.survey.model.AdminRight;
 
 @Service("adminRightService")
@@ -57,11 +57,14 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 			r.setCode(code);
 			r.setPos(pos);
 		}
-		//数据源操作demo,可以完成住从
+		/*//数据源操作demo,可以完成住从
 		RightToken token = new RightToken();
 		token.setRight(r);
 		// 绑定令牌
-		RightToken.bindToken(token);
+		RightToken.bindToken(token);*/
+		
+		//数据源切换例子
+		DataSourceSwitch.setDataSource(DataSourceSwitch.DATA_SOURCE_MASTER);
 		
 		this.saveOrUpdateEntiry(r);
 

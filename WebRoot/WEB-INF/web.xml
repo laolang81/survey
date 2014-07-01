@@ -34,7 +34,7 @@
 
 	<filter>
 		<filter-name>sitemesh</filter-name>
-		<filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
+		<filter-class>com.sniper.survey.sitemesh3.MySiteMeshFilter</filter-class>
 	</filter>
 
 	<filter>

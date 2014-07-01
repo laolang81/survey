@@ -7,5 +7,5 @@ public interface AdminUserService extends BaseService<AdminUser> {
 
 	public boolean isRegisted(String name);
 	
-	public AdminUser findByName(String username);
+	public AdminUser validateByName(String username);
 }

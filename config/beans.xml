@@ -42,8 +42,8 @@
 	<bean id="dataSourceRouter" class="com.sniper.survey.datasource.DataSourceRouter">
 		<property name="targetDataSources">
 			<map>
-				<entry key="odd" value-ref="dataSource_main"></entry>
-				<entry key="even" value-ref="dataSource_salve_1"></entry>
+				<entry key="master" value-ref="dataSource_main"></entry>
+				<entry key="salve_a" value-ref="dataSource_salve_1"></entry>
 			</map>
 		</property>
 		<!-- 默认数据源集合 -->

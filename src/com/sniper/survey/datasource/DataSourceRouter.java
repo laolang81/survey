@@ -15,7 +15,10 @@ public class DataSourceRouter extends AbstractRoutingDataSource {
 	 */
 	@Override
 	protected Object determineCurrentLookupKey() {
-		// 得到当前的令牌
+		
+		
+		return DataSourceSwitch.getDataSource();
+	/*	// 得到当前的令牌
 		RightToken token = RightToken.getCurrentToken();
 		System.out.println("经过了 DataSourceRouter");
 		
@@ -25,9 +28,9 @@ public class DataSourceRouter extends AbstractRoutingDataSource {
 			// 解除令牌绑定
 			RightToken.unbindToken();
 			System.out.println(id);
-			return ((id % 2) == 0) ? "even" : "odd";
+			return ((id % 2) == 0) ? "master" : "salve_a";
 		}
-		return null;
+		return null;*/
 	}
 
 }

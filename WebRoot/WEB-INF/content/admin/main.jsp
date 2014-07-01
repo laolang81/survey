@@ -16,7 +16,7 @@
 <head>
 <meta charset="utf-8">
 <!-- 从被装饰页面获取title标签内容,并设置默认值-->
-<title><sitemesh:write property='title'/></title>
+<title><sitemesh:write property="title" /> - 后台管理</title>
 <!-- 从被装饰页面获取head标签内容 -->
 <sitemesh:write property='head'/>
 <base href="<%= basePath %>">
@@ -76,7 +76,8 @@
 					<li><a href="#">Separated link</a></li>
 					<li class="divider"></li>
 					<li><a href="#">One more separated link</a></li>
-				</ul></li>
+				</ul>
+			</li>
 		</ul>
 
 		<ul class="nav navbar-nav navbar-right">
@@ -89,7 +90,8 @@
 					<li><a href="#">Something else here</a></li>
 					<li class="divider"></li>
 					<li><a href="j_spring_security_logout">Logout</a></li>
-				</ul></li>
+				</ul>
+			</li>
 		</ul>
 	</div>
 	<!-- /.navbar-collapse -->

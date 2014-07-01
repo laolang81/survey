@@ -26,6 +26,7 @@ import com.sniper.survey.util.VerifyCode;
 public class VerifyAction extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
+	private static final String VALIDATECODE = 	"sessionVerifyName";
 	// Struts2中Map类型的session
 	private Map<String, Object> session;
 	
@@ -63,8 +64,7 @@ public class VerifyAction extends ActionSupport implements SessionAware {
 		// String securityCode = VerifyCode.getSecurityCode();
 		imageStream = Verify.getImageAsInputStream(securityCode);
 		// 放入session中
-		session.put("sessionVerifyName", securityCode);
-		
+		session.put(VALIDATECODE, securityCode);
 		return SUCCESS;
 	}
 

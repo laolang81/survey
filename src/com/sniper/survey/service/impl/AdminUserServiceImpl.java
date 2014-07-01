@@ -38,7 +38,7 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser> implements
 	}
 	
 	@Override
-	public AdminUser findByName(String username) {
+	public AdminUser validateByName(String username) {
 		
 		String hql = "from AdminUser where name = ?";
 		return (AdminUser) this.uniqueResult(hql, username);

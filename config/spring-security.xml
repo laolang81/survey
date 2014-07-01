@@ -11,9 +11,10 @@
 	<http pattern="/myfiles/**" security="none" />
 	<http pattern="/verify**" security="none" />
 	<http pattern="/assets/**" security="none" />
-	
 
-	<http auto-config="true" access-denied-page="/admin/errorNotRight">
+
+	<http access-denied-page="/admin/errorNotRight"
+		entry-point-ref="authenticationProcessingFilterEntryPoint">
 		<!-- 匿名授权 -->
 		<!--auto-config = true 则使用from-login. 如果不使用该属性 则默认为http-basic(没有session). -->
 		<!-- lowercase-comparisons：表示URL比较前先转为小写。 -->
@@ -26,10 +27,9 @@
 		<!-- <intercept-url pattern="/j_spring_security_check" access="none"/> -->
 		<!-- <form-login/> -->
 		<!-- username-parameter="j_username" password-parameter="j_password" login-processing-url="j_spring_security_check" -->
-		<form-login login-page="/admin/login"
-			authentication-failure-url="/admin/login?error=true"
-			default-target-url="/admin" username-parameter="username"
-			password-parameter="password" />
+		<!-- <form-login login-page="/admin/login" authentication-failure-url="/admin/login?error=true" 
+			default-target-url="/admin" username-parameter="username" password-parameter="password" 
+			/> -->
 
 		<!--login-page：指定登录页面。 -->
 		<!-- login-processing-url：指定了客户在登录页面中按下 Sign In 按钮时要访问的 URL。 -->
@@ -40,7 +40,8 @@
 		<!--logout-url：指定了用于响应退出系统请求的URL。其默认值为：/j_spring_security_logout。 -->
 		<!-- logout-success-url：退出系统后转向的URL。 -->
 		<!-- invalidate-session：指定在退出系统时是否要销毁Session。 -->
-		<logout logout-success-url="/admin/login" delete-cookies="JSESSIONID" />
+		<!-- <logout logout-success-url="/admin/login" delete-cookies="JSESSIONID" /> -->
+		<logout/>
 		<remember-me />
 
 		<!-- <http-basic /> -->
@@ -52,34 +53,32 @@
 		<!-- 此值表示：用户第二次登录时，前一次的登录信息都被清空。 -->
 		<session-management session-fixation-protection="none">
 			<concurrency-control max-sessions="1"
-				error-if-maximum-exceeded="true"
-				 />
+				error-if-maximum-exceeded="true" />
 		</session-management>
 		<!-- 设置验证filter -->
+		<custom-filter ref="myLoginFilter" before="FORM_LOGIN_FILTER" />
 		<custom-filter ref="mySniperFilter" before="FILTER_SECURITY_INTERCEPTOR" />
 
 	</http>
 
 	<!-- 配置过滤器 -->
 	<beans:bean id="mySniperFilter"
-		class="com.sniper.survey.spring.security.MyFilterSecurityInterceptor"
-		autowire="byName">
+		class="com.sniper.survey.spring.security.MyFilterSecurityInterceptor">
 		<!-- 用户拥有的权限 -->
 		<beans:property name="authenticationManager" ref="authenticationManager" />
 		<!-- 用户是否拥有所请求资源的权限 -->
 		<beans:property name="accessDecisionManager" ref="myAccessDecisionManagerBean" />
 		<!-- 资源与权限对应关系 -->
 		<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
-
 	</beans:bean>
 
 	<!-- 认真管理器，实现用户认证的入口，主要实现USerDetailsService 接口即可 -->
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider user-service-ref="myUserDetailServiceImpl">
-			<password-encoder hash="md5">
+			<!-- 因为用户登录自定义，密码加密在自定义里面加密过了所以这里不用设置加密 -->
+			<!-- <password-encoder hash="md5"> -->
 				<!-- <salt-source user-property="username"/> <salt-source user-property="password"/> -->
-			</password-encoder>
-
+			<!-- </password-encoder> -->
 		</authentication-provider>
 	</authentication-manager>
 
@@ -99,6 +98,35 @@
 		<beans:property name="adminRightService" ref="adminRightService"></beans:property>
 	</beans:bean>
 
+	<beans:bean id="myLoginFilter"
+		class="com.sniper.survey.spring.security.MyUsernamePasswordAuthenticationFilter">
+		<!-- 处理登录 -->
+		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
+		<!-- 处理登录成功之后的处理 -->
+		<beans:property name="authenticationSuccessHandler"
+			ref="loginLogAuthenticationSuccessHandler"></beans:property>
+		<!-- 验证失败 -->
+		<beans:property name="authenticationFailureHandler"
+			ref="simpleUrlAuthenticationFailureHandler"></beans:property>
+		<beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
+		<!-- 注入用户dao -->
+		<beans:property name="adminUserService" ref="adminUserService"></beans:property>
+	</beans:bean>
 
+	<beans:bean id="loginLogAuthenticationSuccessHandler"
+		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/admin/"></beans:property>
+	</beans:bean>
+	<beans:bean id="simpleUrlAuthenticationFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<!-- 可以配置相应的跳转方式。属性forwardToDestination为true采用forward false为sendRedirect -->
+		<beans:property name="defaultFailureUrl" value="/admin/login?error=true"></beans:property>
+	</beans:bean>
+
+	<!-- 未登录的切入点 -->
+	<beans:bean id="authenticationProcessingFilterEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/admin/login"></beans:property>
+	</beans:bean>
 </beans:beans>
 

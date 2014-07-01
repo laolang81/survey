@@ -55,6 +55,7 @@
 			<h2 class="form-signin-heading">
 				<s:text name="login.sign.in" />
 			</h2>
+			
 			<s:set name="login_error">${param.error }</s:set>
 			<s:if test="%{#login_error == 'true' }">
 				<div class="alert alert-warning alert-dismissible" role="alert">
