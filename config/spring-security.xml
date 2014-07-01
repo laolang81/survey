@@ -40,8 +40,7 @@
 		<!--logout-url：指定了用于响应退出系统请求的URL。其默认值为：/j_spring_security_logout。 -->
 		<!-- logout-success-url：退出系统后转向的URL。 -->
 		<!-- invalidate-session：指定在退出系统时是否要销毁Session。 -->
-		<!-- <logout logout-success-url="/admin/login" delete-cookies="JSESSIONID" /> -->
-		<logout/>
+		<logout logout-success-url="/admin/login" delete-cookies="JSESSIONID" />
 		<remember-me />
 
 		<!-- <http-basic /> -->
@@ -56,9 +55,10 @@
 				error-if-maximum-exceeded="true" />
 		</session-management>
 		<!-- 设置验证filter -->
+		
 		<custom-filter ref="myLoginFilter" before="FORM_LOGIN_FILTER" />
 		<custom-filter ref="mySniperFilter" before="FILTER_SECURITY_INTERCEPTOR" />
-
+		
 	</http>
 
 	<!-- 配置过滤器 -->
@@ -101,7 +101,7 @@
 	<beans:bean id="myLoginFilter"
 		class="com.sniper.survey.spring.security.MyUsernamePasswordAuthenticationFilter">
 		<!-- 处理登录 -->
-		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
+		<beans:property name="filterProcessesUrl" value="/j_spring_security_checks" />
 		<!-- 处理登录成功之后的处理 -->
 		<beans:property name="authenticationSuccessHandler"
 			ref="loginLogAuthenticationSuccessHandler"></beans:property>

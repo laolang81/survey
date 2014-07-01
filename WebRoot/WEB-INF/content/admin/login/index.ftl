@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<title>用户登录</title>
+<title><@s.text name="login.sign.in" /></title>
 <base href="${request.scheme }://${request.serverName}:#{request.serverPort}${request.contextPath}/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,8 +31,8 @@
 </head>
 <body>
 	<div class="container">
-		<form data-status='正在登录...' data-url="/survey/admin/" class="form-signin" role="form" name="login" action="j_spring_security_check" method="post">
-			<h2 class="form-signin-heading">请登录</h2>
+		<form data-status='<@s.text name="login.loading" />' data-url="/survey/admin/" class="form-signin" role="form" name="login" action="j_spring_security_checks" method="post">
+			<h2 class="form-signin-heading"><@s.text name="login.sign.in" /></h2>
 			<#if Parameters.error?exists && Parameters.error = "true">
 				<div class="alert alert-warning alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert">
@@ -41,31 +41,37 @@
 					<#if Session.SPRING_SECURITY_LAST_EXCEPTION.message?exists >
 					${Session.SPRING_SECURITY_LAST_EXCEPTION.message}
 					<#else>
-					登录失败
+					<@s.text name="login.message.error.fiald"/>
 					</#if>
 				</div>
 			</#if>
-			<input type="hidden" name="" value="" />
+			
 			<div class="form-group input-group-lg">
-				<label for="username">登录名</label> 
-				<input type="text" id="username" name="username" class="form-control" placeholder="登录名" required autofocus>
+				<label for="username"><@s.text name="login.username" /></label>
+				<input type="text" id="username" value="" name="username" class="form-control" placeholder="<@s.text name="login.username"/>" required autofocus>
 			</div>
 			<div class="form-group input-group-lg">
-				<label for="password">登录密码</label>
-				<input id="password" type="password" name="password" class="form-control" placeholder="登录密码" required>
+				<label for="password"><@s.text name="login.password" /></label>
+				<input id="password" type="password" name="password" class="form-control" placeholder="<@s.text name="login.password"/>" required>
 			</div>
 
 			<div class="form-group input-group-lg">
-				<label for="verifycode" class="col-sm-2 control-label sr-only">输入验证码</label>
-				<input type="text" name="sessionVerifyName" style=" display: inline;width: 44%;  float: left;" placeholder="输入验证码" id="verifycode" class="form-control">
-				<img alt="点击我刷新验证码"style="cursor: pointer; margin-left:2%" src="/survey/verify" class="fl">
+				<label for="verifycode" class="col-sm-2 control-label sr-only">
+					<@s.text name="login.message.verity.code" />
+					</label>
+					<input type="text" name="sessionVerifyName" style=" display: inline;width: 44%;  float: left;" placeholder="<@s.text name="login.message.verity.code"/>"
+					id="verifycode" class="form-control">
+					<img alt="<@s.text name="login.message.verity.alt"/>" style="cursor: pointer; margin-left:2%" src="<@s.url action="verify" namespace="/" />" class="fl">
 			</div>
 			<div class="form-group input-group-lg">
 				<label class="">
-					<input type="checkbox"name="_spring_security_remember_me"> Remember me
+				<input type="checkbox" name="_spring_security_remember_me"> Remember me
 				</label>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+
+			<button class="btn btn-lg btn-primary btn-block" type="submit">
+				<@s.text name="login.sign.name" />
+			</button>
 		</form>
 	</div>
 	<!-- /container -->
@@ -78,7 +84,7 @@
 					onlogin();
 				}
 			});
-			$('form button[type="button"]').click(function() {
+			$('form button[type="submit"]').click(function() {
 				onlogin();
 			});
 			$('form img').click(function() {

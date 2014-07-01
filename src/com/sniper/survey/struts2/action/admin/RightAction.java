@@ -1,5 +1,6 @@
 package com.sniper.survey.struts2.action.admin;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,9 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.AdminRight;
@@ -71,6 +75,17 @@ public class RightAction extends BaseAction<AdminRight> {
 	 */
 	@Action(value = "list", results = { @Result(name = "success", location = "list.ftl", type = "freemarker") })
 	public String list() {
+		//如果想在程序中获得当前登陆用户对应的对象。
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		
+		System.out.println(userDetails);
+		//如果想获得当前登陆用户所拥有的所有权限。
+		Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) userDetails.getAuthorities();;
+		
+		System.out.println(authorities);
+		
 		String hql = "from AdminRight";
 		this.allRight = adminRightService.page(hql, 0, 200);
 		return SUCCESS;

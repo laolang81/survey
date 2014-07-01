@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.TextEscapeUtils;
 
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminUserService;
@@ -36,8 +37,10 @@ public class MyUsernamePasswordAuthenticationFilter extends
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request,
 			HttpServletResponse response) throws AuthenticationException {
+
 		if (!request.getMethod().equals("POST")) {
-			throw new AuthenticationServiceException("无效提交");
+			throw new AuthenticationServiceException("无效请求");
+			
 		}
 
 		checkValidateCode(request);
@@ -51,6 +54,10 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		if (StringUtils.isEmpty(username)) {
 			throw new AuthenticationServiceException("用户名不能为空");
 		}
+
+		//保存最后提交的用户名
+		System.out.println("用户名session保存");
+		request.getSession().setAttribute("SPRING_SECURITY_LAST_USERNAME_KEY", username);
 		
 		if (StringUtils.isEmpty(password)) {
 			throw new AuthenticationServiceException("密码不能为空");
@@ -58,7 +65,7 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		// 获取数据库比对密码
 		System.out.println("用户名:" + username);
 		AdminUser adminUser = adminUserService.validateByName(username);
-		
+
 		System.out.println(adminUser);
 		if (adminUser == null) {
 			throw new AuthenticationServiceException("用户名不存在");
@@ -69,6 +76,9 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		System.out.println("加密之后的密码" + password);
 		if (username == null || !adminUser.getPassword().equals(password)) {
 
+			/*request.getSession().setAttribute(
+					SPRING_SECURITY_FORM_USERNAME_KEY,
+					TextEscapeUtils.escapeEntities(username));*/
 			/*
 			 * 在我们配置的simpleUrlAuthenticationFailureHandler处理登录失败的处理类在这么一段
 			 * 这样我们可以在登录失败后，向用户提供相应的信息。
@@ -86,18 +96,18 @@ public class MyUsernamePasswordAuthenticationFilter extends
 			 */
 			throw new AuthenticationServiceException("用户名密码不匹配！");
 		}
-		
-		System.out.println("通过了验证-1");
+
+		// System.out.println("通过了验证-1");
 		// UsernamePasswordAuthenticationToken实现 Authentication
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 				username, password);
 		// Place the last username attempted into HttpSession for views
 		// 允许子类设置详细属性
-		System.out.println("通过了验证-2");
+		// System.out.println("通过了验证-2");
 		setDetails(request, authenticationToken);
-		System.out.println("通过了验证-3");
+		// System.out.println("通过了验证-3");
 		// 运行UserDetailsService的loadUserByUsername 再次封装Authentication
-		return getAuthenticationManager().authenticate(authenticationToken);
+		return this.getAuthenticationManager().authenticate(authenticationToken);
 	}
 
 	/**
@@ -111,7 +121,7 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		String sessionValidatecode = obtailSessionValidateCode(session);
 		// 让上一次的验证码失效
 		System.out.println("验证码已失效");
-		session.setAttribute(VALIDATE_CODE, null);
+		// session.setAttribute(VALIDATE_CODE, null);
 		String validateCodeParamter = obtainValidateCodeParamter(request);
 
 		System.out.println("提交的验证码: " + validateCodeParamter);
