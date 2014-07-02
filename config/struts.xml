@@ -42,9 +42,14 @@
 				class="com.sniper.survey.struts2.interceptor.LoginInterceptor" />
 			<interceptor name="CatchUrlInterceptor"
 				class="com.sniper.survey.struts2.interceptor.CatchUrlInterceptor" />
-
+			<interceptor name="methodInterceptor"
+				class="com.sniper.survey.struts2.interceptor.MethodInterceptor" />
+            
 			<interceptor-stack name="defaultInterceptor">
-				<!-- <interceptor-ref name="loginInterceptor"></interceptor-ref> -->
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+					<param name="validateAnnotatedMethodOnly">true</param>
+				</interceptor-ref>
 				<interceptor-ref name="defaultStack">
 					<param name="modelDriven.refreshModelBeforeResult">true</param>
 				</interceptor-ref>

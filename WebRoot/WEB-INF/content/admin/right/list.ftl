@@ -6,8 +6,9 @@
 			<th><@s.text name="table.id"></@s.text></th>
 			<th><@s.text name="table.name"></@s.text></th>
 			<th><@s.text name="table.url"></@s.text></th>
-			<th><@s.text name="table.isMenu"></@s.text></th>
-			<th><@s.text name="table.isPublic"></@s.text></th>
+			<th><@s.text name="table.theMenu"></@s.text></th>
+			<th><@s.text name="table.thePublic"></@s.text></th>
+			<th><@s.text name="table.thePublic"></@s.text></th>
 			<th><@s.text name="table.pos"></@s.text></th>
 			<th><@s.text name="table.code"></@s.text></th>
 		</tr>
@@ -22,8 +23,9 @@
 				</@s.a>
 			</td>
 			<td><@s.property value="url"/></td>
-			<td><@s.property value="isMenu"/></td>
-			<td><@s.property value="isPublic"/></td>
+			<td><@s.property value="theMenu"/></td>
+			<td><@s.property value="thePublic"/></td>
+			<td><@s.property value="theShow"/></td>
 			<td><@s.property value="pos"/></td>
 			<td><@s.property value="code"/></td>
 		</tr>

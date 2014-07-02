@@ -15,16 +15,16 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mc_admin_right")
-public class AdminRight extends BaseEntity{
+public class AdminRight extends BaseEntity {
 
 	private static final long serialVersionUID = 6907715430593817715L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ar_id")
 	private Integer id;
-	@Column(name = "ar_name")
+	@Column(name = "ar_name", nullable = false)
 	private String name;
-	@Column(name = "ar_url")
+	@Column(name = "ar_url", nullable = false)
 	private String url;
 	@Column(name = "ar_desc")
 	private String desc;
@@ -35,19 +35,18 @@ public class AdminRight extends BaseEntity{
 	@Column(name = "ar_pos", updatable = false)
 	private int pos;
 	// 公共资源所有问都可以访问
-	@Column(name = "ar_is_public")
-	private boolean isPublic;
+	private boolean thePublic;
 	// 显示为menu
-	@Column(name = "ar_is_menu")
-	private boolean isMenu;
+	private boolean theMenu;
 	
-	@Column(name = "ar_sort")
-	private int sort;
+	private boolean theShow;
 
-	/*mappedBy写在那边那边不维护*/
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, mappedBy = "adminRight")
+	private long sort;
+
+	/* mappedBy写在那边那边不维护 */
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, mappedBy = "adminRight")
 	private Set<AdminGroup> adminGroup = new HashSet<>();
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -96,27 +95,36 @@ public class AdminRight extends BaseEntity{
 		this.pos = pos;
 	}
 
-	public boolean isPublic() {
-		return isPublic;
+	
+	public boolean isThePublic() {
+		return thePublic;
 	}
 
-	public void setPublic(boolean isPublic) {
-		this.isPublic = isPublic;
+	public void setThePublic(boolean thePublic) {
+		this.thePublic = thePublic;
 	}
 
-	public boolean isMenu() {
-		return isMenu;
+	public boolean isTheMenu() {
+		return theMenu;
 	}
 
-	public void setMenu(boolean isMenu) {
-		this.isMenu = isMenu;
+	public void setTheMenu(boolean theMenu) {
+		this.theMenu = theMenu;
 	}
 
-	public int getSort() {
+	public boolean isTheShow() {
+		return theShow;
+	}
+
+	public void setTheShow(boolean theShow) {
+		this.theShow = theShow;
+	}
+
+	public long getSort() {
 		return sort;
 	}
 
-	public void setSort(int sort) {
+	public void setSort(long sort) {
 		this.sort = sort;
 	}
 

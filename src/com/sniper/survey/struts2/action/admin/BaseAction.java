@@ -2,8 +2,14 @@ package com.sniper.survey.struts2.action.admin;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -30,6 +36,7 @@ public abstract class BaseAction<T> extends ActionSupport implements
 		return htmlPath;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BaseAction() {
 		// 得到泛型话的超类，
 		Type type = this.getClass().getGenericSuperclass();
@@ -79,20 +86,10 @@ public abstract class BaseAction<T> extends ActionSupport implements
 	}
 
 	public String getMethod() {
+		if (null == this.method) {
+			this.method = ServletActionContext.getRequest().getMethod();
+		}
 		return method;
-	}
-
-	/**
-	 * 记录编辑id
-	 */
-	private Integer updateid;
-
-	public Integer getUpdateid() {
-		return updateid;
-	}
-
-	public void setUpdateid(Integer updateid) {
-		this.updateid = updateid;
 	}
 
 	@SuppressWarnings("unused")
@@ -102,6 +99,32 @@ public abstract class BaseAction<T> extends ActionSupport implements
 			return true;
 		else
 			return false;
+	}
+
+	/**
+	 * 获取用户信息
+	 * 
+	 * @return
+	 */
+	protected UserDetails getUserInfo() {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+		return userDetails;
+
+	}
+
+	/**
+	 * 获取用户权限
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	protected Collection<GrantedAuthority> getAuthorities() {
+		UserDetails userDetails = getUserInfo();
+		Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) userDetails
+				.getAuthorities();
+		return authorities;
+
 	}
 
 }

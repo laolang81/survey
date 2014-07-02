@@ -1,0 +1,28 @@
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.2//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+<validators>
+
+
+	<!-- 基于字段的验证 -->
+	<field name="name">
+		<!-- 设置短路验证其，当前验证不同,不执行下一个转换器验证下一个short-circuit=true -->
+		<field-validator type="requiredstring">
+			<message>名称必须</message>
+		</field-validator>
+
+	</field>
+	<field name="url">
+		<field-validator type="requiredstring">
+			<message>必须</message>
+		</field-validator>
+		
+
+	</field>
+
+
+
+</validators>  
+
+   
+   

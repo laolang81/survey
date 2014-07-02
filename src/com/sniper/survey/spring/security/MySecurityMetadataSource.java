@@ -58,11 +58,6 @@ public class MySecurityMetadataSource implements
 					ConfigAttribute configAttribute = new SecurityConfig(adminGroup.getValue());
 					configAttributes.add(configAttribute);
 				}
-				
-				System.out.println("权限=<--");
-				System.out.println(configAttributes);
-				System.out.println("-->");
-				
 				rightMap.put(right.getUrl(), configAttributes);
 			}
 		}

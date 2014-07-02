@@ -101,7 +101,7 @@ public class ValidateUtil {
 		
 		System.out.println(url);
 		AdminRight right = map.get(url);
-		if (right == null || right.isPublic()) {
+		if (right == null || right.isThePublic()) {
 			return true;
 		} else {
 			AdminUser user = (AdminUser) session.getAttribute("user");

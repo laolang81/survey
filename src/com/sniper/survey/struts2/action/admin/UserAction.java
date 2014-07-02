@@ -4,6 +4,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -19,6 +24,11 @@ import com.sniper.survey.util.ValidateUtil;
 //加注解
 @Controller
 @Scope("prototype")
+@Namespace("/admin/right")
+@ParentPackage("default")
+@Results({
+		@Result(name = "error", location = "/WEB_INF/content/error/error.jsp")
+		})
 public class UserAction extends BaseAction<AdminUser> implements UserAware {
 
 	private static final long serialVersionUID = 1L;
@@ -68,6 +78,7 @@ public class UserAction extends BaseAction<AdminUser> implements UserAware {
 	 * 
 	 * @return
 	 */
+	@Action("")
 	public String list() {
 
 		return SUCCESS;

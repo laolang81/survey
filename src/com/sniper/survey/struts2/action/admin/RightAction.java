@@ -1,6 +1,5 @@
 package com.sniper.survey.struts2.action.admin;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,14 +14,8 @@ import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 
-import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
-import com.opensymphony.xwork2.validator.annotations.Validations;
-import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
 
@@ -30,11 +23,7 @@ import com.sniper.survey.service.impl.AdminRightService;
 @Scope("prototype")
 @Namespace("/admin/right")
 @ParentPackage("default")
-// @InterceptorRef("loginInterceptor")
-@Results({
-		@Result(name = "error", location = "%{htmlPath}/error/error.jsp"),
-		@Result(name = "login", location = "login", params = { "namespace",
-				"/admin" }, type = "redirectAction") })
+@Results({ @Result(name = "error", location = "/WEB_INF/content/error/error.jsp") })
 public class RightAction extends BaseAction<AdminRight> {
 
 	private static final long serialVersionUID = 2799348891231755561L;
@@ -80,17 +69,6 @@ public class RightAction extends BaseAction<AdminRight> {
 	@Action(value = "list", results = { @Result(name = "success", location = "list.ftl", type = "freemarker") })
 	@SkipValidation
 	public String list() {
-		// 如果想在程序中获得当前登陆用户对应的对象。
-		UserDetails userDetails = (UserDetails) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
-
-		System.out.println(userDetails);
-		// 如果想获得当前登陆用户所拥有的所有权限。
-		Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) userDetails
-				.getAuthorities();
-		;
-
-		System.out.println(authorities);
 
 		String hql = "from AdminRight order by sort desc";
 		this.allRight = adminRightService.page(hql, 0, 200);
@@ -110,16 +88,14 @@ public class RightAction extends BaseAction<AdminRight> {
 	}
 
 	@Action(value = "save", results = {
-			@Result(name = "success", location = "save.ftl", type = "freemarker"),
-			@Result(name = "input", location = "save.ftl", type = "freemarker") })
-	@Validations(requiredStrings = {
-			@RequiredStringValidator(type = ValidatorType.SIMPLE, trim = true, fieldName = "name", message = "请输入名称"),
-			@RequiredStringValidator(type = ValidatorType.SIMPLE, trim = true, fieldName = "url", message = "请输入资源地址") })
+			@Result(name = "success", location = "save.jsp"),
+			@Result(name = "input", location = "save.jsp") })
 	public String save() {
-		System.out.println("save");
+
 		if (getMethod().equals("POST")) {
-			adminRightService.saveEntiry(model);
+			adminRightService.saveOrUpdate(model);
 		}
+
 		return SUCCESS;
 	}
 
@@ -140,12 +116,6 @@ public class RightAction extends BaseAction<AdminRight> {
 			@Result(name = "input", location = "save", type = "redirectAction") })
 	public String saveOrUpdate() {
 
-		// spring多库分布实例
-		// 绑定token到当前线程
-		/*
-		 * RightToken token = new RightToken(); token.setRight(getModel()); //
-		 * 绑定令牌 RightToken.bindToken(token);
-		 */
 		adminRightService.saveOrUpdate(model);
 		if (model.getId() == 0) {
 			return "add";
@@ -160,11 +130,30 @@ public class RightAction extends BaseAction<AdminRight> {
 	 */
 	@Action(value = "update", results = {
 			@Result(name = "success", location = "save.jsp"),
-			@Result(name = "input", location = "save.jsp") })
+			@Result(name = "input", location = "save.jsp"),
+			@Result(name = "edit", location = "update", type = "redirectAction", params = {
+					"id", "${id}" }), })
 	@SkipValidation
 	public String update() {
-		System.out.println("update");
 		this.model = adminRightService.getEntity(this.model.getId());
+		return SUCCESS;
+	}
+
+	// 更新数据
+	@Action(value = "updateData", results = {
+			@Result(name = "input", location = "save.jsp"),
+			@Result(name = "edit", location = "update", type = "redirectAction", params = {
+					"id", "${id}" }),
+			@Result(name = "success", location = "update", type = "redirectAction", params = {
+					"id", "${id}" }), })
+	/**
+	 * 
+	 * @return
+	 */
+	public String updateData() {
+		if (getMethod().equals("POST")) {
+			adminRightService.saveOrUpdate(model);
+		}
 		return SUCCESS;
 	}
 
@@ -173,13 +162,18 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
-	@Action(value = "delete", results = { @Result(name = "success", location = "save.jsp") })
+	@Action(value = "delete", results = { 
+			@Result(name = "input", location = "list", type = "redirectAction"),
+			@Result(name = "success", location = "list", type = "redirectAction")})
 	@SkipValidation
 	public String delete() {
 		AdminRight right = new AdminRight();
-		right.setId(getUpdateid());
+		if(model.getId() == 0){
+			return INPUT;
+		}
+		right.setId(this.model.getId());
 		adminRightService.deleteEntiry(right);
-		return "list";
+		return SUCCESS;
 	}
 
 }

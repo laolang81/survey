@@ -52,7 +52,6 @@ public class myUserDetail implements UserDetailsService {
 			accountNonLocked = true;
 		}
 		
-		System.out.println("myUserDetailService:" + adminUser.getPassword());
 		// 在数据库中获取信息之后赋值给他们,这里演示一下
 		User user = new User(adminUser.getName(), adminUser.getPassword(),
 				adminUser.isEnables(), accountNonExpired, credentialsNonExpired,

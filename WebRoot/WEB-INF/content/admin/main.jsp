@@ -110,10 +110,7 @@
 			<sitemesh:write property='body'/>
 		</div>
 	</div>
-	
 </div>
-
-
 
 <div id="footer" class="bs-footer" role="contentinfo">
 	<div class="container">
