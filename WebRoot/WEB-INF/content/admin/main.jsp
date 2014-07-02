@@ -106,8 +106,6 @@
 			</div>
 		</div>
 		<div class="col-md-10" role="main">
-			
-			
 			<!-- 从被装饰页面获取body标签内容 -->
 			<sitemesh:write property='body'/>
 		</div>

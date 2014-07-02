@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <s:form action="saveorupdate" namespace="/admin/right" method="post"
@@ -42,7 +41,7 @@
 		<label for="desc" class="col-sm-2 control-label">desc描述</label>
 		<div class="col-sm-10">
 			<s:textarea rows="3" name="desc" cssClass="form-control" id="desc" placeholder="desc" />
-			<p class="help-block"><s:fielderror fieldName="url" /></p>
+			<p class="help-block"><s:fielderror fieldName="desc" /></p>
 		</div>
 	</div>
 	<div class="form-group">
