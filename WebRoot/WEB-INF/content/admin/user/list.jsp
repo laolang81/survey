@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
-<%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <s:include value="../public/header.jsp"></s:include>
 <script src="myfiles/Plugin/Metro/docs/js/jquery/jquery.dataTables.js"></script>

@@ -10,7 +10,7 @@
 		<!-- 标签名 -->
 		<name>page</name>
 		<!-- 对应的标签处理类全限定名 -->
-		<tag-class>com.sniper.survey.util.PageTag</tag-class>
+		<tag-class>com.sniper.survey.form.tag.PageTag</tag-class>
 		<!-- 标签主体的类型 -->
 		<body-content>empty</body-content>
 		<!-- 当前页号属性的描述信息 -->

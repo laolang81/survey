@@ -10,7 +10,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
@@ -18,17 +17,23 @@ import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
+import com.sniper.survey.util.StrutsPage;
 
 @Controller
 @Scope("prototype")
 @Namespace("/admin/right")
 @ParentPackage("default")
-@Results({ @Result(name = "error", location = "/WEB_INF/content/error/error.jsp") })
 public class RightAction extends BaseAction<AdminRight> {
 
 	private static final long serialVersionUID = 2799348891231755561L;
 
+	/**
+	 * 读取记录数
+	 */
 	private List<AdminRight> allRight;
+	private int pageNo;
+	public String pageHtml;
+	public int listRow = 20;
 	/**
 	 * ajax返回列表
 	 */
@@ -44,6 +49,29 @@ public class RightAction extends BaseAction<AdminRight> {
 	public void setAllRight(List<AdminRight> allRight) {
 		this.allRight = allRight;
 	}
+	
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+	public int getPageNo() {
+		return pageNo;
+	}
+	
+	public String getPageHtml() {
+		return pageHtml;
+	}
+	
+	public void setPageHtml(String pageHtml) {
+		this.pageHtml = pageHtml;
+	}
+	
+	public void setListRow(int listRow) {
+		this.listRow = listRow;
+	}
+	public int getListRow() {
+		return listRow;
+	}
+	
 
 	@JSON(serialize = false)
 	public Map<String, List<AdminRight>> getResult() {
@@ -57,8 +85,8 @@ public class RightAction extends BaseAction<AdminRight> {
 	@Action(value = "", results = { @Result(name = "success", location = "list.jsp") })
 	public String index() {
 		String hql = "from AdminRight";
-		this.allRight = adminRightService.page(hql, 0, 200);
-		return SUCCESS;
+		this.allRight = adminRightService.page(hql, 0,10);
+		return ERROR;
 	}
 
 	/**
@@ -66,12 +94,23 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
-	@Action(value = "list", results = { @Result(name = "success", location = "list.ftl", type = "freemarker") })
+	@Action(value = "list", results = { @Result(name = "success", location = "list.jsp") })
 	@SkipValidation
 	public String list() {
 
-		String hql = "from AdminRight order by sort desc";
-		this.allRight = adminRightService.page(hql, 0, 200);
+		
+		
+		String hql = "select count(a) from AdminRight a";
+		long l =  (long) adminRightService.uniqueResult(hql);
+		int totalNum = new Long(l).intValue();
+		
+		StrutsPage page = new StrutsPage(totalNum, getListRow());
+		pageHtml = page.show();
+		
+		String hql2 = "from AdminRight order by sort desc";
+		this.allRight = adminRightService.page(hql2, page.getFristRow(), page.getListRow());
+		
+		
 		return SUCCESS;
 	}
 

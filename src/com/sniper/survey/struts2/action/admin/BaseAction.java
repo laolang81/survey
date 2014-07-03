@@ -7,6 +7,8 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import com.sniper.survey.struts2.MethodAware;
 
+@Results({ @Result(name = "error", location = "/WEB_INF/content/error/error.jsp") })
 public abstract class BaseAction<T> extends ActionSupport implements
 		ModelDriven<T>, Preparable, MethodAware {
 
