@@ -18,11 +18,25 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import com.sniper.survey.struts2.MethodAware;
 
-@Results({ @Result(name = "error", location = "/WEB_INF/content/error/error.jsp") })
+@Results({ 								
+	@Result(name = "error", location = "/WEB-INF/content/error/error.jsp"),
+	@Result(name = "login", location = "login" ,type ="redirectAction" , params = {"namespace","/admin"})
+	})
 public abstract class BaseAction<T> extends ActionSupport implements
 		ModelDriven<T>, Preparable, MethodAware {
 
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * 网站title
+	 */
+	private String webPageTitle;
+	/**
+	 * 分页参数
+	 */
+	private int pageNo;
+	public String pageHtml;
+	public int listRow = 20;
 
 	public T model;
 	/**
@@ -130,4 +144,54 @@ public abstract class BaseAction<T> extends ActionSupport implements
 
 	}
 
+	public String getWebPageTitle() {
+		return webPageTitle;
+	}
+
+	public void setWebPageTitle(String webPageTitle) {
+		this.webPageTitle = webPageTitle;
+	}
+
+	/**
+	 * @return the pageNo
+	 */
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	/**
+	 * @param pageNo the pageNo to set
+	 */
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+
+	/**
+	 * @return the pageHtml
+	 */
+	public String getPageHtml() {
+		return pageHtml;
+	}
+
+	/**
+	 * @param pageHtml the pageHtml to set
+	 */
+	public void setPageHtml(String pageHtml) {
+		this.pageHtml = pageHtml;
+	}
+
+	/**
+	 * @return the listRow
+	 */
+	public int getListRow() {
+		return listRow;
+	}
+
+	/**
+	 * @param listRow the listRow to set
+	 */
+	public void setListRow(int listRow) {
+		this.listRow = listRow;
+	}
+	
 }

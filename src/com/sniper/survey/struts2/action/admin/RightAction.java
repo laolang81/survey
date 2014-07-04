@@ -31,9 +31,6 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 读取记录数
 	 */
 	private List<AdminRight> allRight;
-	private int pageNo;
-	public String pageHtml;
-	public int listRow = 20;
 	/**
 	 * ajax返回列表
 	 */
@@ -49,29 +46,6 @@ public class RightAction extends BaseAction<AdminRight> {
 	public void setAllRight(List<AdminRight> allRight) {
 		this.allRight = allRight;
 	}
-	
-	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
-	}
-	public int getPageNo() {
-		return pageNo;
-	}
-	
-	public String getPageHtml() {
-		return pageHtml;
-	}
-	
-	public void setPageHtml(String pageHtml) {
-		this.pageHtml = pageHtml;
-	}
-	
-	public void setListRow(int listRow) {
-		this.listRow = listRow;
-	}
-	public int getListRow() {
-		return listRow;
-	}
-	
 
 	@JSON(serialize = false)
 	public Map<String, List<AdminRight>> getResult() {
@@ -85,7 +59,7 @@ public class RightAction extends BaseAction<AdminRight> {
 	@Action(value = "", results = { @Result(name = "success", location = "list.jsp") })
 	public String index() {
 		String hql = "from AdminRight";
-		this.allRight = adminRightService.page(hql, 0,10);
+		this.allRight = adminRightService.page(hql, 0, 10);
 		return ERROR;
 	}
 
@@ -98,19 +72,19 @@ public class RightAction extends BaseAction<AdminRight> {
 	@SkipValidation
 	public String list() {
 
-		
-		
+		System.out.println("ssssssss");
+
 		String hql = "select count(a) from AdminRight a";
-		long l =  (long) adminRightService.uniqueResult(hql);
+		long l = (long) adminRightService.uniqueResult(hql);
 		int totalNum = new Long(l).intValue();
-		
+
 		StrutsPage page = new StrutsPage(totalNum, getListRow());
 		pageHtml = page.show();
-		
+
 		String hql2 = "from AdminRight order by sort desc";
-		this.allRight = adminRightService.page(hql2, page.getFristRow(), page.getListRow());
-		
-		
+		this.allRight = adminRightService.page(hql2, page.getFristRow(),
+				page.getListRow());
+
 		return SUCCESS;
 	}
 
@@ -129,17 +103,24 @@ public class RightAction extends BaseAction<AdminRight> {
 	@Action(value = "save", results = {
 			@Result(name = "success", location = "save.jsp"),
 			@Result(name = "input", location = "save.jsp") })
+	@SkipValidation
 	public String save() {
-
+		setWebPageTitle("权限添加");
+		System.out.println(getMethod());
 		if (getMethod().equals("POST")) {
 			adminRightService.saveOrUpdate(model);
 		}
-
 		return SUCCESS;
 	}
 
-	@Action(value = "savedata")
+	@Action(value = "saveData", results = {
+			@Result(name = "input", location = "save.jsp"),
+			@Result(name = "success", location = "save", type = "redirectAction") })
 	public String saveData() {
+		System.out.println(getMethod());
+		if (getMethod().equals("POST")) {
+			adminRightService.saveOrUpdate(model);
+		}
 		return SUCCESS;
 	}
 
@@ -169,11 +150,12 @@ public class RightAction extends BaseAction<AdminRight> {
 	 */
 	@Action(value = "update", results = {
 			@Result(name = "success", location = "save.jsp"),
-			@Result(name = "input", location = "save.jsp"),
-			@Result(name = "edit", location = "update", type = "redirectAction", params = {
-					"id", "${id}" }), })
+			@Result(name = "input", location = "save.jsp") })
 	@SkipValidation
 	public String update() {
+		if(null == model.getId()){
+			return ERROR;
+		}
 		this.model = adminRightService.getEntity(this.model.getId());
 		return SUCCESS;
 	}
@@ -185,10 +167,6 @@ public class RightAction extends BaseAction<AdminRight> {
 					"id", "${id}" }),
 			@Result(name = "success", location = "update", type = "redirectAction", params = {
 					"id", "${id}" }), })
-	/**
-	 * 
-	 * @return
-	 */
 	public String updateData() {
 		if (getMethod().equals("POST")) {
 			adminRightService.saveOrUpdate(model);
@@ -201,13 +179,13 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
-	@Action(value = "delete", results = { 
+	@Action(value = "delete", results = {
 			@Result(name = "input", location = "list", type = "redirectAction"),
-			@Result(name = "success", location = "list", type = "redirectAction")})
+			@Result(name = "success", location = "list", type = "redirectAction") })
 	@SkipValidation
 	public String delete() {
 		AdminRight right = new AdminRight();
-		if(model.getId() == 0){
+		if (model.getId() == 0) {
 			return INPUT;
 		}
 		right.setId(this.model.getId());

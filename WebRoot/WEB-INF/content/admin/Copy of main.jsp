@@ -25,6 +25,8 @@
 <script type="text/javascript" src="myfiles/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript"
 	src="myfiles/Plugin/Bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="myfiles/Plugin/ztree/js/jquery.ztree.core-3.5.min.js"></script>
 
 
 <link href="myfiles/Plugin/Bootstrap/css/bootstrap.min.css"
@@ -36,6 +38,8 @@
 <link href="myfiles/Plugin/font-awesome/css/font-awesome.min.css"
 	media="screen" rel="stylesheet" type="text/css">
 
+<link href="myfiles/Plugin/ztree/css/zTreeStyle/zTreeStyle.css"
+	media="screen" rel="stylesheet" type="text/css">
 
 <link href="myfiles/css/admin.css"
 	media="screen" rel="stylesheet" type="text/css">
@@ -107,12 +111,17 @@
 
 
 <div class="container">
-	
-		
+	<div class="row">
+		<div class="col-md-2">
+			<div data-spy="affix" data-offset-top="100" >
+				导航菜单
+			</div>
+		</div>
+		<div class="col-md-10" role="main">
 			<!-- 从被装饰页面获取body标签内容 -->
 			<sitemesh:write property='body'/>
-		
-	
+		</div>
+	</div>
 </div>
 
 <div id="footer" class="bs-footer" role="contentinfo">

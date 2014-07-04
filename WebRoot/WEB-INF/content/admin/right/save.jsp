@@ -3,7 +3,7 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<s:form action="updateData"  method="post"
+<s:form action="saveData"  method="post"
 	id="sniperForm" cssClass="form-horizontal" role="form">
 	<s:token/>
 	<s:hidden name="id" />

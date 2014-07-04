@@ -73,6 +73,11 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000" />
+	</bean>
+
 	<!-- 事物通知 -->
 	<!-- rollback-for回滚事物，果存在一个事务，则支持当前事务。如果没有事务则开启 -->
 	<!-- aopalliance-1.0 需要这个包否则报错，这个包在struts里面 -->
@@ -149,7 +154,7 @@
 		<!-- 事务切入点通知 -->
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* *..*Service.*(..))"
 			order="1" />
-		<!-- 缓存切入点通知 -->	
+		<!-- 缓存切入点通知 -->
 		<aop:advisor advice-ref="cacheAdvice"
 			pointcut="(execution(* *..*Service.get*(..))
 											or execution(* *..*Service.find*(..))

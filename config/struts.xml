@@ -4,12 +4,9 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 
-
-
 	<constant name="struts.convention.package.locators.basePackage"
 		value="com.sniper.survey.struts2.action" />
 	<constant name="struts.convention.package.locators" value="struts2,action" />
-
 
 	<constant name="struts.convention.action.mapAllMatches" value="true" />
 

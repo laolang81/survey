@@ -22,8 +22,10 @@ public class MeetUser extends BaseEntity {
 	private Integer id;
 	
 	private String name;
-	private int sex;
+	private String sex;
 	private String nation;
+	private String post;
+	private String unit;
 	private String mobilePhone;
 	private String shopInfo;
 	private String moneyType;
@@ -50,11 +52,11 @@ public class MeetUser extends BaseEntity {
 		this.name = name;
 	}
 
-	public int getSex() {
+	public String getSex() {
 		return sex;
 	}
 
-	public void setSex(int sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
@@ -72,6 +74,34 @@ public class MeetUser extends BaseEntity {
 
 	public void setMobilePhone(String mobilePhone) {
 		this.mobilePhone = mobilePhone;
+	}
+
+	/**
+	 * @return the post
+	 */
+	public String getPost() {
+		return post;
+	}
+
+	/**
+	 * @param post the post to set
+	 */
+	public void setPost(String post) {
+		this.post = post;
+	}
+
+	/**
+	 * @return the unit
+	 */
+	public String getUnit() {
+		return unit;
+	}
+
+	/**
+	 * @param unit the unit to set
+	 */
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 
 	public String getShopInfo() {

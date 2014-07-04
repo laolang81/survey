@@ -18,11 +18,11 @@
 	<listener>
 	  <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
-
-	<filter>
+	<!-- spring提交用的 -->
+	<!-- <filter>
 	    <filter-name>MultipartFilter</filter-name>
 	    <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
-	</filter>
+	</filter> -->
 
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
@@ -40,11 +40,11 @@
 		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
 	</filter>
 
-	<filter-mapping>
+	<!-- <filter-mapping>
 	    <filter-name>MultipartFilter</filter-name>
 	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
-
+ -->
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -69,10 +69,10 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<error-page>
+	<!-- <error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/content/error/404.jsp</location>
-	</error-page>
+	</error-page> -->
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

@@ -35,11 +35,11 @@ public class AdminRight extends BaseEntity {
 	@Column(name = "ar_pos", updatable = false)
 	private int pos;
 	// 公共资源所有问都可以访问
-	private boolean thePublic;
+	private boolean thePublic = false;
 	// 显示为menu
-	private boolean theMenu;
+	private boolean theMenu = false;
 	
-	private boolean theShow;
+	private boolean theShow = false;
 
 	private long sort;
 

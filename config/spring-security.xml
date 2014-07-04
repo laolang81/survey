@@ -11,6 +11,7 @@
 	<http pattern="/myfiles/**" security="none" />
 	<http pattern="/verify**" security="none" />
 	<http pattern="/assets/**" security="none" />
+	<http pattern="/admin/file-upload" security="none" />
 
 	<http auto-config="true" access-denied-page="/admin/errorNotRight"
 		entry-point-ref="authenticationProcessingFilterEntryPoint">
@@ -20,10 +21,9 @@
 		<!-- path-type：表示使用Apache Ant的匹配模式。 -->
 		<!--access-denied-page：访问拒绝时转向的页面。 -->
 		<!-- access-decision-manager-ref：指定了自定义的访问策略管理器。 -->
-		<intercept-url pattern="/admin**" access="ROLE_ADMIN" />
+		
 		<intercept-url pattern="/admin/login**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<!-- <intercept-url pattern="/admin/**" access="isAuthenticated()"/> -->
-		<!-- <intercept-url pattern="/j_spring_security_check" access="none"/> -->
+		<intercept-url pattern="/admin**" access="ROLE_ADMIN" />
 		<!-- <form-login/> -->
 		<!-- username-parameter="j_username" password-parameter="j_password" login-processing-url="j_spring_security_check" -->
 		<!-- <form-login login-page="/admin/login" authentication-failure-url="/admin/login?error=true" 
@@ -58,7 +58,6 @@
 		
 		<custom-filter ref="myLoginFilter" before="FORM_LOGIN_FILTER" />
 		<custom-filter ref="mySniperFilter" before="FILTER_SECURITY_INTERCEPTOR" />
-		
 	</http>
 
 	<!-- 配置过滤器 -->
