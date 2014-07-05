@@ -108,6 +108,8 @@ public final class ImageUtils {
 			Image image = ImageIO.read(file);
 			int width = image.getWidth(null);
 			int height = image.getHeight(null);
+			System.out.println(width);
+			System.out.println(height);
 			BufferedImage bufferedImage = new BufferedImage(width, height,
 					BufferedImage.TYPE_INT_RGB);
 			Graphics2D g = bufferedImage.createGraphics();

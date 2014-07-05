@@ -15,13 +15,11 @@ import magick.MagickImage;
 public class JMagickUtil {
 	
 	static{
-		System.setProperty("jmagick.systemclassloader", "no");
+		//System.setProperty("jmagick.systemclassloader", "no");
+		System.setProperty("jmagick.systemclassloader","false");
 	}
 
 	public JMagickUtil() {
-		// Resize
-		System.setProperty("jmagick.systemclassloader", "no");
-		System.out.println("sss");
 		
 	}
 	/**

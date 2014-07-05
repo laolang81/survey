@@ -72,7 +72,7 @@ public class RightAction extends BaseAction<AdminRight> {
 	@SkipValidation
 	public String list() {
 
-		System.out.println("ssssssss");
+		
 
 		String hql = "select count(a) from AdminRight a";
 		long l = (long) adminRightService.uniqueResult(hql);
