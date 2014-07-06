@@ -9,6 +9,7 @@
 	<http pattern="/" security="none" />
 	<http pattern="/admin/login**" security="none" />
 	<http pattern="/myfiles/**" security="none" />
+	<http pattern="/attachments/**" security="none" />
 	<http pattern="/verify**" security="none" />
 	
 

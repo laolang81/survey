@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -20,6 +20,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -38,72 +39,79 @@ public class FileUploadAction extends BaseAction<Files> {
 	private FilesService filesService;
 
 	// 对应的表单名称
-	private File uf;
+	private File imgFile;
 	// 上传的表单名称
-	private String ufFileName;
+	private String imgFileFileName;
 	// 上传类型
-	private String ufContentType;
-	//文件类型地址  image/flush,file
+	private String imgFileContentType;
+	// 文件类型地址 image/flush,file
 	private String dir = "images";
 
-	private Map<String, Files> result = new HashMap<>();
-
 	/**
-	 * @return the uf
+	 * 设置网页显示url
 	 */
-	public File getUf() {
-		return uf;
+	private String webUrl;
+
+	private Map<String, Object> result = new HashMap<>();
+
+	public File getImgFile() {
+		return imgFile;
 	}
 
-	/**
-	 * @param uf
-	 *            the uf to set
-	 */
-	public void setUf(File uf) {
-		this.uf = uf;
+	public void setImgFile(File imgFile) {
+		this.imgFile = imgFile;
 	}
 
-	/**
-	 * @return the ufFileName
-	 */
-	public String getUfFileName() {
-		return ufFileName;
+	public String getImgFileFileName() {
+		return imgFileFileName;
 	}
 
-	/**
-	 * @param ufFileName
-	 *            the ufFileName to set
-	 */
-	public void setUfFileName(String ufFileName) {
-		this.ufFileName = ufFileName;
+	public void setImgFileFileName(String imgFileFileName) {
+		this.imgFileFileName = imgFileFileName;
 	}
 
-	/**
-	 * @return the ufContentType
-	 */
-	public String getUfContentType() {
-		return ufContentType;
+	public String getImgFileContentType() {
+		return imgFileContentType;
 	}
 
-	/**
-	 * @param ufContentType
-	 *            the ufContentType to set
-	 */
-	public void setUfContentType(String ufContentType) {
-		this.ufContentType = ufContentType;
+	public void setImgFileContentType(String imgFileContentType) {
+		this.imgFileContentType = imgFileContentType;
 	}
 
 	public String getDir() {
 		return dir;
 	}
-	
+
 	public void setDir(String dir) {
 		this.dir = dir;
 	}
+
+	public void setWebUrl(String webUrl) {
+		this.webUrl = webUrl;
+	}
+
+	/**
+	 * 返回域名部分加目录
+	 * 
+	 * @return
+	 */
+	public String getWebUrl() {
+		if (null == webUrl) {
+			HttpServletRequest request = ServletActionContext.getRequest();
+			webUrl = request.getScheme() + "://" + request.getServerName();
+			if (request.getServerPort() != 80) {
+				webUrl += ":" + request.getServerPort();
+			}
+			webUrl += request.getContextPath();
+		}
+		return webUrl;
+	}
+
 	/**
 	 * @return the result
 	 */
-	public Map<String, Files> getResult() {
+	@JSON(serialize = false)
+	public Map<String, Object> getResult() {
 		return result;
 	}
 
@@ -111,42 +119,47 @@ public class FileUploadAction extends BaseAction<Files> {
 	 * @param result
 	 *            the result to set
 	 */
-	public void setResult(Map<String, Files> result) {
+	public void setResult(Map<String, Object> result) {
 		this.result = result;
 	}
 
 	@Action(value = "upload", results = {
-			@Result(name = "success", type = "json"),
-			@Result(name = "input", type = "json") })
+			@Result(name = "success", type = "json", params = { "root",
+					"result" }),
+			@Result(name = "input", type = "json", params = { "root", "result" }) })
 	@SkipValidation
 	public String upload() throws IOException {
 
-		//上传文件
-		uploadFile(uf);
-
+		// 上传文件
+		String saveUrl = uploadFile(imgFile);
+		result.put("error", 0);
+		result.put("url", getWebUrl() + saveUrl);
+		
 		return SUCCESS;
 	}
 
-	private void uploadFile(File f) throws FileNotFoundException, IOException {
+	private String uploadFile(File f) throws FileNotFoundException, IOException {
 
-		ServletContext context = ServletActionContext.getServletContext();
-		// 保存地址
-		String dir = context.getRealPath("../data/");
-		System.out.println(context.getRealPath("./"));
-		System.out.println(dir);
-		
-		
+		// 项目根目录
+		String rootDir = ServletActionContext.getServletContext().getRealPath(
+				"/");
+		// 保存的目录，是固定目录，只能更改rootpath目录移动文件
+		String saveFileName = getSaveFilename();
 		String savePath = getSaveDir();
-		String saveUrl = savePath +  getSaveFilename();
+		// 用户前台显示
+		String saveUrl = savePath;
 		
-		System.out.println(savePath);
-		System.out.println(saveUrl);
+		// 组装真的url
+		savePath = rootDir + savePath;
+		// 检查文件夹是否存在
 		File fileDir = new File(savePath);
-		if(!fileDir.isDirectory()){
+		if (!fileDir.isDirectory()) {
 			fileDir.mkdirs();
 		}
-		
-		FileOutputStream out = new FileOutputStream(saveUrl);
+		savePath += saveFileName;
+		saveUrl += saveFileName;
+
+		FileOutputStream out = new FileOutputStream(savePath);
 		FileInputStream in = new FileInputStream(f);
 
 		byte[] buffer = new byte[1024];
@@ -157,32 +170,39 @@ public class FileUploadAction extends BaseAction<Files> {
 		}
 		out.close();
 		in.close();
+
+		return saveUrl;
 	}
+
 	/**
 	 * 获取保存的地址
+	 * 
 	 * @return
 	 */
-	private String getSaveDir()
-	{
-		String saveDir = "/approot/www/jsp/survey/WebRoot/data/" + getDir() + "/";
+	private String getSaveDir() {
+
+		String saveDir = "/attachments/" + getDir() + "/";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String ymd = sdf.format(new Date());
-		saveDir += ymd + "/" ;
+		saveDir += ymd + "/";
 		return saveDir;
 	}
+
 	/**
 	 * 生成文件问名称
+	 * 
 	 * @return
 	 */
-	private String getSaveFilename()
-	{
-		String fileExt = ufFileName.substring(ufFileName.lastIndexOf(".") + 1).toLowerCase();
-		//if(!Arrays.<String>asList(extMap.get(dirName).split(",")).contains(fileExt)){
+	private String getSaveFilename() {
+		String fileExt = imgFileFileName.substring(
+				imgFileFileName.lastIndexOf(".") + 1).toLowerCase();
+		// if(!Arrays.<String>asList(extMap.get(dirName).split(",")).contains(fileExt)){
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-		String newFileName = df.format(new Date()) + "_" + new Random().nextInt(10000) + "." + fileExt;
+		String newFileName = df.format(new Date()) + "_"
+				+ new Random().nextInt(10000) + "." + fileExt;
 		return newFileName;
 	}
-	
+
 	/**
 	 * 吧上传的文件保存在数据库
 	 * 
@@ -190,7 +210,7 @@ public class FileUploadAction extends BaseAction<Files> {
 	 */
 	private int saveFiles() {
 		Files files = new Files();
-		
+
 		return 0;
 	}
 
@@ -198,4 +218,6 @@ public class FileUploadAction extends BaseAction<Files> {
 	public String htmlmanager() {
 		return SUCCESS;
 	}
+	
+	
 }

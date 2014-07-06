@@ -15,8 +15,8 @@ import magick.MagickImage;
 public class JMagickUtil {
 	
 	static{
-		//System.setProperty("jmagick.systemclassloader", "no");
-		System.setProperty("jmagick.systemclassloader","false");
+		System.setProperty("jmagick.systemclassloader", "no");
+		//System.setProperty("jmagick.systemclassloader","false");
 	}
 
 	public JMagickUtil() {
