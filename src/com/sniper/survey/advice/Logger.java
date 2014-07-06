@@ -21,12 +21,17 @@ public class Logger {
 
 	@Resource
 	private LogService logService;
-
+	/**
+	 * 处理连接点
+	 * @param point
+	 * @return
+	 */
 	public Object record(ProceedingJoinPoint point) {
 
 		Log log = new Log();
 		try {
 			// 设置操作人
+			
 			ActionContext context = ActionContext.getContext();
 			// 设置操作者
 			if (context != null) {
