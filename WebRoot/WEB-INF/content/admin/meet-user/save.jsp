@@ -7,7 +7,7 @@
 	href="myfiles/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"
 	rel="stylesheet" media="screen">
 
-<s:form action="save" method="post" id="sniperForm"
+<s:form action="saveData" method="post" id="sniperForm"
 	cssClass="form-horizontal" role="form">
 	<s:token />
 	<s:hidden name="id" />

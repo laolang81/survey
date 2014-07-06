@@ -73,9 +73,14 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		return SUCCESS;
 	}
 
-	@Action(value = "saveData")
+	
+	
+	@Action(value = "saveData", results = {
+			@Result(name = "input", location = "save.jsp"),
+			@Result(name = "success", location = "save", type = "redirectAction") })
 	public String saveData() {
-		if (getMethod().equals("post")) {
+		System.out.println(getMethod());
+		if (getMethod().equals("POST")) {
 			meetUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;

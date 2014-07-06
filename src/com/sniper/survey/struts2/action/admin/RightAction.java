@@ -72,8 +72,6 @@ public class RightAction extends BaseAction<AdminRight> {
 	@SkipValidation
 	public String list() {
 
-		
-
 		String hql = "select count(a) from AdminRight a";
 		long l = (long) adminRightService.uniqueResult(hql);
 		int totalNum = new Long(l).intValue();
@@ -153,7 +151,7 @@ public class RightAction extends BaseAction<AdminRight> {
 			@Result(name = "input", location = "save.jsp") })
 	@SkipValidation
 	public String update() {
-		if(null == model.getId()){
+		if (null == model.getId()) {
 			return ERROR;
 		}
 		this.model = adminRightService.getEntity(this.model.getId());
