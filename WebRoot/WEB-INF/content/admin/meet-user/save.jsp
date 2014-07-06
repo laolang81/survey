@@ -24,7 +24,7 @@
 	<div class="form-group">
 		<label for="name" class="col-sm-2 control-label">性别</label>
 		<div class="col-sm-2">
-			<s:select list="#{ '男':'男','女':'女' }" name="sex"
+			<s:select list="#{ '0':'男','1':'女' }" name="sex"
 				cssClass="form-control"></s:select>
 		</div>
 	</div>
