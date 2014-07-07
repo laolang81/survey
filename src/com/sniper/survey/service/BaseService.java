@@ -1,19 +1,22 @@
 package com.sniper.survey.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
+import com.sniper.survey.util.ValidateUtil;
+
 public interface BaseService<T> {
 	/**
-	 * 获取新的session
-	 * 测试用用
+	 * 获取新的session 测试用用
+	 * 
 	 * @return
 	 */
 	public Session getOpenSession();
-	
+
 	// 写操作
 	public void saveEntiry(T t);
 
@@ -48,13 +51,36 @@ public interface BaseService<T> {
 	public List<T> findAllEntitles();
 
 	public void executeSQL(Class clazz, String hql, Object... Object);
+
 	/**
 	 * 分页
+	 * 
 	 * @param hql
 	 * @param firstResult
 	 * @param maxResult
 	 * @param Object
 	 * @return
 	 */
-	public List<T> page(String hql, int firstResult, int maxResult,  Object... Object);
+	public List<T> page(String hql, int firstResult, int maxResult,
+			Object... Object);
+
+	/**
+	 * 
+	 * @param listRow
+	 * @param Object
+	 * @return
+	 */
+	public Map<String, Object> pageList(int listRow, Object... Object);
+
+	public String getHaving();
+
+	public void setHaving(String having);
+
+	public String getGroup();
+
+	public void setGroup(String group);
+
+	public String getOrder();
+
+	public void setOrder(String order);
 }

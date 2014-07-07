@@ -1,54 +1,56 @@
-<?php
-if(!isset($url)){
-	throw  new \Exception("url必须定义");
-}
-
-$this->headScript()
-	->prependFile($this->basePath() . '/myfiles/js/jquery.sniper.div.address.js')
-	->prependFile($this->basePath() . '/myfiles/js/jquery.sniper.menu.js');
-
-$this->headLink( )
-	->prependStylesheet($this->basePath() . '/myfiles/css/sniper.top.css');
-?>
-<div id="sniper_menu" class="mt5">
-<ul>
-<li><span data-value="del-checkbox"><input type="checkbox" name="del"/><i class="ml5 fa fa-sort-asc"></i></span>
-<ul class="select">
-<li><span data-value="1">全选</span></li>
-<li><span data-value="2">不选</span></li>
-<li><span data-value="3">反选</span></li>
-<li><span data-value="4">未审</span></li>
-<li><span data-value="5">已审</span></li>
-</ul></li><li
-class="ml5 left"><span data-value="delete">删除</span></li><?php if(isset($status) && is_array($status)):?><li
-class="center"><span>标记为<i class="ml5 fa fa-sort-asc"></i></span>
-<ul class="maked">
-<?php
-foreach ($status as $k=>$v):
-echo '<li><span data-value="'.$k.'">'.$v.'</span></li>';
-endforeach;
-?>
-</ul>
-</li><?php endif; if(isset($moveto) && is_array($moveto)):?><li
-class="center"><span>移动到<i class="ml5 fa fa-sort-asc"></i></span>
-<ul class="moveto">
-<?php
-foreach ($moveto as $k=>$v):
-echo '<li><span data-value="'.$k.'">'.$v.'</span></li>';
-endforeach;
-?>
-</ul></li><?php endif; if (isset($more)):?><li class="center"><span data-value="more">更多<i class="ml5 fa fa-sort-asc"></i></span>
-<ul class="export">
-<li><span data-value="export">导出</span></li>
-</ul></li><?php endif;?><li
-class="right"><span data-value="refresh">刷新</span></li>
-</ul>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<script type="text/javascript" src="myfiles/js/jquery.sniper.menu.js"></script>
+<div id="sniper_menu" class="btn-group" data-spy="affix" data-offset-top="100">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+  			<i class="fa fa-angle-double-down"></i>
+  		</button>
+  		<ul class="dropdown-menu">
+			<li><a href="#" data-value="1" data-type="select">全选</a></li>
+			<li><a href="#" data-value="2" data-type="select">不选</a></li>
+			<li><a href="#" data-value="3" data-type="select">反选</a></li>
+		</ul>
+	</div>
+	<div class="btn-group">
+		<button type="button" class="btn btn-danger" data-value="delete" data-type="delete"><i class="fa fa-trash-o"></i></button>  		
+	</div>
+	<s:if test="status">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+  			 标记为
+  			 <span class="caret"></span>
+  		</button>
+  		<ul class="dropdown-menu">
+  		<s:iterator value="status" id="key">
+  			<li><a href="#" data-value='<s:property value="#key"/>' data-type="maketo"><s:property value="value"/></span></a>
+  		</s:iterator>
+		</ul>
+	</div>
+	</s:if>
+	<s:if test="moveto">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+  			 移动到
+  			 <span class="caret"></span>
+  		</button>
+  		<ul class="dropdown-menu">
+  		<s:iterator value="moveto" id="key">
+  			<li><a href="#" data-value='<s:property value="#key"/>' data-type="maketo"><s:property value="value"/></span></a>
+  		</s:iterator>
+		</ul>
+	</div>
+	</s:if>
+	
 </div>
+
 <!-- 调用 -->
-<script>
+<script type="text/javascript">
+
 $(function(){
  	$().snipermenu({
- 		url:'<?php echo $url?>'
- 	 	});
+ 		url:'<s:property value="sm_url"/>'
+ 	 });
 });
 </script>

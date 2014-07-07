@@ -1,8 +1,6 @@
 package com.sniper.survey.struts2.action.admin;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -15,42 +13,38 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.sniper.survey.model.MeetUser;
-import com.sniper.survey.service.impl.MeetUserService;
+import com.sniper.survey.model.AdminUser;
+import com.sniper.survey.service.impl.AdminUserService;
 
 @Controller
 @Scope("prototype")
-@Namespace("/admin/meet-user")
+@Namespace("/admin/admin-user")
 @ParentPackage("default")
-public class MeetUserAction extends BaseAction<MeetUser> {
+public class AdminUserAction extends BaseAction<AdminUser> {
 
 	private static final long serialVersionUID = 1L;
 
 	@Resource
-	MeetUserService meetUserService;
+	AdminUserService adminUserService;
 
 	/**
 	 * 读取记录数
 	 */
-	private List<MeetUser> meetUsers;
+	private List<AdminUser> list;
 
 	/**
 	 * @return the meetUsers
 	 */
-	public List<MeetUser> getMeetUsers() {
-		return meetUsers;
+	public List<AdminUser> getList() {
+		return list;
 	}
 
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
 		setWebPageTitle("调查人员列表");
-
-		Map<String, Object> map = new HashMap<>();
-		map = meetUserService.pageList(getListRow());
-		pageHtml = (String) map.get("pageHtml");
-		meetUsers = (List<MeetUser>) map.get("rows");
-		// setPageHtml(map.get("pageHtml"));
+		this.list = adminUserService.adminList(getListRow());
+		this.pageHtml = adminUserService.getPageHtml();
 		return SUCCESS;
 	}
 
@@ -72,7 +66,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		System.out.println(getMethod());
 		if (getMethod().equals("post")) {
 			System.out.println("save");
-			meetUserService.saveOrUpdateEntiry(model);
+			adminUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
 	}
@@ -81,15 +75,12 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 			@Result(name = "input", location = "save.jsp"),
 			@Result(name = "success", location = "save", type = "redirectAction") })
 	public String saveData() {
-		System.out.println(getMethod());
 		if (getMethod().equals("POST")) {
-			meetUserService.saveOrUpdateEntiry(model);
+			adminUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
 	}
 
-	@Action(value = "update")
-	@SkipValidation
 	public String update() {
 		if (null == model.getId()) {
 			return ERROR;
@@ -97,17 +88,10 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		return SUCCESS;
 	}
 
-	@Action(value = "updateData", results = {
-			@Result(name = "input", location = "save.jsp"),
-			@Result(name = "success", location = "update", type = "redirectAction") })
 	public String updateData() {
-		if (getMethod().equals("POST")) {
-			meetUserService.saveOrUpdateEntiry(model);
-		}
 		return SUCCESS;
 	}
 
-	@Action("delete")
 	public String delete() {
 		return SUCCESS;
 	}

@@ -4,33 +4,28 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
+import com.sniper.survey.model.AdminUser;
+import com.sniper.survey.service.impl.AdminUserService;
 import com.sniper.survey.struts2.MethodAware;
+import com.sniper.survey.struts2.RootAction;
 
-@Results({ 								
-	@Result(name = "error", location = "/WEB-INF/content/error/error.jsp"),
-	@Result(name = "login", location = "login" ,type ="redirectAction" , params = {"namespace","/admin"})
-	})
-public abstract class BaseAction<T> extends ActionSupport implements
+public abstract class BaseAction<T> extends RootAction implements
 		ModelDriven<T>, Preparable, MethodAware {
 
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * 网站title
-	 */
-	private String webPageTitle;
+	@Resource
+	AdminUserService adminUserService;
 	/**
 	 * 分页参数
 	 */
@@ -123,33 +118,36 @@ public abstract class BaseAction<T> extends ActionSupport implements
 	 * 
 	 * @return
 	 */
-	protected UserDetails getUserInfo() {
+	public static UserDetails getUserInfo() {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
 		return userDetails;
 
 	}
-
+	/**
+	 * 获取用户id用于和其他表关联
+	 * @return
+	 */
+	public int getUserID() {
+		String username = getUserInfo().getUsername();
+		AdminUser adminUser = adminUserService.validateByName(username);
+		if(null != adminUser){
+			return adminUser.getId();
+		}
+		return 0;
+	}
 	/**
 	 * 获取用户权限
 	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	protected Collection<GrantedAuthority> getAuthorities() {
+	public static Collection<GrantedAuthority> getAuthorities() {
 		UserDetails userDetails = getUserInfo();
 		Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) userDetails
 				.getAuthorities();
 		return authorities;
 
-	}
-
-	public String getWebPageTitle() {
-		return webPageTitle;
-	}
-
-	public void setWebPageTitle(String webPageTitle) {
-		this.webPageTitle = webPageTitle;
 	}
 
 	/**

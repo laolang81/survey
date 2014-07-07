@@ -1,7 +1,9 @@
 package com.sniper.survey.service.impl;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -11,6 +13,8 @@ import org.hibernate.Session;
 
 import com.sniper.survey.dao.BaseDao;
 import com.sniper.survey.service.BaseService;
+import com.sniper.survey.util.StrutsPage;
+import com.sniper.survey.util.ValidateUtil;
 
 /**
  * @Resource写法不能乱写，写在字段上和set上可以用子类覆盖，而字段不能被覆盖
@@ -20,12 +24,50 @@ import com.sniper.survey.service.BaseService;
  */
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
+	// 数据库死的一些变量
+	private String having;
+	private String group;
+	private String order;
+
 	private BaseDao<T> dao;
 	//
 	private Class<T> clazz;
 
 	public BaseDao<T> getDao() {
 		return dao;
+	}
+
+	public String getHaving() {
+		if (ValidateUtil.isValid(having)) {
+			return " HAVING " + having;
+		}
+		return "";
+	}
+
+	public void setHaving(String having) {
+		this.having = having;
+	}
+
+	public String getGroup() {
+		if (ValidateUtil.isValid(group)) {
+			return " GROUP " + group;
+		}
+		return "";
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
+	public String getOrder() {
+		if (ValidateUtil.isValid(order)) {
+			return " ORDER BY " + order;
+		}
+		return "";
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -51,15 +93,14 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	public Session getOpenSession() {
 		return dao.getOpenSesion();
 	}
-	
+
 	public void saveEntiry(T t) {
 		dao.saveEntiry(t);
 
 	}
 
 	public void saveOrUpdateEntiry(T t) {
-		
-		
+
 		dao.saveOrUpdateEntiry(t);
 
 	}
@@ -129,9 +170,33 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	public void executeSQL(Class clazz, String hql, Object... Object) {
 		dao.executeSQL(clazz, hql, Object);
 	}
+
 	@Override
-	public List<T> page(String hql, int firstResult, int maxResult,  Object... Object)
-	{
+	public List<T> page(String hql, int firstResult, int maxResult,
+			Object... Object) {
 		return dao.findEntityByHQL(hql, firstResult, maxResult, Object);
 	}
+
+	@Override
+	public Map<String, Object> pageList(int listRow, Object... Object) {
+
+		Map<String, Object> map = new HashMap<>();
+
+		String hql = "select count(a) from " + clazz.getSimpleName() + " a";
+		long l = (long) this.uniqueResult(hql, Object);
+		int totalNum = new Long(l).intValue();
+
+		StrutsPage page = new StrutsPage(totalNum, listRow);
+		String pageHtml = page.show();
+		map.put("pageHtml", pageHtml);
+
+		String hql2 = "from " + clazz.getSimpleName() + getHaving() + getGroup() + getOrder();
+		List<T> list = this.page(hql2, page.getFristRow(), page.getListRow(),
+				Object);
+
+		map.put("rows", list);
+
+		return map;
+	}
+
 }

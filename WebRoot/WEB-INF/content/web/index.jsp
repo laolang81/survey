@@ -1,161 +1,154 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<title>Bootstrap 101 Template</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script
-	src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<script type="text/javascript" src="myfiles/Plugin/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="myfiles/Plugin/kindeditor/lang/zh_CN.js"></script>
+<link
+	href="myfiles/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"
+	rel="stylesheet" media="screen">
 
-<!-- Bootstrap -->
-<link rel="stylesheet"
-	href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+<s:form action="saveData" method="post" id="sniperForm"
+	cssClass="form-horizontal" role="form">
+	<s:token />
+	<s:hidden name="id" />
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
-        <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body>
-	<h1>Hello, world!</h1>
-
-<div class="container">
-
-      <form class="form-signin" role="form">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required>
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
-
-    </div> <!-- /container -->
-
-
-	<!-- Stack the columns on mobile by making one full-width and the other half-width -->
-	<div class="row">
-		<div class="col-xs-12 col-md-8">.col-xs-12 .col-md-8</div>
-		<div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-	</div>
-
-	<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-	<div class="row">
-		<div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-		<div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-		<div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-	</div>
-
-	<!-- Columns are always 50% wide, on mobile and desktop -->
-	<div class="row">
-		<div class="col-xs-6">.col-xs-6</div>
-		<div class="col-xs-6">.col-xs-6</div>
-	</div>
-
-
-	<div class="row">
-		<div class="col-md-1">.col-md-1</div>
-		<div class="col-md-1">.col-md-1</div>
-		<div class="col-md-1">.col-md-1</div>
-		<div class="col-md-1">.col-md-1</div>
-		<div class="col-md-1">.col-md-1</div>
-		<div class="col-md-1">.col-md-1</div>
-		<div class="col-md-1">.col-md-1</div>
-		<div class="col-md-1">.col-md-1</div>
-		<div class="col-md-1">.col-md-1</div>
-		<div class="col-md-1">.col-md-1</div>
-		<div class="col-md-1">.col-md-1</div>
-		<div class="col-md-1">.col-md-1</div>
-	</div>
-	<div class="row">
-		<div class="col-md-8">.col-md-8</div>
-		<div class="col-md-4">.col-md-4</div>
-	</div>
-	<div class="row">
-		<div class="col-md-4">.col-md-4</div>
-		<div class="col-md-4">.col-md-4</div>
-		<div class="col-md-4">.col-md-4</div>
-	</div>
-	<div class="row">
-		<div class="col-md-6">.col-md-6</div>
-		<div class="col-md-6">.col-md-6</div>
-	</div>
-
-
-
-
-	<button type="button" class="btn btn-ttc">Save changes</button>
-
-
-
-	<form role="form">
-		<div class="form-group">
-			<label for="exampleInputEmail1">Email address</label> <input
-				type="email" class="form-control" id="exampleInputEmail1"
-				placeholder="Enter email">
+	<div class="form-group">
+		<label for="name" class="col-sm-2 control-label">名称</label>
+		<div class="col-sm-10">
+			<s:textfield name="name" cssClass="form-control" id="name" />
+			<div class="help-block">
+				<s:fielderror fieldName="name" />
+			</div>
 		</div>
-		<div class="form-group">
-			<label for="exampleInputPassword1">Password</label> <input
-				type="password" class="form-control" id="exampleInputPassword1"
-				placeholder="Password">
+	</div>
+	<div class="form-group">
+		<label for="name" class="col-sm-2 control-label">性别</label>
+		<div class="col-sm-2">
+			<s:select list="#{ '0':'男','1':'女' }" name="sex"
+				cssClass="form-control"></s:select>
 		</div>
-		<div class="form-group">
-			<label for="exampleInputFile">File input</label> <input type="file"
-				id="exampleInputFile">
-			<p class="help-block">Example block-level help text here.</p>
+	</div>
+	<div class="form-group">
+		<label for="nation" class="col-sm-2 control-label">民族</label>
+		<div class="col-sm-10">
+			<s:textfield name="nation" cssClass="form-control" id="nation" />
+			<div class="help-block">
+				<s:fielderror fieldName="nation" />
+			</div>
 		</div>
-		<div class="checkbox">
-			<label> <input type="checkbox"> Check me out
-			</label>
+	</div>
+	<div class="form-group">
+		<label for="post" class="col-sm-2 control-label">职务</label>
+		<div class="col-sm-10">
+			<s:textfield name="post" cssClass="form-control" id="post" />
+
 		</div>
-		<button type="submit" class="btn btn-default">Submit</button>
-	</form>
+	</div>
+	<div class="form-group">
+		<label for="unit" class="col-sm-2 control-label">单位</label>
+		<div class="col-sm-10">
+			<s:textfield name="unit" cssClass="form-control" id="unit" />
 
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="mobilePhone" class="col-sm-2 control-label">移动电话</label>
+		<div class="col-sm-10">
+			<s:textfield name="mobilePhone" cssClass="form-control"
+				id="mobilePhone" />
 
-	<!-- Standard button -->
-	<button type="button" class="btn btn-default">Default</button>
+		</div>
+	</div>
 
-	<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-	<button type="button" class="btn btn-primary">Primary</button>
+	<div class="form-group">
+		<label for="shopInfo" class="col-sm-2 control-label">住宿要求</label>
+		<div class="col-sm-10">
+			<s:textfield name="shopInfo" cssClass="form-control" id="shopInfo" />
+		</div>
+	</div>
 
-	<!-- Indicates a successful or positive action -->
-	<button type="button" class="btn btn-success">Success</button>
+	<div class="form-group">
+		<label for="moneyType" class="col-sm-2 control-label">会务费用支付方式</label>
+		<div class="col-sm-10">
+			<s:textfield name="moneyType" cssClass="form-control" id="moneyType" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="reportTime" class="col-sm-2 control-label">报道时间</label>
+		<div class="col-sm-3">
+			<s:textfield name="reportTime" cssClass="form-control" id="reportTime" readonly="true" data-date-format="yyyy-mm-dd hh:ii" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="carNum" class="col-sm-2 control-label">车次(航班)</label>
+		<div class="col-sm-10">
+			<s:textfield name="carNum" cssClass="form-control" id="carNum" />
 
-	<!-- Contextual button for informational alert messages -->
-	<button type="button" class="btn btn-info">Info</button>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="carPeople" class="col-sm-2 control-label">是否接站</label>
+		<div class="col-sm-10">
+			<s:checkbox name="carPeople" cssClass="checkbox-inline" />
+		</div>
+	</div>
 
-	<!-- Indicates caution should be taken with this action -->
-	<button type="button" class="btn btn-warning">Warning</button>
+	<div class="form-group">
+		<label for="leaveTime" class="col-sm-2 control-label">离开时间</label>
+		<div class="col-sm-3">
+			<s:textfield name="leaveTime" cssClass="form-control" id="leaveTime" readonly="true" data-date-format="yyyy-mm-dd hh:ii" />
+		</div>
+	</div>
+	
 
-	<!-- Indicates a dangerous or potentially negative action -->
-	<button type="button" class="btn btn-danger">Danger</button>
+	<div class="form-group">
+		<label for="carLeavePeople" class="col-sm-2 control-label">是否送站</label>
+		<div class="col-sm-10">
+			<s:checkbox name="carLeavePeople" cssClass="checkbox-inline" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="carLeaveNum" class="col-sm-2 control-label">返程车次(航班)</label>
+		<div class="col-sm-10">
+			<s:textfield name="carLeaveNum" cssClass="form-control"
+				id="carLeaveNum" />
 
-	<!-- Deemphasize a button by making it look like a link while maintaining button behavior -->
-	<button type="button" class="btn btn-link">Link</button>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="other" class="col-sm-2 control-label">其他要求</label>
+		<div class="col-sm-10">
+			<s:textarea cols="4" cssClass="form-control" name="other" id="other"></s:textarea>
+		</div>
+	</div>
 
+	<div class="form-group">
+		<div class="col-sm-10 col-md-offset-2">
+			<button type="submit" class="btn btn-danger">保存</button>
+		</div>
+	</div>
+</s:form>
 
+<script type="text/javascript"
+	src="myfiles/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"
+	charset="UTF-8"></script>
+<script type="text/javascript"
+	src="myfiles/Plugin/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
+	charset="UTF-8"></script>
+<script type="text/javascript">
+	
+$('#leaveTime').datetimepicker({ language:  'zh-CN'});
+$('#reportTime').datetimepicker({ language:  'zh-CN'});
 
-
-
-	<img
-		src="http://60.216.101.97/attachment/images/image/20140430/064699f61a76387e0b7aca7aebde8844.jpg"
-		alt="..." class="img-rounded">
-	<img
-		src="http://60.216.101.97/attachment/images/image/20140430/064699f61a76387e0b7aca7aebde8844.jpg"
-		alt="..." class="img-circle">
-	<img
-		src="http://60.216.101.97/attachment/images/image/20140430/064699f61a76387e0b7aca7aebde8844.jpg"
-		alt="..." class="img-thumbnail">
-
-
-</body>
-</html>
-
+</script>
+<script type="text/javascript">
+$(function() {
+	var editor = KindEditor.create('textarea[name="other"]',{
+		uploadJson : 'admin/file-upload/upload',
+		fileManagerJson : 'admin/file-upload/htmlmanager',
+		allowFileManager : true,
+			
+		afterBlur: function(){this.sync();}
+	});
+});
+</script>
