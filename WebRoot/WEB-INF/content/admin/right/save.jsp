@@ -2,8 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<title><s:property value="webPageTitle"/></title>
 
-<s:form action="saveData"  method="post"
+<s:form action=""  method="post"
 	id="sniperForm" cssClass="form-horizontal" role="form">
 	<s:token/>
 	<s:hidden name="id" />

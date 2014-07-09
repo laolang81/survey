@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -25,6 +26,9 @@ import com.sniper.survey.util.ValidateUtil;
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	// 数据库死的一些变量
+	private String entityAsName = "ean";
+	private String where;
+	private String join;
 	private String having;
 	private String group;
 	private String order;
@@ -35,6 +39,37 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	public BaseDao<T> getDao() {
 		return dao;
+	}
+
+	public String getEntityAsName() {
+
+		return entityAsName;
+	}
+
+	public void setEntityAsName(String entityAsName) {
+		this.entityAsName = entityAsName;
+	}
+
+	public String getWhere() {
+		if (ValidateUtil.isValid(where)) {
+			return " WHERE " + where;
+		}
+		return "";
+	}
+
+	public void setWhere(String where) {
+		this.where = where;
+	}
+
+	public String getJoin() {
+		if (ValidateUtil.isValid(join)) {
+			return join;
+		}
+		return "";
+	}
+
+	public void setJoin(String join) {
+		this.join = join;
 	}
 
 	public String getHaving() {
@@ -177,12 +212,16 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return dao.findEntityByHQL(hql, firstResult, maxResult, Object);
 	}
 
+	/**
+	 * 数据苦分页使用能完成基本的需求
+	 */
 	@Override
 	public Map<String, Object> pageList(int listRow, Object... Object) {
 
 		Map<String, Object> map = new HashMap<>();
 
-		String hql = "select count(a) from " + clazz.getSimpleName() + " a";
+		String hql = "select count(" + getEntityAsName() + ") from "
+				+ clazz.getSimpleName() + " " + getEntityAsName() + getWhere();
 		long l = (long) this.uniqueResult(hql, Object);
 		int totalNum = new Long(l).intValue();
 
@@ -190,7 +229,8 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		String pageHtml = page.show();
 		map.put("pageHtml", pageHtml);
 
-		String hql2 = "from " + clazz.getSimpleName() + getHaving() + getGroup() + getOrder();
+		String hql2 = "from " + clazz.getSimpleName() + " " + getEntityAsName()
+				+ getWhere() + getHaving() + getGroup() + getOrder();
 		List<T> list = this.page(hql2, page.getFristRow(), page.getListRow(),
 				Object);
 
@@ -199,4 +239,10 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return map;
 	}
 
+	@Override
+	public Criteria criteria() {
+
+		Criteria criteria = dao.criteria();
+		return criteria;
+	}
 }

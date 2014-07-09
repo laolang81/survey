@@ -14,7 +14,7 @@ import com.opensymphony.xwork2.ActionSupport;
 	@Result(name = "error", location = "/WEB-INF/content/error/error.jsp"),
 	@Result(name = "login", location = "login" ,type ="redirectAction" , params = {"namespace","/admin"})
 	})
-public abstract class RootAction extends ActionSupport  {
+public abstract class RootAction extends ActionSupport {
 
 	
 	private static final long serialVersionUID = -4888324940150304798L;

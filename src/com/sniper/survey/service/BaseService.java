@@ -3,11 +3,10 @@ package com.sniper.survey.service;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-
-import com.sniper.survey.util.ValidateUtil;
 
 public interface BaseService<T> {
 	/**
@@ -72,6 +71,18 @@ public interface BaseService<T> {
 	 */
 	public Map<String, Object> pageList(int listRow, Object... Object);
 
+	public String getEntityAsName();
+
+	public void setEntityAsName(String entityAsName);
+
+	public String getWhere();
+
+	public void setWhere(String where);
+
+	public String getJoin();
+
+	public void setJoin(String join);
+
 	public String getHaving();
 
 	public void setHaving(String having);
@@ -83,4 +94,6 @@ public interface BaseService<T> {
 	public String getOrder();
 
 	public void setOrder(String order);
+
+	public Criteria criteria();
 }

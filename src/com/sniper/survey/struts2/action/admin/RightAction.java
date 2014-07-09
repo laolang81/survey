@@ -101,7 +101,7 @@ public class RightAction extends BaseAction<AdminRight> {
 	@Action(value = "save", results = {
 			@Result(name = "success", location = "save.jsp"),
 			@Result(name = "input", location = "save.jsp") })
-	@SkipValidation
+	
 	public String save() {
 		setWebPageTitle("权限添加");
 		System.out.println(getMethod());
@@ -133,7 +133,7 @@ public class RightAction extends BaseAction<AdminRight> {
 					"id", "${id}" }),
 			@Result(name = "input", location = "save", type = "redirectAction") })
 	public String saveOrUpdate() {
-
+		
 		adminRightService.saveOrUpdate(model);
 		if (model.getId() == 0) {
 			return "add";
@@ -151,6 +151,7 @@ public class RightAction extends BaseAction<AdminRight> {
 			@Result(name = "input", location = "save.jsp") })
 	@SkipValidation
 	public String update() {
+		System.out.println(getMethod());
 		if (null == model.getId()) {
 			return ERROR;
 		}

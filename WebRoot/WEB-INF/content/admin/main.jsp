@@ -60,18 +60,14 @@
 	<div class="collapse navbar-collapse"
 		id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="#">网站站点</a></li>
-			<li><a href="#">Link</a></li>
+			<li class="active"><a href="#">LOGO</a></li>
+			<li><a href="#">网站站点</a></li>
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown">人员采集 <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="admin/meet-user/">人员列表</a></li>
 					<li><a href="admin/meet-user/save">人员添加</a></li>
-					<li><a href="#">Something else here</a></li>
-					<li class="divider"></li>
-					<li><a href="#">Separated link</a></li>
-					<li class="divider"></li>
-					<li><a href="#">One more separated link</a></li>
+					<li><a href="admin/meet-user/export">人员导出</a></li>
 				</ul>
 			</li>
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -79,25 +75,26 @@
 				<ul class="dropdown-menu">
 					<li><a href="admin/right/list">资源列表</a></li>
 					<li><a href="admin/right/save">资源添加</a></li>
-					<li><a href="#">Something else here</a></li>
 					<li class="divider"></li>
-					<li><a href="#">Separated link</a></li>
+					<li><a href="admin/admin-group/list">用户组列表</a></li>
+					<li><a href="admin/admin-group/save">用户组添加</a></li>
 					<li class="divider"></li>
-					<li><a href="#">One more separated link</a></li>
+					<li><a href="admin/admin-user/list">管理员列表</a></li>
+					<li><a href="admin/admin-user/save">管理员添加</a></li>
 				</ul>
 			</li>
 		</ul>
 
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#">Link</a></li>
+			
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
-				data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+				data-toggle="dropdown">Holle, Sniper <b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Action</a></li>
-					<li><a href="#">Another action</a></li>
-					<li><a href="#">Something else here</a></li>
+					<li><a href="#">我的设置</a></li>
+					<li><a href="#">网站配置</a></li>
+					<li><a href="#">更改密码</a></li>
 					<li class="divider"></li>
-					<li><a href="j_spring_security_logout">Logout</a></li>
+					<li><a href="j_spring_security_logout">退出</a></li>
 				</ul>
 			</li>
 		</ul>
@@ -107,19 +104,14 @@
 
 
 <div class="container">
-	
-		
-			<!-- 从被装饰页面获取body标签内容 -->
-			<sitemesh:write property='body'/>
-		
-	
+	<!-- 从被装饰页面获取body标签内容 -->
+	<sitemesh:write property='body'/>
 </div>
 
 <div id="footer" class="bs-footer" role="contentinfo">
 	<div class="container">
 		<p class="text-right">
 			Thanks for using
-			
 		</p>
 		<p id="footer-upgrade" class="text-right">
 			Version 1.0

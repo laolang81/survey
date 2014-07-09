@@ -47,10 +47,11 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		setWebPageTitle("调查人员列表");
 
 		Map<String, Object> map = new HashMap<>();
+		meetUserService.setOrder("id desc");
 		map = meetUserService.pageList(getListRow());
 		pageHtml = (String) map.get("pageHtml");
 		meetUsers = (List<MeetUser>) map.get("rows");
-		// setPageHtml(map.get("pageHtml"));
+		setPageHtml(pageHtml);
 		return SUCCESS;
 	}
 
@@ -78,10 +79,9 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 	}
 
 	@Action(value = "saveData", results = {
-			@Result(name = "input", location = "save.jsp"),
+			@Result(name = "input", location = "save", type = "redirectAction"),
 			@Result(name = "success", location = "save", type = "redirectAction") })
 	public String saveData() {
-		System.out.println(getMethod());
 		if (getMethod().equals("POST")) {
 			meetUserService.saveOrUpdateEntiry(model);
 		}
@@ -98,8 +98,10 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 	}
 
 	@Action(value = "updateData", results = {
-			@Result(name = "input", location = "save.jsp"),
-			@Result(name = "success", location = "update", type = "redirectAction") })
+			@Result(name = "input", location = "update", type = "redirectAction", params = {
+					"id", "${id}" }),
+			@Result(name = "success", location = "update", type = "redirectAction", params = {
+					"id", "${id}" }) })
 	public String updateData() {
 		if (getMethod().equals("POST")) {
 			meetUserService.saveOrUpdateEntiry(model);

@@ -3,11 +3,15 @@ package com.sniper.survey.struts2.action.admin;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,10 +24,12 @@ import com.sniper.survey.struts2.MethodAware;
 import com.sniper.survey.struts2.RootAction;
 
 public abstract class BaseAction<T> extends RootAction implements
-		ModelDriven<T>, Preparable, MethodAware {
+		ModelDriven<T>, Preparable, MethodAware,
+		ServletRequestAware {
 
+	private HttpServletRequest request;
 	private static final long serialVersionUID = 1L;
-	
+
 	@Resource
 	AdminUserService adminUserService;
 	/**
@@ -98,6 +104,7 @@ public abstract class BaseAction<T> extends RootAction implements
 	}
 
 	public String getMethod() {
+
 		if (null == this.method) {
 			this.method = ServletActionContext.getRequest().getMethod();
 		}
@@ -105,8 +112,9 @@ public abstract class BaseAction<T> extends RootAction implements
 	}
 
 	@SuppressWarnings("unused")
-	private boolean isAjaxRequest(HttpServletRequest request) {
-		String header = request.getHeader("X-Requested-With");
+	private boolean isAjaxRequest() {
+		String header = ServletActionContext.getRequest().getHeader(
+				"X-Requested-With");
 		if (header != null && "XMLHttpRequest".equals(header))
 			return true;
 		else
@@ -124,18 +132,21 @@ public abstract class BaseAction<T> extends RootAction implements
 		return userDetails;
 
 	}
+
 	/**
 	 * 获取用户id用于和其他表关联
+	 * 
 	 * @return
 	 */
 	public int getUserID() {
 		String username = getUserInfo().getUsername();
 		AdminUser adminUser = adminUserService.validateByName(username);
-		if(null != adminUser){
+		if (null != adminUser) {
 			return adminUser.getId();
 		}
 		return 0;
 	}
+
 	/**
 	 * 获取用户权限
 	 * 
@@ -158,7 +169,8 @@ public abstract class BaseAction<T> extends RootAction implements
 	}
 
 	/**
-	 * @param pageNo the pageNo to set
+	 * @param pageNo
+	 *            the pageNo to set
 	 */
 	public void setPageNo(int pageNo) {
 		this.pageNo = pageNo;
@@ -172,7 +184,8 @@ public abstract class BaseAction<T> extends RootAction implements
 	}
 
 	/**
-	 * @param pageHtml the pageHtml to set
+	 * @param pageHtml
+	 *            the pageHtml to set
 	 */
 	public void setPageHtml(String pageHtml) {
 		this.pageHtml = pageHtml;
@@ -186,10 +199,18 @@ public abstract class BaseAction<T> extends RootAction implements
 	}
 
 	/**
-	 * @param listRow the listRow to set
+	 * @param listRow
+	 *            the listRow to set
 	 */
 	public void setListRow(int listRow) {
 		this.listRow = listRow;
 	}
+
+	@Override
+	public void setServletRequest(HttpServletRequest arg0) {
+		this.request = arg0;
+
+	}
 	
+
 }

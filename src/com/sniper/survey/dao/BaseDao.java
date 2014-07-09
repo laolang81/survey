@@ -2,6 +2,7 @@ package com.sniper.survey.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.ReplicationMode;
 import org.hibernate.SQLQuery;
@@ -81,4 +82,6 @@ public interface BaseDao<T> {
 	public SQLQuery findEntityBySQLQuery(String sql, Object... Object);
 	
 	public void executeSQL(Class clazz, String hql, Object... Object);
+	
+	public Criteria criteria();
 }

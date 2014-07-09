@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.ReplicationMode;
 import org.hibernate.SQLQuery;
@@ -200,5 +201,11 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		}
 		query.executeUpdate();
 	}
-
+	
+	@Override
+	public Criteria criteria() {
+		
+		Criteria criteria = this.getCurrentSession().createCriteria(clazz);
+		return criteria;
+	}
 }

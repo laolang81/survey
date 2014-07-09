@@ -26,6 +26,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+  
+  <%
+  	out.println("程序抛了一个异常" + exception);
+  %>
     Error ${message }sssssss<br>
 	<s:property value="error.message"/>
   </body>
