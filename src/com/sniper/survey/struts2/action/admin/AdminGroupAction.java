@@ -7,7 +7,7 @@ import com.sniper.survey.model.AdminGroup;
 
 @Controller
 @Scope("prototype")
-public class GroupAction extends BaseAction<AdminGroup> {
+public class AdminGroupAction extends BaseAction<AdminGroup> {
 
 	/**
 	 * 

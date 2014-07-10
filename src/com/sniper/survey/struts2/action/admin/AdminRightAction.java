@@ -23,7 +23,7 @@ import com.sniper.survey.service.impl.AdminRightService;
 @Scope("prototype")
 @Namespace("/admin/admin-right")
 @ParentPackage("default")
-public class RightAction extends BaseAction<AdminRight> {
+public class AdminRightAction extends BaseAction<AdminRight> {
 
 	private static final long serialVersionUID = 2799348891231755561L;
 
