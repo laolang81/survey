@@ -39,7 +39,7 @@
 			<td><s:property value="unit"/></td>
 			<td><s:property value="mobilePhone"/></td>
 			<td><s:property value="shopInfo"/></td>
-			<td><s:date name="reportTime" format="yyyy-MM-dd HH:mm:ss" /></td>
+			<td><s:property value="reportTime"/></td>
 			<td><s:property value="carNum"/></td>
 			<td><s:property value="carPeople"/></td>
 		</tr>

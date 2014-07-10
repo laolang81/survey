@@ -42,6 +42,7 @@ public class AdminRight extends BaseEntity {
 	private boolean theShow = false;
 
 	private long sort;
+	
 
 	/* mappedBy写在那边那边不维护 */
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, mappedBy = "adminRight")

@@ -13,8 +13,6 @@ public class DataSourceSwitch {
 	public static final String DATA_SOURCE_SLAVE_A = "salve_a";
 
 	public static final ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<>();
-
-	
 	
 	public static void setDataSource(String dataSourceType) {
 		System.out.println("数据源切换到" + dataSourceType);

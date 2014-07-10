@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-INPUT
-<s:form action="save" method="post" id="sniperForm"
+<script type="text/javascript" src="myfiles/Plugin/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="myfiles/Plugin/kindeditor/lang/zh_CN.js"></script>
+<link
+	href="myfiles/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"
+	rel="stylesheet" media="screen">
+
+<s:form action="saveData" method="post" id="sniperForm"
 	cssClass="form-horizontal" role="form">
 	<s:token />
 	<s:hidden name="id" />
@@ -19,7 +24,7 @@ INPUT
 	<div class="form-group">
 		<label for="name" class="col-sm-2 control-label">性别</label>
 		<div class="col-sm-2">
-			<s:select list="sexArray" name="sex"
+			<s:select list="#{ '0':'男','1':'女' }" name="sex"
 				cssClass="form-control"></s:select>
 		</div>
 	</div>
@@ -36,12 +41,14 @@ INPUT
 		<label for="post" class="col-sm-2 control-label">职务</label>
 		<div class="col-sm-10">
 			<s:textfield name="post" cssClass="form-control" id="post" />
+
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="unit" class="col-sm-2 control-label">单位</label>
 		<div class="col-sm-10">
 			<s:textfield name="unit" cssClass="form-control" id="unit" />
+
 		</div>
 	</div>
 	<div class="form-group">
@@ -49,6 +56,7 @@ INPUT
 		<div class="col-sm-10">
 			<s:textfield name="mobilePhone" cssClass="form-control"
 				id="mobilePhone" />
+
 		</div>
 	</div>
 
@@ -68,8 +76,7 @@ INPUT
 	<div class="form-group">
 		<label for="reportTime" class="col-sm-2 control-label">报道时间</label>
 		<div class="col-sm-3">
-			<s:textfield name="reportTime" cssClass="form-control"
-				id="reportTime" readonly="true" data-date-format="yyyy-mm-dd hh:ii" />
+			<s:textfield name="reportTime" cssClass="form-control" id="reportTime" readonly="true" data-date-format="yyyy-mm-dd hh:ii" />
 		</div>
 	</div>
 	<div class="form-group">
@@ -89,10 +96,10 @@ INPUT
 	<div class="form-group">
 		<label for="leaveTime" class="col-sm-2 control-label">离开时间</label>
 		<div class="col-sm-3">
-			<s:textfield name="leaveTime" cssClass="form-control" id="leaveTime"
-				readonly="true" data-date-format="yyyy-mm-dd hh:ii" />
+			<s:textfield name="leaveTime" cssClass="form-control" id="leaveTime" readonly="true" data-date-format="yyyy-mm-dd hh:ii" />
 		</div>
 	</div>
+	
 
 	<div class="form-group">
 		<label for="carLeavePeople" class="col-sm-2 control-label">是否送站</label>
@@ -100,15 +107,14 @@ INPUT
 			<s:checkbox name="carLeavePeople" cssClass="checkbox-inline" />
 		</div>
 	</div>
-	
 	<div class="form-group">
 		<label for="carLeaveNum" class="col-sm-2 control-label">返程车次(航班)</label>
 		<div class="col-sm-10">
 			<s:textfield name="carLeaveNum" cssClass="form-control"
 				id="carLeaveNum" />
+
 		</div>
 	</div>
-	
 	<div class="form-group">
 		<label for="other" class="col-sm-2 control-label">其他要求</label>
 		<div class="col-sm-10">
@@ -121,16 +127,8 @@ INPUT
 			<button type="submit" class="btn btn-danger">保存</button>
 		</div>
 	</div>
-	
 </s:form>
 
-<script type="text/javascript"
-	src="myfiles/Plugin/kindeditor/kindeditor-min.js"></script>
-<script type="text/javascript"
-	src="myfiles/Plugin/kindeditor/lang/zh_CN.js"></script>
-<link
-	href="myfiles/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"
-	rel="stylesheet" media="screen">
 <script type="text/javascript"
 	src="myfiles/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"
 	charset="UTF-8"></script>
@@ -138,22 +136,20 @@ INPUT
 	src="myfiles/Plugin/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
 	charset="UTF-8"></script>
 <script type="text/javascript">
-	$('#leaveTime').datetimepicker({
-		language : 'zh-CN'
-	});
-	$('#reportTime').datetimepicker({
-		language : 'zh-CN'
-	});
+	
+$('#leaveTime').datetimepicker({ language:  'zh-CN'});
+$('#reportTime').datetimepicker({ language:  'zh-CN'});
 
-	$(function() {
-		var editor = KindEditor.create('textarea[name="other"]', {
-			uploadJson : 'admin/file-upload/upload',
-			fileManagerJson : 'admin/file-upload/htmlmanager',
-			allowFileManager : true,
-			//filePostName	: "uf", 
-			afterBlur : function() {
-				this.sync();
-			}
-		});
+</script>
+<script type="text/javascript">
+$(function() {
+	var editor = KindEditor.create('textarea[name="other"]',{
+		uploadJson : 'admin/file-upload/upload',
+		fileManagerJson : 'admin/file-upload/htmlmanager',
+		allowFileManager : true,
+		//filePostName	: "uf", 
+			
+		afterBlur: function(){this.sync();}
 	});
+});
 </script>

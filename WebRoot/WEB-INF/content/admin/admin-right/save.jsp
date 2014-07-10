@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <title><s:property value="webPageTitle"/></title>
 
-<s:form action=""  method="post"
+<s:form method="post"
 	id="sniperForm" cssClass="form-horizontal" role="form">
 	<s:token/>
 	<s:hidden name="id" />

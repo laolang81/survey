@@ -2,8 +2,8 @@
  * js基本配置文件
  */
 var sniperConfig = new Array();
-sniperConfig['webUrl'] = 'http://www.shandongbusiness.gov.cn';
-sniperConfig['baseAdminPath'] = 'doftec';
+sniperConfig['webUrl'] = '/';
+sniperConfig['baseAdminPath'] = 'admin';
 sniperConfig['baseAdminConfirm'] = '确定这么做？';
 sniperConfig['baseAdminMessage'] = '<img src="/myfiles/images/admin/loading.gif"/>';
 

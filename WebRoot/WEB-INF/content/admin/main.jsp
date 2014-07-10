@@ -12,17 +12,15 @@
 %>
 <!DOCTYPE html>
 <html lang="zh-cn">
-<!-- 第一个装饰页面 -->
 <head>
 <meta charset="utf-8">
-<!-- 从被装饰页面获取title标签内容,并设置默认值-->
 <title><sitemesh:write property="title" /> - 后台管理</title>
-<!-- 从被装饰页面获取head标签内容 -->
 <sitemesh:write property='head'/>
 <base href="<%= basePath %>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script type="text/javascript" src="myfiles/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="myfiles/js/js.config.js"></script>
 <script type="text/javascript"
 	src="myfiles/Plugin/Bootstrap/js/bootstrap.min.js"></script>
 
@@ -73,13 +71,13 @@
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown">权限管理 <b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="admin/right/list">资源列表</a></li>
-					<li><a href="admin/right/save">资源添加</a></li>
+					<li><a href="admin/admin-right/">资源列表</a></li>
+					<li><a href="admin/admin-right/save">资源添加</a></li>
 					<li class="divider"></li>
-					<li><a href="admin/admin-group/list">用户组列表</a></li>
+					<li><a href="admin/admin-group/">用户组列表</a></li>
 					<li><a href="admin/admin-group/save">用户组添加</a></li>
 					<li class="divider"></li>
-					<li><a href="admin/admin-user/list">管理员列表</a></li>
+					<li><a href="admin/admin-user/">管理员列表</a></li>
 					<li><a href="admin/admin-user/save">管理员添加</a></li>
 				</ul>
 			</li>

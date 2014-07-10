@@ -30,7 +30,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <%
   	out.println("程序抛了一个异常" + exception);
   %>
-    Error ${message }sssssss<br>
-	<s:property value="error.message"/>
+  <div class="row">
+  	<div class="alert"><s:a href="javascript:window.history.go(-1)">返回</s:a></div>
+  </div>
   </body>
 </html>

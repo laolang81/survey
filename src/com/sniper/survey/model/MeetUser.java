@@ -16,11 +16,11 @@ import javax.persistence.TemporalType;
 public class MeetUser extends BaseEntity {
 
 	static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	private String name;
 	private String sex;
 	private String nation;
@@ -37,13 +37,12 @@ public class MeetUser extends BaseEntity {
 	private Date leaveTime;
 	private boolean carLeavePeople;
 	private String carLeaveNum;
-	@Column(name = "other",columnDefinition = "text")
+	@Column(name = "other", columnDefinition = "text")
 	private String other;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date createTime;
+	private Date createTime = new Date();
 	private int bindUid;
-	
-	
+
 	public String getName() {
 		return name;
 	}
@@ -84,7 +83,8 @@ public class MeetUser extends BaseEntity {
 	}
 
 	/**
-	 * @param post the post to set
+	 * @param post
+	 *            the post to set
 	 */
 	public void setPost(String post) {
 		this.post = post;
@@ -98,7 +98,8 @@ public class MeetUser extends BaseEntity {
 	}
 
 	/**
-	 * @param unit the unit to set
+	 * @param unit
+	 *            the unit to set
 	 */
 	public void setUnit(String unit) {
 		this.unit = unit;
@@ -177,6 +178,7 @@ public class MeetUser extends BaseEntity {
 	}
 
 	public Date getCreateTime() {
+		
 		return createTime;
 	}
 
@@ -194,7 +196,7 @@ public class MeetUser extends BaseEntity {
 
 	@Override
 	public Integer getId() {
-		
+
 		return this.id;
 	}
 

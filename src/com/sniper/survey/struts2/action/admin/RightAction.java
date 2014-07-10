@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -17,11 +18,10 @@ import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
-import com.sniper.survey.util.StrutsPage;
 
 @Controller
 @Scope("prototype")
-@Namespace("/admin/right")
+@Namespace("/admin/admin-right")
 @ParentPackage("default")
 public class RightAction extends BaseAction<AdminRight> {
 
@@ -43,46 +43,20 @@ public class RightAction extends BaseAction<AdminRight> {
 		return allRight;
 	}
 
-	public void setAllRight(List<AdminRight> allRight) {
-		this.allRight = allRight;
-	}
-
 	@JSON(serialize = false)
 	public Map<String, List<AdminRight>> getResult() {
 		return result;
 	}
 
-	public void setResult(Map<String, List<AdminRight>> result) {
-		this.result = result;
-	}
-
-	@Action(value = "", results = { @Result(name = "success", location = "list.jsp") })
-	public String index() {
-		String hql = "from AdminRight";
-		this.allRight = adminRightService.page(hql, 0, 10);
-		return ERROR;
-	}
-
-	/**
-	 * 数据列表
-	 * 
-	 * @return
-	 */
-	@Action(value = "list", results = { @Result(name = "success", location = "list.jsp") })
+	@SuppressWarnings("unchecked")
+	@Actions({ @Action(value = "index") })
 	@SkipValidation
-	public String list() {
-
-		String hql = "select count(a) from AdminRight a";
-		long l = (long) adminRightService.uniqueResult(hql);
-		int totalNum = new Long(l).intValue();
-
-		StrutsPage page = new StrutsPage(totalNum, getListRow());
-		pageHtml = page.show();
-
-		String hql2 = "from AdminRight order by sort desc";
-		this.allRight = adminRightService.page(hql2, page.getFristRow(),
-				page.getListRow());
-
+	public String index() {
+		Map<String, Object> map = new HashMap<>();
+		adminRightService.setOrder("id desc");
+		map = adminRightService.pageList(getListRow());
+		pageHtml = (String) map.get("pageHtml");
+		allRight = (List<AdminRight>) map.get("rows");
 		return SUCCESS;
 	}
 
@@ -101,7 +75,6 @@ public class RightAction extends BaseAction<AdminRight> {
 	@Action(value = "save", results = {
 			@Result(name = "success", location = "save.jsp"),
 			@Result(name = "input", location = "save.jsp") })
-	
 	public String save() {
 		setWebPageTitle("权限添加");
 		System.out.println(getMethod());
@@ -115,30 +88,10 @@ public class RightAction extends BaseAction<AdminRight> {
 			@Result(name = "input", location = "save.jsp"),
 			@Result(name = "success", location = "save", type = "redirectAction") })
 	public String saveData() {
-		System.out.println(getMethod());
 		if (getMethod().equals("POST")) {
 			adminRightService.saveOrUpdate(model);
 		}
 		return SUCCESS;
-	}
-
-	/**
-	 * 更新操作 redirectAction
-	 * 
-	 * @return
-	 */
-	@Action(value = "saveorupdate", results = {
-			@Result(name = "add", location = "save", type = "redirectAction"),
-			@Result(name = "edit", location = "update", type = "redirectAction", params = {
-					"id", "${id}" }),
-			@Result(name = "input", location = "save", type = "redirectAction") })
-	public String saveOrUpdate() {
-		
-		adminRightService.saveOrUpdate(model);
-		if (model.getId() == 0) {
-			return "add";
-		}
-		return "edit";
 	}
 
 	/**
@@ -147,21 +100,29 @@ public class RightAction extends BaseAction<AdminRight> {
 	 * @return
 	 */
 	@Action(value = "update", results = {
-			@Result(name = "success", location = "save.jsp"),
-			@Result(name = "input", location = "save.jsp") })
+			@Result(name = "success", location = "save.jsp", params = { "id",
+					"${id}" }),
+			@Result(name = "input", location = "save.jsp", params = { "id",
+					"${id}" }) })
 	@SkipValidation
 	public String update() {
-		System.out.println(getMethod());
 		if (null == model.getId()) {
 			return ERROR;
 		}
-		this.model = adminRightService.getEntity(this.model.getId());
+		if (getMethod().equals("GET")) {
+			this.model = adminRightService.getEntity(this.model.getId());
+		}
+
+		if (getMethod().equals("POST")) {
+			adminRightService.saveOrUpdate(model);
+		}
 		return SUCCESS;
 	}
 
 	// 更新数据
 	@Action(value = "updateData", results = {
-			@Result(name = "input", location = "save.jsp"),
+			@Result(name = "input", location = "save.jsp", params = { "id",
+					"${id}" }),
 			@Result(name = "edit", location = "update", type = "redirectAction", params = {
 					"id", "${id}" }),
 			@Result(name = "success", location = "update", type = "redirectAction", params = {

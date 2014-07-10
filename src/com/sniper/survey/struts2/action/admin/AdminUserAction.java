@@ -1,6 +1,8 @@
 package com.sniper.survey.struts2.action.admin;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -14,6 +16,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.AdminUser;
+import com.sniper.survey.model.MeetUser;
 import com.sniper.survey.service.impl.AdminUserService;
 
 @Controller
@@ -42,19 +45,14 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
-		setWebPageTitle("调查人员列表");
-		this.list = adminUserService.adminList(getListRow());
-		this.pageHtml = adminUserService.getPageHtml();
-		return SUCCESS;
-	}
+		setWebPageTitle("管理人员列表");
 
-	/**
-	 * 用户列表导出
-	 * 
-	 * @return
-	 */
-	@Actions({ @Action(value = "export") })
-	public String export() {
+		Map<String, Object> map = new HashMap<>();
+		adminUserService.setOrder("id desc");
+		map = adminUserService.pageList(getListRow());
+		pageHtml = (String) map.get("pageHtml");
+		list = (List<AdminUser>) map.get("rows");
+		setPageHtml(pageHtml);
 		return SUCCESS;
 	}
 

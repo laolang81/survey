@@ -15,6 +15,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.sniper.survey.config.MeetUserData;
 import com.sniper.survey.model.MeetUser;
 import com.sniper.survey.service.impl.MeetUserService;
 
@@ -26,8 +27,16 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 
 	private static final long serialVersionUID = 1L;
 
+	private Map<Integer, String> sexs = new HashMap<>();
+	{
+		sexs = MeetUserData.getSex();
+	}
 	@Resource
 	MeetUserService meetUserService;
+
+	public Map<Integer, String> getSexs() {
+		return sexs;
+	}
 
 	/**
 	 * 读取记录数
@@ -41,6 +50,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		return meetUsers;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
@@ -66,12 +76,11 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 	}
 
 	@Action(value = "save", results = {
-			@Result(name = "success", location = "save.jsp"),
-			@Result(name = "input", location = "save.jsp") })
-	@SkipValidation
+			@Result(name = "input", location = "save.jsp"),
+			@Result(name = "success", location = "save.jsp") })
 	public String save() {
 		System.out.println(getMethod());
-		if (getMethod().equals("post")) {
+		if (getMethod().equals("POST")) {
 			System.out.println("save");
 			meetUserService.saveOrUpdateEntiry(model);
 		}
@@ -88,11 +97,25 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		return SUCCESS;
 	}
 
-	@Action(value = "update")
+	@Action(value = "update", results = {
+			@Result(name = "input", location = "update", type = "redirectAction", params = {
+					"id", "${id}" }),
+			@Result(name = "success", location = "save.jsp") })
 	@SkipValidation
 	public String update() {
-		if (null == model.getId()) {
+
+		if (model.getId() == 0) {
 			return ERROR;
+		}
+
+		if (getMethod().equals("GET")) {
+			this.model = meetUserService.getEntity(this.model.getId());
+		}
+
+		if (getMethod().equals("POST")) {
+			System.out.println(model.getLeaveTime());
+			System.out.println(model.getReportTime());
+			meetUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
 	}

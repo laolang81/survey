@@ -3,14 +3,10 @@ package com.sniper.survey.struts2.action.admin;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,12 +16,10 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminUserService;
-import com.sniper.survey.struts2.MethodAware;
 import com.sniper.survey.struts2.RootAction;
 
 public abstract class BaseAction<T> extends RootAction implements
-		ModelDriven<T>, Preparable, MethodAware,
-		ServletRequestAware {
+		ModelDriven<T>, Preparable, ServletRequestAware {
 
 	private HttpServletRequest request;
 	private static final long serialVersionUID = 1L;
@@ -96,9 +90,7 @@ public abstract class BaseAction<T> extends RootAction implements
 	/**
 	 * 获取用户的提交方式 get post
 	 */
-	@Override
 	public void setMethod(String method) {
-
 		this.method = method;
 
 	}
@@ -106,15 +98,13 @@ public abstract class BaseAction<T> extends RootAction implements
 	public String getMethod() {
 
 		if (null == this.method) {
-			this.method = ServletActionContext.getRequest().getMethod();
+			this.method = this.request.getMethod();
 		}
 		return method;
 	}
 
-	@SuppressWarnings("unused")
-	private boolean isAjaxRequest() {
-		String header = ServletActionContext.getRequest().getHeader(
-				"X-Requested-With");
+	protected boolean isXMLHttpRequest() {
+		String header = this.request.getHeader("X-Requested-With");
 		if (header != null && "XMLHttpRequest".equals(header))
 			return true;
 		else
@@ -211,6 +201,5 @@ public abstract class BaseAction<T> extends RootAction implements
 		this.request = arg0;
 
 	}
-	
 
 }

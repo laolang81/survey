@@ -57,7 +57,7 @@
 
 		<default-action-ref name="notFound" />
 		<action name="notFound">
-			<result>/error/404.jsp</result>
+			<result>/WEB-INF/content/error/404.jsp</result>
 		</action>
 	</package>
 

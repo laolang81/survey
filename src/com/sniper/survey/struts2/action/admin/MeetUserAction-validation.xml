@@ -13,11 +13,7 @@
 		</field-validator>
 
 	</field>
-	<field name="url">
-		<field-validator type="requiredstring">
-			<message>必须</message>
-		</field-validator>
-	</field>
+	
 
 
 
