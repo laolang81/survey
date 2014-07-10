@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+<s:set name="sm_url">/amdin/meet-right/delete</s:set>
+<s:include value="../public/sniper_menu.jsp"></s:include>
 
 
 <table class="table table-hover">
@@ -18,8 +20,8 @@
 	</thead>
 	<tbody>
 		<tr>
-		<s:iterator value="allRight">
-			<td><s:checkbox fieldValue="%{id}" value="false" name="id" /> <s:property value="id"/></td>
+		<s:iterator value="list">
+			<td><s:checkbox fieldValue="%{id}" value="false" name="list.id" /> <s:property value="id"/></td>
 			<td><s:a action="update" target="_blank">
 				<s:param name="id">${id }</s:param>
 				<s:property value="name"/>

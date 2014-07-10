@@ -3,6 +3,8 @@ package com.sniper.survey.struts2.action.admin;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,17 +23,22 @@ import com.sniper.survey.struts2.RootAction;
 public abstract class BaseAction<T> extends RootAction implements
 		ModelDriven<T>, Preparable, ServletRequestAware {
 
-	private HttpServletRequest request;
+	
 	private static final long serialVersionUID = 1L;
 
 	@Resource
 	AdminUserService adminUserService;
+	
+	private HttpServletRequest request;
 	/**
 	 * 分页参数
 	 */
-	private int pageNo;
-	public String pageHtml;
-	public int listRow = 20;
+	protected int pageNo;
+	protected String pageHtml;
+	protected int listRow = 20;
+	//用于ajax返回信息
+	protected Map<String, Object> ajaxResult = new HashMap<>();
+	
 
 	public T model;
 	/**
@@ -174,14 +181,6 @@ public abstract class BaseAction<T> extends RootAction implements
 	}
 
 	/**
-	 * @param pageHtml
-	 *            the pageHtml to set
-	 */
-	public void setPageHtml(String pageHtml) {
-		this.pageHtml = pageHtml;
-	}
-
-	/**
 	 * @return the listRow
 	 */
 	public int getListRow() {
@@ -196,6 +195,11 @@ public abstract class BaseAction<T> extends RootAction implements
 		this.listRow = listRow;
 	}
 
+	public Map<String, Object> getAjaxResult() {
+		return ajaxResult;
+	}
+	
+	
 	@Override
 	public void setServletRequest(HttpServletRequest arg0) {
 		this.request = arg0;

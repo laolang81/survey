@@ -34,12 +34,21 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	 * 读取记录数
 	 */
 	private List<AdminUser> list;
+	private List<Integer> delid;
 
 	/**
 	 * @return the meetUsers
 	 */
 	public List<AdminUser> getList() {
 		return list;
+	}
+
+	public void setDelid(List<Integer> delid) {
+		this.delid = delid;
+	}
+
+	public List<Integer> getDelid() {
+		return delid;
 	}
 
 	@Actions({ @Action(value = "index") })
@@ -52,7 +61,6 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		map = adminUserService.pageList(getListRow());
 		pageHtml = (String) map.get("pageHtml");
 		list = (List<AdminUser>) map.get("rows");
-		setPageHtml(pageHtml);
 		return SUCCESS;
 	}
 

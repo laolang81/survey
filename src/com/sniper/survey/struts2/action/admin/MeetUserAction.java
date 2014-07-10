@@ -61,7 +61,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		map = meetUserService.pageList(getListRow());
 		pageHtml = (String) map.get("pageHtml");
 		meetUsers = (List<MeetUser>) map.get("rows");
-		setPageHtml(pageHtml);
+		
 		return SUCCESS;
 	}
 

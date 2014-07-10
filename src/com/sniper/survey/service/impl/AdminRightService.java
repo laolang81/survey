@@ -23,4 +23,6 @@ public interface AdminRightService extends BaseService<AdminRight> {
 	
 	public List<AdminRight> springRight();
 	
+	public Boolean deleteAdminRight(List<Integer> i);
+	
 }

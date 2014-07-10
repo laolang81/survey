@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.sniper.survey.dao.BaseDao;
@@ -21,8 +22,7 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 
 	@Override
 	public void addRgiht() {
-		
-		
+
 	}
 
 	/**
@@ -57,18 +57,18 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 			r.setCode(code);
 			r.setPos(pos);
 		}
-		/*//数据源操作demo,可以完成住从
-		RightToken token = new RightToken();
-		token.setRight(r);
-		// 绑定令牌
-		RightToken.bindToken(token);*/
-		
-		//数据源切换例子
+		/*
+		 * //数据源操作demo,可以完成住从 RightToken token = new RightToken();
+		 * token.setRight(r); // 绑定令牌 RightToken.bindToken(token);
+		 */
+
+		// 数据源切换例子
 		DataSourceSwitch.setDataSource(DataSourceSwitch.DATA_SOURCE_MASTER);
-		
+
 		this.saveOrUpdateEntiry(r);
 
 	}
+
 	/**
 	 * 添加 url
 	 */
@@ -84,6 +84,7 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 		}
 
 	}
+
 	/**
 	 * 获取最大权限位
 	 */
@@ -93,22 +94,38 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 		Integer pos = (Integer) this.uniqueResult(hql);
 		return pos == null ? 0 : pos;
 	}
-	
+
 	/**
-	 *  获取spring可用的url
-	 *  加get可能会生成2个缓存
-	 *  此方法为spring security专用
+	 * 获取spring可用的url 加get可能会生成2个缓存 此方法为spring security专用
+	 * 
 	 * @return
 	 */
 	@Override
-	public List<AdminRight> springRight(){
-		
+	public List<AdminRight> springRight() {
+
 		List<AdminRight> adminRights = this.findAllEntitles();
-		for(AdminRight right: adminRights){
+		for (AdminRight right : adminRights) {
 			right.getAdminGroup().size();
 		}
 		return adminRights;
-		
+
+	}
+
+	@Override
+	public Boolean deleteAdminRight(List<Integer> i) {
+
+		if (i.size() < 1) {
+			return false;
+		}
+
+		String hql = "DELETE FROM AdminRight where id in("
+				+ StringUtils.join(i, ",") + ")";
+		try {
+			this.batchEntiryByHQL(hql);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 		
 	}
 }

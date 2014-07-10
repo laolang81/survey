@@ -30,7 +30,8 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	/**
 	 * 读取记录数
 	 */
-	private List<AdminRight> allRight;
+	private List<AdminRight> list;
+	private List<Integer> delid;
 	/**
 	 * ajax返回列表
 	 */
@@ -39,8 +40,16 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	@Resource
 	private AdminRightService adminRightService;
 
-	public List<AdminRight> getAllRight() {
-		return allRight;
+	public List<AdminRight> getList() {
+		return list;
+	}
+
+	public void setDelid(List<Integer> delid) {
+		this.delid = delid;
+	}
+
+	public List<Integer> getDelid() {
+		return delid;
 	}
 
 	@JSON(serialize = false)
@@ -56,7 +65,7 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		adminRightService.setOrder("id desc");
 		map = adminRightService.pageList(getListRow());
 		pageHtml = (String) map.get("pageHtml");
-		allRight = (List<AdminRight>) map.get("rows");
+		list = (List<AdminRight>) map.get("rows");
 		return SUCCESS;
 	}
 
@@ -67,8 +76,8 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	 */
 	@Action(value = "ajaxlist", results = { @Result(name = "success", type = "json") })
 	public String ajaxList() {
-		this.allRight = adminRightService.findAllEntitles();
-		result.put("aaData", allRight);
+		this.list = adminRightService.findAllEntitles();
+		result.put("aaData", list);
 		return SUCCESS;
 	}
 
@@ -77,7 +86,6 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 			@Result(name = "input", location = "save.jsp") })
 	public String save() {
 		setWebPageTitle("权限添加");
-		System.out.println(getMethod());
 		if (getMethod().equals("POST")) {
 			adminRightService.saveOrUpdate(model);
 		}
@@ -100,10 +108,8 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	 * @return
 	 */
 	@Action(value = "update", results = {
-			@Result(name = "success", location = "save.jsp", params = { "id",
-					"${id}" }),
-			@Result(name = "input", location = "save.jsp", params = { "id",
-					"${id}" }) })
+			@Result(name = "success", location = "save.jsp"),
+			@Result(name = "input", location = "save.jsp") })
 	@SkipValidation
 	public String update() {
 		if (null == model.getId()) {
@@ -139,18 +145,26 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	 * 
 	 * @return
 	 */
-	@Action(value = "delete", results = {
-			@Result(name = "input", location = "list", type = "redirectAction"),
-			@Result(name = "success", location = "list", type = "redirectAction") })
+	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
+			"root", "ajaxResult" }) })
 	@SkipValidation
 	public String delete() {
-		AdminRight right = new AdminRight();
-		if (model.getId() == 0) {
-			return INPUT;
+		ajaxResult.put("code", 0);
+		ajaxResult.put("msg", "success");
+
+		if (delid.size() > 0) {
+			for (Integer	i : delid) {
+				if (i != 0) {
+					//adminRightService.deleteAdminRight(delid);
+					System.out.println(i);
+					ajaxResult.put("code", 1);
+					ajaxResult.put("msg", "删除失败对象:" + i);
+				}
+			}
 		}
-		right.setId(this.model.getId());
-		adminRightService.deleteEntiry(right);
+
 		return SUCCESS;
+
 	}
 
 }
