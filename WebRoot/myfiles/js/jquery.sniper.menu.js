@@ -1,6 +1,7 @@
 /**
  * 用户列表也的所有操作
  */
+jQuery.ajaxSettings.traditional = true;
 (function ($) {
    $.fn.extend({
         "snipermenu": function (options) {
@@ -31,8 +32,8 @@
             
             
             var chk_value	= [];
-            var value		= '';
-            var valuetype	= '';
+            var menuValue		= '';
+            var menuType	= '';
             //组装url
             var url			= options.baseurl + options.url;
             var exporturl	= options.baseurl + options.exporturl;
@@ -59,7 +60,7 @@
             	paramid	= chk_value.join('&id[]=');
             	//alert(id);
             	//alert(exporturl+'?id[]='+paramid);
-            	window.open(exporturl+'?id[]='+paramid+'&type='+value);
+            	window.open(exporturl+'?id[]='+paramid+'&type='+menuValue);
             }
            
             //数据发送，及获取
@@ -82,14 +83,14 @@
         		}    	
             	
             	//新页打开检测
-            	if(targettype.toString().indexOf(value) > -1) {
+            	if(targettype.toString().indexOf(menuValue) > -1) {
             		exportword(chk_value);
             		return false;
             	}
             	art.dialog({content: '后台操作中...'});
             	
             	
-            	$.post(url, { value:value, valuetype:valuetype, delid: chk_value}, 
+            	$.post(url, { menuValue:menuValue, menuType:menuType, delid: chk_value}, 
             			function (data, textStatus){ 
 	            		//关闭所有窗口
 		    			var list = art.dialog.list;
@@ -104,7 +105,7 @@
 			    		
         	    		if(data.code > 0){
         	    			
-        	    			switch(value){    				
+        	    			switch(menuType){    				
     	    					case 'delete':
 	    	    					for(var i in chk_value){
 	        	    					if($(options.prefix + chk_value[i]).length!=0){
@@ -126,13 +127,13 @@
             };
             
             var click = function(obj){
-            	value		= $(obj).attr('data-value'); 
-        		valuetype	= $(obj).attr('data-type'); 
+            	menuValue	= $(obj).attr('data-value'); 
+        		menuType	= $(obj).attr('data-type'); 
             	
         		//执行选择操作
-        		if(valuetype == 'select' ){
+        		if(menuType == 'select' ){
         			
-        			switch(value){
+        			switch(menuValue){
         				case '1':
         					$(options.div + ' tbody>tr :checkbox').prop("checked",true);
         					break;
@@ -162,11 +163,11 @@
             	//sniper_menu
             	$(options.id + ' a').click(function(event){
             		click(this);
-            		return false;
+            		//return false;
         		});
             	$(options.id + ' button[data-type="delete"]').click(function(event){
             		click(this);
-            		return false;
+            		//return false;
         		});
             }	
            

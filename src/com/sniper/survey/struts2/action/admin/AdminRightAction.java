@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -28,10 +29,59 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	private static final long serialVersionUID = 2799348891231755561L;
 
 	/**
+	 * sniper_menu菜单
+	 * 
+	 */
+	/**
+	 * 操作类型
+	 */
+	private String menuType;
+	private Integer menuValue;
+
+	private Map<String, Map<Boolean, String>> sniperMenu = new HashMap<>();
+	{
+
+		Map<Boolean, String> menu = new HashMap<>();
+		menu.put(false, "否");
+		menu.put(true, "是");
+		sniperMenu.put("IsMenu", menu);
+
+		Map<Boolean, String> ispublic = new HashMap<>();
+		ispublic.put(false, "否");
+		ispublic.put(true, "是");
+		sniperMenu.put("IsPublic", ispublic);
+
+		Map<Boolean, String> show = new HashMap<>();
+		show.put(false, "否");
+		show.put(true, "是");
+		sniperMenu.put("IsShow", show);
+	}
+
+	public void setMenuType(String menuType) {
+		this.menuType = menuType;
+	}
+
+	public String getMenuType() {
+		return menuType;
+	}
+
+	public void setMenuValue(Integer menuValue) {
+		this.menuValue = menuValue;
+	}
+
+	public Integer getMenuValue() {
+		return menuValue;
+	}
+
+	public Map<String, Map<Boolean, String>> getSniperMenu() {
+		return sniperMenu;
+	}
+
+	/**
 	 * 读取记录数
 	 */
 	private List<AdminRight> list;
-	private List<Integer> delid;
+	private Integer[] delid;
 	/**
 	 * ajax返回列表
 	 */
@@ -44,11 +94,11 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		return list;
 	}
 
-	public void setDelid(List<Integer> delid) {
+	public void setDelid(Integer[] delid) {
 		this.delid = delid;
 	}
 
-	public List<Integer> getDelid() {
+	public Integer[] getDelid() {
 		return delid;
 	}
 
@@ -149,18 +199,39 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 			"root", "ajaxResult" }) })
 	@SkipValidation
 	public String delete() {
-		ajaxResult.put("code", 0);
-		ajaxResult.put("msg", "success");
+		ajaxResult.put("code", 1);
+		ajaxResult.put("msg", "error");
+		if (!getMethod().equals("POST")) {
+			return SUCCESS;
+		}
 
-		if (delid.size() > 0) {
-			for (Integer	i : delid) {
-				if (i != 0) {
-					//adminRightService.deleteAdminRight(delid);
-					System.out.println(i);
-					ajaxResult.put("code", 1);
-					ajaxResult.put("msg", "删除失败对象:" + i);
-				}
+		if (getMenuType() == null || getMenuValue() == null) {
+			return SUCCESS;
+		}
+
+		switch (menuType) {
+		case "delete":
+			if (adminRightService.deleteAdminRight(delid)) {
+				ajaxResult.put("code", 0);
+				ajaxResult.put("msg", "success");
+			} else {
+				ajaxResult.put("code", 1);
+				ajaxResult.put("msg", "删除失败");
 			}
+			break;
+		case "IsShow":
+			String where = "UPDATE AdminRight SET theShow=? WHERE id in(?)";
+			adminRightService.batchEntiryByHQL(where, getMenuValue(), StringUtils.join(delid, ","));
+			break;
+		case "IsPublic":
+			System.out.println("IsPublic");
+			break;
+		case "IsMenu":
+			System.out.println("IsMenu");
+			break;
+
+		default:
+			break;
 		}
 
 		return SUCCESS;

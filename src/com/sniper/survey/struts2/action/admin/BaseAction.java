@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.json.annotations.JSON;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,12 +24,11 @@ import com.sniper.survey.struts2.RootAction;
 public abstract class BaseAction<T> extends RootAction implements
 		ModelDriven<T>, Preparable, ServletRequestAware {
 
-	
 	private static final long serialVersionUID = 1L;
 
 	@Resource
 	AdminUserService adminUserService;
-	
+
 	private HttpServletRequest request;
 	/**
 	 * 分页参数
@@ -36,9 +36,8 @@ public abstract class BaseAction<T> extends RootAction implements
 	protected int pageNo;
 	protected String pageHtml;
 	protected int listRow = 20;
-	//用于ajax返回信息
+	// 用于ajax返回信息
 	protected Map<String, Object> ajaxResult = new HashMap<>();
-	
 
 	public T model;
 	/**
@@ -195,11 +194,11 @@ public abstract class BaseAction<T> extends RootAction implements
 		this.listRow = listRow;
 	}
 
+	@JSON(serialize = false)
 	public Map<String, Object> getAjaxResult() {
 		return ajaxResult;
 	}
-	
-	
+
 	@Override
 	public void setServletRequest(HttpServletRequest arg0) {
 		this.request = arg0;

@@ -112,9 +112,9 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 	}
 
 	@Override
-	public Boolean deleteAdminRight(List<Integer> i) {
+	public Boolean deleteAdminRight(Integer[] i) {
 
-		if (i.size() < 1) {
+		if (null == i || i.length == 0) {
 			return false;
 		}
 
