@@ -2,27 +2,26 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <title><s:property value="webPageTitle"/></title>
-<s:set name="sm_url">/amdin/meet-user/delete</s:set>
+<s:set name="sm_url">/amdin/admin-user/delete</s:set>
 <s:include value="../public/sniper_menu.jsp"></s:include>
-
+<s:debug></s:debug>
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<th><s:text name="ID"></s:text></th>
-			<th><s:text name="名称"></s:text></th>
-			<th><s:text name="性别"></s:text></th>
-			<th><s:text name="职务"></s:text></th>
-			<th><s:text name="单位"></s:text></th>
-			<th><s:text name="手机"></s:text></th>
-			<th><s:text name="住宿要求"></s:text></th>
-			<th><s:text name="报道时间"></s:text></th>
-			<th><s:text name="车次"></s:text></th>
-			<th><s:text name="是否接站"></s:text></th>
+			<th>ID</th>
+			<th>username</th>
+			<th>nickname</th>
+			<th>email</th>
+			<th>enables</th>
+			<th>usernameExpired</th>
+			<th>passwordExpired</th>
+			<th>locked</th>
+			<th>createTime</th>
 		</tr>
 	</thead>
 	<tbody>
+		<s:iterator value="list">
 		<tr>
-		<s:iterator value="meetUsers">
 			<td><s:checkbox fieldValue="%{id}" value="false" name="id" />
 			<s:a action="update" target="_blank">
 				<s:param name="id">${id }</s:param>
@@ -34,14 +33,13 @@
 				<s:property value="name"/>
 				</s:a>
 			</td>
-			<td><s:property value="sex"/></td>
-			<td><s:property value="post"/></td>
-			<td><s:property value="unit"/></td>
-			<td><s:property value="mobilePhone"/></td>
-			<td><s:property value="shopInfo"/></td>
-			<td><s:property value="reportTime"/></td>
-			<td><s:property value="carNum"/></td>
-			<td><s:property value="carPeople"/></td>
+			<td><s:property value="nickName"/></td>
+			<td><s:property value="email"/></td>
+			<td><s:property value="enables"/></td>
+			<td><s:property value="usernameExpired"/></td>
+			<td><s:property value="passwordExpired"/></td>
+			<td><s:property value="locked"/></td>
+			<td><s:date name="ctime" format="yyyy-mm-dd HH:mm:ss"/> </td>
 		</tr>
 		</s:iterator>
 		

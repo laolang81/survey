@@ -98,8 +98,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 	}
 
 	@Action(value = "update", results = {
-			@Result(name = "input", location = "update", type = "redirectAction", params = {
-					"id", "${id}" }),
+			@Result(name = "input", location = "save.jsp"),
 			@Result(name = "success", location = "save.jsp") })
 	@SkipValidation
 	public String update() {

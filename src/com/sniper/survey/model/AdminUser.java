@@ -1,8 +1,8 @@
 package com.sniper.survey.model;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "mc_admin_user")
-public class AdminUser extends BaseEntity{
+public class AdminUser extends BaseEntity {
 
 	private static final long serialVersionUID = -1749860151352757711L;
 	@Id
@@ -38,15 +38,15 @@ public class AdminUser extends BaseEntity{
 	// 用户是否启用
 	@Column(name = "ENABLES")
 	private boolean enables;
-	//用户过期时间戳
+	// 用户过期时间戳
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "USERNAME_EXPIRED")
 	private Date usernameExpired;
-	//密码过期时间
+	// 密码过期时间
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "PASSWORD_EXPIRED")
 	private Date passwordExpired;
-	//用户是否锁定
+	// 用户是否锁定
 	@Column(name = "LOCKED")
 	private boolean locked;
 
@@ -57,11 +57,11 @@ public class AdminUser extends BaseEntity{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "au_ctime", updatable = false)
 	private Date ctime = new Date();
-	
+
 	// 对应用户组
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "mc_admin_user_group", joinColumns = @JoinColumn(name = "uid"), inverseJoinColumns = @JoinColumn(name = "gid"))
-	private Set<AdminGroup> adminGroup = new HashSet<>();
+	private List<AdminGroup> adminGroup = new ArrayList<>();
 
 	// 权限总和
 	@Transient
@@ -69,11 +69,10 @@ public class AdminUser extends BaseEntity{
 	// 设置为超级管理员
 	@Transient
 	private boolean superAdmin = false;
-	
+
 	@Transient
 	private boolean auth;
 
-		
 	public Integer getId() {
 		return id;
 	}
@@ -91,14 +90,19 @@ public class AdminUser extends BaseEntity{
 	}
 
 	public String getPassword() {
+		System.out.println("获取password--" + password);
 		return password;
 	}
 
 	public void setPassword(String password) {
+		System.out.println("设置password--" + password);
 		this.password = password;
 	}
 
 	public String getNickName() {
+		if (null == nickName || "".equals(nickName)) {
+			return name;
+		}
 		return nickName;
 	}
 
@@ -113,8 +117,6 @@ public class AdminUser extends BaseEntity{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	
 
 	public boolean isEnables() {
 		return enables;
@@ -180,12 +182,11 @@ public class AdminUser extends BaseEntity{
 		this.superAdmin = superAdmin;
 	}
 
-
-	public Set<AdminGroup> getAdminGroup() {
+	public List<AdminGroup> getAdminGroup() {
 		return adminGroup;
 	}
 
-	public void setAdminGroup(Set<AdminGroup> adminGroup) {
+	public void setAdminGroup(List<AdminGroup> adminGroup) {
 		this.adminGroup = adminGroup;
 	}
 
@@ -229,12 +230,8 @@ public class AdminUser extends BaseEntity{
 	public boolean hasRight(AdminRight right) {
 		int pos = right.getPos();
 		long code = right.getCode();
-		
-		//return true;
-		return !((rightSum[pos] & code) == 0);
 
+		return !((rightSum[pos] & code) == 0);
 	}
-	
-	
 
 }

@@ -4,27 +4,21 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.httpclient.util.DateUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.sniper.survey.dao.BaseDao;
 import com.sniper.survey.model.AdminUser;
-import com.sniper.survey.util.StrutsPage;
 import com.sniper.survey.util.ValidateUtil;
+import com.sniper.survey.util.VerifyCode;
+import com.sniper.survey.util.DataUtil;
+import com.sniper.survey.util.VerifyCode.SecurityCodeLevel;
 
 @Service("adminUserService")
 public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser> implements
 		AdminUserService {
 
-	public String pageHtml;
-
-	public String getPageHtml() {
-		return pageHtml;
-	}
-
-	public void setPageHtml(String pageHtml) {
-		this.pageHtml = pageHtml;
-	}
-	
 	@Resource(name = "adminUserDao")
 	public void setDao(BaseDao<AdminUser> dao) {
 		super.setDao(dao);
@@ -53,23 +47,34 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser> implements
 		String hql = "from AdminUser where name = ?";
 		return (AdminUser) this.uniqueResult(hql, username);
 	}
-	
-	public List<AdminUser> adminList(int listRow, Object... Object) {
 
-		List<AdminUser> meetUsers;
+	/**
+	 * 用户修改添加删除
+	 */
+	@Override
+	public void saveOrUpdateEntiry(AdminUser t) {
 
-		String hql = "select count(a) from MeetUser a";
-		long l = (long) this.uniqueResult(hql, Object);
-		int totalNum = new Long(l).intValue();
+		System.out.println("ssss");
+		System.out.println(t.getPassword());
+		if (!StringUtils.isEmpty(t.getPassword())) {
+			// 获取随机验证码
+			String rand = VerifyCode.getSecurityCode(4,
+					SecurityCodeLevel.Medium, false);
 
-		StrutsPage page = new StrutsPage(totalNum, listRow);
-		pageHtml = page.show();
+			String password = t.getPassword();
 
-		String hql2 = "from MeetUser order by id desc";
-		meetUsers = this.page(hql2, page.getFristRow(), page.getListRow(),
-				Object);
+			System.out.println("加密之前" + password);
 
-		return meetUsers;
+			password = DataUtil.md5(password) + rand;
+			System.out.println("第一次加密" + password);
+			password = DataUtil.md5(password);
+
+			System.out.println("第二次加密" + password);
+
+			t.setPassword(password);
+			t.setRand(rand);
+		}
+		super.saveOrUpdateEntiry(t);
 	}
 
 }

@@ -57,10 +57,10 @@ jQuery.ajaxSettings.traditional = true;
             		return false;
             	}
             	//?a[]=1&a[]=3
-            	paramid	= chk_value.join('&id[]=');
+            	paramid	= chk_value.join('&delid=');
             	//alert(id);
             	//alert(exporturl+'?id[]='+paramid);
-            	window.open(exporturl+'?id[]='+paramid+'&type='+menuValue);
+            	window.open(exporturl+'?delid='+paramid+'&type='+menuType);
             }
            
             //数据发送，及获取
@@ -99,7 +99,7 @@ jQuery.ajaxSettings.traditional = true;
 		    			};
 		        		//信息反馈
 			    		if(textStatus=='success')
-			    			art.dialog({ time: 1, content: data.message});
+			    			art.dialog({ time: 1, content: data.msg});
 			    		else
 			    			art.dialog({ time: 1, content: '网络链接不通'});
 			    		

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+
 <s:set name="sm_url">/admin-right/delete</s:set>
 <s:include value="../public/sniper_menu.jsp"></s:include>
 
@@ -19,9 +20,10 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
+		
 		<s:iterator value="list">
-			<td><s:checkbox fieldValue="%{id}" value="false" name="list.id" />
+		<tr id="sl_<s:property value="id"/>">
+			<td><s:checkbox fieldValue="%{id}" name="list.id" />
 				<s:a action="update" target="_blank">
 				<s:param name="id">${id }</s:param>
 				<s:property value="id"/>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.sniper.survey.dao.BaseDao;
@@ -20,10 +21,23 @@ public class AdminGroupServiceImpl extends BaseServiceImpl<AdminGroup>
 	}
 
 	@Override
-	public List<AdminGroup> getGroupSelectList() {
-		String hql = "SELECT new AdminGroup(g.value, g.name) FROM AdminGroup g";
+	public List<AdminGroup> getGroupSelectList(String where) {
+		String hql = "SELECT new AdminGroup(g.id, g.name) FROM AdminGroup g ";
+
+		if (null != where || "".equals(where)) {
+			hql += where;
+		}
 		List<AdminGroup> adminGroups = this.findEntityByHQL(hql);
 		return adminGroups;
+	}
+
+	@Override
+	public List<AdminGroup> getGroupList(Integer[] id) {
+
+		String hql = " from AdminGroup where id in("
+				+ StringUtils.join(id, ",") + ")";
+		
+		return this.findEntityByHQL(hql);
 	}
 
 }

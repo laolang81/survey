@@ -28,18 +28,24 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 
 	private static final long serialVersionUID = 2799348891231755561L;
 
-	/**
-	 * sniper_menu菜单
-	 * 
-	 */
-	/**
-	 * 操作类型
-	 */
-	private String menuType;
-	private Integer menuValue;
 
-	private Map<String, Map<Boolean, String>> sniperMenu = new HashMap<>();
-	{
+	/**
+	 * ajax返回列表
+	 */
+	private Map<String, List<AdminRight>> result = new HashMap<>();
+
+	@Resource
+	private AdminRightService adminRightService;
+
+	@JSON(serialize = false)
+	public Map<String, List<AdminRight>> getResult() {
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Actions({ @Action(value = "index") })
+	@SkipValidation
+	public String index() {
 
 		Map<Boolean, String> menu = new HashMap<>();
 		menu.put(false, "否");
@@ -55,62 +61,7 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		show.put(false, "否");
 		show.put(true, "是");
 		sniperMenu.put("IsShow", show);
-	}
 
-	public void setMenuType(String menuType) {
-		this.menuType = menuType;
-	}
-
-	public String getMenuType() {
-		return menuType;
-	}
-
-	public void setMenuValue(Integer menuValue) {
-		this.menuValue = menuValue;
-	}
-
-	public Integer getMenuValue() {
-		return menuValue;
-	}
-
-	public Map<String, Map<Boolean, String>> getSniperMenu() {
-		return sniperMenu;
-	}
-
-	/**
-	 * 读取记录数
-	 */
-	private List<AdminRight> list;
-	private Integer[] delid;
-	/**
-	 * ajax返回列表
-	 */
-	private Map<String, List<AdminRight>> result = new HashMap<>();
-
-	@Resource
-	private AdminRightService adminRightService;
-
-	public List<AdminRight> getList() {
-		return list;
-	}
-
-	public void setDelid(Integer[] delid) {
-		this.delid = delid;
-	}
-
-	public Integer[] getDelid() {
-		return delid;
-	}
-
-	@JSON(serialize = false)
-	public Map<String, List<AdminRight>> getResult() {
-		return result;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Actions({ @Action(value = "index") })
-	@SkipValidation
-	public String index() {
 		Map<String, Object> map = new HashMap<>();
 		adminRightService.setOrder("id desc");
 		map = adminRightService.pageList(getListRow());
@@ -199,7 +150,9 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 			"root", "ajaxResult" }) })
 	@SkipValidation
 	public String delete() {
-		ajaxResult.put("code", 1);
+		// code 小于1表示有错误,大于0表示ok,==0表示未操作
+
+		ajaxResult.put("code", 0);
 		ajaxResult.put("msg", "error");
 		if (!getMethod().equals("POST")) {
 			return SUCCESS;
@@ -212,16 +165,25 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		switch (menuType) {
 		case "delete":
 			if (adminRightService.deleteAdminRight(delid)) {
-				ajaxResult.put("code", 0);
+				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} else {
-				ajaxResult.put("code", 1);
+				ajaxResult.put("code", -1);
 				ajaxResult.put("msg", "删除失败");
 			}
 			break;
 		case "IsShow":
-			String where = "UPDATE AdminRight SET theShow=? WHERE id in(?)";
-			adminRightService.batchEntiryByHQL(where, getMenuValue(), StringUtils.join(delid, ","));
+			String where = "UPDATE AdminRight SET theShow=? WHERE id in("
+					+ StringUtils.join(delid, ",") + ") ";
+			try {
+				adminRightService.batchEntiryByHQL(where, getMenuValue());
+				ajaxResult.put("code", 1);
+				ajaxResult.put("msg", "success");
+			} catch (Exception e) {
+				ajaxResult.put("code", -1);
+				ajaxResult.put("msg", e.getMessage());
+			}
+
 			break;
 		case "IsPublic":
 			System.out.println("IsPublic");

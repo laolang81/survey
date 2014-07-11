@@ -22,7 +22,7 @@ import com.sniper.survey.util.ValidateUtil;
 //加注解
 @Controller
 @Scope("prototype")
-@Namespace("/admin/admin-user")
+@Namespace("/admin/user")
 @ParentPackage("default")
 public class UserAction extends BaseAction<AdminUser> implements UserAware {
 
@@ -104,7 +104,7 @@ public class UserAction extends BaseAction<AdminUser> implements UserAware {
 			System.out.println(model);
 		} else {
 			// 设置用户组
-			setAdminGroupsSelect(adminGroupService.getGroupSelectList());
+			//setAdminGroupsSelect(adminGroupService.getGroupSelectList());
 		}
 	}
 

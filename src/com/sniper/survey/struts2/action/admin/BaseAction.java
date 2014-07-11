@@ -4,6 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -31,6 +32,43 @@ public abstract class BaseAction<T> extends RootAction implements
 
 	private HttpServletRequest request;
 	/**
+	 * sniper_menu菜单
+	 */
+	protected String menuType;
+	protected Boolean menuValue;
+	protected Integer[] delid;
+
+	protected Map<String, Map<Boolean, String>> sniperMenu = new HashMap<>();
+
+	public void setMenuType(String menuType) {
+		this.menuType = menuType;
+	}
+
+	public String getMenuType() {
+		return menuType;
+	}
+
+	public void setMenuValue(Boolean menuValue) {
+		this.menuValue = menuValue;
+	}
+
+	public Boolean getMenuValue() {
+		return menuValue;
+	}
+
+	public Map<String, Map<Boolean, String>> getSniperMenu() {
+		return sniperMenu;
+	}
+
+	public void setDelid(Integer[] delid) {
+		this.delid = delid;
+	}
+
+	public Integer[] getDelid() {
+		return delid;
+	}
+
+	/**
 	 * 分页参数
 	 */
 	protected int pageNo;
@@ -52,6 +90,20 @@ public abstract class BaseAction<T> extends RootAction implements
 
 	public String getHtmlPath() {
 		return htmlPath;
+	}
+
+	/**
+	 * 读取记录数
+	 */
+	protected List<T> list;
+	protected List<T> AjaxList;
+
+	public List<T> getList() {
+		return list;
+	}
+
+	public List<T> getAjaxList() {
+		return AjaxList;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

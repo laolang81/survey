@@ -8,5 +8,7 @@ import com.sniper.survey.service.BaseService;
 public interface AdminGroupService extends BaseService<AdminGroup> {
 
 	
-	public List<AdminGroup> getGroupSelectList();
+	public List<AdminGroup> getGroupSelectList(String where);
+	
+	public List<AdminGroup> getGroupList(Integer[] id);
 }

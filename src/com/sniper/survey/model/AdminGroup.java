@@ -17,8 +17,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mc_admin_group")
-public class AdminGroup extends BaseEntity{
-	
+public class AdminGroup extends BaseEntity {
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,11 +32,10 @@ public class AdminGroup extends BaseEntity{
 	private Integer fid;
 	@Column(name = "ag_note")
 	public String note;
-	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE })
 	@JoinTable(name = "mc_admin_group_right", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "right_id"))
 	private Set<AdminRight> adminRight = new HashSet<>();
-
 
 	public Integer getId() {
 		return id;
@@ -90,6 +89,12 @@ public class AdminGroup extends BaseEntity{
 		super();
 		this.name = name;
 		this.value = value;
+	}
+
+	public AdminGroup(Integer id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
 	}
 
 	public AdminGroup() {

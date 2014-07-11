@@ -28,15 +28,15 @@ public class myUserDetail implements UserDetailsService {
 
 	@Resource
 	private AdminUserService adminUserService;
-	
+
 	public myUserDetail(AdminUserService adminUserService) {
 		this.adminUserService = adminUserService;
 	}
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {
-		
+
 		System.out.println("myUserDetailService:" + username);
 		AdminUser adminUser = adminUserService.validateByName(username);
 		if (adminUser == null) {
@@ -47,22 +47,22 @@ public class myUserDetail implements UserDetailsService {
 
 		boolean accountNonExpired = true;
 		boolean credentialsNonExpired = true;
-		boolean accountNonLocked	= false;
-		if(!adminUser.isLocked()){
+		boolean accountNonLocked = false;
+		if (!adminUser.isLocked()) {
 			accountNonLocked = true;
 		}
-		
+
 		// 在数据库中获取信息之后赋值给他们,这里演示一下
 		User user = new User(adminUser.getName(), adminUser.getPassword(),
-				adminUser.isEnables(), accountNonExpired, credentialsNonExpired,
-				accountNonLocked, authorities);
+				adminUser.isEnables(), accountNonExpired,
+				credentialsNonExpired, accountNonLocked, authorities);
 
 		return user;
 	}
 
 	/**
-	 * 取得用户的权限
-	 * 获取当前用户可以查看的地址列表
+	 * 取得用户的权限 获取当前用户可以查看的地址列表
+	 * 
 	 * @param adminUser
 	 * @return
 	 */
@@ -70,8 +70,8 @@ public class myUserDetail implements UserDetailsService {
 			AdminUser adminUser) {
 
 		Set<GrantedAuthority> authSet = new HashSet<>();
-		Set<AdminGroup> groups = adminUser.getAdminGroup();
-		
+		Set<AdminGroup> groups = new HashSet<>(adminUser.getAdminGroup());
+
 		for (AdminGroup adminGroup : groups) {
 			authSet.add(new SimpleGrantedAuthority(adminGroup.getValue()));
 		}

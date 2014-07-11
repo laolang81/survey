@@ -1,5 +1,7 @@
 package com.sniper.survey.spring.security;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,7 +43,15 @@ public class MyUsernamePasswordAuthenticationFilter extends
 			throw new AuthenticationServiceException("无效请求");
 			
 		}
-
+		
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		response.setCharacterEncoding("UTF-8");
+		
 		checkValidateCode(request);
 
 		String username = obtainUsername(request);
@@ -69,8 +79,9 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		}
 		System.out.println("加密之前的密码" + password);
 		password = DataUtil.md5(password) + adminUser.getRand();
+		System.out.println("第一次加密" + password);
 		password = DataUtil.md5(password);
-		System.out.println("加密之后的密码" + password);
+		System.out.println("第二次加密" + password);
 		if (username == null || !adminUser.getPassword().equals(password)) {
 
 			/*request.getSession().setAttribute(
@@ -151,13 +162,13 @@ public class MyUsernamePasswordAuthenticationFilter extends
 
 	@Override
 	protected String obtainPassword(HttpServletRequest request) {
-		Object obj = request.getParameter(USERNAME);
+		Object obj = request.getParameter(PASSWORD);
 		return null == obj ? "" : obj.toString();
 	}
 
 	@Override
 	protected String obtainUsername(HttpServletRequest request) {
-		Object obj = request.getParameter(PASSWORD);
+		Object obj = request.getParameter(USERNAME);
 		return null == obj ? "" : obj.toString();
 	}
 

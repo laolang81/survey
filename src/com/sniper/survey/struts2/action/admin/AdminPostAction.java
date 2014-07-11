@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -21,9 +23,11 @@ import com.sniper.survey.service.impl.TagsService;
 import com.sniper.survey.util.VerifyCode;
 
 //加注解
-@Controller("adminPost")
+@Controller
 @Scope("prototype")
-public class PostAction extends BaseAction<AdminUser> {
+@Namespace("/admin/admin-post")
+@ParentPackage("default")
+public class AdminPostAction extends BaseAction<AdminUser> {
 
 	/**
 	 * 
