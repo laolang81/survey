@@ -23,13 +23,14 @@ import javax.persistence.Transient;
 public class AdminUser extends BaseEntity {
 
 	private static final long serialVersionUID = -1749860151352757711L;
+	
 	@Id
 	@Column(name = "au_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@Column(name = "au_name", unique = true, updatable = false)
 	private String name;
-	@Column(name = "au_password")
+	@Column(name = "au_password", nullable = true)
 	private String password;
 	@Column(name = "au_nickName")
 	private String nickName;
@@ -90,12 +91,10 @@ public class AdminUser extends BaseEntity {
 	}
 
 	public String getPassword() {
-		System.out.println("获取password--" + password);
 		return password;
 	}
 
 	public void setPassword(String password) {
-		System.out.println("设置password--" + password);
 		this.password = password;
 	}
 

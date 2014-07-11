@@ -129,13 +129,19 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return dao.getOpenSesion();
 	}
 
+	@Override
+	public Session getCurrentSession() {
+
+		return dao.getCurrentSession();
+	}
+
 	public void saveEntiry(T t) {
 		dao.saveEntiry(t);
 
 	}
 
 	public void saveOrUpdateEntiry(T t) {
-		
+
 		dao.saveOrUpdateEntiry(t);
 
 	}

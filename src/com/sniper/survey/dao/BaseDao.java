@@ -21,6 +21,7 @@ public interface BaseDao<T> {
 	 * 测试专用
 	 */
 	public Session getOpenSesion();
+	public Session getCurrentSession();
 	
 	// 写操作
 	/**

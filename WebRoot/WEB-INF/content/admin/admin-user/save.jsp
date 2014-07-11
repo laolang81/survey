@@ -40,11 +40,11 @@
 	</div>
 	
 	<div class="form-group">
-		<label for="password" class="col-sm-2 control-label">密码</label>
+		<label for="password_old" class="col-sm-2 control-label">密码</label>
 		<div class="col-sm-10">
-			<s:password name="password" cssClass="form-control" id="password" />
+			<s:password name="password_old" cssClass="form-control" id="password_old" />
 			<div class="help-block">
-				<s:fielderror fieldName="password" />
+				<s:fielderror fieldName="password_old" />
 			</div>
 		</div>
 	</div>
@@ -72,7 +72,14 @@
 	<div class="form-group">
 		<label for="enables" class="col-sm-2 control-label">启用</label>
 		<div class="col-sm-2">
-			<s:checkbox name="enables"></s:checkbox>
+			<s:checkbox name="enables"  />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="locked" class="col-sm-2 control-label">锁定</label>
+		<div class="col-sm-2">
+			<s:checkbox name="locked" />
 		</div>
 	</div>
 	
@@ -97,13 +104,6 @@
 					<s:date name="passwordExpired" format="yyyy-MM-dd HH:mm:ss" />
 				</s:param>
 			</s:textfield>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label for="locked" class="col-sm-2 control-label">锁定</label>
-		<div class="col-sm-2">
-			<s:checkbox name="locked"></s:checkbox>
 		</div>
 	</div>
 	

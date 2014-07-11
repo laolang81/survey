@@ -28,7 +28,6 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 
 	private static final long serialVersionUID = 2799348891231755561L;
 
-
 	/**
 	 * ajax返回列表
 	 */
@@ -87,7 +86,7 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 			@Result(name = "input", location = "save.jsp") })
 	public String save() {
 		setWebPageTitle("权限添加");
-		if (getMethod().equals("POST")) {
+		if (getMethod().equalsIgnoreCase("post")) {
 			adminRightService.saveOrUpdate(model);
 		}
 		return SUCCESS;
@@ -97,7 +96,7 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 			@Result(name = "input", location = "save.jsp"),
 			@Result(name = "success", location = "save", type = "redirectAction") })
 	public String saveData() {
-		if (getMethod().equals("POST")) {
+		if (getMethod().equalsIgnoreCase("post")) {
 			adminRightService.saveOrUpdate(model);
 		}
 		return SUCCESS;
@@ -116,12 +115,13 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		if (null == model.getId()) {
 			return ERROR;
 		}
-		if (getMethod().equals("GET")) {
-			this.model = adminRightService.getEntity(this.model.getId());
+
+		if (getMethod().equalsIgnoreCase("post")) {
+			adminRightService.saveOrUpdate(model);
 		}
 
-		if (getMethod().equals("POST")) {
-			adminRightService.saveOrUpdate(model);
+		if (getMethod().equalsIgnoreCase("get")) {
+			this.model = adminRightService.getEntity(this.model.getId());
 		}
 		return SUCCESS;
 	}
@@ -135,7 +135,7 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 			@Result(name = "success", location = "update", type = "redirectAction", params = {
 					"id", "${id}" }), })
 	public String updateData() {
-		if (getMethod().equals("POST")) {
+		if (getMethod().equalsIgnoreCase("post")) {
 			adminRightService.saveOrUpdate(model);
 		}
 		return SUCCESS;
@@ -154,7 +154,7 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 
 		ajaxResult.put("code", 0);
 		ajaxResult.put("msg", "error");
-		if (!getMethod().equals("POST")) {
+		if (!getMethod().equalsIgnoreCase("post") || !isXMLHttpRequest()) {
 			return SUCCESS;
 		}
 

@@ -4,7 +4,7 @@
 <title><s:property value="webPageTitle"/></title>
 <s:set name="sm_url">/amdin/admin-user/delete</s:set>
 <s:include value="../public/sniper_menu.jsp"></s:include>
-<s:debug></s:debug>
+
 <table class="table table-hover">
 	<thead>
 		<tr>

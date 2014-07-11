@@ -15,6 +15,7 @@ public interface BaseService<T> {
 	 * @return
 	 */
 	public Session getOpenSession();
+	public Session getCurrentSession();
 
 	// 写操作
 	public void saveEntiry(T t);

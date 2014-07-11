@@ -28,7 +28,7 @@
 	<div class="form-group">
 		<label for="theMenu" class="col-sm-2 control-label">theMenu</label>
 		<div class="col-sm-10">
-			<s:checkbox name="theMenu" value="1" />
+			<s:checkbox name="theMenu"/>
 			<div class="help-block"><s:fielderror fieldName="theMenu" /></div>
 		</div>
 	</div>

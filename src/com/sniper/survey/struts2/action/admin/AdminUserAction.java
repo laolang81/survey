@@ -1,7 +1,6 @@
 package com.sniper.survey.struts2.action.admin;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +36,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	@Resource
 	AdminUserService adminUserService;
 
+	private String password_old;
 	private String password_c;
 	// 用户组列表
 	private List<AdminGroup> adminGroups = new ArrayList<>();
@@ -66,10 +66,16 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		return valueFromGroups;
 	}
 
+	public String getPassword_old() {
+		return password_old;
+	}
+	public void setPassword_old(String password_old) {
+		this.password_old = password_old;
+	}
 	public void setPassword_c(String password_c) {
 		this.password_c = password_c;
 	}
-
+	
 	public String getPassword_c() {
 		return password_c;
 	}
@@ -92,7 +98,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 			@Result(name = "success", location = "save.jsp"),
 			@Result(name = "input", location = "save.jsp") })
 	public String save() {
-		if (getMethod().equals("POST")) {
+		if (getMethod().equalsIgnoreCase("post")) {
 			adminUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
@@ -102,7 +108,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 			@Result(name = "input", location = "save.jsp"),
 			@Result(name = "success", location = "save", type = "redirectAction") })
 	public String saveData() {
-		if (getMethod().equals("POST")) {
+		if (getMethod().equalsIgnoreCase("post")) {
 			adminUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
@@ -114,29 +120,34 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	@SkipValidation
 	public String update() {
 
-		if (null == model.getId()) {
+		if (null == this.model.getId()) {
 			return ERROR;
 		}
+		
+		List<AdminGroup> ags = new ArrayList<>();
 
-		this.model = adminUserService.getEntity(model.getId());
-		List<AdminGroup> ags = model.getAdminGroup();
-		// 未表单设置选中答案\
+		if (getMethod().equalsIgnoreCase("post")) {
+			
+			if(!password_c.isEmpty()){
+				model.setPassword(password_c);
+			}
+			
+			ags = adminGroupService.getGroupList(fromGroups);
+			this.model.getAdminGroup().clear();
+			this.model.setAdminGroup(ags);
+			adminUserService.saveOrUpdateEntiry(this.model);
+
+		}
+		if (getMethod().equalsIgnoreCase("get")) {
+			this.model = adminUserService.getEntity(this.model.getId());
+		}
+
+		ags = this.model.getAdminGroup();
+		// 未表单设置选中答案
 		for (AdminGroup ag : ags) {
 			if (ag != null) {
 				valueFromGroups.add(ag.getId());
 			}
-		}
-		
-		if (getMethod().equals("POST")) {
-			model.getAdminGroup().clear();
-			System.out.println(Arrays.asList(fromGroups));
-			ags = adminGroupService.getGroupList(fromGroups);
-			model.setAdminGroup(ags);
-			if(!StringUtils.isEmpty(password_c)){
-				model.setPassword(password_c);
-			}
-			System.out.println(model.getPassword());
-			adminUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
 	}
@@ -164,7 +175,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 		ajaxResult.put("code", 0);
 		ajaxResult.put("msg", "非有效请求");
-		if (!getMethod().equals("POST") || !isXMLHttpRequest()) {
+		if (!getMethod().equalsIgnoreCase("post") || !isXMLHttpRequest()) {
 			return SUCCESS;
 		}
 		ajaxResult.put("msg", "参数不全");

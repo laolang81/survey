@@ -61,7 +61,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		map = meetUserService.pageList(getListRow());
 		pageHtml = (String) map.get("pageHtml");
 		meetUsers = (List<MeetUser>) map.get("rows");
-		
+
 		return SUCCESS;
 	}
 
@@ -79,8 +79,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 			@Result(name = "input", location = "save.jsp"),
 			@Result(name = "success", location = "save.jsp") })
 	public String save() {
-		System.out.println(getMethod());
-		if (getMethod().equals("POST")) {
+		if (getMethod().equalsIgnoreCase("post")) {
 			System.out.println("save");
 			meetUserService.saveOrUpdateEntiry(model);
 		}
@@ -91,7 +90,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 			@Result(name = "input", location = "save", type = "redirectAction"),
 			@Result(name = "success", location = "save", type = "redirectAction") })
 	public String saveData() {
-		if (getMethod().equals("POST")) {
+		if (getMethod().equalsIgnoreCase("post")) {
 			meetUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
@@ -107,7 +106,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 			return ERROR;
 		}
 
-		if (getMethod().equals("GET")) {
+		if (getMethod().equalsIgnoreCase("get")) {
 			this.model = meetUserService.getEntity(this.model.getId());
 		}
 
@@ -125,7 +124,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 			@Result(name = "success", location = "update", type = "redirectAction", params = {
 					"id", "${id}" }) })
 	public String updateData() {
-		if (getMethod().equals("POST")) {
+		if (getMethod().equalsIgnoreCase("post")) {
 			meetUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
@@ -133,6 +132,36 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 
 	@Action("delete")
 	public String delete() {
+		// code 小于1表示有错误,大于0表示ok,==0表示未操作
+
+		ajaxResult.put("code", 0);
+		ajaxResult.put("msg", "error");
+		if (!getMethod().equalsIgnoreCase("post") || !isXMLHttpRequest()) {
+			return SUCCESS;
+		}
+
+		if (getMenuType() == null || getMenuValue() == null) {
+			return SUCCESS;
+		}
+
+		switch (menuType) {
+		case "delete":
+
+			break;
+		case "IsShow":
+
+			break;
+		case "IsPublic":
+			System.out.println("IsPublic");
+			break;
+		case "IsMenu":
+			System.out.println("IsMenu");
+			break;
+
+		default:
+			break;
+		}
+
 		return SUCCESS;
 	}
 
