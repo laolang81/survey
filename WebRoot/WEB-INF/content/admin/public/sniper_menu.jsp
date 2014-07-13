@@ -39,7 +39,7 @@
 
 $(function(){
  	$().snipermenu({
- 		url:'<s:property value="sm_url"/>'
+ 		url:'<s:property value="sniperUrl"/>'
  	 });
 });
 </script>

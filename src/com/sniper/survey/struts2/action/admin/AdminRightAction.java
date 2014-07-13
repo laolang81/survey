@@ -46,6 +46,8 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	@SkipValidation
 	public String index() {
 
+		super.sniperUrl = "/amdin/admin-right/delete";
+		
 		Map<Boolean, String> menu = new HashMap<>();
 		menu.put(false, "否");
 		menu.put(true, "是");

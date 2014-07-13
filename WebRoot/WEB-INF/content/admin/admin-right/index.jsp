@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<s:set name="sm_url">/admin-right/delete</s:set>
 <s:include value="../public/sniper_menu.jsp"></s:include>
 
 <table class="table table-hover">

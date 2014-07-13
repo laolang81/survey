@@ -2,8 +2,6 @@ package com.sniper.survey.struts2.action.admin;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +22,6 @@ import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.service.impl.AdminUserService;
 import com.sniper.survey.struts2.RootAction;
-import com.sniper.survey.util.PropertiesUtil;
 
 public abstract class BaseAction<T> extends RootAction implements
 		ModelDriven<T>, Preparable, ServletRequestAware {
@@ -44,8 +41,10 @@ public abstract class BaseAction<T> extends RootAction implements
 	protected Boolean menuValue;
 	protected Integer[] delid;
 	protected String ip;
-
+	//sniper菜单选项
 	protected Map<String, Map<Boolean, String>> sniperMenu = new HashMap<>();
+	//菜单处理url
+	protected String sniperUrl;
 
 	public void setMenuType(String menuType) {
 		this.menuType = menuType;
@@ -65,6 +64,10 @@ public abstract class BaseAction<T> extends RootAction implements
 
 	public Map<String, Map<Boolean, String>> getSniperMenu() {
 		return sniperMenu;
+	}
+
+	public String getSniperUrl() {
+		return sniperUrl;
 	}
 
 	public void setDelid(Integer[] delid) {
@@ -158,18 +161,15 @@ public abstract class BaseAction<T> extends RootAction implements
 
 		// 设置网站后台标题
 		// getRequestUrl
-		System.out.println(this.request.getRequestURI());
-		System.out.println(this.request.getRequestURL());
 		String url = this.request.getRequestURI().replace(
 				this.request.getContextPath(), "");
-
-		// 当不是一斜杠结尾的url
+		//此时的url不会携带?后面的东西
+		// 当不是一斜杠结尾的url,
 		if (url.lastIndexOf(".") != -1) {
 			// 去除结尾的后缀
 			url = url.substring(0, url.lastIndexOf("."));
 		}
-		
-		
+
 		System.out.println(url);
 		String title = adminRightService.getUrlName(url);
 		setWebPageTitle(title);

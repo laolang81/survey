@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<title><s:property value="webPageTitle"/></title>
-<s:set name="sm_url">/amdin/meet-user/delete</s:set>
 <s:include value="../public/sniper_menu.jsp"></s:include>
 
 <table class="table table-hover">

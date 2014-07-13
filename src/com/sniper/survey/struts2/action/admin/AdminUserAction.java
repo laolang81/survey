@@ -82,7 +82,8 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
-		setWebPageTitle("管理人员列表");
+		
+		super.sniperUrl = "/amdin/amdin-user/delete";
 
 		Map<Boolean, String> menu = new HashMap<>();
 		menu.put(false, "否");

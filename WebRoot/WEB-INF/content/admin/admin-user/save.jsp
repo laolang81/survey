@@ -58,10 +58,8 @@
 		<label for="adminGroup" class="col-sm-2 control-label">用户组</label>
 		<div class="col-sm-10">
 			<s:checkboxlist list="adminGroups" value="valueFromGroups" listKey="id" listValue="name" name="fromGroups" cssClass=""></s:checkboxlist>
-			
 		</div>
 	</div>
-	
 	
 	<div class="form-group">
 		<label for="enables" class="col-sm-2 control-label">启用</label>
