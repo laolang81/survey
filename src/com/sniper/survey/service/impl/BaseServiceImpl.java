@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -169,6 +170,15 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	public void batchEntiryByHQL(String hql, Object... Object) {
 		dao.batchEntiryByHQL(hql, Object);
+
+	}
+
+	@Override
+	public void batchFiledChange(String filedName, Object changeValue,
+			String id) {
+		String hql = "UPDATE " + clazz.getSimpleName() + " SET " + filedName
+				+ "=? WHERE id in(" + id + ") ";
+		dao.batchEntiryByHQL(hql, changeValue);
 
 	}
 

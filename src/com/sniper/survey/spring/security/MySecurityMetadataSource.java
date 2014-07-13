@@ -69,14 +69,18 @@ public class MySecurityMetadataSource implements
 					configAttributes.add(configAttribute);
 				}
 				// 添加后缀
+				
 				for (int i = 0; i < list.length; i++) {
-					if (!right.getUrl().endsWith("/")) {
-						rightMap.put(right.getUrl() + "." + list[i],
-								configAttributes);
-					}else{
-						//由于 / 和/index访问的是一个地址,所以再次加一个链接
-						rightMap.put(right.getUrl() + "index", configAttributes);
+					String url = right.getUrl();
+					// 找出不宜/结尾的url,加上.后缀
+					if (!url.endsWith("/")) {
+						url += "." + list[i];
+					} else {
+						// 由于 / 和/index访问的是一个地址,所以再次加一个链接
+						url += "index." + list[i];
 					}
+					System.out.println(url);
+					rightMap.put(url, configAttributes);
 				}
 				rightMap.put(right.getUrl(), configAttributes);
 			}

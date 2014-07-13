@@ -46,7 +46,7 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	@SkipValidation
 	public String index() {
 
-		super.sniperUrl = "/amdin/admin-right/delete";
+		super.sniperUrl = "/admin-right/delete";
 		
 		Map<Boolean, String> menu = new HashMap<>();
 		menu.put(false, "否");
@@ -162,10 +162,8 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 
 			break;
 		case "IsMenu":
-			where = "UPDATE AdminRight SET theMenu=? WHERE id in("
-					+ StringUtils.join(delid, ",") + ") ";
 			try {
-				adminRightService.batchEntiryByHQL(where, getMenuValue());
+				adminRightService.batchFiledChange("theMenu", getMenuValue(), StringUtils.join(delid, ","));
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {

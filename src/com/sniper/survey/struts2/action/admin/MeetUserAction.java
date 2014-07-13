@@ -55,7 +55,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 	@SkipValidation
 	public String index() {
 		
-		super.sniperUrl = "/amdin/meet-user/delete";
+		super.sniperUrl = "/meet-user/delete";
 		Map<String, Object> map = new HashMap<>();
 		meetUserService.setOrder("id desc");
 		map = meetUserService.pageList(getListRow());

@@ -27,6 +27,12 @@ public interface BaseService<T> {
 	public void deleteEntiry(T t);
 
 	public void batchEntiryByHQL(String hql, Object... Object);
+	/**
+	 * 单个字段的修改,批量修改
+	 * @param hql
+	 * @param Object
+	 */
+	public void batchFiledChange(String filedName, Object changeValue, String id);
 
 	// 级联关系保存
 	public void savePersist(T t);
@@ -87,4 +93,6 @@ public interface BaseService<T> {
 	public void setOrder(String order);
 
 	public Criteria criteria();
+	
+	
 }

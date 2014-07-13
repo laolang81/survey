@@ -83,7 +83,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	@SkipValidation
 	public String index() {
 		
-		super.sniperUrl = "/amdin/amdin-user/delete";
+		super.sniperUrl = "/amdin-user/delete";
 
 		Map<Boolean, String> menu = new HashMap<>();
 		menu.put(false, "否");
@@ -216,10 +216,8 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 			break;
 		case "locked":
-			hql = "UPDATE AdminUser SET locked=? WHERE id in("
-					+ StringUtils.join(delid, ",") + ") ";
 			try {
-				adminUserService.batchEntiryByHQL(hql, getMenuValue());
+				adminUserService.batchFiledChange("locked", getMenuValue(), StringUtils.join(delid, ","));
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
