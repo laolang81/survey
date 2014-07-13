@@ -43,7 +43,7 @@
 		<label for="url" class="col-sm-2 control-label">Url</label>
 		<div class="col-sm-10">
 			<s:textfield name="url" cssClass="form-control" id="url" placeholder="url" />
-			<div class="help-block">url地址</div>
+			<div class="help-block">注意url地址 / 等于 /index struts出现斜杠会自动寻找index,请在添加url的时候不要加index,只写/即可</div>
 		</div>
 	</div>
 	
