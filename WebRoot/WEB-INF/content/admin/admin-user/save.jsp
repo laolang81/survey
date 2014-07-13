@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<s:debug></s:debug>
-
 <s:form method="post" id="sniperForm" cssClass="form-horizontal"
 	role="form">
 	<s:token />
@@ -13,9 +11,7 @@
 		<label for="name" class="col-sm-2 control-label">名称</label>
 		<div class="col-sm-10">
 			<s:textfield name="name" cssClass="form-control" id="name" />
-			<div class="help-block">
-				<s:fielderror fieldName="name" />
-			</div>
+			<div class="help-block"><s:fielderror fieldName="name" /></div>
 		</div>
 	</div>
 
@@ -43,9 +39,7 @@
 		<label for="password_old" class="col-sm-2 control-label">密码</label>
 		<div class="col-sm-10">
 			<s:password name="password_old" cssClass="form-control" id="password_old" />
-			<div class="help-block">
-				<s:fielderror fieldName="password_old" />
-			</div>
+			<div class="help-block"><s:fielderror fieldName="password_old" /></div>
 		</div>
 	</div>
 	

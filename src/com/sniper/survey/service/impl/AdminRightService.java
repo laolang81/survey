@@ -25,4 +25,6 @@ public interface AdminRightService extends BaseService<AdminRight> {
 	
 	public Boolean deleteAdminRight(Integer[] i);
 	
+	public String getUrlName(String url);
+	
 }

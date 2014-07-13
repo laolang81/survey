@@ -20,8 +20,10 @@
 		</field-validator>
 	</field>
 
-	<field name="password">
-
+	<field name="password_old">
+		<field-validator type="requiredstring" short-circuit="true">
+			<message>密码必须</message>
+		</field-validator>
 		<field-validator type="stringlength">
 			<param name="trim">true</param>
 			<param name="minLength">6</param>
@@ -32,8 +34,8 @@
 	</field>
 
 	<validator type="expression">
-		<param name="expression"><![CDATA[password!=null || password_c==password]]></param>
-		<message>两次密码不一致</message>
+		<param name="expression"><![CDATA[password_old!=null && password_c==password_old]]></param>
+		<message>两次密码输入请保持一致</message>
 	</validator>
 
 

@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "mc_admin_user")
@@ -28,12 +29,14 @@ public class AdminUser extends BaseEntity {
 	@Column(name = "au_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@NotNull
 	@Column(name = "au_name", unique = true, updatable = false)
 	private String name;
 	@Column(name = "au_password", nullable = true)
 	private String password;
 	@Column(name = "au_nickName")
 	private String nickName;
+	
 	@Column(name = "au_email")
 	private String email;
 	// 用户是否启用

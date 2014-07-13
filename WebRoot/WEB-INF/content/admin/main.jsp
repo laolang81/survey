@@ -17,7 +17,7 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<title><sitemesh:write property="title" /> - 后台管理</title>
+<title><sitemesh:write property="title" /> <s:property value="webPageTitle"/> - 后台管理</title>
 <sitemesh:write property='head' />
 <base href="<%=basePath%>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,23 +66,24 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">人员采集 <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="admin/meet-user/">人员列表</a></li>
-						<li><a href="admin/meet-user/save">人员添加</a></li>
-						<li><a href="admin/meet-user/export">人员导出</a></li>
+						<li><s:a action="/" namespace="/admin/meet-user">人员列表</s:a></li>
+						<li><s:a action="save" namespace="/admin/meet-user">人员添加</s:a></li>
+						<li><s:a action="export" namespace="/admin/meet-user">人员导出</s:a></li>
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">权限管理 <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="admin/admin-right/">资源列表</a></li>
-						<li><a href="admin/admin-right/save">资源添加</a></li>
+						<li><s:a action="index" namespace="/admin/admin-right">资源列表</s:a></li>
+						<li><s:a action="save" namespace="/admin/admin-right">资源添加</s:a></li>
 						<li class="divider"></li>
-						<li><a href="admin/admin-group/">用户组列表</a></li>
-						<li><a href="admin/admin-group/save">用户组添加</a></li>
+						<li><s:a action="index" namespace="/admin/admin-group">用户组列表</s:a></li>
+						<li><s:a action="save" namespace="/admin/admin-group">用户组添加</s:a></li>
 						<li class="divider"></li>
-						<li><a href="admin/admin-user/">管理员列表</a></li>
-						<li><a href="admin/admin-user/save">管理员添加</a></li>
+						<li><s:a action="index" namespace="/admin/admin-user">管理员列表</s:a></li>
+						<li><s:a action="save" namespace="/admin/admin-user">管理员添加</s:a></li>
 						<li class="divider"></li>
-						<li><a href="admin/admin-user/change-password">更改密码</a></li>
+						<li><s:a action="change-password" namespace="/admin/admin-user">更改密码</s:a></li>
+						
 						
 					</ul></li>
 			</ul>

@@ -20,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import com.sniper.survey.model.AdminGroup;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminGroupService;
-import com.sniper.survey.service.impl.AdminUserService;
 
 @Controller
 @Scope("prototype")
@@ -32,9 +31,6 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 	@Resource
 	AdminGroupService adminGroupService;
-
-	@Resource
-	AdminUserService adminUserService;
 
 	private String password_old;
 	private String password_c;
@@ -187,7 +183,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		// code 小于1表示有错误,大于0表示ok,==0表示未操作
 
 		super.delete();
-		
+
 		String hql = "";
 
 		switch (menuType) {

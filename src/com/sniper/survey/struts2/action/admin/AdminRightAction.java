@@ -92,16 +92,6 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		return SUCCESS;
 	}
 
-	@Action(value = "saveData", results = {
-			@Result(name = "input", location = "save.jsp"),
-			@Result(name = "success", location = "save", type = "redirectAction") })
-	public String saveData() {
-		if (getMethod().equalsIgnoreCase("post")) {
-			adminRightService.saveOrUpdate(model);
-		}
-		return SUCCESS;
-	}
-
 	/**
 	 * 编辑
 	 * 
@@ -125,7 +115,6 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		}
 		return SUCCESS;
 	}
-
 
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })

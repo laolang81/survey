@@ -75,7 +75,7 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 	@Override
 	public void appendRightByURL(String url) {
 
-		String hql = "select count(*) from AdminRight r where r.url = ?";
+		String hql = "select count(r) from AdminRight r where r.url = ?";
 		Long long1 = (Long) this.uniqueResult(hql, url);
 		if (long1 == 0) {
 			AdminRight right = new AdminRight();
@@ -126,6 +126,13 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	@Override
+	public String getUrlName(String url) {
 		
+		String hql = "select a.name from AdminRight a where url in(?)";
+		String string = (String) this.uniqueResult(hql, url);
+		return string;
 	}
 }

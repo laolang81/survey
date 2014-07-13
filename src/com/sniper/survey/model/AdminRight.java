@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "mc_admin_right")
@@ -20,31 +21,29 @@ public class AdminRight extends BaseEntity {
 	private static final long serialVersionUID = 6907715430593817715L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ar_id")
+	@Column(name = "id")
 	private Integer id;
-	@Column(name = "ar_name", nullable = false)
+	@NotNull
+	@Column(name = "name", nullable = false)
 	private String name;
-	@Column(name = "ar_url", nullable = false)
+	@NotNull
+	@Column(name = "url", nullable = false)
 	private String url;
-	private String action;
-	private String nameSpace;
-	@Column(name = "ar_desc")
-	private String desc;
+	private String note;
 	// 权限吗
-	@Column(name = "ar_code", updatable = false)
+	@Column(name = "code", updatable = false)
 	private long code;
 	// 权限位
-	@Column(name = "ar_pos", updatable = false)
+	@Column(name = "pos", updatable = false)
 	private int pos;
 	// 公共资源所有问都可以访问
 	private boolean thePublic = false;
 	// 显示为menu
 	private boolean theMenu = false;
-	
+
 	private boolean theShow = false;
 
 	private long sort;
-	
 
 	/* mappedBy写在那边那边不维护 */
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, mappedBy = "adminRight")
@@ -74,28 +73,12 @@ public class AdminRight extends BaseEntity {
 		this.url = url;
 	}
 
-	public String getAction() {
-		return action;
+	public String getNote() {
+		return note;
 	}
 
-	public void setAction(String action) {
-		this.action = action;
-	}
-
-	public String getNameSpace() {
-		return nameSpace;
-	}
-
-	public void setNameSpace(String nameSpace) {
-		this.nameSpace = nameSpace;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public long getCode() {
@@ -114,7 +97,6 @@ public class AdminRight extends BaseEntity {
 		this.pos = pos;
 	}
 
-	
 	public boolean isThePublic() {
 		return thePublic;
 	}

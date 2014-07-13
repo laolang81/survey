@@ -17,10 +17,6 @@ public abstract class WebBaseAction extends RootAction {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 网站title
-	 */
-	private String webPageTitle;
-	/**
 	 * 分页参数
 	 */
 	private int pageNo;
@@ -65,14 +61,6 @@ public abstract class WebBaseAction extends RootAction {
 				.getAuthorities();
 		return authorities;
 
-	}
-
-	public String getWebPageTitle() {
-		return webPageTitle;
-	}
-
-	public void setWebPageTitle(String webPageTitle) {
-		this.webPageTitle = webPageTitle;
 	}
 
 	/**

@@ -2,6 +2,8 @@ package com.sniper.survey.struts2.action.admin;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +21,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import com.sniper.survey.model.AdminUser;
+import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.service.impl.AdminUserService;
 import com.sniper.survey.struts2.RootAction;
+import com.sniper.survey.util.PropertiesUtil;
 
 public abstract class BaseAction<T> extends RootAction implements
 		ModelDriven<T>, Preparable, ServletRequestAware {
@@ -29,6 +33,8 @@ public abstract class BaseAction<T> extends RootAction implements
 
 	@Resource
 	AdminUserService adminUserService;
+	@Resource
+	AdminRightService adminRightService;
 
 	private HttpServletRequest request;
 	/**
@@ -37,6 +43,7 @@ public abstract class BaseAction<T> extends RootAction implements
 	protected String menuType;
 	protected Boolean menuValue;
 	protected Integer[] delid;
+	protected String ip;
 
 	protected Map<String, Map<Boolean, String>> sniperMenu = new HashMap<>();
 
@@ -66,6 +73,10 @@ public abstract class BaseAction<T> extends RootAction implements
 
 	public Integer[] getDelid() {
 		return delid;
+	}
+
+	public String getIp() {
+		return this.request.getRemoteAddr();
 	}
 
 	/**
@@ -136,8 +147,6 @@ public abstract class BaseAction<T> extends RootAction implements
 			}
 		}
 
-		// 给url标题复制
-
 		// 以上简单写法
 		// ParameterizedType Type = (ParameterizedType)
 		// this.getClass().getGenericSuperclass();;
@@ -147,6 +156,23 @@ public abstract class BaseAction<T> extends RootAction implements
 	@Override
 	public void prepare() throws Exception {
 
+		// 设置网站后台标题
+		// getRequestUrl
+		System.out.println(this.request.getRequestURI());
+		System.out.println(this.request.getRequestURL());
+		String url = this.request.getRequestURI().replace(
+				this.request.getContextPath(), "");
+
+		// 当不是一斜杠结尾的url
+		if (url.lastIndexOf(".") != -1) {
+			// 去除结尾的后缀
+			url = url.substring(0, url.lastIndexOf("."));
+		}
+		
+		
+		System.out.println(url);
+		String title = adminRightService.getUrlName(url);
+		setWebPageTitle(title);
 	}
 
 	@Override
@@ -262,6 +288,7 @@ public abstract class BaseAction<T> extends RootAction implements
 
 	/**
 	 * delete公共调用的类
+	 * 
 	 * @return
 	 */
 	public String delete() {

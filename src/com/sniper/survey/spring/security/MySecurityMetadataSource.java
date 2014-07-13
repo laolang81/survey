@@ -1,7 +1,6 @@
 package com.sniper.survey.spring.security;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +60,6 @@ public class MySecurityMetadataSource implements
 					.getValue("struts.action.extension");
 
 			String[] list = extension.split(",");
-			System.out.println(Arrays.asList(list));
 
 			for (AdminRight right : adminRights) {
 				Collection<ConfigAttribute> configAttributes = new ArrayList<>();
@@ -75,6 +73,9 @@ public class MySecurityMetadataSource implements
 					if (!right.getUrl().endsWith("/")) {
 						rightMap.put(right.getUrl() + "." + list[i],
 								configAttributes);
+					}else{
+						//由于 / 和/index访问的是一个地址,所以再次加一个链接
+						rightMap.put(right.getUrl() + "index", configAttributes);
 					}
 				}
 				rightMap.put(right.getUrl(), configAttributes);
