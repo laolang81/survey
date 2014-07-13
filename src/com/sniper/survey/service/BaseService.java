@@ -52,17 +52,7 @@ public interface BaseService<T> {
 
 	public void executeSQL(Class clazz, String hql, Object... Object);
 
-	/**
-	 * 分页
-	 * 
-	 * @param hql
-	 * @param firstResult
-	 * @param maxResult
-	 * @param Object
-	 * @return
-	 */
-	public List<T> page(String hql, int firstResult, int maxResult,
-			Object... Object);
+	
 
 	/**
 	 * 

@@ -29,7 +29,6 @@ public class myAccessDecisionManagerBean implements AccessDecisionManager {
 			return;
 		}
 		//object is url
-		System.out.println("object:" + object.toString());
 		//所请求的资源拥有的权限(一个资源对多个权限)  
 		Iterator<ConfigAttribute> ite = configAttributes.iterator();
 		while(ite.hasNext()){
@@ -39,7 +38,6 @@ public class myAccessDecisionManagerBean implements AccessDecisionManager {
 			
 			//用户所拥有的权限authentication  
 			for(GrantedAuthority ga: authentication.getAuthorities()){
-				
 				if(needPermission.equals(ga.getAuthority())){
 					//ga is user's role
 					return;

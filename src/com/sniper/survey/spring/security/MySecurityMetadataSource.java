@@ -1,6 +1,7 @@
 package com.sniper.survey.spring.security;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import com.sniper.survey.model.AdminGroup;
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
+import com.sniper.survey.util.PropertiesUtil;
 
 /**
  * 该过滤器的主要作用就是通过spring著名的IoC生成securityMetadataSource。
@@ -33,35 +35,51 @@ public class MySecurityMetadataSource implements
 
 	@Resource
 	private AdminRightService adminRightService;
-	
-	private static Map<String, Collection<ConfigAttribute>> rightMap = null;
-	
-	
+
+	private static Map<String, Collection<ConfigAttribute>> rightMap = new HashMap<>();
+
 	public void setAdminRightService(AdminRightService adminRightService) {
 		this.adminRightService = adminRightService;
 	}
-	
+
 	/**
-	 * 加载所有资源与权限的关系  
+	 * 加载所有资源与权限的关系
 	 */
 	@SuppressWarnings("unused")
 	private void loadResourceDefine() {
-		if (rightMap == null) {
-			
+		if (rightMap.isEmpty()) {
+
 			rightMap = new HashMap<String, Collection<ConfigAttribute>>();
-			//spring 自动缓存,
+			// spring 自动缓存,
 			List<AdminRight> adminRights = this.adminRightService.springRight();
-			
+			// 读取struts2的后缀配置
+
+			PropertiesUtil propertiesUtil = new PropertiesUtil(
+					"struts.properties");
+
+			String extension = propertiesUtil
+					.getValue("struts.action.extension");
+
+			String[] list = extension.split(",");
+			System.out.println(Arrays.asList(list));
+
 			for (AdminRight right : adminRights) {
 				Collection<ConfigAttribute> configAttributes = new ArrayList<>();
-				for(AdminGroup adminGroup: right.getAdminGroup()){
-					ConfigAttribute configAttribute = new SecurityConfig(adminGroup.getValue());
+				for (AdminGroup adminGroup : right.getAdminGroup()) {
+					ConfigAttribute configAttribute = new SecurityConfig(
+							adminGroup.getValue());
 					configAttributes.add(configAttribute);
+				}
+				// 添加后缀
+				for (int i = 0; i < list.length; i++) {
+					if (!right.getUrl().endsWith("/")) {
+						rightMap.put(right.getUrl() + "." + list[i],
+								configAttributes);
+					}
 				}
 				rightMap.put(right.getUrl(), configAttributes);
 			}
 		}
-
 	}
 
 	@SuppressWarnings("unused")
@@ -77,62 +95,30 @@ public class MySecurityMetadataSource implements
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object)
 			throws IllegalArgumentException {
-		
+
 		FilterInvocation filterInvocation = (FilterInvocation) object;
 		HttpServletRequest request = filterInvocation.getHttpRequest();
 		String requestUrl = filterInvocation.getRequestUrl();
-		
-        if(rightMap == null) {  
-            loadResourceDefine();
-        }
 
-        if(requestUrl.indexOf("?") != -1){
-        	requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf("?"));
-        }
-        
-        RequestMatcher requestMatcher = new AntPathRequestMatcher(requestUrl);
-        
+		if (rightMap.isEmpty()) {
+			loadResourceDefine();
+		}
+
+		if (requestUrl.indexOf("?") != -1) {
+			requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf("?"));
+		}
+
+		RequestMatcher requestMatcher = new AntPathRequestMatcher(requestUrl);
+
 		if (requestMatcher.matches(request)) {
 			System.out.println(requestUrl);
-			if(rightMap.get(requestUrl) != null){
+			if (rightMap.get(requestUrl) != null) {
 				System.out.println("通过");
 				return rightMap.get(requestUrl);
 			}
 		}
-		//throw new AccessDeniedException("errorNotRight");
+		// throw new AccessDeniedException("errorNotRight");
 		System.out.println("找不到记录");
-		/*FilterInvocation filterInvocation1 = (FilterInvocation) object;
-		HttpServletRequest request = filterInvocation1.getHttpRequest();
-
-		Iterator<String> ite = rightMap.keySet().iterator();
-		System.out.println("start");
-		
-		System.out.println(rightMap);
-	    System.out.println(Arrays.asList(ite));
-	       
-		int i = 0;
-		if (ite.hasNext()) {
-			System.out.println(ite.next());
-			String resURL = ite.next();
-			
-			System.out.println(resURL);
-			if(resURL.indexOf("?") != -1){
-				resURL = resURL.substring(0, resURL.lastIndexOf("?"));
-			}
-			System.out.println(resURL);
-			RequestMatcher requestMatcher = new AntPathRequestMatcher(resURL);
-			Boolean boolean1 = requestMatcher.matches(request);
-			System.out.println(boolean1);
-			if (requestMatcher.matches(request)) {
-				System.out.println(i);
-				System.out.println(requestMatcher.matches(request));
-				System.out.println(resURL);
-				return rightMap.get(resURL);
-			}
-			System.out.println(resURL);
-			i++;
-		}
-		System.out.println("end");*/
 
 		return null;
 	}

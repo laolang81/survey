@@ -106,6 +106,12 @@ public abstract class BaseAction<T> extends RootAction implements
 		return AjaxList;
 	}
 
+	@Override
+	public void setServletRequest(HttpServletRequest arg0) {
+		this.request = arg0;
+
+	}
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BaseAction() {
 		// 得到泛型话的超类，
@@ -129,6 +135,9 @@ public abstract class BaseAction<T> extends RootAction implements
 				}
 			}
 		}
+
+		// 给url标题复制
+
 		// 以上简单写法
 		// ParameterizedType Type = (ParameterizedType)
 		// this.getClass().getGenericSuperclass();;
@@ -251,10 +260,21 @@ public abstract class BaseAction<T> extends RootAction implements
 		return ajaxResult;
 	}
 
-	@Override
-	public void setServletRequest(HttpServletRequest arg0) {
-		this.request = arg0;
+	/**
+	 * delete公共调用的类
+	 * @return
+	 */
+	public String delete() {
+		// code 小于1表示有错误,大于0表示ok,==0表示未操作
+		ajaxResult.put("code", 0);
+		ajaxResult.put("msg", "error");
+		if (!getMethod().equalsIgnoreCase("post") || !isXMLHttpRequest()) {
+			return SUCCESS;
+		}
 
+		if (getMenuType() == null || getMenuValue() == null) {
+			return SUCCESS;
+		}
+		return NONE;
 	}
-
 }

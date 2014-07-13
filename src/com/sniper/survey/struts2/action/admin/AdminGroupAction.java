@@ -18,4 +18,6 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 	{
 		return SUCCESS;
 	}
+	
+	
 }

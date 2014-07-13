@@ -39,19 +39,17 @@ public class MyUsernamePasswordAuthenticationFilter extends
 	public Authentication attemptAuthentication(HttpServletRequest request,
 			HttpServletResponse response) throws AuthenticationException {
 
-		if (!request.getMethod().equals("POST")) {
-			throw new AuthenticationServiceException("无效请求");
-			
-		}
-		
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		response.setCharacterEncoding("UTF-8");
-		
+
+		if (!request.getMethod().equalsIgnoreCase("post")) {
+			throw new AuthenticationServiceException("Invalid request");
+		}
+
 		checkValidateCode(request);
 
 		String username = obtainUsername(request);
@@ -64,29 +62,28 @@ public class MyUsernamePasswordAuthenticationFilter extends
 			throw new AuthenticationServiceException("用户名不能为空");
 		}
 
-		//保存最后提交的用户名
-		request.getSession().setAttribute("SPRING_SECURITY_LAST_USERNAME_KEY", username);
-		
+		// 保存最后提交的用户名
+		request.getSession().setAttribute("SPRING_SECURITY_LAST_USERNAME_KEY",
+				username);
+
 		if (StringUtils.isEmpty(password)) {
 			throw new AuthenticationServiceException("密码不能为空");
 		}
 		// 获取数据库比对密码
-		System.out.println("用户名:" + username);
 		AdminUser adminUser = adminUserService.validateByName(username);
 
 		if (adminUser == null) {
 			throw new AuthenticationServiceException("用户名不存在");
 		}
-		System.out.println("加密之前的密码" + password);
 		password = DataUtil.md5(password) + adminUser.getRand();
-		System.out.println("第一次加密" + password);
 		password = DataUtil.md5(password);
-		System.out.println("第二次加密" + password);
 		if (username == null || !adminUser.getPassword().equals(password)) {
 
-			/*request.getSession().setAttribute(
-					SPRING_SECURITY_FORM_USERNAME_KEY,
-					TextEscapeUtils.escapeEntities(username));*/
+			/*
+			 * request.getSession().setAttribute(
+			 * SPRING_SECURITY_FORM_USERNAME_KEY,
+			 * TextEscapeUtils.escapeEntities(username));
+			 */
 			/*
 			 * 在我们配置的simpleUrlAuthenticationFailureHandler处理登录失败的处理类在这么一段
 			 * 这样我们可以在登录失败后，向用户提供相应的信息。
@@ -112,7 +109,8 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		// 允许子类设置详细属性
 		setDetails(request, authenticationToken);
 		// 运行UserDetailsService的loadUserByUsername 再次封装Authentication
-		return this.getAuthenticationManager().authenticate(authenticationToken);
+		return this.getAuthenticationManager()
+				.authenticate(authenticationToken);
 	}
 
 	/**
@@ -124,16 +122,13 @@ public class MyUsernamePasswordAuthenticationFilter extends
 
 		HttpSession session = request.getSession();
 		String sessionValidatecode = obtailSessionValidateCode(session);
-		// 让上一次的验证码失效
-		System.out.println("验证码已失效");
+		// 让上一次的验证码失效,这里被调用2次,第二次调用在myUserDetail回调
 		// session.setAttribute(VALIDATE_CODE, null);
 		String validateCodeParamter = obtainValidateCodeParamter(request);
-		
-		System.out.println(sessionValidatecode + "->" + validateCodeParamter);
-		
+
 		if (StringUtils.isEmpty(validateCodeParamter)
 				|| !sessionValidatecode.equalsIgnoreCase(validateCodeParamter)) {
-			//throw new AuthenticationServiceException("验证码不匹配！");
+			// throw new AuthenticationServiceException("验证码不匹配！");
 		}
 	}
 

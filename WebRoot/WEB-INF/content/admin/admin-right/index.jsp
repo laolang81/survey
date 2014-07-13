@@ -5,7 +5,6 @@
 <s:set name="sm_url">/admin-right/delete</s:set>
 <s:include value="../public/sniper_menu.jsp"></s:include>
 
-
 <table class="table table-hover">
 	<thead>
 		<tr>

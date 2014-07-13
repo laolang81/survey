@@ -126,42 +126,14 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		return SUCCESS;
 	}
 
-	// 更新数据
-	@Action(value = "updateData", results = {
-			@Result(name = "input", location = "save.jsp", params = { "id",
-					"${id}" }),
-			@Result(name = "edit", location = "update", type = "redirectAction", params = {
-					"id", "${id}" }),
-			@Result(name = "success", location = "update", type = "redirectAction", params = {
-					"id", "${id}" }), })
-	public String updateData() {
-		if (getMethod().equalsIgnoreCase("post")) {
-			adminRightService.saveOrUpdate(model);
-		}
-		return SUCCESS;
-	}
 
-	/**
-	 * 删除
-	 * 
-	 * @return
-	 */
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
 	@SkipValidation
+	@Override
 	public String delete() {
-		// code 小于1表示有错误,大于0表示ok,==0表示未操作
-
-		ajaxResult.put("code", 0);
-		ajaxResult.put("msg", "error");
-		if (!getMethod().equalsIgnoreCase("post") || !isXMLHttpRequest()) {
-			return SUCCESS;
-		}
-
-		if (getMenuType() == null || getMenuValue() == null) {
-			return SUCCESS;
-		}
-
+		super.delete();
+		String where = "";
 		switch (menuType) {
 		case "delete":
 			if (adminRightService.deleteAdminRight(delid)) {
@@ -173,7 +145,7 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 			}
 			break;
 		case "IsShow":
-			String where = "UPDATE AdminRight SET theShow=? WHERE id in("
+			where = "UPDATE AdminRight SET theShow=? WHERE id in("
 					+ StringUtils.join(delid, ",") + ") ";
 			try {
 				adminRightService.batchEntiryByHQL(where, getMenuValue());
@@ -186,10 +158,30 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 
 			break;
 		case "IsPublic":
-			System.out.println("IsPublic");
+			where = "UPDATE AdminRight SET thePublic=? WHERE id in("
+					+ StringUtils.join(delid, ",") + ") ";
+			try {
+				adminRightService.batchEntiryByHQL(where, getMenuValue());
+				ajaxResult.put("code", 1);
+				ajaxResult.put("msg", "success");
+			} catch (Exception e) {
+				ajaxResult.put("code", -1);
+				ajaxResult.put("msg", e.getMessage());
+			}
+
 			break;
 		case "IsMenu":
-			System.out.println("IsMenu");
+			where = "UPDATE AdminRight SET theMenu=? WHERE id in("
+					+ StringUtils.join(delid, ",") + ") ";
+			try {
+				adminRightService.batchEntiryByHQL(where, getMenuValue());
+				ajaxResult.put("code", 1);
+				ajaxResult.put("msg", "success");
+			} catch (Exception e) {
+				ajaxResult.put("code", -1);
+				ajaxResult.put("msg", e.getMessage());
+			}
+
 			break;
 
 		default:

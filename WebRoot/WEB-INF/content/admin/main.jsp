@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "no-cache");
@@ -80,6 +81,9 @@
 						<li class="divider"></li>
 						<li><a href="admin/admin-user/">管理员列表</a></li>
 						<li><a href="admin/admin-user/save">管理员添加</a></li>
+						<li class="divider"></li>
+						<li><a href="admin/admin-user/change-password">更改密码</a></li>
+						
 					</ul></li>
 			</ul>
 

@@ -69,13 +69,15 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	public String getPassword_old() {
 		return password_old;
 	}
+
 	public void setPassword_old(String password_old) {
 		this.password_old = password_old;
 	}
+
 	public void setPassword_c(String password_c) {
 		this.password_c = password_c;
 	}
-	
+
 	public String getPassword_c() {
 		return password_c;
 	}
@@ -85,7 +87,17 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	@SkipValidation
 	public String index() {
 		setWebPageTitle("管理人员列表");
-		System.out.println("index");
+
+		Map<Boolean, String> menu = new HashMap<>();
+		menu.put(false, "否");
+		menu.put(true, "是");
+		sniperMenu.put("enables", menu);
+
+		Map<Boolean, String> ispublic = new HashMap<>();
+		ispublic.put(false, "否");
+		ispublic.put(true, "是");
+		sniperMenu.put("locked", ispublic);
+
 		Map<String, Object> map = new HashMap<>();
 		adminUserService.setOrder("id desc");
 		map = adminUserService.pageList(getListRow());
@@ -123,15 +135,15 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		if (null == this.model.getId()) {
 			return ERROR;
 		}
-		
+
 		List<AdminGroup> ags = new ArrayList<>();
 
 		if (getMethod().equalsIgnoreCase("post")) {
-			
-			if(!password_c.isEmpty()){
+
+			if (!password_c.isEmpty()) {
 				model.setPassword(password_c);
 			}
-			
+
 			ags = adminGroupService.getGroupList(fromGroups);
 			this.model.getAdminGroup().clear();
 			this.model.setAdminGroup(ags);
@@ -170,18 +182,12 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
 	@SkipValidation
+	@Override
 	public String delete() {
 		// code 小于1表示有错误,大于0表示ok,==0表示未操作
 
-		ajaxResult.put("code", 0);
-		ajaxResult.put("msg", "非有效请求");
-		if (!getMethod().equalsIgnoreCase("post") || !isXMLHttpRequest()) {
-			return SUCCESS;
-		}
-		ajaxResult.put("msg", "参数不全");
-		if (getMenuType() == null || getMenuValue() == null) {
-			return SUCCESS;
-		}
+		super.delete();
+		
 		String hql = "";
 
 		switch (menuType) {
@@ -223,9 +229,6 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 				ajaxResult.put("code", -1);
 				ajaxResult.put("msg", e.getMessage());
 			}
-			break;
-		case "IsMenu":
-			System.out.println("IsMenu");
 			break;
 
 		default:

@@ -16,10 +16,17 @@
 		<field-validator type="requiredstring">
 			<message>必须</message>
 		</field-validator>
-		
-
 	</field>
-
+	<field name="action">
+		<field-validator type="requiredstring">
+			<message>必须</message>
+		</field-validator>
+	</field>
+	<field name="nameSpace">
+		<field-validator type="requiredstring">
+			<message>必须</message>
+		</field-validator>
+	</field>
 
 
 </validators>  

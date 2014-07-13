@@ -26,6 +26,8 @@ public class AdminRight extends BaseEntity {
 	private String name;
 	@Column(name = "ar_url", nullable = false)
 	private String url;
+	private String action;
+	private String nameSpace;
 	@Column(name = "ar_desc")
 	private String desc;
 	// 权限吗
@@ -70,6 +72,22 @@ public class AdminRight extends BaseEntity {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public String getNameSpace() {
+		return nameSpace;
+	}
+
+	public void setNameSpace(String nameSpace) {
+		this.nameSpace = nameSpace;
 	}
 
 	public String getDesc() {

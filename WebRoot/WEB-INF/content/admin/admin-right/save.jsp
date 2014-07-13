@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <title><s:property value="webPageTitle"/></title>
 
+
+
 <s:form method="post"
 	id="sniperForm" cssClass="form-horizontal" role="form">
 	<s:token/>
@@ -43,7 +45,7 @@
 		<label for="url" class="col-sm-2 control-label">Url</label>
 		<div class="col-sm-10">
 			<s:textfield name="url" cssClass="form-control" id="url" placeholder="url" />
-			<div class="help-block"><s:fielderror fieldName="url" /></div>
+			<div class="help-block">url地址</div>
 		</div>
 	</div>
 	

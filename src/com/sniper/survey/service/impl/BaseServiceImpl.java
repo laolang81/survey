@@ -212,8 +212,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		dao.executeSQL(clazz, hql, Object);
 	}
 
-	@Override
-	public List<T> page(String hql, int firstResult, int maxResult,
+	private List<T> page(String hql, int firstResult, int maxResult,
 			Object... Object) {
 		return dao.findEntityByHQL(hql, firstResult, maxResult, Object);
 	}
@@ -241,13 +240,11 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 				Object);
 
 		map.put("rows", list);
-
 		return map;
 	}
 
 	@Override
 	public Criteria criteria() {
-
 		Criteria criteria = dao.criteria();
 		return criteria;
 	}

@@ -130,19 +130,14 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		return SUCCESS;
 	}
 
-	@Action("delete")
+	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
+			"root", "ajaxResult" }) })
+	@SkipValidation
+	@Override
 	public String delete() {
 		// code 小于1表示有错误,大于0表示ok,==0表示未操作
 
-		ajaxResult.put("code", 0);
-		ajaxResult.put("msg", "error");
-		if (!getMethod().equalsIgnoreCase("post") || !isXMLHttpRequest()) {
-			return SUCCESS;
-		}
-
-		if (getMenuType() == null || getMenuValue() == null) {
-			return SUCCESS;
-		}
+		super.delete();
 
 		switch (menuType) {
 		case "delete":
