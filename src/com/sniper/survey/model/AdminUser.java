@@ -30,14 +30,13 @@ public class AdminUser extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@NotNull
-	@Column(name = "au_name", unique = true, updatable = false)
+	@Column(name = "name", unique = true, updatable = false)
 	private String name;
-	@Column(name = "au_password", nullable = true)
+	@Column(name = "password", nullable = true)
 	private String password;
-	@Column(name = "au_nickName")
+	@Column(name = "nickName")
 	private String nickName;
 	
-	@Column(name = "au_email")
 	private String email;
 	// 用户是否启用
 	@Column(name = "ENABLES")
@@ -55,11 +54,11 @@ public class AdminUser extends BaseEntity {
 	private boolean locked;
 
 	// 密码加密随机字符串
-	@Column(name = "au_rand")
+	@Column(name = "rand")
 	private String rand;
 	// 创建时间
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "au_ctime", updatable = false)
+	@Column(name = "ctime", updatable = false)
 	private Date ctime = new Date();
 
 	// 对应用户组

@@ -63,8 +63,9 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser> implements
 	 */
 	@Override
 	public void saveOrUpdateEntiry(AdminUser t) {
-
-		if (t.getPassword().length() != 32) {
+		
+		System.out.println("密码" + t.getPassword());
+		if (t.getPassword() != null) {
 			// 获取随机验证码
 			String rand = VerifyCode.getSecurityCode(4,
 					SecurityCodeLevel.Medium, false);
@@ -76,6 +77,7 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser> implements
 			t.setPassword(password);
 			t.setRand(rand);
 		}
+		System.out.println("密码----" + t.getPassword());
 		super.saveOrUpdateEntiry(t);
 	}
 

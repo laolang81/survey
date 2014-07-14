@@ -63,6 +63,7 @@ public class Logger {
 			// 保存错误信息
 			log.setResult("failure");
 			log.setResultMsg(e.getMessage());
+			System.out.println(e.getMessage());
 		} finally {
 			System.out.println("----------->");
 			System.out.println(log.getName());

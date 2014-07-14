@@ -12,7 +12,6 @@ import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -108,9 +107,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		return SUCCESS;
 	}
 
-	@Action(value = "save", results = {
-			@Result(name = "success", location = "save.jsp"),
-			@Result(name = "input", location = "save.jsp") })
+	@Action(value = "save")
 	public String save() {
 		if (getMethod().equalsIgnoreCase("post")) {
 			List<AdminGroup> ags = new ArrayList<>();
@@ -127,7 +124,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 	@Action(value = "update", results = {
 			@Result(name = "success", location = "save.jsp"),
-			@Result(name = "input", location = "save.jsp") })
+			@Result(name = "input", location = "save-input.jsp") })
 	public String update() {
 
 		if (null == this.model.getId()) {

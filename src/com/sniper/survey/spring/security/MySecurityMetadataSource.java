@@ -44,50 +44,46 @@ public class MySecurityMetadataSource implements
 	/**
 	 * 加载所有资源与权限的关系
 	 */
-	@SuppressWarnings("unused")
 	private void loadResourceDefine() {
-		if (rightMap.isEmpty()) {
+		
+		//rightMap = new HashMap<String, Collection<ConfigAttribute>>();
+		// spring 自动缓存,
+		List<AdminRight> adminRights = this.adminRightService.springRight();
+		// 读取struts2的后缀配置
 
-			rightMap = new HashMap<String, Collection<ConfigAttribute>>();
-			// spring 自动缓存,
-			List<AdminRight> adminRights = this.adminRightService.springRight();
-			// 读取struts2的后缀配置
+		PropertiesUtil propertiesUtil = new PropertiesUtil(
+				"struts.properties");
 
-			PropertiesUtil propertiesUtil = new PropertiesUtil(
-					"struts.properties");
+		String extension = propertiesUtil
+				.getValue("struts.action.extension");
 
-			String extension = propertiesUtil
-					.getValue("struts.action.extension");
+		String[] list = extension.split(",");
 
-			String[] list = extension.split(",");
-
-			for (AdminRight right : adminRights) {
-				Collection<ConfigAttribute> configAttributes = new ArrayList<>();
-				for (AdminGroup adminGroup : right.getAdminGroup()) {
-					ConfigAttribute configAttribute = new SecurityConfig(
-							adminGroup.getValue());
-					configAttributes.add(configAttribute);
-				}
-				// 添加后缀
-				
-				for (int i = 0; i < list.length; i++) {
-					String url = right.getUrl();
-					// 找出不宜/结尾的url,加上.后缀
-					if (!url.endsWith("/")) {
-						url += "." + list[i];
-					} else {
-						// 由于 / 和/index访问的是一个地址,所以再次加一个链接
-						url += "index." + list[i];
-					}
-					System.out.println(url);
-					rightMap.put(url, configAttributes);
-				}
-				rightMap.put(right.getUrl(), configAttributes);
+		for (AdminRight right : adminRights) {
+			Collection<ConfigAttribute> configAttributes = new ArrayList<>();
+			for (AdminGroup adminGroup : right.getAdminGroup()) {
+				ConfigAttribute configAttribute = new SecurityConfig(
+						adminGroup.getValue());
+				configAttributes.add(configAttribute);
 			}
+			// 添加后缀
+
+			for (int i = 0; i < list.length; i++) {
+				String url = right.getUrl();
+				// 找出不宜/结尾的url,加上.后缀
+				if (!url.endsWith("/")) {
+					url += "." + list[i];
+				} else {
+					// 由于 / 和/index访问的是一个地址,所以再次加一个链接
+					url += "index." + list[i];
+				}
+				rightMap.put(url, configAttributes);
+			}
+			rightMap.put(right.getUrl(), configAttributes);
 		}
+		
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
 
