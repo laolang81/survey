@@ -100,7 +100,7 @@ dependencies {
     	//'jExcelAPI:jxl:2.6',
     	//'net.sourceforge.jexcelapi:jxl:2.6.12',
     	'org.apache.poi:poi:3.10-FINAL',
-    	'jmagick:jmagick:6.6.9'
+    	//'jmagick:jmagick:6.6.9'
     	
 
     )

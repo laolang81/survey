@@ -2,7 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%
 	response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "no-cache");
@@ -67,7 +67,7 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">人员采集 <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><s:a action="/" namespace="/admin/meet-user">人员列表</s:a></li>
+						<li><s:a action="index" namespace="/admin/meet-user">人员列表</s:a></li>
 						<li><s:a action="save" namespace="/admin/meet-user">人员添加</s:a></li>
 						<li><s:a action="export" namespace="/admin/meet-user">人员导出</s:a></li>
 					</ul></li>
@@ -92,7 +92,7 @@
 			<ul class="nav navbar-nav navbar-right">
 
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Holle, sniper <b class="caret"></b></a>
+					data-toggle="dropdown">Holle, <sec:authentication property="name"/> <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">我的设置</a></li>
 						<li><a href="#">网站配置</a></li>
