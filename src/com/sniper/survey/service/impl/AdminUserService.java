@@ -9,6 +9,6 @@ public interface AdminUserService extends BaseService<AdminUser> {
 
 	public AdminUser validateByName(String username);
 
-	
-	
+	public boolean validateByPassword(String password);
+
 }

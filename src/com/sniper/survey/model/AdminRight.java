@@ -44,6 +44,7 @@ public class AdminRight extends BaseEntity {
 	private boolean theShow = false;
 
 	private long sort;
+	private Integer fid = 0;
 
 	/* mappedBy写在那边那边不维护 */
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, mappedBy = "adminRight")
@@ -127,6 +128,14 @@ public class AdminRight extends BaseEntity {
 
 	public void setSort(long sort) {
 		this.sort = sort;
+	}
+
+	public void setFid(Integer fid) {
+		this.fid = fid;
+	}
+
+	public Integer getFid() {
+		return fid;
 	}
 
 	public Set<AdminGroup> getAdminGroup() {

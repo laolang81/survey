@@ -28,12 +28,11 @@ public class AdminGroup extends BaseEntity {
 	private String name;
 	@Column(name = "ag_value", unique = true)
 	private String value;
-	@Column(name = "ag_fid")
-	private Integer fid;
+
 	@Column(name = "ag_note")
 	public String note;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	@JoinTable(name = "mc_admin_group_right", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "right_id"))
 	private Set<AdminRight> adminRight = new HashSet<>();
 
@@ -59,14 +58,6 @@ public class AdminGroup extends BaseEntity {
 
 	public void setValue(String value) {
 		this.value = value;
-	}
-
-	public Integer getFid() {
-		return fid;
-	}
-
-	public void setFid(Integer fid) {
-		this.fid = fid;
 	}
 
 	public String getNote() {

@@ -169,7 +169,7 @@ public abstract class BaseAction<T> extends RootAction implements
 			// 去除结尾的后缀
 			url = url.substring(0, url.lastIndexOf("."));
 		}
-		System.out.println(url.lastIndexOf("index"));
+		
 		if(url.lastIndexOf("index") != -1){
 			url = url.substring(0, url.length() - 5);
 		}

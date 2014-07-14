@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -32,6 +31,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	@Resource
 	AdminGroupService adminGroupService;
 
+	private String password_new;
 	private String password_old;
 	private String password_c;
 	// 用户组列表
@@ -62,6 +62,14 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		return valueFromGroups;
 	}
 
+	public void setPassword_new(String password_new) {
+		this.password_new = password_new;
+	}
+
+	public String getPassword_new() {
+		return password_new;
+	}
+
 	public String getPassword_old() {
 		return password_old;
 	}
@@ -78,11 +86,10 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		return password_c;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
-		
+
 		super.sniperUrl = "/amdin-user/delete";
 
 		Map<Boolean, String> menu = new HashMap<>();
@@ -95,11 +102,10 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		ispublic.put(true, "是");
 		sniperMenu.put("locked", ispublic);
 
-		Map<String, Object> map = new HashMap<>();
 		adminUserService.setOrder("id desc");
-		map = adminUserService.pageList(getListRow());
-		pageHtml = (String) map.get("pageHtml");
-		list = (List<AdminUser>) map.get("rows");
+		adminUserService.pageList(getListRow());
+		pageHtml = adminUserService.getPageHtml();
+		list = adminUserService.getLists();
 		return SUCCESS;
 	}
 
@@ -108,17 +114,14 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 			@Result(name = "input", location = "save.jsp") })
 	public String save() {
 		if (getMethod().equalsIgnoreCase("post")) {
-			adminUserService.saveOrUpdateEntiry(model);
-		}
-		return SUCCESS;
-	}
+			List<AdminGroup> ags = new ArrayList<>();
+			if (!password_c.isEmpty()) {
+				model.setPassword(password_c);
+			}
 
-	@Action(value = "saveData", results = {
-			@Result(name = "input", location = "save.jsp"),
-			@Result(name = "success", location = "save", type = "redirectAction") })
-	public String saveData() {
-		if (getMethod().equalsIgnoreCase("post")) {
-			adminUserService.saveOrUpdateEntiry(model);
+			ags = adminGroupService.getGroupList(fromGroups);
+			this.model.setAdminGroup(ags);
+			adminUserService.saveOrUpdateEntiry(this.model);
 		}
 		return SUCCESS;
 	}
@@ -161,13 +164,37 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		return SUCCESS;
 	}
 
-	@SkipValidation
-	public void prepareDoUpdate() {
-		System.out.println("prepareDoUpdate");
+	@Action(value = "change-password", results = {
+			@Result(name = "success", location = "change-password.jsp"),
+			@Result(name = "input", location = "change-password.jsp") })
+	public String changePassword() {
 
-	}
+		Integer uid = getUserID();
+		if (0 == uid) {
+			return ERROR;
+		}
 
-	public String updateData() {
+		if (getMethod().equalsIgnoreCase("post")) {
+
+			if (!password_c.isEmpty()) {
+
+				// 检查密码
+				if (adminUserService.validateByPassword(password_old)) {
+					model.setPassword(password_c);
+				} else {
+					return INPUT;
+				}
+
+			}
+			System.out.println("第二次输出" + model.getRand());
+			adminUserService.saveOrUpdateEntiry(this.model);
+
+		}
+		if (getMethod().equalsIgnoreCase("get")) {
+			this.model = adminUserService.getEntity(uid);
+			System.out.println("第三次输出" + model.getRand());
+		}
+
 		return SUCCESS;
 	}
 
@@ -185,15 +212,11 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 		super.delete();
 
-		String hql = "";
-
 		switch (menuType) {
 		case "delete":
-			hql = "DELETE AdminUser WHERE id in("
-					+ StringUtils.join(delid, ",") + ") ";
 
 			try {
-				adminUserService.batchEntiryByHQL(hql);
+				adminUserService.deleteBatchEntityById(delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
@@ -203,10 +226,10 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 			break;
 		case "enables":
-			hql = "UPDATE AdminUser SET enables=? WHERE id in("
-					+ StringUtils.join(delid, ",") + ") ";
+
 			try {
-				adminUserService.batchEntiryByHQL(hql, getMenuValue());
+				adminUserService.batchFiledChange("enables", getMenuValue(),
+						delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
@@ -217,7 +240,8 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 			break;
 		case "locked":
 			try {
-				adminUserService.batchFiledChange("locked", getMenuValue(), StringUtils.join(delid, ","));
+				adminUserService.batchFiledChange("locked", getMenuValue(),
+						delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {

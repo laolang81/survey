@@ -2,7 +2,6 @@ package com.sniper.survey.struts2.action.admin;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -173,7 +172,7 @@ public class LoginAction extends BaseAction<AdminUser> implements SessionAware {
 				// user.calucateRightSum();
 				// 保存用户xx,提供spring使用
 				System.out.println(user);
-				Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
+				Set<GrantedAuthority> authSet = new HashSet<>();
 
 				Set<AdminGroup> groups = new HashSet<>(user.getAdminGroup());
 

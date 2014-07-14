@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.sniper.survey.dao.BaseDao;
@@ -47,6 +46,18 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser> implements
 		return (AdminUser) this.uniqueResult(hql, username);
 	}
 
+	@Override
+	public boolean validateByPassword(String password) {
+		String hql = "select count(a) from AdminUser a where a.password = md5(concat(md5(?),rand))";
+		long l = (long) this.uniqueResult(hql, password);
+		if (l == 1) {
+			return true;
+		}
+
+		return false;
+
+	}
+
 	/**
 	 * 用户修改添加删除
 	 */
@@ -64,11 +75,6 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUser> implements
 
 			t.setPassword(password);
 			t.setRand(rand);
-		}else{
-			//设置原始密码，放置密码清空
-			//AdminUser adminUser = this.validateByName(t.getName());
-			//t.setPassword(adminUser.getPassword());
-			//adminUser = null;
 		}
 		super.saveOrUpdateEntiry(t);
 	}

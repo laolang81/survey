@@ -18,13 +18,17 @@ public interface AdminRightService extends BaseService<AdminRight> {
 	public void saveOrUpdate(AdminRight r);
 
 	public void appendRightByURL(String url);
-	
+
 	public int getMaxRightPos();
-	
+
 	public List<AdminRight> springRight();
-	
-	public Boolean deleteAdminRight(Integer[] i);
-	
+
 	public String getUrlName(String url);
+
+	public List<AdminRight> getAdminRightList();
 	
+	public List<AdminRight> getAdminRightMenuList();
+	
+	public List<AdminRight> getAdminRightList(Integer[] id);
+
 }

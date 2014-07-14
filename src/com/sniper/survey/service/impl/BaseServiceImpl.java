@@ -34,6 +34,9 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	private String group;
 	private String order;
 
+	private String pageHtml;
+	private List<T> lists;
+
 	private BaseDao<T> dao;
 	//
 	private Class<T> clazz;
@@ -106,6 +109,14 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		this.order = order;
 	}
 
+	public String getPageHtml() {
+		return pageHtml;
+	}
+
+	public List<T> getLists() {
+		return lists;
+	}
+
 	@SuppressWarnings("unchecked")
 	public BaseServiceImpl() {
 		ParameterizedType type = (ParameterizedType) this.getClass()
@@ -174,10 +185,30 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	@Override
+	public boolean deleteBatchEntityById(Integer[] id) {
+		if (id.length == 0) {
+			return false;
+		}
+
+		String hql = "DELETE FROM " + clazz.getSimpleName() + " where id in("
+				+ StringUtils.join(id, ",") + ")";
+		try {
+			this.batchEntiryByHQL(hql);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
+	}
+
+	/**
+	 * 根据id,批量修改一个字段的值
+	 */
+	@Override
 	public void batchFiledChange(String filedName, Object changeValue,
-			String id) {
+			Integer[] id) {
 		String hql = "UPDATE " + clazz.getSimpleName() + " SET " + filedName
-				+ "=? WHERE id in(" + id + ") ";
+				+ "=? WHERE id in(" + StringUtils.join(id, ",") + ") ";
 		dao.batchEntiryByHQL(hql, changeValue);
 
 	}
@@ -231,26 +262,24 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	 * 数据苦分页使用能完成基本的需求
 	 */
 	@Override
-	public Map<String, Object> pageList(int listRow, Object... Object) {
+	public void pageList(int listRow, Object... Object) {
 
 		Map<String, Object> map = new HashMap<>();
 
-		String hql = "select count(" + getEntityAsName() + ") from "
-				+ clazz.getSimpleName() + " " + getEntityAsName() + getWhere();
+		String hql = "SELECT count(" + getEntityAsName() + ") FROM "
+				+ clazz.getSimpleName() + " " + getEntityAsName() + getJoin()
+				+ getWhere();
 		long l = (long) this.uniqueResult(hql, Object);
 		int totalNum = new Long(l).intValue();
 
 		StrutsPage page = new StrutsPage(totalNum, listRow);
-		String pageHtml = page.show();
-		map.put("pageHtml", pageHtml);
+		pageHtml = page.show();
 
-		String hql2 = "from " + clazz.getSimpleName() + " " + getEntityAsName()
-				+ getWhere() + getHaving() + getGroup() + getOrder();
-		List<T> list = this.page(hql2, page.getFristRow(), page.getListRow(),
-				Object);
+		String hql2 = "FROM " + clazz.getSimpleName() + " " + getEntityAsName()
+				+ getJoin() + getWhere() + getHaving() + getGroup()
+				+ getOrder();
+		lists = this.page(hql2, page.getFristRow(), page.getListRow(), Object);
 
-		map.put("rows", list);
-		return map;
 	}
 
 	@Override

@@ -112,27 +112,40 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 	}
 
 	@Override
-	public Boolean deleteAdminRight(Integer[] i) {
-
-		if (null == i || i.length == 0) {
-			return false;
-		}
-
-		String hql = "DELETE FROM AdminRight where id in("
-				+ StringUtils.join(i, ",") + ")";
-		try {
-			this.batchEntiryByHQL(hql);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	@Override
 	public String getUrlName(String url) {
-		
+
 		String hql = "select a.name from AdminRight a where url in(?)";
 		String string = (String) this.uniqueResult(hql, url);
 		return string;
+	}
+
+	/**
+	 * 应该有上下级关系,容易组成菜单 只读取菜单
+	 */
+	@Override
+	public List<AdminRight> getAdminRightList() {
+
+		String hql = "from AdminRight";
+
+		List<AdminRight> adminRights = this.findEntityByHQL(hql);
+		return adminRights;
+	}
+
+	@Override
+	public List<AdminRight> getAdminRightMenuList() {
+		String hql = "from AdminRight where theMenu=true";
+		
+		List<AdminRight> adminRights = this.findEntityByHQL(hql);
+		return adminRights;
+	}
+
+	@Override
+	public List<AdminRight> getAdminRightList(Integer[] id) {
+
+		String hql = "from AdminRight where id in("
+				+ StringUtils.join(id, ",") + ")";
+		
+		System.out.println(hql);
+		return this.findEntityByHQL(hql);
 	}
 }

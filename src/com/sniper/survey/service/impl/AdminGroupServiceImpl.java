@@ -39,5 +39,12 @@ public class AdminGroupServiceImpl extends BaseServiceImpl<AdminGroup>
 		
 		return this.findEntityByHQL(hql);
 	}
+	
+	@Override
+	public AdminGroup getEntity(Integer id) {
+		AdminGroup adminGroup = super.getEntity(id);
+		adminGroup.getAdminRight().size();
+		return adminGroup;
+	}
 
 }

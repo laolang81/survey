@@ -15,6 +15,7 @@ public interface BaseService<T> {
 	 * @return
 	 */
 	public Session getOpenSession();
+
 	public Session getCurrentSession();
 
 	// 写操作
@@ -27,12 +28,17 @@ public interface BaseService<T> {
 	public void deleteEntiry(T t);
 
 	public void batchEntiryByHQL(String hql, Object... Object);
+
+	public boolean deleteBatchEntityById(Integer[] id);
+
 	/**
 	 * 单个字段的修改,批量修改
+	 * 
 	 * @param hql
 	 * @param Object
 	 */
-	public void batchFiledChange(String filedName, Object changeValue, String id);
+	public void batchFiledChange(String filedName, Object changeValue,
+			Integer[] id);
 
 	// 级联关系保存
 	public void savePersist(T t);
@@ -58,15 +64,17 @@ public interface BaseService<T> {
 
 	public void executeSQL(Class clazz, String hql, Object... Object);
 
-	
-
 	/**
 	 * 
 	 * @param listRow
 	 * @param Object
 	 * @return
 	 */
-	public Map<String, Object> pageList(int listRow, Object... Object);
+	public void pageList(int listRow, Object... Object);
+
+	public String getPageHtml();
+
+	public List<T> getLists();
 
 	public String getEntityAsName();
 
@@ -93,6 +101,5 @@ public interface BaseService<T> {
 	public void setOrder(String order);
 
 	public Criteria criteria();
-	
-	
+
 }

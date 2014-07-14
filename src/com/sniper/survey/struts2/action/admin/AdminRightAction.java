@@ -1,12 +1,12 @@
 package com.sniper.survey.struts2.action.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -33,6 +33,16 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	 */
 	private Map<String, List<AdminRight>> result = new HashMap<>();
 
+	// 顶级right,
+	private List<AdminRight> adminRights = new ArrayList<>();
+
+	public List<AdminRight> getAdminRights() {
+		if (adminRights.size() == 0) {
+			adminRights = adminRightService.getAdminRightMenuList();
+		}
+		return adminRights;
+	}
+
 	@Resource
 	private AdminRightService adminRightService;
 
@@ -41,13 +51,12 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
 
 		super.sniperUrl = "/admin-right/delete";
-		
+
 		Map<Boolean, String> menu = new HashMap<>();
 		menu.put(false, "否");
 		menu.put(true, "是");
@@ -63,11 +72,10 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		show.put(true, "是");
 		sniperMenu.put("IsShow", show);
 
-		Map<String, Object> map = new HashMap<>();
 		adminRightService.setOrder("id desc");
-		map = adminRightService.pageList(getListRow());
-		pageHtml = (String) map.get("pageHtml");
-		list = (List<AdminRight>) map.get("rows");
+		adminRightService.pageList(getListRow());
+		pageHtml = adminRightService.getPageHtml();
+		list = adminRightService.getLists();
 		return SUCCESS;
 	}
 
@@ -87,10 +95,10 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 			@Result(name = "success", location = "save.jsp"),
 			@Result(name = "input", location = "save.jsp") })
 	public String save() {
-		setWebPageTitle("权限添加");
 		if (getMethod().equalsIgnoreCase("post")) {
 			adminRightService.saveOrUpdate(model);
 		}
+
 		return SUCCESS;
 	}
 
@@ -124,10 +132,10 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	@Override
 	public String delete() {
 		super.delete();
-		String where = "";
+
 		switch (menuType) {
 		case "delete":
-			if (adminRightService.deleteAdminRight(delid)) {
+			if (adminRightService.deleteBatchEntityById(delid)) {
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} else {
@@ -136,10 +144,10 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 			}
 			break;
 		case "IsShow":
-			where = "UPDATE AdminRight SET theShow=? WHERE id in("
-					+ StringUtils.join(delid, ",") + ") ";
+
 			try {
-				adminRightService.batchEntiryByHQL(where, getMenuValue());
+				adminRightService.batchFiledChange("theShow", getMenuValue(),
+						delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
@@ -149,10 +157,10 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 
 			break;
 		case "IsPublic":
-			where = "UPDATE AdminRight SET thePublic=? WHERE id in("
-					+ StringUtils.join(delid, ",") + ") ";
+
 			try {
-				adminRightService.batchEntiryByHQL(where, getMenuValue());
+				adminRightService.batchFiledChange("thePublic", getMenuValue(),
+						delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
@@ -163,7 +171,8 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 			break;
 		case "IsMenu":
 			try {
-				adminRightService.batchFiledChange("theMenu", getMenuValue(), StringUtils.join(delid, ","));
+				adminRightService.batchFiledChange("theMenu", getMenuValue(),
+						delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {

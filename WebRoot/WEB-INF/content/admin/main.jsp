@@ -95,7 +95,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="#">我的设置</a></li>
 						<li><a href="#">网站配置</a></li>
-						<li><a href="#">更改密码</a></li>
+						<li><s:a action="change-password" namespace="/admin/admin-user">更改密码</s:a></li>
 						<li class="divider"></li>
 						<li><a href="j_spring_security_logout">退出</a></li>
 					</ul></li>

@@ -23,6 +23,8 @@
 		<!-- access-decision-manager-ref：指定了自定义的访问策略管理器。 -->
 		
 		<intercept-url pattern="/admin**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
+		
 		<!-- <form-login/> -->
 		<!-- username-parameter="j_username" password-parameter="j_password" login-processing-url="j_spring_security_check" -->
 		<!-- <form-login login-page="/admin/login" authentication-failure-url="/admin/login?error=true" 

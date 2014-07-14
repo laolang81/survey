@@ -21,49 +21,61 @@ public class SystemConfig extends BaseEntity {
 	private Boolean autoload;
 	private String input;
 	private String placeholder;
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getKeyName() {
 		return keyName;
 	}
+
 	public void setKeyName(String keyName) {
 		this.keyName = keyName;
 	}
+
 	public String getKeyValue() {
 		return keyValue;
 	}
+
 	public void setKeyValue(String keyValue) {
 		this.keyValue = keyValue;
 	}
+
 	public String getKeyInfo() {
 		return keyInfo;
 	}
+
 	public void setKeyInfo(String keyInfo) {
 		this.keyInfo = keyInfo;
 	}
+
 	public Boolean getAutoload() {
 		return autoload;
 	}
+
 	public void setAutoload(Boolean autoload) {
 		this.autoload = autoload;
 	}
+
 	public String getInput() {
 		return input;
 	}
+
 	public void setInput(String input) {
 		this.input = input;
 	}
+
 	public String getPlaceholder() {
 		return placeholder;
 	}
+
 	public void setPlaceholder(String placeholder) {
 		this.placeholder = placeholder;
 	}
-
-	
 
 }

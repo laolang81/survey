@@ -1,13 +1,12 @@
 package com.sniper.survey.struts2.action.admin;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -27,6 +26,8 @@ import com.sniper.survey.service.impl.AdminGroupService;
 @ParentPackage("default")
 public class AdminGroupAction extends BaseAction<AdminGroup> {
 
+	private static final long serialVersionUID = 1L;
+
 	@Resource
 	AdminGroupService adminGroupService;
 
@@ -35,21 +36,37 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 
 	// 用户提交的权限列表,或者被选中的值的集合
 	private Integer[] fromRight;
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	// 被选中的答案
+	private List<Integer> valueFromRights = new ArrayList<>();
+
+	public List<AdminRight> getAdminRights() {
+		if (adminRights.size() == 0) {
+			adminRights = adminRightService.getAdminRightList();
+		}
+		return adminRights;
+	}
+
+	public void setFromRight(Integer[] fromRight) {
+		this.fromRight = fromRight;
+	}
+
+	public Integer[] getFromRight() {
+		return fromRight;
+	}
+
+	public List<Integer> getValueFromRights() {
+		return valueFromRights;
+	}
 
 	@Actions({ @Action(value = "index") })
 	public String list() {
 
 		super.sniperUrl = "/amdin-group/delete";
-		
-		Map<String, Object> map = new HashMap<>();
+
 		adminGroupService.setOrder("id desc");
-		map = adminGroupService.pageList(getListRow());
-		pageHtml = (String) map.get("pageHtml");
-		list = (List<AdminGroup>) map.get("rows");
+		adminGroupService.pageList(getListRow());
+		pageHtml = adminGroupService.getPageHtml();
+		list = adminGroupService.getLists();
 
 		return SUCCESS;
 	}
@@ -58,9 +75,13 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 			@Result(name = "success", location = "save.jsp"),
 			@Result(name = "input", location = "save.jsp") })
 	public String save() {
-		setWebPageTitle("权限添加");
+
 		if (getMethod().equalsIgnoreCase("post")) {
-			adminGroupService.saveOrUpdateEntiry(model);
+			List<AdminRight> ags = new ArrayList<>();
+			ags = adminRightService.getAdminRightList(fromRight);
+			Set<AdminRight> set = new HashSet<>(ags);
+			this.model.setAdminRight(set);
+			adminGroupService.saveOrUpdateEntiry(this.model);
 		}
 		return SUCCESS;
 	}
@@ -74,13 +95,31 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 			return ERROR;
 		}
 
-		if (getMethod().equalsIgnoreCase("post")) {
-			adminGroupService.saveOrUpdateEntiry(model);
-		}
+		// 被选中的值,被选中的权限列表
+		List<AdminRight> ags = new ArrayList<>();
 
+		if (getMethod().equalsIgnoreCase("post")) {
+			// 获取所有被选中的权限
+			ags = adminRightService.getAdminRightList(fromRight);
+			System.out.println(fromRight);
+			System.out.println(ags);
+			Set<AdminRight> set = new HashSet<>(ags);
+			this.model.getAdminRight().clear();
+			this.model.setAdminRight(set);
+			adminGroupService.saveOrUpdateEntiry(this.model);
+
+		}
 		if (getMethod().equalsIgnoreCase("get")) {
 			this.model = adminGroupService.getEntity(this.model.getId());
+			ags = new ArrayList<>(this.model.getAdminRight());
+
 		}
+
+		// 未表单设置选中答案
+		for (AdminRight ag : ags) {
+			valueFromRights.add(ag.getId());
+		}
+
 		return SUCCESS;
 	}
 
@@ -90,10 +129,10 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 	@Override
 	public String delete() {
 		super.delete();
-		String where = "";
+
 		switch (menuType) {
 		case "delete":
-			if (adminRightService.deleteAdminRight(delid)) {
+			if (adminRightService.deleteBatchEntityById(delid)) {
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} else {
@@ -102,10 +141,10 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 			}
 			break;
 		case "IsShow":
-			where = "UPDATE AdminRight SET theShow=? WHERE id in("
-					+ StringUtils.join(delid, ",") + ") ";
+
 			try {
-				adminGroupService.batchEntiryByHQL(where, getMenuValue());
+				adminGroupService.batchFiledChange("theShow", getMenuValue(),
+						delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
@@ -115,10 +154,10 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 
 			break;
 		case "IsPublic":
-			where = "UPDATE AdminRight SET thePublic=? WHERE id in("
-					+ StringUtils.join(delid, ",") + ") ";
+
 			try {
-				adminGroupService.batchEntiryByHQL(where, getMenuValue());
+				adminGroupService.batchFiledChange("thePublic", getMenuValue(),
+						delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
@@ -128,10 +167,10 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 
 			break;
 		case "IsMenu":
-			where = "UPDATE AdminRight SET theMenu=? WHERE id in("
-					+ StringUtils.join(delid, ",") + ") ";
+
 			try {
-				adminGroupService.batchEntiryByHQL(where, getMenuValue());
+				adminGroupService.batchFiledChange("theMenu", getMenuValue(),
+						delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {

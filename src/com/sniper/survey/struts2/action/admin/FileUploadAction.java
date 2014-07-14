@@ -142,7 +142,7 @@ public class FileUploadAction extends BaseAction<Files> {
 		String saveUrl = uploadFile(imgFile);
 		result.put("error", 0);
 		result.put("url", getWebUrl() + saveUrl);
-		
+
 		return SUCCESS;
 	}
 
@@ -156,7 +156,7 @@ public class FileUploadAction extends BaseAction<Files> {
 		String savePath = getSaveDir();
 		// 用户前台显示
 		String saveUrl = savePath;
-		
+
 		// 组装真的url
 		savePath = rootDir + savePath;
 		// 检查文件夹是否存在
@@ -223,26 +223,31 @@ public class FileUploadAction extends BaseAction<Files> {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Action(value = "htmlmanager", results = { @Result(name = "success", type = "json", params = { "root", "result" }) })
+	@Action(value = "htmlmanager", results = { @Result(name = "success", type = "json", params = {
+			"root", "result" }) })
 	public String htmlmanager() {
-		
-		//根目录路径，可以指定绝对路径，比如 /var/www/attached/
+
+		// 根目录路径，可以指定绝对路径，比如 /var/www/attached/
 		String rootPath = ServletActionContext.getServletContext().getRealPath(
-				"/") + "/attachments/";
-		//根目录URL，可以指定绝对路径，比如 http://www.yoursite.com/attached/
-		String rootUrl  = ServletActionContext.getRequest().getContextPath() + "/attachments/";
-		
+				"/")
+				+ "/attachments/";
+		// 根目录URL，可以指定绝对路径，比如 http://www.yoursite.com/attached/
+		String rootUrl = ServletActionContext.getRequest().getContextPath()
+				+ "/attachments/";
+
 		System.out.println("rootUrl:" + rootUrl);
-		//图片扩展名
-		String[] fileTypes = new String[]{"gif", "jpg", "jpeg", "png", "bmp"};
+		// 图片扩展名
+		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp" };
 
 		String dirName = getDir();
 		if (dirName != null) {
-			if(!Arrays.<String>asList(new String[]{"image", "flash", "media", "file"}).contains(dirName)){
-				result.put("message","Invalid Directory name.");
+			if (!Arrays.<String> asList(
+					new String[] { "image", "flash", "media", "file" })
+					.contains(dirName)) {
+				result.put("message", "Invalid Directory name.");
 				return SUCCESS;
 			}
-			
+
 			rootPath += dirName + "/";
 			rootUrl += dirName + "/";
 			File saveDirFile = new File(rootPath);
@@ -250,60 +255,66 @@ public class FileUploadAction extends BaseAction<Files> {
 				saveDirFile.mkdirs();
 			}
 		}
-		//根据path参数，设置各路径和URL
+		// 根据path参数，设置各路径和URL
 		String path = this.path != null ? this.path : "";
 		String currentPath = rootPath + path;
 		String currentUrl = rootUrl + path;
 		String currentDirPath = path;
 		String moveupDirPath = "";
 		if (!"".equals(path)) {
-			String str = currentDirPath.substring(0, currentDirPath.length() - 1);
-			moveupDirPath = str.lastIndexOf("/") >= 0 ? str.substring(0, str.lastIndexOf("/") + 1) : "";
+			String str = currentDirPath.substring(0,
+					currentDirPath.length() - 1);
+			moveupDirPath = str.lastIndexOf("/") >= 0 ? str.substring(0,
+					str.lastIndexOf("/") + 1) : "";
 		}
 
-		//排序形式，name or size or type
+		// 排序形式，name or size or type
 		String order = this.order != null ? this.order.toLowerCase() : "name";
 
-		//不允许使用..移动到上一级目录
+		// 不允许使用..移动到上一级目录
 		if (path.indexOf("..") >= 0) {
 			result.put("message", "Access is not allowed.");
 			return SUCCESS;
 		}
-		//最后一个字符不是/
+		// 最后一个字符不是/
 		if (!"".equals(path) && !path.endsWith("/")) {
 			result.put("message", "Parameter is not valid.");
 			return SUCCESS;
 		}
-		//目录不存在或不是目录
+		// 目录不存在或不是目录
 		System.out.println(currentPath);
 		File currentPathFile = new File(currentPath);
-		if(!currentPathFile.isDirectory()){
+		if (!currentPathFile.isDirectory()) {
 			result.put("message", "Directory does not exist.");
 			return SUCCESS;
 		}
 		System.out.println(currentPathFile.listFiles().length);
-		//遍历目录取的文件信息
-		List<Hashtable> fileList = new ArrayList<Hashtable>();
-		if(currentPathFile.listFiles() != null) {
+		// 遍历目录取的文件信息
+		List<Hashtable> fileList = new ArrayList<>();
+		if (currentPathFile.listFiles() != null) {
 			for (File file : currentPathFile.listFiles()) {
-				Hashtable<String, Object> hash = new Hashtable<String, Object>();
+				Hashtable<String, Object> hash = new Hashtable<>();
 				String fileName = file.getName();
-				if(file.isDirectory()) {
+				if (file.isDirectory()) {
 					hash.put("is_dir", true);
 					hash.put("has_file", (file.listFiles() != null));
 					hash.put("filesize", 0L);
 					hash.put("is_photo", false);
 					hash.put("filetype", "");
-				} else if(file.isFile()){
-					String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+				} else if (file.isFile()) {
+					String fileExt = fileName.substring(
+							fileName.lastIndexOf(".") + 1).toLowerCase();
 					hash.put("is_dir", false);
 					hash.put("has_file", false);
 					hash.put("filesize", file.length());
-					hash.put("is_photo", Arrays.<String>asList(fileTypes).contains(fileExt));
+					hash.put("is_photo", Arrays.<String> asList(fileTypes)
+							.contains(fileExt));
 					hash.put("filetype", fileExt);
 				}
 				hash.put("filename", fileName);
-				hash.put("datetime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(file.lastModified()));
+				hash.put("datetime",
+						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(file
+								.lastModified()));
 				fileList.add(hash);
 			}
 		}
@@ -315,7 +326,7 @@ public class FileUploadAction extends BaseAction<Files> {
 		} else {
 			Collections.sort(fileList, new NameComparator());
 		}
-		
+
 		result.put("moveup_dir_path", moveupDirPath);
 		result.put("current_dir_path", currentDirPath);
 		result.put("current_url", currentUrl);
@@ -324,8 +335,7 @@ public class FileUploadAction extends BaseAction<Files> {
 
 		return SUCCESS;
 	}
-	
-	
+
 	public String getOrder() {
 		return order;
 	}
@@ -342,32 +352,39 @@ public class FileUploadAction extends BaseAction<Files> {
 		this.path = path;
 	}
 
-
 	public class NameComparator implements Comparator {
 		public int compare(Object a, Object b) {
-			Hashtable hashA = (Hashtable)a;
-			Hashtable hashB = (Hashtable)b;
-			if (((Boolean)hashA.get("is_dir")) && !((Boolean)hashB.get("is_dir"))) {
+			Hashtable hashA = (Hashtable) a;
+			Hashtable hashB = (Hashtable) b;
+			if (((Boolean) hashA.get("is_dir"))
+					&& !((Boolean) hashB.get("is_dir"))) {
 				return -1;
-			} else if (!((Boolean)hashA.get("is_dir")) && ((Boolean)hashB.get("is_dir"))) {
+			} else if (!((Boolean) hashA.get("is_dir"))
+					&& ((Boolean) hashB.get("is_dir"))) {
 				return 1;
 			} else {
-				return ((String)hashA.get("filename")).compareTo((String)hashB.get("filename"));
+				return ((String) hashA.get("filename"))
+						.compareTo((String) hashB.get("filename"));
 			}
 		}
 	}
+
 	public class SizeComparator implements Comparator {
 		public int compare(Object a, Object b) {
-			Hashtable hashA = (Hashtable)a;
-			Hashtable hashB = (Hashtable)b;
-			if (((Boolean)hashA.get("is_dir")) && !((Boolean)hashB.get("is_dir"))) {
+			Hashtable hashA = (Hashtable) a;
+			Hashtable hashB = (Hashtable) b;
+			if (((Boolean) hashA.get("is_dir"))
+					&& !((Boolean) hashB.get("is_dir"))) {
 				return -1;
-			} else if (!((Boolean)hashA.get("is_dir")) && ((Boolean)hashB.get("is_dir"))) {
+			} else if (!((Boolean) hashA.get("is_dir"))
+					&& ((Boolean) hashB.get("is_dir"))) {
 				return 1;
 			} else {
-				if (((Long)hashA.get("filesize")) > ((Long)hashB.get("filesize"))) {
+				if (((Long) hashA.get("filesize")) > ((Long) hashB
+						.get("filesize"))) {
 					return 1;
-				} else if (((Long)hashA.get("filesize")) < ((Long)hashB.get("filesize"))) {
+				} else if (((Long) hashA.get("filesize")) < ((Long) hashB
+						.get("filesize"))) {
 					return -1;
 				} else {
 					return 0;
@@ -375,18 +392,22 @@ public class FileUploadAction extends BaseAction<Files> {
 			}
 		}
 	}
+
 	public class TypeComparator implements Comparator {
 		public int compare(Object a, Object b) {
-			Hashtable hashA = (Hashtable)a;
-			Hashtable hashB = (Hashtable)b;
-			if (((Boolean)hashA.get("is_dir")) && !((Boolean)hashB.get("is_dir"))) {
+			Hashtable hashA = (Hashtable) a;
+			Hashtable hashB = (Hashtable) b;
+			if (((Boolean) hashA.get("is_dir"))
+					&& !((Boolean) hashB.get("is_dir"))) {
 				return -1;
-			} else if (!((Boolean)hashA.get("is_dir")) && ((Boolean)hashB.get("is_dir"))) {
+			} else if (!((Boolean) hashA.get("is_dir"))
+					&& ((Boolean) hashB.get("is_dir"))) {
 				return 1;
 			} else {
-				return ((String)hashA.get("filetype")).compareTo((String)hashB.get("filetype"));
+				return ((String) hashA.get("filetype"))
+						.compareTo((String) hashB.get("filetype"));
 			}
 		}
 	}
-	
+
 }

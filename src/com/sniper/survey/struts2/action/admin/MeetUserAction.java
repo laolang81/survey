@@ -50,17 +50,16 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		return meetUsers;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
-		
+
 		super.sniperUrl = "/meet-user/delete";
-		Map<String, Object> map = new HashMap<>();
+
 		meetUserService.setOrder("id desc");
-		map = meetUserService.pageList(getListRow());
-		pageHtml = (String) map.get("pageHtml");
-		meetUsers = (List<MeetUser>) map.get("rows");
+		meetUserService.pageList(getListRow());
+		pageHtml = meetUserService.getPageHtml();
+		list = meetUserService.getLists();
 
 		return SUCCESS;
 	}

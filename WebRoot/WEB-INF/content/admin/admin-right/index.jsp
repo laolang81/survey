@@ -15,6 +15,7 @@
 			<th><s:text name="table.theShow"></s:text></th>
 			<th><s:text name="table.pos"></s:text></th>
 			<th><s:text name="table.code"></s:text></th>
+			<th><s:text name="table.fid"></s:text></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -34,6 +35,7 @@
 			<td><s:property value="theShow"/></td>
 			<td><s:property value="pos"/></td>
 			<td><s:property value="code"/></td>
+			<td><s:property value="fid"/></td>
 		</tr>
 		</s:iterator>
 		
