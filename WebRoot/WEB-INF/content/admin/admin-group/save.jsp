@@ -5,7 +5,7 @@
 
 <s:form method="post" id="sniperForm"
 	cssClass="form-horizontal" role="form">
-	<s:token />
+	
 	<s:hidden name="id" />
 
 	<div class="form-group">

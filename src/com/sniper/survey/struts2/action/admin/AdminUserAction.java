@@ -87,7 +87,6 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	}
 
 	@Actions({ @Action(value = "index") })
-	@SkipValidation
 	public String index() {
 
 		super.sniperUrl = "/amdin-user/delete";
@@ -129,7 +128,6 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	@Action(value = "update", results = {
 			@Result(name = "success", location = "save.jsp"),
 			@Result(name = "input", location = "save.jsp") })
-	@SkipValidation
 	public String update() {
 
 		if (null == this.model.getId()) {
@@ -143,10 +141,12 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 			if (!password_c.isEmpty()) {
 				model.setPassword(password_c);
 			}
+			if (fromGroups.length > 0) {
+				ags = adminGroupService.getGroupList(fromGroups);
+				this.model.getAdminGroup().clear();
+				this.model.setAdminGroup(ags);
+			}
 
-			ags = adminGroupService.getGroupList(fromGroups);
-			this.model.getAdminGroup().clear();
-			this.model.setAdminGroup(ags);
 			adminUserService.saveOrUpdateEntiry(this.model);
 
 		}
@@ -205,7 +205,6 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	 */
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
-	@SkipValidation
 	@Override
 	public String delete() {
 		// code 小于1表示有错误,大于0表示ok,==0表示未操作

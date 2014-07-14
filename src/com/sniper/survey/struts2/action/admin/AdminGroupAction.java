@@ -77,10 +77,14 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 	public String save() {
 
 		if (getMethod().equalsIgnoreCase("post")) {
-			List<AdminRight> ags = new ArrayList<>();
-			ags = adminRightService.getAdminRightList(fromRight);
-			Set<AdminRight> set = new HashSet<>(ags);
-			this.model.setAdminRight(set);
+
+			if (fromRight.length > 0) {
+				List<AdminRight> ags = new ArrayList<>();
+				ags = adminRightService.getAdminRightList(fromRight);
+				Set<AdminRight> set = new HashSet<>(ags);
+				this.model.setAdminRight(set);
+			}
+
 			adminGroupService.saveOrUpdateEntiry(this.model);
 		}
 		return SUCCESS;
@@ -100,12 +104,13 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 
 		if (getMethod().equalsIgnoreCase("post")) {
 			// 获取所有被选中的权限
-			ags = adminRightService.getAdminRightList(fromRight);
-			System.out.println(fromRight);
-			System.out.println(ags);
-			Set<AdminRight> set = new HashSet<>(ags);
-			this.model.getAdminRight().clear();
-			this.model.setAdminRight(set);
+			if (fromRight.length > 0) {
+				ags = adminRightService.getAdminRightList(fromRight);
+				Set<AdminRight> set = new HashSet<>(ags);
+				this.model.getAdminRight().clear();
+				this.model.setAdminRight(set);
+			}
+
 			adminGroupService.saveOrUpdateEntiry(this.model);
 
 		}

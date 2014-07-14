@@ -119,6 +119,7 @@ public class MySecurityMetadataSource implements
 			System.out.println(requestUrl);
 			if (rightMap.get(requestUrl) != null) {
 				System.out.println("通过");
+				System.out.println(rightMap.get(requestUrl));
 				return rightMap.get(requestUrl);
 			}
 		}
