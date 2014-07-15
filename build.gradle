@@ -11,6 +11,13 @@ repositories {
 
 }
 
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
 dependencies {
 
     compile (
