@@ -46,15 +46,18 @@ public class myUserDetail implements UserDetailsService {
 
 		boolean accountNonExpired = true;
 		boolean credentialsNonExpired = true;
-		boolean accountNonLocked = false;
-		if (!adminUser.isLocked()) {
-			accountNonLocked = true;
+		boolean accountNonEnabled = adminUser.isEnabled();
+		
+
+		boolean accountNonLocked = true;
+		if (adminUser.isLocked()) {
+			accountNonLocked = false;
 		}
 
 		// 在数据库中获取信息之后赋值给他们,这里演示一下
 		User user = new User(adminUser.getName(), adminUser.getPassword(),
-				adminUser.isEnables(), accountNonExpired,
-				credentialsNonExpired, accountNonLocked, authorities);
+				accountNonEnabled, accountNonExpired, credentialsNonExpired,
+				accountNonLocked, authorities);
 
 		return user;
 	}

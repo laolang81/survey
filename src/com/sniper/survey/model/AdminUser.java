@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull;
 public class AdminUser extends BaseEntity {
 
 	private static final long serialVersionUID = -1749860151352757711L;
-	
+
 	@Id
 	@Column(name = "au_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,11 +36,11 @@ public class AdminUser extends BaseEntity {
 	private String password;
 	@Column(name = "nickName")
 	private String nickName;
-	
+
 	private String email;
 	// 用户是否启用
-	@Column(name = "ENABLES")
-	private boolean enables;
+	@Column(name = "ENABLED")
+	private boolean enabled;
 	// 用户过期时间戳
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "USERNAME_EXPIRED")
@@ -119,12 +119,12 @@ public class AdminUser extends BaseEntity {
 		this.email = email;
 	}
 
-	public boolean isEnables() {
-		return enables;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setEnables(boolean enables) {
-		this.enables = enables;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Date getUsernameExpired() {

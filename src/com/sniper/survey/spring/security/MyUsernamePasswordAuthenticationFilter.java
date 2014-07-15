@@ -77,7 +77,7 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		}
 		password = DataUtil.md5(password) + adminUser.getRand();
 		password = DataUtil.md5(password);
-		if (username == null || !adminUser.getPassword().equals(password)) {
+		if (adminUser.getPassword() != null && !adminUser.getPassword().equals(password)) {
 
 			/*
 			 * request.getSession().setAttribute(

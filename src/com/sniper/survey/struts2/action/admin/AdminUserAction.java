@@ -173,12 +173,16 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 		if (getMethod().equalsIgnoreCase("post")) {
 
-			if (!password_c.isEmpty()) {
-
+			if (password_c != null && !password_c.isEmpty()) {
 				// 检查密码
 				if (adminUserService.validateByPassword(password_old)) {
 					model.setPassword(password_c);
 				} else {
+					Map<String, List<String>> errorMap = getFieldErrors();
+					List<String> list = new ArrayList<>();
+					list.add("老密码不对");
+					errorMap.put("password_old", list);
+					setFieldErrors(errorMap);
 					return INPUT;
 				}
 
