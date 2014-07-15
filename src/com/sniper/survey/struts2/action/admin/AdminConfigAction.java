@@ -3,6 +3,8 @@ package com.sniper.survey.struts2.action.admin;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -12,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.SystemConfig;
+import com.sniper.survey.service.impl.SystemConfigService;
 
 @Controller
 @Scope("prototype")
@@ -21,6 +24,9 @@ public class AdminConfigAction extends BaseAction<SystemConfig> {
 
 	private static final long serialVersionUID = 1L;
 
+	@Resource
+	SystemConfigService configService;
+	
 	@Action("index")
 	@SkipValidation
 	public String index() {

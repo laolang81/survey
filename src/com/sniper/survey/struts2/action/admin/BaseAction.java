@@ -8,23 +8,19 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.context.ServletContextAware;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.service.impl.AdminUserService;
-import com.sniper.survey.service.impl.SystemConfigService;
 import com.sniper.survey.struts2.RootAction;
 
 public abstract class BaseAction<T> extends RootAction implements
@@ -37,16 +33,8 @@ public abstract class BaseAction<T> extends RootAction implements
 	@Resource
 	AdminRightService adminRightService;
 
-	public static SystemConfigService configService;
-
-	@Autowired
-	public void setConfigService(SystemConfigService configService) {
-		BaseAction.configService = configService;
-	}
-
 	// 执行原始的request方法
 	private HttpServletRequest request;
-	
 
 	// 存放网站配置
 	protected Map<String, String> systemConfig = new HashMap<>();
@@ -58,12 +46,10 @@ public abstract class BaseAction<T> extends RootAction implements
 	/**
 	 * sniper_menu菜单
 	 */
+	protected Map<String, Map<Boolean, String>> sniperMenu = new HashMap<>();
 	protected String menuType;
 	protected Boolean menuValue;
 	protected Integer[] delid;
-
-	// sniper菜单选项
-	protected Map<String, Map<Boolean, String>> sniperMenu = new HashMap<>();
 	// 菜单处理url
 	protected String sniperUrl;
 
@@ -152,8 +138,6 @@ public abstract class BaseAction<T> extends RootAction implements
 
 	}
 
-	
-
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BaseAction() {
 		// 得到泛型话的超类，
@@ -178,7 +162,6 @@ public abstract class BaseAction<T> extends RootAction implements
 			}
 		}
 
-		
 		// 以上简单写法
 		// ParameterizedType Type = (ParameterizedType)
 		// this.getClass().getGenericSuperclass();;
@@ -189,7 +172,8 @@ public abstract class BaseAction<T> extends RootAction implements
 	@Override
 	public void prepare() throws Exception {
 
-		systemConfig = (Map<String, String>) this.request.getServletContext().getAttribute("systemConfig");
+		systemConfig = (Map<String, String>) this.request.getServletContext()
+				.getAttribute("systemConfig");
 		// 设置网站后台标题
 		// getRequestUrl
 		String url = this.request.getRequestURI().replace(
