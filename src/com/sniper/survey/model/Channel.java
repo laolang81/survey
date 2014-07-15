@@ -13,37 +13,33 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "mc_channel")
-public class Channel extends BaseEntity{
+public class Channel extends BaseEntity {
 
 	private static final long serialVersionUID = -331296954351916696L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "cl_id")
 	public Integer id;
-	@Column(name = "cl_name", unique = true)
+	@Column(name = "name", unique = true)
 	private String name;
-	@Column(name = "cl_fid")
 	private String fid;
-	@Column(name = "cl_order")
 	private Long order;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "cl_stime", updatable = false)
+	@Column(name = "stime", updatable = false)
 	private Date stime;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "cl_letime")
 	private Date letime;
-	@Column(name = "cl_uid", updatable = false)
+	@Column(name = "uid", updatable = false)
 	private Integer uid;
-	@Column(name = "cl_status")
+	@Column(name = "status")
 	private Short status;
-	@Column(name = "cl_url")
+	@Column(name = "url")
 	private String url;
 	// 页面显示方式
-	@Column(name = "cl_show_type")
+	@Column(name = "showType")
 	private Short showType;
-	@Column(name = "cl_attachement")
+	@Column(name = "attachement")
 	private String attachement;
-	@Column(name = "cl_note")
+	@Column(name = "note")
 	private String note;
 
 	public Integer getId() {
