@@ -23,7 +23,7 @@ public interface AdminRightService extends BaseService<AdminRight> {
 
 	public List<AdminRight> springRight();
 
-	public String getUrlName(String url);
+	public String getCUrlName(String url);
 
 	public List<AdminRight> getAdminRightList();
 	

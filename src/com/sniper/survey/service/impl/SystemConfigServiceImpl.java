@@ -1,5 +1,9 @@
 package com.sniper.survey.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Repository;
@@ -15,6 +19,19 @@ public class SystemConfigServiceImpl extends BaseServiceImpl<SystemConfig>
 	@Resource(name = "systemConfigDao")
 	public void setDao(BaseDao<SystemConfig> dao) {
 		super.setDao(dao);
+	}
+
+	@Override
+	public Map<String, String> getCAdminConfig(Boolean autoload) {
+
+		Map<String, String> map = new HashMap<>();
+
+		String hql = "select new SystemConfig(sc.keyName, sc.keyValue) from SystemConfig sc where sc.autoload = ?";
+		List<SystemConfig> configs = this.findEntityByHQL(hql, autoload);
+		for (SystemConfig config : configs) {
+			map.put(config.getKeyName(), config.getKeyValue());
+		}
+		return map;
 	}
 
 }

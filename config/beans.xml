@@ -133,9 +133,9 @@
 		<!-- -->
 		<cache:caching cache="SurveyAdminRight">
 			<!-- 缓存方法 保存的key -->
-			<cache:cacheable method="get*" />
-			<cache:cacheable method="load*" />
-			<cache:cacheable method="find*" />
+			<cache:cacheable method="getc*" />
+			<cache:cacheable method="loadc*" />
+			<cache:cacheable method="findc*" />
 
 			<!-- 删除缓存的方法 就是当执行下面方法的时候除掉缓存 需要配合aop切入点才管用 -->
 			<cache:cache-evict method="save*" all-entries="true" />
@@ -156,11 +156,14 @@
 			order="1" />
 		<!-- 缓存切入点通知 -->
 		<aop:advisor advice-ref="cacheAdvice"
-			pointcut="(execution(* *..*Service.get*(..))
-											or execution(* *..*Service.find*(..))
-											or execution(* *..*Service.load*(..))
+			pointcut="(execution(* *..*Service.getc*(..))
+											or execution(* *..*Service.findc*(..))
+											or execution(* *..*Service.loadc*(..))
 											or execution(* *..*Service.save*(..))
 											or execution(* *..*Service.update*(..))
+											or execution(* *..*Service.delete*(..))
+											or execution(* *..*Service.move*(..))
+											or execution(* *..*Service.toggle*(..))
 											or execution(* *..*Service.clear*(..)))
 											and !bean(myUserDetail)
 											"

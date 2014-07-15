@@ -1,5 +1,6 @@
 package com.sniper.survey.util;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -311,8 +312,6 @@ public class StrutsPage {
 		getUrl();
 		// 必须在获取当前页之后
 		setNowCoolPage();
-
-		
 		// 站位
 		this.params.put(getVarPage(), "_PAGE_");
 		String urlParam = "";

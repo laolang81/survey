@@ -21,6 +21,8 @@ public abstract class RootAction extends ActionSupport {
 
 	private static final long serialVersionUID = -4888324940150304798L;
 
+	
+
 	/**
 	 * 网站title
 	 */

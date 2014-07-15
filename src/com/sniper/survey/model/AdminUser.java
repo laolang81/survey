@@ -34,13 +34,13 @@ public class AdminUser extends BaseEntity {
 	private String name;
 	@Column(name = "password", nullable = true)
 	private String password;
-	@Column(name = "nickName")
+
 	private String nickName;
 
 	private String email;
 	// 用户是否启用
 	@Column(name = "ENABLED")
-	private boolean enabled;
+	private boolean enabled = false;
 	// 用户过期时间戳
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "USERNAME_EXPIRED")
@@ -51,10 +51,8 @@ public class AdminUser extends BaseEntity {
 	private Date passwordExpired;
 	// 用户是否锁定
 	@Column(name = "LOCKED")
-	private boolean locked;
+	private boolean locked = false;
 
-	// 密码加密随机字符串
-	@Column(name = "rand")
 	private String rand;
 	// 创建时间
 	@Temporal(TemporalType.TIMESTAMP)

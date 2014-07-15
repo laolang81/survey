@@ -27,7 +27,7 @@ public class AdminRight extends BaseEntity {
 	@Column(name = "name", nullable = false)
 	private String name;
 	@NotNull
-	@Column(name = "url", nullable = false)
+	@Column(name = "url", nullable = false, unique = true)
 	private String url;
 	private String note;
 	// 权限吗

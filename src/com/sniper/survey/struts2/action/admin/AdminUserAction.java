@@ -88,7 +88,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	@Actions({ @Action(value = "index") })
 	public String index() {
 
-		super.sniperUrl = "/amdin-user/delete";
+		super.sniperUrl = "/admin-user/delete";
 
 		Map<Boolean, String> menu = new HashMap<>();
 		menu.put(false, "否");
@@ -104,6 +104,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		adminUserService.pageList(getListRow());
 		pageHtml = adminUserService.getPageHtml();
 		list = adminUserService.getLists();
+
 		return SUCCESS;
 	}
 
@@ -135,7 +136,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 		if (getMethod().equalsIgnoreCase("post")) {
 
-			if (!password_c.isEmpty()) {
+			if (null != password_c) {
 				model.setPassword(password_c);
 			}
 			if (fromGroups.length > 0) {
@@ -173,7 +174,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 		if (getMethod().equalsIgnoreCase("post")) {
 
-			if (password_c != null && !password_c.isEmpty()) {
+			if (password_c != null) {
 				// 检查密码
 				if (adminUserService.validateByPassword(password_old)) {
 					model.setPassword(password_c);
@@ -187,13 +188,11 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 				}
 
 			}
-			System.out.println("第二次输出" + model.getRand());
 			adminUserService.saveOrUpdateEntiry(this.model);
 
 		}
 		if (getMethod().equalsIgnoreCase("get")) {
 			this.model = adminUserService.getEntity(uid);
-			System.out.println("第三次输出" + model.getRand());
 		}
 
 		return SUCCESS;

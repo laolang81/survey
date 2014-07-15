@@ -112,8 +112,9 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 	}
 
 	@Override
-	public String getUrlName(String url) {
+	public String getCUrlName(String url) {
 
+		DataSourceSwitch.setDataSource(DataSourceSwitch.DATA_SOURCE_MASTER);
 		String hql = "select a.name from AdminRight a where url in(?)";
 		String string = (String) this.uniqueResult(hql, url);
 		return string;

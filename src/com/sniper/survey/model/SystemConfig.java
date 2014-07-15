@@ -18,7 +18,7 @@ public class SystemConfig extends BaseEntity {
 	private String keyName;
 	private String keyValue;
 	private String keyInfo;
-	private Boolean autoload;
+	private Boolean autoload = true;
 	private String input;
 	private String placeholder;
 
@@ -76,6 +76,16 @@ public class SystemConfig extends BaseEntity {
 
 	public void setPlaceholder(String placeholder) {
 		this.placeholder = placeholder;
+	}
+	
+	public SystemConfig() {
+		super();
+	}
+
+	public SystemConfig(String keyName, String keyValue) {
+		super();
+		this.keyName = keyName;
+		this.keyValue = keyValue;
 	}
 
 }

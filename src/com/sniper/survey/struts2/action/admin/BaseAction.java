@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.json.annotations.JSON;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,7 @@ import com.opensymphony.xwork2.Preparable;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.service.impl.AdminUserService;
+import com.sniper.survey.service.impl.SystemConfigService;
 import com.sniper.survey.struts2.RootAction;
 
 public abstract class BaseAction<T> extends RootAction implements
@@ -33,7 +35,29 @@ public abstract class BaseAction<T> extends RootAction implements
 	@Resource
 	AdminRightService adminRightService;
 
+	
+	public static SystemConfigService configService;
+	
+	@Autowired
+	public void setConfigService(SystemConfigService configService) {
+		BaseAction.configService = configService;
+	}
+	// 执行原始的request方法
 	private HttpServletRequest request;
+
+	// 存放网站配置
+	protected static Map<String, String> systemConfig = new HashMap<>();
+	static {
+		if (systemConfig == null) {
+			systemConfig = configService.getCAdminConfig(true);
+			System.out.println("参数初始化");
+		}
+	}
+	
+	public Map<String, String> getSystemConfig() {
+		return systemConfig;
+	}
+
 	/**
 	 * sniper_menu菜单
 	 */
@@ -41,9 +65,9 @@ public abstract class BaseAction<T> extends RootAction implements
 	protected Boolean menuValue;
 	protected Integer[] delid;
 	protected String ip;
-	//sniper菜单选项
+	// sniper菜单选项
 	protected Map<String, Map<Boolean, String>> sniperMenu = new HashMap<>();
-	//菜单处理url
+	// 菜单处理url
 	protected String sniperUrl;
 
 	public void setMenuType(String menuType) {
@@ -98,7 +122,7 @@ public abstract class BaseAction<T> extends RootAction implements
 	private String method;
 
 	/**
-	 * 定义模板文件地址
+	 * 定义模板文件地址 暂不用武之地
 	 */
 	private String htmlPath = "admin";
 
@@ -110,6 +134,9 @@ public abstract class BaseAction<T> extends RootAction implements
 	 * 读取记录数
 	 */
 	protected List<T> list;
+	/**
+	 * ajax返回形式
+	 */
 	protected List<T> AjaxList;
 
 	public List<T> getList() {
@@ -149,6 +176,8 @@ public abstract class BaseAction<T> extends RootAction implements
 				}
 			}
 		}
+		
+		System.out.println(configService);
 
 		// 以上简单写法
 		// ParameterizedType Type = (ParameterizedType)
@@ -159,22 +188,26 @@ public abstract class BaseAction<T> extends RootAction implements
 	@Override
 	public void prepare() throws Exception {
 
+		if (systemConfig == null) {
+			// systemConfig = configService.getCAdminConfig(true);
+			System.out.println("参数初始化");
+		}
 		// 设置网站后台标题
 		// getRequestUrl
 		String url = this.request.getRequestURI().replace(
 				this.request.getContextPath(), "");
-		//此时的url不会携带?后面的东西
+		// 此时的url不会携带?后面的东西
 		// 当不是一斜杠结尾的url,
 		if (url.lastIndexOf(".") != -1) {
 			// 去除结尾的后缀
 			url = url.substring(0, url.lastIndexOf("."));
 		}
-		
-		if(url.lastIndexOf("index") != -1){
+
+		if (url.lastIndexOf("index") != -1) {
 			url = url.substring(0, url.length() - 5);
 		}
 		System.out.println(url);
-		String title = adminRightService.getUrlName(url);
+		String title = adminRightService.getCUrlName(url);
 		setWebPageTitle(title);
 	}
 

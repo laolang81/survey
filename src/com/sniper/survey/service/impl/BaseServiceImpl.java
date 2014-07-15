@@ -1,9 +1,7 @@
 package com.sniper.survey.service.impl;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -149,13 +147,10 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	public void saveEntiry(T t) {
 		dao.saveEntiry(t);
-
 	}
 
 	public void saveOrUpdateEntiry(T t) {
-
 		dao.saveOrUpdateEntiry(t);
-
 	}
 
 	@Override
@@ -217,12 +212,26 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return dao.loadEntity(id);
 	}
 
+	@Override
+	public T loadCEntity(Integer id) {
+		return dao.loadEntity(id);
+	}
+
 	public T getEntity(Integer id) {
 		return dao.getEntity(id);
 	}
 
-	public List<T> findEntityByHQL(String hql, Object... Object) {
+	@Override
+	public T getCEntity(Integer id) {
+		return dao.getEntity(id);
+	}
 
+	public List<T> findEntityByHQL(String hql, Object... Object) {
+		return dao.findEntityByHQL(hql, Object);
+	}
+
+	@Override
+	public List<T> findcEntityByHQL(String hql, Object... Object) {
 		return dao.findEntityByHQL(hql, Object);
 	}
 
@@ -264,7 +273,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	@Override
 	public void pageList(int listRow, Object... Object) {
 
-		Map<String, Object> map = new HashMap<>();
+		
 
 		String hql = "SELECT count(" + getEntityAsName() + ") FROM "
 				+ clazz.getSimpleName() + " " + getEntityAsName() + getJoin()

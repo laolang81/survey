@@ -1,7 +1,6 @@
 package com.sniper.survey.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -48,9 +47,15 @@ public interface BaseService<T> {
 	// 读操作
 	public T loadEntity(Integer id);
 
+	public T loadCEntity(Integer id);
+
 	public T getEntity(Integer id);
 
+	public T getCEntity(Integer id);
+
 	public List<T> findEntityByHQL(String hql, Object... Object);
+
+	public List<T> findcEntityByHQL(String hql, Object... Object);
 
 	public Query findEntityByHQLQuery(String hql, Object... Object);
 
@@ -64,12 +69,6 @@ public interface BaseService<T> {
 
 	public void executeSQL(Class clazz, String hql, Object... Object);
 
-	/**
-	 * 
-	 * @param listRow
-	 * @param Object
-	 * @return
-	 */
 	public void pageList(int listRow, Object... Object);
 
 	public String getPageHtml();

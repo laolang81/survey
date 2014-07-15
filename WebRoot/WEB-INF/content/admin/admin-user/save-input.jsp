@@ -62,9 +62,9 @@ input
 	</div>
 	
 	<div class="form-group">
-		<label for="enables" class="col-sm-2 control-label">启用</label>
+		<label for="enabled" class="col-sm-2 control-label">启用</label>
 		<div class="col-sm-2">
-			<s:checkbox name="enables"  />
+			<s:checkbox name="enabled"  />
 		</div>
 	</div>
 	

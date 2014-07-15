@@ -61,7 +61,7 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 	@Actions({ @Action(value = "index") })
 	public String list() {
 
-		super.sniperUrl = "/amdin-group/delete";
+		
 
 		adminGroupService.setOrder("id desc");
 		adminGroupService.pageList(getListRow());

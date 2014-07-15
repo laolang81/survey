@@ -25,7 +25,7 @@
   		</button>
   		<ul class="dropdown-menu">
   		<s:iterator value="value">
-  			<li><a href="javascript:;" data-value='<s:property value="key"/>' data-type='<s:property value="oper"/>'><s:property value="value"/></span></a>
+  			<li><a href="javascript:;" data-value='<s:property value="key"/>' data-type='<s:property value="oper"/>'><s:property value="value"/></a>
   		</s:iterator>
 		</ul>
 	</div>

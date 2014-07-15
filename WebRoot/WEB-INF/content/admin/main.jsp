@@ -46,16 +46,17 @@
 </head>
 
 <body>
+
 	<nav class="navbar navbar-default" role="navigation">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span> <span
+				<span class="sr-only"><s:property value="systemConfig.webName"/> </span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="">Sniper</a>
+			<a class="navbar-brand" href="/"><s:property value="systemConfig.webName"/></a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -83,6 +84,9 @@
 						<li><s:a action="index" namespace="/admin/admin-user">管理员列表</s:a></li>
 						<li><s:a action="save" namespace="/admin/admin-user">管理员添加</s:a></li>
 						<li class="divider"></li>
+						<li><s:a action="index" namespace="/admin/admin-config">网站配置</s:a></li>
+						<li><s:a action="save" namespace="/admin/admin-config">添加配置</s:a></li>
+						<li class="divider"></li>
 						<li><s:a action="change-password" namespace="/admin/admin-user">更改密码</s:a></li>
 						
 						
@@ -95,7 +99,7 @@
 					data-toggle="dropdown">Holle, <sec:authentication property="name"/> <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">我的设置</a></li>
-						<li><a href="#">网站配置</a></li>
+						
 						<li><s:a action="change-password" namespace="/admin/admin-user">更改密码</s:a></li>
 						<li class="divider"></li>
 						<li><a href="j_spring_security_logout">退出</a></li>
