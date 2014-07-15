@@ -177,7 +177,12 @@ public abstract class BaseAction<T> extends RootAction implements
 			}
 		}
 		
-		System.out.println(configService);
+		System.out.println("configService" + configService);
+		
+		if (systemConfig.isEmpty()) {
+			//systemConfig = configService.getCAdminConfig(true);
+			System.out.println("参数初始化");
+		}
 
 		// 以上简单写法
 		// ParameterizedType Type = (ParameterizedType)
