@@ -88,7 +88,18 @@ public abstract class BaseAction<T> extends RootAction implements
 	protected String ip;
 
 	public String getIp() {
-		return this.request.getRemoteAddr();
+		ip = request.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip;
+
 	}
 
 	/**
@@ -172,8 +183,12 @@ public abstract class BaseAction<T> extends RootAction implements
 	@Override
 	public void prepare() throws Exception {
 
-		systemConfig = (Map<String, String>) this.request.getServletContext()
-				.getAttribute("systemConfig");
+		System.out.println(getIp());
+		if (systemConfig.isEmpty()) {
+			systemConfig = (Map<String, String>) this.request
+					.getServletContext().getAttribute("systemConfig");
+		}
+
 		// 设置网站后台标题
 		// getRequestUrl
 		String url = this.request.getRequestURI().replace(

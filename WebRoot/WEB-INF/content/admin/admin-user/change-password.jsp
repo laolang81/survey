@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-
+<s:debug></s:debug>
 <s:form method="post" id="sniperForm" cssClass="form-horizontal"
 	role="form">
 

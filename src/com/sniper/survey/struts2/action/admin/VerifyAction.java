@@ -16,20 +16,22 @@ import com.sniper.survey.util.VerifyCode;
 
 /**
  * 提供图片验证码
+ * 
  * @author laolang
- *
+ * 
  */
 @Controller
 @Scope("prototype")
 @Namespace("/")
-@Result(name="success",type="stream",params={"contentType","image/jpeg","inputName","imageStream","bufferSize","2048"})
+@Result(name = "success", type = "stream", params = { "contentType",
+		"image/jpeg", "inputName", "imageStream", "bufferSize", "2048" })
 public class VerifyAction extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
-	private static final String VALIDATECODE = 	"sessionVerifyName";
+	private static final String VALIDATECODE = "sessionVerifyName";
 	// Struts2中Map类型的session
 	private Map<String, Object> session;
-	
+
 	private String d;
 
 	public String getD() {

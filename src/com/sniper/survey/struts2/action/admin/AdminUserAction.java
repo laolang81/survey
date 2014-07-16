@@ -93,7 +93,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		Map<Boolean, String> menu = new HashMap<>();
 		menu.put(false, "否");
 		menu.put(true, "是");
-		sniperMenu.put("enables", menu);
+		sniperMenu.put("enabled", menu);
 
 		Map<Boolean, String> ispublic = new HashMap<>();
 		ispublic.put(false, "否");
@@ -112,7 +112,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	public String save() {
 		if (getMethod().equalsIgnoreCase("post")) {
 			List<AdminGroup> ags = new ArrayList<>();
-			if (!password_c.isEmpty()) {
+			if (password_c != null) {
 				model.setPassword(password_c);
 			}
 
@@ -162,10 +162,10 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		return SUCCESS;
 	}
 
-	@Action(value = "change-password", results = {
+	@Action(value = "changepassword", results = {
 			@Result(name = "success", location = "change-password.jsp"),
 			@Result(name = "input", location = "change-password.jsp") })
-	public String changePassword() {
+	public String changepassword() {
 
 		Integer uid = getUserID();
 		if (0 == uid) {
@@ -174,20 +174,39 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 		if (getMethod().equalsIgnoreCase("post")) {
 
-			if (password_c != null) {
-				// 检查密码
-				if (adminUserService.validateByPassword(password_old)) {
-					model.setPassword(password_c);
-				} else {
-					Map<String, List<String>> errorMap = getFieldErrors();
-					List<String> list = new ArrayList<>();
-					list.add("老密码不对");
-					errorMap.put("password_old", list);
-					setFieldErrors(errorMap);
-					return INPUT;
-				}
+			Map<String, List<String>> errorMap = getFieldErrors();
+			List<String> list = new ArrayList<>();
 
+			if (password_old == null) {
+				list.add("旧密码不得为空");
+				errorMap.put("password_old", list);
+				setFieldErrors(errorMap);
+				return INPUT;
 			}
+
+			if (password_new == null || password_new.length() < 6) {
+				list.add("新密码必须6位以上");
+				errorMap.put("password_new", list);
+				setFieldErrors(errorMap);
+				return INPUT;
+			}
+
+			if (password_c == null || password_c != password_new) {
+				list.add("两次密码输入不一致");
+				errorMap.put("password_c", list);
+				setFieldErrors(errorMap);
+				return INPUT;
+			}
+
+			// 检查密码
+			if (adminUserService.validateByPassword(password_old)) {
+				model.setPassword(password_c);
+			} else {
+				list.add("旧密码不对");
+				errorMap.put("password_old", list);
+				return INPUT;
+			}
+
 			adminUserService.saveOrUpdateEntiry(this.model);
 
 		}
@@ -224,7 +243,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 			}
 
 			break;
-		case "enables":
+		case "enabled":
 
 			try {
 				adminUserService.batchFiledChange("enables", getMenuValue(),

@@ -31,10 +31,11 @@ public class Verify {
 		try {
 			PathUtil p = new PathUtil();
 			String webRootPath = p.getWebInfPath();
-			in = new FileInputStream(webRootPath + "/file/shades.ttf");
+
+			in = new FileInputStream(webRootPath + "file/shades.ttf");
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 		}
 
 		RegisterFont gf = new RegisterFont(in);
@@ -52,12 +53,12 @@ public class Verify {
 	public static Random random = new Random();
 
 	/**
-	 * 获取随即颜色
-	 * 生成155-255的数字
+	 * 获取随即颜色 生成155-255的数字
+	 * 
 	 * @return
 	 */
 	public static Color getRandomColor() {
-		
+
 		return new Color(random.nextInt(100), random.nextInt(100),
 				random.nextInt(100), random.nextInt(100) + 155);
 	}
@@ -106,7 +107,6 @@ public class Verify {
 				BufferedImage.TYPE_INT_RGB);
 		// 绘制图像对象
 		Graphics g = image.createGraphics();
-
 		g.setFont(new Font(fontName, Font.ITALIC, fSize));
 		// 设置背景色
 		// g.setColor(color);

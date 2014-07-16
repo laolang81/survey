@@ -86,8 +86,7 @@
 						<li class="divider"></li>
 						<li><s:a action="index" namespace="/admin/admin-config">网站配置</s:a></li>
 						<li><s:a action="save" namespace="/admin/admin-config">添加配置</s:a></li>
-						<li class="divider"></li>
-						<li><s:a action="change-password" namespace="/admin/admin-user">更改密码</s:a></li>
+						
 						
 						
 					</ul></li>
@@ -100,7 +99,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="#">我的设置</a></li>
 						
-						<li><s:a action="change-password" namespace="/admin/admin-user">更改密码</s:a></li>
+						<li><s:a action="changepassword" namespace="/admin/admin-user">更改密码</s:a></li>
 						<li class="divider"></li>
 						<li><a href="j_spring_security_logout">退出</a></li>
 					</ul></li>
