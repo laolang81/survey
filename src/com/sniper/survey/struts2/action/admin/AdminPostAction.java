@@ -152,7 +152,7 @@ public class AdminPostAction extends BaseAction<Post> {
 						.getChannelListById(channelsPost)));
 			}
 			
-			System.out.println(model.getPostValue().getId());
+			System.out.println(model.getPostValue());
 			PostValue postValue1 = new PostValue();
 			postValue1.setId(model.getPostValue().getId());
 			
