@@ -1,6 +1,8 @@
 package com.sniper.survey.struts2.action.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +19,11 @@ import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.Channel;
 import com.sniper.survey.model.Post;
+import com.sniper.survey.model.PostValue;
 import com.sniper.survey.service.impl.ChannelService;
 import com.sniper.survey.service.impl.PostService;
 import com.sniper.survey.util.DataUtil;
+import com.sniper.survey.util.PropertiesUtil;
 
 //加注解
 @Controller
@@ -35,8 +39,17 @@ public class AdminPostAction extends BaseAction<Post> {
 
 	@Resource
 	ChannelService channelService;
-
+	/**
+	 * 文章栏目选择
+	 */
 	Map<Integer, String> channelTop = new HashMap<>();
+	// 状态列表
+	Map<Integer, String> statusList = new HashMap<>();
+	// 保存被选中的之的列表
+	List<Integer> channelChecked = new ArrayList<>();
+	// 栏目提交之后得到的结果
+	private Integer[] channelsPost;
+	private String postValuePost;
 
 	public Map<Integer, String> getChannelTop() {
 
@@ -51,6 +64,35 @@ public class AdminPostAction extends BaseAction<Post> {
 		return channelTop;
 	}
 
+	public Map<Integer, String> getStatusList() {
+		if (statusList.isEmpty()) {
+			PropertiesUtil propertiesUtil = new PropertiesUtil(
+					"properties/postStatus.properties");
+			statusList = propertiesUtil.getAllIntegerValue();
+		}
+		return statusList;
+	}
+
+	public List<Integer> getChannelChecked() {
+		return channelChecked;
+	}
+
+	public Integer[] getChannelsPost() {
+		return channelsPost;
+	}
+
+	public void setChannelsPost(Integer[] channelsPost) {
+		this.channelsPost = channelsPost;
+	}
+
+	public void setPostValuePost(String postValuePost) {
+		this.postValuePost = postValuePost;
+	}
+
+	public String getPostValuePost() {
+		return postValuePost;
+	}
+
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
@@ -61,6 +103,8 @@ public class AdminPostAction extends BaseAction<Post> {
 		show.put(false, "否");
 		show.put(true, "是");
 		sniperMenu.put("Audit", show);
+
+		sniperMenuInt.put("Status", getStatusList());
 
 		sniperMenuInt.put("Channel", getChannelTop());
 
@@ -77,6 +121,14 @@ public class AdminPostAction extends BaseAction<Post> {
 			@Result(name = "success", location = "save.jsp") })
 	public String save() {
 		if (getMethod().equalsIgnoreCase("post")) {
+			if (channelsPost.length != 0) {
+				model.getChannels().clear();
+				model.setChannels(new HashSet<>(channelService
+						.getChannelListById(channelsPost)));
+			}
+			PostValue postValue = new PostValue();
+			postValue.setValue(getPostValuePost());
+			model.setPostValue(postValue);
 			postService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
@@ -92,14 +144,34 @@ public class AdminPostAction extends BaseAction<Post> {
 			return ERROR;
 		}
 
-		if (getMethod().equalsIgnoreCase("get")) {
-			this.model = postService.getEntity(this.model.getId());
-		}
-
 		if (getMethod().equalsIgnoreCase("post")) {
 
+			if (channelsPost.length != 0) {
+				model.getChannels().clear();
+				model.setChannels(new HashSet<>(channelService
+						.getChannelListById(channelsPost)));
+			}
+			
+			System.out.println(model.getPostValue().getId());
+			PostValue postValue1 = new PostValue();
+			postValue1.setId(model.getPostValue().getId());
+			
+			//PostValue postValue = new PostValue();
+			//postValue.setValue(getPostValuePost());
+			//model.setPostValue(postValue);
 			postService.saveOrUpdateEntiry(model);
 		}
+
+		if (getMethod().equalsIgnoreCase("get")) {
+			this.model = postService.getAllEntity(this.model.getId());
+			setPostValuePost(model.getPostValue().getValue());
+
+		}
+
+		for (Channel c : model.getChannels()) {
+			channelChecked.add(c.getId());
+		}
+
 		return SUCCESS;
 	}
 

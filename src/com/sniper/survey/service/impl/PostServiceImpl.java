@@ -8,11 +8,22 @@ import com.sniper.survey.dao.BaseDao;
 import com.sniper.survey.model.Post;
 
 @Service("postService")
-public class PostServiceImpl extends BaseServiceImpl<Post> implements PostService {
+public class PostServiceImpl extends BaseServiceImpl<Post> implements
+		PostService {
 
 	@Resource(name = "postDao")
 	public void setDao(BaseDao<Post> dao) {
-		
+
 		super.setDao(dao);
+	}
+
+	@Override
+	public Post getAllEntity(Integer id) {
+		Post post = super.getEntity(id);
+		
+		post.getPostValue().getValue();
+		post.getChannels().size();
+		
+		return post;
 	}
 }

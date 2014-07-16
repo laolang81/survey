@@ -2,103 +2,63 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
+
 <s:form method="post" id="sniperForm" cssClass="form-horizontal"
 	role="form">
-	
+
 	<s:hidden name="id" />
 
 	<div class="form-group">
 		<label for="name" class="col-sm-2 control-label">名称</label>
 		<div class="col-sm-10">
 			<s:textfield name="name" cssClass="form-control" id="name" />
-			<div class="help-block"><s:fielderror fieldName="name" /></div>
+			<div class="help-block">
+				<s:fielderror fieldName="name" />
+			</div>
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="nickName" class="col-sm-2 control-label">昵称</label>
+		<label for="source" class="col-sm-2 control-label">来源</label>
 		<div class="col-sm-10">
-			<s:textfield name="nickName" cssClass="form-control" id="nickName" />
+			<s:textfield name="source" cssClass="form-control" id="source" />
 			<div class="help-block">
-				<s:fielderror fieldName="nickName" />
+				<s:fielderror fieldName="source" />
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="form-group">
-		<label for="email" class="col-sm-2 control-label">Email</label>
+		<label for="nickName" class="col-sm-2 control-label">Sort</label>
 		<div class="col-sm-10">
-			<s:textfield name="email" cssClass="form-control" id="email" />
-			<div class="help-block">
-				<s:fielderror fieldName="email" />
-			</div>
+			<s:textfield name="order" cssClass="form-control" id="order" />
+
 		</div>
 	</div>
-	
+
 	<div class="form-group">
-		<label for="password_old" class="col-sm-2 control-label">密码</label>
+		<label for="adminGroup" class="col-sm-2 control-label">栏目组</label>
 		<div class="col-sm-10">
-			<s:password name="password_old" cssClass="form-control" id="password_old" />
-			<div class="help-block"><s:fielderror fieldName="password_old" /></div>
+			<s:checkboxlist list="channelTop" value="channelChecked"
+				listKey="key" listValue="value" name="channelsPost" cssClass=""></s:checkboxlist>
 		</div>
 	</div>
-	
+
 	<div class="form-group">
-		<label for="password_c" class="col-sm-2 control-label">确认密码</label>
-		<div class="col-sm-10">
-			<s:password name="password_c" cssClass="form-control" id="password_c" />
-			<div class="help-block">
-				<s:fielderror fieldName="password_c" />
-				<s:actionerror name="password_c"/>
-			</div>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label for="adminGroup" class="col-sm-2 control-label">用户组</label>
-		<div class="col-sm-10">
-			<s:checkboxlist list="adminGroups" value="valueFromGroups" listKey="id" listValue="name" name="fromGroups" cssClass=""></s:checkboxlist>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label for="enabled" class="col-sm-2 control-label">启用</label>
+		<label for="enabled" class="col-sm-2 control-label">状态</label>
 		<div class="col-sm-2">
-			<s:checkbox name="enabled"  />
+
+			<s:select list="statusList" name="status"></s:select>
 		</div>
 	</div>
-	
+
 	<div class="form-group">
-		<label for="locked" class="col-sm-2 control-label">锁定</label>
-		<div class="col-sm-2">
-			<s:checkbox name="locked" />
+		<label for="locked" class="col-sm-2 control-label">内容</label>
+		<div class="col-sm-10">
+			<s:textarea rows="6" name="postValuePost" cssClass="form-control"></s:textarea>
 		</div>
 	</div>
-	
-	<div class="form-group">
-		<label for="usernameExpired" class="col-sm-2 control-label">用户名过期时间</label>
-		<div class="col-sm-3">
-			<s:textfield name="usernameExpired" cssClass="form-control"
-				id="usernameExpired" readonly="true" data-date-format="yyyy-mm-dd hh:ii:ss">
-				<s:param name="value">
-					<s:date name="usernameExpired" format="yyyy-MM-dd HH:mm:ss" />
-				</s:param>
-			</s:textfield>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label for="passwordExpired" class="col-sm-2 control-label">密码过期时间</label>
-		<div class="col-sm-3">
-			<s:textfield name="passwordExpired" cssClass="form-control"
-				id="passwordExpired" readonly="true" data-date-format="yyyy-mm-dd hh:ii:ss">
-				<s:param name="value">
-					<s:date name="passwordExpired" format="yyyy-MM-dd HH:mm:ss" />
-				</s:param>
-			</s:textfield>
-		</div>
-	</div>
-	
+
 
 	<div class="form-group">
 		<div class="col-sm-10 col-md-offset-2">
@@ -106,11 +66,12 @@
 		</div>
 	</div>
 </s:form>
-
+<script type="text/javascript" src="myfiles/Plugin/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript" src="myfiles/Plugin/kindeditor/lang/zh_CN.js"></script>
 <link
 	href="myfiles/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"
 	rel="stylesheet" media="screen">
-	
+
 <script type="text/javascript"
 	src="myfiles/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"
 	charset="UTF-8"></script>
@@ -121,8 +82,16 @@
 	$('#usernameExpired').datetimepicker({
 		language : 'zh-CN'
 	});
-	$('#passwordExpired').datetimepicker({
-		language : 'zh-CN'
+	
+	
+	$(function() {
+		var editor = KindEditor.create('textarea[name="postValuePost"]',{
+			uploadJson : 'admin/file-upload/upload',
+			fileManagerJson : 'admin/file-upload/htmlmanager',
+			allowFileManager : true,
+				
+			afterBlur: function(){this.sync();}
+		});
 	});
 </script>
 

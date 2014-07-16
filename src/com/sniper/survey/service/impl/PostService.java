@@ -5,4 +5,5 @@ import com.sniper.survey.service.BaseService;
 
 public interface PostService extends BaseService<Post> {
 
+	public Post getAllEntity(Integer id);
 }

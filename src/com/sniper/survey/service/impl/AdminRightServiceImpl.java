@@ -146,7 +146,6 @@ public class AdminRightServiceImpl extends BaseServiceImpl<AdminRight>
 		String hql = "from AdminRight where id in("
 				+ StringUtils.join(id, ",") + ")";
 		
-		System.out.println(hql);
 		return this.findEntityByHQL(hql);
 	}
 }

@@ -41,7 +41,7 @@ public class Log {
 	@Column(name = "ml_result")
 	private String result;
 	// 操作结果消息
-	@Column(name = "ml_result_msg")
+	@Column(name = "ml_result_msg", columnDefinition = "text")
 	private String resultMsg;
 
 	@Column(name = "ml_time")

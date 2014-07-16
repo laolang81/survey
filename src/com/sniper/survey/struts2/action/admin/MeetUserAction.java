@@ -110,8 +110,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		}
 
 		if (getMethod().equals("POST")) {
-			System.out.println(model.getLeaveTime());
-			System.out.println(model.getReportTime());
+			
 			meetUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;

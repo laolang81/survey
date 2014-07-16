@@ -11,7 +11,8 @@ public class MySiteMeshFilter extends ConfigurableSiteMeshFilter {
 		builder
 			.addDecoratorPath("/*", "/WEB-INF/content/web/main.jsp")
 			.addDecoratorPath("/admin*", "/WEB-INF/content/admin/main.jsp")
-			.addExcludedPath("/admin/login**");
+			.addExcludedPath("/admin/login**")
+			.addExcludedPath("/myfiles**");
 		
 		
 	}

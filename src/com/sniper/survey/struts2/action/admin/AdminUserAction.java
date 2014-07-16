@@ -168,7 +168,7 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 			@Result(name = "input", location = "change-password.jsp") })
 	public String changepassword() {
 
-		Integer uid = getUserID();
+		Integer uid = UserID();
 		if (0 == uid) {
 			return ERROR;
 		}

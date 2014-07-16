@@ -1,9 +1,7 @@
 package com.sniper.survey.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -83,25 +81,15 @@ public class Post extends BaseEntity {
 	@Column(name = "pt_language")
 	private String language = "zh_CN";
 
-	/**
-	 * 单向@OneToOne, post包含postValue 双向就是相互包含 cascade的意思是对应的操作函数 比如remove对应delete
-	 */
-	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE, CascadeType.REMOVE })
-	@JoinColumn(name = "pt_pe_id", unique = true)
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@JoinColumn(name = "postValueId")
 	// 默认为延迟加载,由于这里是主键关联，在住表删除时，次表没变化，是个bug
 	private PostValue postValue;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE, CascadeType.REMOVE })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	// referencedColumnName为每个表关联列，主键不用写
 	@JoinTable(name = "mc_post_node", joinColumns = @JoinColumn(name = "pn_pid"), inverseJoinColumns = @JoinColumn(name = "pn_cid"))
 	private Set<Channel> channels = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE, CascadeType.REMOVE })
-	@JoinTable(name = "mc_post_tags", joinColumns = @JoinColumn(name = "pmt_pid"), inverseJoinColumns = @JoinColumn(name = "pmt_tid"))
-	private List<Tags> tags = new ArrayList<>();
 
 	@ManyToOne(cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "uid")
@@ -281,14 +269,6 @@ public class Post extends BaseEntity {
 
 	public Post() {
 
-	}
-
-	public List<Tags> getTags() {
-		return tags;
-	}
-
-	public void setTags(List<Tags> tags) {
-		this.tags = tags;
 	}
 
 	public void setAdminUser(AdminUser adminUser) {

@@ -76,8 +76,8 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">会议管理 <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><s:a action="index" namespace="/admin/meet-user">人员列表</s:a></li>
-						<li><s:a action="save" namespace="/admin/meet-user">人员添加</s:a></li>
+						<li><s:a action="index" namespace="/admin/admin-post">会议列表</s:a></li>
+						<li><s:a action="save" namespace="/admin/admin-post">会议添加</s:a></li>
 						
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"

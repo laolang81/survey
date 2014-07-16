@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "mc_post_value")
-public class PostValue extends BaseEntity{
+public class PostValue extends BaseEntity {
 
 	private static final long serialVersionUID = 8437710606525667425L;
 	@Id
@@ -25,7 +25,9 @@ public class PostValue extends BaseEntity{
 	@Column(name = "pe_value", columnDefinition = "text")
 	private String value;
 	
-	
+	// 维护这post表这是个反向属性,一般被拥有方被定义,文章内容一般不执行什么操作,属于被拥有放
+	@OneToOne(mappedBy = "postValue")
+	private Post post;
 
 	public Integer getId() {
 		return id;
@@ -42,13 +44,6 @@ public class PostValue extends BaseEntity{
 	public void setValue(String value) {
 		this.value = value;
 	}
-
-	
-
-	
-	// 维护这post表这是个反向属性,一般被拥有方被定义,文章内容一般不执行什么操作,属于被拥有放
-	@OneToOne(mappedBy = "postValue")
-	private Post post;
 
 	public Post getPost() {
 		return post;

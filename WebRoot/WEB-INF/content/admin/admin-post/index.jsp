@@ -7,14 +7,10 @@
 	<thead>
 		<tr>
 			<th>ID</th>
-			<th>username</th>
-			<th>nickname</th>
-			<th>email</th>
-			<th>enables</th>
-			<th>usernameExpired</th>
-			<th>passwordExpired</th>
-			<th>locked</th>
-			<th>createTime</th>
+			<th>标题</th>
+			<th>状态</th>
+			<th>栏目</th>
+			<th>发布时间</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -31,12 +27,8 @@
 				<s:property value="name"/>
 				</s:a>
 			</td>
-			<td><s:property value="status"/></td>
-			<td><s:property value="stime"/></td>
-			<td><s:property value="enables"/></td>
-			<td><s:property value="usernameExpired"/></td>
-			<td><s:property value="passwordExpired"/></td>
-			<td><s:property value="locked"/></td>
+			<td><s:property value="statusList[status]"/></td>
+			<td><s:property value="channelTop[pn_cid]"/> <s:property value="channels.name"/> </td>
 			<td><s:date name="stime" format="yyyy-mm-dd HH:mm:ss"/> </td>
 		</tr>
 		</s:iterator>

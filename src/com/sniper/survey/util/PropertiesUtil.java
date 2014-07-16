@@ -42,14 +42,30 @@ public class PropertiesUtil {
 		return value;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Map<String, String> getAllValue() {
 		Map<String, String> list = new HashMap<>();
-		@SuppressWarnings("rawtypes")
+
 		Enumeration en = properties.propertyNames();
 		while (en.hasMoreElements()) {
 			String key = (String) en.nextElement();
 			String value = properties.getProperty(key);
 			list.put(key, value);
+		}
+
+		return list;
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	public Map<Integer, String> getAllIntegerValue() {
+		Map<Integer, String> list = new HashMap<>();
+
+		Enumeration en = properties.propertyNames();
+		while (en.hasMoreElements()) {
+			String key = (String) en.nextElement();
+			String value = properties.getProperty(key);
+			list.put(Integer.parseInt(key), value);
 		}
 
 		return list;
