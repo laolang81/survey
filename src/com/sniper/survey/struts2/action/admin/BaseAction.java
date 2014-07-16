@@ -36,19 +36,13 @@ public abstract class BaseAction<T> extends RootAction implements
 	// 执行原始的request方法
 	private HttpServletRequest request;
 
-	// 存放网站配置
-	protected Map<String, String> systemConfig = new HashMap<>();
-
-	public Map<String, String> getSystemConfig() {
-		return systemConfig;
-	}
-
 	/**
 	 * sniper_menu菜单
 	 */
+	protected Map<String, Map<Integer, String>> sniperMenuInt = new HashMap<>();
 	protected Map<String, Map<Boolean, String>> sniperMenu = new HashMap<>();
 	protected String menuType;
-	protected Boolean menuValue;
+	protected String menuValue;
 	protected Integer[] delid;
 	// 菜单处理url
 	protected String sniperUrl;
@@ -61,16 +55,20 @@ public abstract class BaseAction<T> extends RootAction implements
 		return menuType;
 	}
 
-	public void setMenuValue(Boolean menuValue) {
+	public void setMenuValue(String menuValue) {
 		this.menuValue = menuValue;
 	}
 
-	public Boolean getMenuValue() {
+	public String getMenuValue() {
 		return menuValue;
 	}
 
 	public Map<String, Map<Boolean, String>> getSniperMenu() {
 		return sniperMenu;
+	}
+
+	public Map<String, Map<Integer, String>> getSniperMenuInt() {
+		return sniperMenuInt;
 	}
 
 	public String getSniperUrl() {
@@ -149,6 +147,10 @@ public abstract class BaseAction<T> extends RootAction implements
 
 	}
 
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BaseAction() {
 		// 得到泛型话的超类，
@@ -179,18 +181,12 @@ public abstract class BaseAction<T> extends RootAction implements
 		// clazz = (Class<T>) Type.getActualTypeArguments()[0];
 	}
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * 每个action之前执行的方法
+	 */
 	@Override
 	public void prepare() throws Exception {
 
-		System.out.println(getIp());
-		if (systemConfig.isEmpty()) {
-			systemConfig = (Map<String, String>) this.request
-					.getServletContext().getAttribute("systemConfig");
-		}
-
-		// 设置网站后台标题
-		// getRequestUrl
 		String url = this.request.getRequestURI().replace(
 				this.request.getContextPath(), "");
 		// 此时的url不会携带?后面的东西
@@ -203,7 +199,7 @@ public abstract class BaseAction<T> extends RootAction implements
 		if (url.lastIndexOf("index") != -1) {
 			url = url.substring(0, url.length() - 5);
 		}
-		System.out.println(url);
+		System.out.println("getWebPageTitle" + url);
 		String title = adminRightService.getCUrlName(url);
 		setWebPageTitle(title);
 	}

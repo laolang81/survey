@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.SystemConfig;
 import com.sniper.survey.service.impl.SystemConfigService;
+import com.sniper.survey.util.DataUtil;
 
 @Controller
 @Scope("prototype")
@@ -26,11 +27,11 @@ public class AdminConfigAction extends BaseAction<SystemConfig> {
 
 	@Resource
 	SystemConfigService configService;
-	
+
 	@Action("index")
 	@SkipValidation
 	public String index() {
-		
+
 		super.sniperUrl = "/admin-config/delete";
 
 		Map<Boolean, String> menu = new HashMap<>();
@@ -51,6 +52,8 @@ public class AdminConfigAction extends BaseAction<SystemConfig> {
 	public String save() {
 		if (getMethod().equalsIgnoreCase("post")) {
 			configService.saveOrUpdateEntiry(model);
+			// 每次修改配置或者删除配置都要更新网站配置
+			updateSystemConfig();
 		}
 
 		return SUCCESS;
@@ -72,6 +75,7 @@ public class AdminConfigAction extends BaseAction<SystemConfig> {
 
 		if (getMethod().equalsIgnoreCase("post")) {
 			configService.saveOrUpdateEntiry(model);
+			updateSystemConfig();
 		}
 
 		if (getMethod().equalsIgnoreCase("get")) {
@@ -100,8 +104,8 @@ public class AdminConfigAction extends BaseAction<SystemConfig> {
 		case "AutoLoad":
 
 			try {
-				configService.batchFiledChange("autoload", getMenuValue(),
-						delid);
+				configService.batchFiledChange("autoload",
+						DataUtil.stringToBoolean(getMenuValue()), delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
@@ -116,6 +120,15 @@ public class AdminConfigAction extends BaseAction<SystemConfig> {
 		}
 
 		return SUCCESS;
+
+	}
+
+	/**
+	 * 更新网站配置
+	 */
+	private void updateSystemConfig() {
+
+		getSystemConfig().clear();
 
 	}
 

@@ -3,6 +3,8 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <s:include value="../public/sniper_menu.jsp"></s:include>
 
+
+
 <table class="table table-hover">
 	<thead>
 		<tr>
@@ -19,9 +21,10 @@
 		</tr>
 	</thead>
 	<tbody>
+		
+		<s:iterator value="list">
 		<tr>
-		<s:iterator value="meetUsers">
-			<td><s:checkbox fieldValue="%{id}" value="false" name="id" />
+			<td><s:checkbox fieldValue="%{id}" value="false" name="list.id" />
 			<s:a action="update" target="_blank">
 				<s:param name="id">${id }</s:param>
 				<s:property value="id"/>

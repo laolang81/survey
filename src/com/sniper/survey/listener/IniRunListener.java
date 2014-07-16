@@ -1,8 +1,5 @@
 package com.sniper.survey.listener;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
@@ -41,12 +38,12 @@ public class IniRunListener implements ApplicationListener, ServletContextAware 
 		if (arg0 instanceof ContextRefreshedEvent) {
 			// 保存系统参数配置
 
-			Map<String, String> map = new HashMap<>();
-			map = configService.getCAdminConfig(true);
+			/*Map<String, String> map = new HashMap<>();
+			map = configService.getAdminConfig(true);
 
 			context.setAttribute("systemConfig", map);
 
-			System.out.println("配置初始化");
+			System.out.println("配置初始化");*/
 		}
 	}
 

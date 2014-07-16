@@ -22,7 +22,7 @@ public class SystemConfigServiceImpl extends BaseServiceImpl<SystemConfig>
 	}
 
 	@Override
-	public Map<String, String> getCAdminConfig(Boolean autoload) {
+	public Map<String, String> getAdminConfig(Boolean autoload) {
 
 		Map<String, String> map = new HashMap<>();
 

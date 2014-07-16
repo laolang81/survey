@@ -1,6 +1,5 @@
 package com.sniper.survey.struts2.action.admin;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
+import com.sniper.survey.util.DataUtil;
 
 @Controller
 @Scope("prototype")
@@ -34,11 +34,15 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	private Map<String, List<AdminRight>> result = new HashMap<>();
 
 	// 顶级right,
-	private List<AdminRight> adminRights = new ArrayList<>();
+	private Map<Integer, String> adminRights = new HashMap<>();
 
-	public List<AdminRight> getAdminRights() {
-		if (adminRights.size() == 0) {
-			adminRights = adminRightService.getAdminRightMenuList();
+	public Map<Integer, String> getAdminRights() {
+		if (adminRights.isEmpty()) {
+			adminRights.put(0, "顶级");
+			List<AdminRight> list = adminRightService.getAdminRightMenuList();
+			for (AdminRight right : list) {
+				adminRights.put(right.getId(), right.getName());
+			}
 		}
 		return adminRights;
 	}
@@ -146,8 +150,8 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		case "IsShow":
 
 			try {
-				adminRightService.batchFiledChange("theShow", getMenuValue(),
-						delid);
+				adminRightService.batchFiledChange("theShow",
+						DataUtil.stringToBoolean(getMenuValue()), delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
@@ -159,8 +163,8 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 		case "IsPublic":
 
 			try {
-				adminRightService.batchFiledChange("thePublic", getMenuValue(),
-						delid);
+				adminRightService.batchFiledChange("thePublic",
+						DataUtil.stringToBoolean(getMenuValue()), delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
@@ -171,8 +175,8 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 			break;
 		case "IsMenu":
 			try {
-				adminRightService.batchFiledChange("theMenu", getMenuValue(),
-						delid);
+				adminRightService.batchFiledChange("theMenu",
+						DataUtil.stringToBoolean(getMenuValue()), delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {

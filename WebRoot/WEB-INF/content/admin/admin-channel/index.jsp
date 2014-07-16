@@ -7,10 +7,11 @@
 	<thead>
 		<tr>
 			<th><s:text name="ID"></s:text></th>
-			<th>Key</th>
-			<th>Value</th>
-			<th>Msg</th>
-			<th>AutoLoad</th>
+			<th>name</th>
+			<th>showType</th>
+			<th>status</th>
+			<th>create Time</th>
+			<th>sort</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -20,12 +21,12 @@
 					<s:a action="update" target="_blank">
 						<s:param name="id">${id }</s:param>
 						<s:property value="id" />
-					</s:a>
-				</td>
-				<td><s:property value="keyName" /></td>
-				<td><s:property value="keyValue" /></td>
-				<td><s:property value="keyInfo" /></td>
-				<td><s:property value="autoload" /></td>
+					</s:a></td>
+				<td><s:property value="name" /></td>
+				<td><s:property value="channelType[showType]" /></td>
+				<td><s:property value="status" /></td>
+				<td><s:property value="stime" /></td>
+				<td><s:property value="order" /></td>
 		</tr>
 		</s:iterator>
 

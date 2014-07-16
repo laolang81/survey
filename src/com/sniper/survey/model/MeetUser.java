@@ -40,6 +40,7 @@ public class MeetUser extends BaseEntity {
 	@Column(name = "other", columnDefinition = "text")
 	private String other;
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(updatable = false)
 	private Date createTime = new Date();
 	private int bindUid;
 
@@ -178,7 +179,7 @@ public class MeetUser extends BaseEntity {
 	}
 
 	public Date getCreateTime() {
-		
+
 		return createTime;
 	}
 

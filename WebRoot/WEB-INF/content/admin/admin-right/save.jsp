@@ -50,7 +50,7 @@
 	<div class="form-group">
 		<label for="fid" class="col-sm-2 control-label">Fid</label>
 		<div class="col-sm-10">
-			<s:select list="adminRights" listKey="id" listValue="name" name="fid"></s:select>
+			<s:select list="adminRights" listKey="key" listValue="value" name="fid"></s:select>
 		</div>
 	</div>
 	

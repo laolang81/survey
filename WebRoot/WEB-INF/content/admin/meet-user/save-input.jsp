@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-INPUT
-<s:form action="save" method="post" id="sniperForm"
-	cssClass="form-horizontal" role="form">
+
+<s:form method="post" id="sniperForm" cssClass="form-horizontal"
+	role="form">
 	<s:token />
 	<s:hidden name="id" />
 
@@ -19,7 +19,7 @@ INPUT
 	<div class="form-group">
 		<label for="name" class="col-sm-2 control-label">性别</label>
 		<div class="col-sm-2">
-			<s:select list="sexArray" name="sex"
+			<s:select list="sexs" listKey="key" listValue="value" name="sex"
 				cssClass="form-control"></s:select>
 		</div>
 	</div>
@@ -69,7 +69,11 @@ INPUT
 		<label for="reportTime" class="col-sm-2 control-label">报道时间</label>
 		<div class="col-sm-3">
 			<s:textfield name="reportTime" cssClass="form-control"
-				id="reportTime" readonly="true" data-date-format="yyyy-mm-dd hh:ii" />
+				id="reportTime" readonly="true" data-date-format="yyyy-mm-dd hh:ii:ss">
+				<s:param name="value">
+					<s:date name="reportTime" format="yyyy-MM-dd HH:mm:ss" />
+				</s:param>
+			</s:textfield>
 		</div>
 	</div>
 	<div class="form-group">
@@ -90,7 +94,11 @@ INPUT
 		<label for="leaveTime" class="col-sm-2 control-label">离开时间</label>
 		<div class="col-sm-3">
 			<s:textfield name="leaveTime" cssClass="form-control" id="leaveTime"
-				readonly="true" data-date-format="yyyy-mm-dd hh:ii" />
+				readonly="true" data-date-format="yyyy-mm-dd hh:ii">
+				<s:param name="value">
+					<s:date name="leaveTime" format="yyyy-MM-dd HH:mm:ss" />
+				</s:param>
+			</s:textfield>
 		</div>
 	</div>
 
@@ -100,7 +108,7 @@ INPUT
 			<s:checkbox name="carLeavePeople" cssClass="checkbox-inline" />
 		</div>
 	</div>
-	
+
 	<div class="form-group">
 		<label for="carLeaveNum" class="col-sm-2 control-label">返程车次(航班)</label>
 		<div class="col-sm-10">
@@ -108,11 +116,11 @@ INPUT
 				id="carLeaveNum" />
 		</div>
 	</div>
-	
+
 	<div class="form-group">
 		<label for="other" class="col-sm-2 control-label">其他要求</label>
 		<div class="col-sm-10">
-			<s:textarea cols="4" cssClass="form-control" name="other" id="other"></s:textarea>
+			<s:textarea rows="4" cssClass="form-control" name="other" id="other"></s:textarea>
 		</div>
 	</div>
 
@@ -121,13 +129,10 @@ INPUT
 			<button type="submit" class="btn btn-danger">保存</button>
 		</div>
 	</div>
-	
+
 </s:form>
 
-<script type="text/javascript"
-	src="myfiles/Plugin/kindeditor/kindeditor-min.js"></script>
-<script type="text/javascript"
-	src="myfiles/Plugin/kindeditor/lang/zh_CN.js"></script>
+
 <link
 	href="myfiles/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"
 	rel="stylesheet" media="screen">
@@ -145,15 +150,5 @@ INPUT
 		language : 'zh-CN'
 	});
 
-	$(function() {
-		var editor = KindEditor.create('textarea[name="other"]', {
-			uploadJson : 'admin/file-upload/upload',
-			fileManagerJson : 'admin/file-upload/htmlmanager',
-			allowFileManager : true,
-			//filePostName	: "uf", 
-			afterBlur : function() {
-				this.sync();
-			}
-		});
-	});
+	
 </script>

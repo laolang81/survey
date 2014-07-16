@@ -61,8 +61,6 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 	@Actions({ @Action(value = "index") })
 	public String list() {
 
-		
-
 		adminGroupService.setOrder("id desc");
 		adminGroupService.pageList(getListRow());
 		pageHtml = adminGroupService.getPageHtml();
@@ -144,45 +142,6 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 				ajaxResult.put("code", -1);
 				ajaxResult.put("msg", "删除失败");
 			}
-			break;
-		case "IsShow":
-
-			try {
-				adminGroupService.batchFiledChange("theShow", getMenuValue(),
-						delid);
-				ajaxResult.put("code", 1);
-				ajaxResult.put("msg", "success");
-			} catch (Exception e) {
-				ajaxResult.put("code", -1);
-				ajaxResult.put("msg", e.getMessage());
-			}
-
-			break;
-		case "IsPublic":
-
-			try {
-				adminGroupService.batchFiledChange("thePublic", getMenuValue(),
-						delid);
-				ajaxResult.put("code", 1);
-				ajaxResult.put("msg", "success");
-			} catch (Exception e) {
-				ajaxResult.put("code", -1);
-				ajaxResult.put("msg", e.getMessage());
-			}
-
-			break;
-		case "IsMenu":
-
-			try {
-				adminGroupService.batchFiledChange("theMenu", getMenuValue(),
-						delid);
-				ajaxResult.put("code", 1);
-				ajaxResult.put("msg", "success");
-			} catch (Exception e) {
-				ajaxResult.put("code", -1);
-				ajaxResult.put("msg", e.getMessage());
-			}
-
 			break;
 
 		default:

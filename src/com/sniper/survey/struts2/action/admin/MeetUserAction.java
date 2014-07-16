@@ -145,12 +145,6 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		case "IsShow":
 
 			break;
-		case "IsPublic":
-			System.out.println("IsPublic");
-			break;
-		case "IsMenu":
-			System.out.println("IsMenu");
-			break;
 
 		default:
 			break;

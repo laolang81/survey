@@ -257,6 +257,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return this.findEntityByHQL(hql);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void executeSQL(Class clazz, String hql, Object... Object) {
 		dao.executeSQL(clazz, hql, Object);

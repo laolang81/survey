@@ -18,7 +18,7 @@
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
-<title><sitemesh:write property="title" /> <s:property value="webPageTitle"/> - 后台管理</title>
+<title><sitemesh:write property="title" /> <s:property value="webPageTitle"/> - ${systemConfig.webAdminName} | 后台管理</title>
 <sitemesh:write property='head' />
 <base href="<%=basePath%>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,11 +52,12 @@
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only"><s:property value="systemConfig.webName"/> </span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
+				<span class="sr-only"><s:property value="systemConfig.webName"/></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/"><s:property value="systemConfig.webName"/></a>
+			<a class="navbar-brand" href="<%=basePath%>">${systemConfig.webName}</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -70,7 +71,21 @@
 					<ul class="dropdown-menu">
 						<li><s:a action="index" namespace="/admin/meet-user">人员列表</s:a></li>
 						<li><s:a action="save" namespace="/admin/meet-user">人员添加</s:a></li>
-						<li><s:a action="export" namespace="/admin/meet-user">人员导出</s:a></li>
+						
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown">会议管理 <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><s:a action="index" namespace="/admin/meet-user">人员列表</s:a></li>
+						<li><s:a action="save" namespace="/admin/meet-user">人员添加</s:a></li>
+						
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown">频道管理 <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><s:a action="index" namespace="/admin/admin-channel">频道列表</s:a></li>
+						<li><s:a action="save" namespace="/admin/admin-channel">频道添加</s:a></li>
+						
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">权限管理 <b class="caret"></b></a>
@@ -91,7 +106,7 @@
 						
 					</ul></li>
 			</ul>
-
+			
 			<ul class="nav navbar-nav navbar-right">
 
 				<li class="dropdown"><a href="#" class="dropdown-toggle"

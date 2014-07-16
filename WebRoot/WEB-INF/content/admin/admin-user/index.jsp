@@ -20,7 +20,7 @@
 	<tbody>
 		<s:iterator value="list">
 		<tr>
-			<td><s:checkbox fieldValue="%{id}" value="false" name="id" />
+			<td><s:checkbox fieldValue="%{id}" value="false" name="list.id" />
 			<s:a action="update" target="_blank">
 				<s:param name="id">${id }</s:param>
 				<s:property value="id"/>

@@ -378,4 +378,37 @@ public class DataUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * 把一个字符串专程boolean
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static boolean stringToBoolean(String string) {
+
+		try {
+			return Boolean.parseBoolean(string);
+
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("非法参数");
+
+		}
+
+	}
+
+	/**
+	 * 把一个字符串专程整型
+	 * 
+	 * @param string
+	 * @return
+	 * @throws Exception
+	 */
+	public static Integer stringToInteger(String string) throws Exception {
+		try {
+			return Integer.parseInt(string);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("非法字符");
+
+		}
+	}
 }

@@ -16,32 +16,28 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.Channel;
-import com.sniper.survey.model.Post;
 import com.sniper.survey.service.impl.ChannelService;
-import com.sniper.survey.service.impl.PostService;
 import com.sniper.survey.util.DataUtil;
 
-//加注解
 @Controller
 @Scope("prototype")
-@Namespace("/admin/admin-post")
+@Namespace("/admin/admin-channel")
 @ParentPackage("default")
-public class AdminPostAction extends BaseAction<Post> {
+public class AdminChannelAction extends BaseAction<Channel> {
 
 	private static final long serialVersionUID = 1L;
-
-	@Resource
-	private PostService postService;
 
 	@Resource
 	ChannelService channelService;
 
 	Map<Integer, String> channelTop = new HashMap<>();
 
+	static Map<Integer, String> channelType = new HashMap<>();
+
 	public Map<Integer, String> getChannelTop() {
 
 		if (channelTop.isEmpty()) {
-
+			channelTop.put(0, "顶级");
 			List<Channel> channels = channelService.findAllEntitles();
 			for (Channel c : channels) {
 				channelTop.put(c.getId(), c.getName());
@@ -51,23 +47,27 @@ public class AdminPostAction extends BaseAction<Post> {
 		return channelTop;
 	}
 
+	public static Map<Integer, String> getChannelType() {
+		if (channelType.isEmpty()) {
+			channelType.put(0, "默认");
+			channelType.put(1, "类别1");
+			channelType.put(2, "类别2");
+		}
+		return channelType;
+	}
+
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
 
 		super.sniperUrl = "/admin-channel/delete";
 
-		Map<Boolean, String> show = new HashMap<>();
-		show.put(false, "否");
-		show.put(true, "是");
-		sniperMenu.put("Audit", show);
+		sniperMenuInt.put("MoveType", getChannelType());
 
-		sniperMenuInt.put("Channel", getChannelTop());
-
-		postService.setOrder("id desc");
-		postService.pageList(getListRow());
-		pageHtml = postService.getPageHtml();
-		list = postService.getLists();
+		channelService.setOrder("id desc");
+		channelService.pageList(getListRow());
+		pageHtml = channelService.getPageHtml();
+		list = channelService.getLists();
 
 		return SUCCESS;
 	}
@@ -77,7 +77,7 @@ public class AdminPostAction extends BaseAction<Post> {
 			@Result(name = "success", location = "save.jsp") })
 	public String save() {
 		if (getMethod().equalsIgnoreCase("post")) {
-			postService.saveOrUpdateEntiry(model);
+			channelService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
 	}
@@ -93,12 +93,12 @@ public class AdminPostAction extends BaseAction<Post> {
 		}
 
 		if (getMethod().equalsIgnoreCase("get")) {
-			this.model = postService.getEntity(this.model.getId());
+			this.model = channelService.getEntity(this.model.getId());
 		}
 
 		if (getMethod().equalsIgnoreCase("post")) {
 
-			postService.saveOrUpdateEntiry(model);
+			channelService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
 	}
@@ -114,7 +114,7 @@ public class AdminPostAction extends BaseAction<Post> {
 
 		switch (menuType) {
 		case "delete":
-			if (postService.deleteBatchEntityById(delid)) {
+			if (channelService.deleteBatchEntityById(delid)) {
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} else {
@@ -124,19 +124,8 @@ public class AdminPostAction extends BaseAction<Post> {
 			break;
 		case "MoveType":
 			try {
-				postService.batchFiledChange("showType",
+				channelService.batchFiledChange("showType",
 						DataUtil.stringToInteger(getMenuValue()), delid);
-				ajaxResult.put("code", 1);
-				ajaxResult.put("msg", "success");
-			} catch (Exception e) {
-				ajaxResult.put("code", -1);
-				ajaxResult.put("msg", e.getMessage());
-			}
-			break;
-		case "Audit":
-			try {
-				postService.batchFiledChange("status",
-						DataUtil.stringToBoolean(getMenuValue()), delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {

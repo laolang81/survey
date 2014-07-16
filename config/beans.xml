@@ -26,7 +26,7 @@
 		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
 		<property name="user" value="${jdbc.user}"></property>
 		<property name="password" value="${jdbc.password}"></property>
-
+		<property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}"></property>
 		<property name="maxPoolSize" value="${c3p0.maxPoolSize}"></property>
 		<property name="minPoolSize" value="${c3p0.minPoolSize}"></property>
 		<property name="initialPoolSize" value="${c3p0.initialPoolSize}"></property>

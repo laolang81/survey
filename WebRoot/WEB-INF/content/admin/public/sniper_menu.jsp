@@ -32,6 +32,22 @@
 	</s:iterator>
 	</s:if>
 	
+	<s:if test="sniperMenuInt">
+	<s:iterator value="sniperMenuInt">
+	<s:set name="oper"><s:property value="key"/> </s:set>
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+  			 <s:property value="key"/> <span class="caret"></span>
+  		</button>
+  		<ul class="dropdown-menu">
+  		<s:iterator value="value">
+  			<li><a href="javascript:;" data-value='<s:property value="key"/>' data-type='<s:property value="oper"/>'><s:property value="value"/></a>
+  		</s:iterator>
+		</ul>
+	</div>
+	</s:iterator>
+	</s:if>
+	
 </div>
 
 <!-- 调用 -->

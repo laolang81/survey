@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -24,7 +25,7 @@ import javax.persistence.TemporalType;
 //表明类的实体名称默认类名
 @Entity
 @Table(name = "mc_post")
-public class Post extends BaseEntity{
+public class Post extends BaseEntity {
 
 	private static final long serialVersionUID = -8153642939179018327L;
 	/*
@@ -41,8 +42,8 @@ public class Post extends BaseEntity{
 	private Integer id;
 	@Column(name = "pt_name")
 	private String name;
-	@Column(name = "pt_uid", updatable = false)
-	private Integer uid;
+	// @Column(name = "pt_uid", updatable = false)
+	// private Integer uid;
 
 	@Column(name = "pt_status")
 	private Integer status;
@@ -53,11 +54,11 @@ public class Post extends BaseEntity{
 	@Column(name = "pt_source")
 	private String source;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "pt_letime")
-	private Date letime;
+	@Column(name = "pt_letime", insertable = false, updatable = true)
+	private Date letime = new Date();
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "pt_stime", updatable = false)
-	private Date stime;
+	private Date stime = new Date();
 	@Column(name = "pt_attachment")
 	private String attachment;
 	@Column(name = "pt_audit_uid")
@@ -78,30 +79,33 @@ public class Post extends BaseEntity{
 	private String url;
 	@Column(name = "pt_comment_count")
 	// int 初始化为0,integer初始化为null
-	private int commentCount;
+	private int commentCount = 0;
 	@Column(name = "pt_language")
-	private Short language;
-
+	private String language = "zh_CN";
 
 	/**
-	 * 单向@OneToOne,
-	 * post包含postValue
-	 * 双向就是相互包含
-	 * cascade的意思是对应的操作函数 比如remove对应delete
+	 * 单向@OneToOne, post包含postValue 双向就是相互包含 cascade的意思是对应的操作函数 比如remove对应delete
 	 */
-	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE, CascadeType.REMOVE })
 	@JoinColumn(name = "pt_pe_id", unique = true)
 	// 默认为延迟加载,由于这里是主键关联，在住表删除时，次表没变化，是个bug
 	private PostValue postValue;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE, CascadeType.REMOVE })
 	// referencedColumnName为每个表关联列，主键不用写
 	@JoinTable(name = "mc_post_node", joinColumns = @JoinColumn(name = "pn_pid"), inverseJoinColumns = @JoinColumn(name = "pn_cid"))
 	private Set<Channel> channels = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+			CascadeType.MERGE, CascadeType.REMOVE })
 	@JoinTable(name = "mc_post_tags", joinColumns = @JoinColumn(name = "pmt_pid"), inverseJoinColumns = @JoinColumn(name = "pmt_tid"))
 	private List<Tags> tags = new ArrayList<>();
+
+	@ManyToOne(cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER)
+	@JoinColumn(name = "uid")
+	private AdminUser adminUser;
 
 	public Integer getId() {
 		return id;
@@ -117,14 +121,6 @@ public class Post extends BaseEntity{
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Integer getUid() {
-		return uid;
-	}
-
-	public void setUid(Integer uid) {
-		this.uid = uid;
 	}
 
 	public Integer getStatus() {
@@ -247,11 +243,11 @@ public class Post extends BaseEntity{
 		this.commentCount = commentCount;
 	}
 
-	public Short getLanguage() {
+	public String getLanguage() {
 		return language;
 	}
 
-	public void setLanguage(Short language) {
+	public void setLanguage(String language) {
 		this.language = language;
 	}
 
@@ -293,6 +289,14 @@ public class Post extends BaseEntity{
 
 	public void setTags(List<Tags> tags) {
 		this.tags = tags;
+	}
+
+	public void setAdminUser(AdminUser adminUser) {
+		this.adminUser = adminUser;
+	}
+
+	public AdminUser getAdminUser() {
+		return adminUser;
 	}
 
 }

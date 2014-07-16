@@ -7,5 +7,5 @@ import com.sniper.survey.service.BaseService;
 
 public interface SystemConfigService extends BaseService<SystemConfig> {
 
-	public Map<String, String> getCAdminConfig(Boolean autoload);
+	public Map<String, String> getAdminConfig(Boolean autoload);
 }

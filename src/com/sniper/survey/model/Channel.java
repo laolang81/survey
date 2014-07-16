@@ -21,25 +21,19 @@ public class Channel extends BaseEntity {
 	public Integer id;
 	@Column(name = "name", unique = true)
 	private String name;
-	private String fid;
-	private Long order;
+	private Integer fid;
+	private long sort;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "stime", updatable = false)
-	private Date stime;
+	private Date stime = new Date();
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date letime;
-	@Column(name = "uid", updatable = false)
-	private Integer uid;
-	@Column(name = "status")
-	private Short status;
-	@Column(name = "url")
+	private Date letime = new Date();
+	private Integer uid = 0;
+	private boolean status = true;
 	private String url;
 	// 页面显示方式
-	@Column(name = "showType")
-	private Short showType;
-	@Column(name = "attachement")
+	private int showType;
 	private String attachement;
-	@Column(name = "note")
 	private String note;
 
 	public Integer getId() {
@@ -58,20 +52,20 @@ public class Channel extends BaseEntity {
 		this.name = name;
 	}
 
-	public String getFid() {
+	public Integer getFid() {
 		return fid;
 	}
 
-	public void setFid(String fid) {
+	public void setFid(Integer fid) {
 		this.fid = fid;
 	}
 
-	public Long getOrder() {
-		return order;
+	public long getSort() {
+		return sort;
 	}
-
-	public void setOrder(Long order) {
-		this.order = order;
+	
+	public void setSort(long sort) {
+		this.sort = sort;
 	}
 
 	public Date getStime() {
@@ -98,11 +92,11 @@ public class Channel extends BaseEntity {
 		this.uid = uid;
 	}
 
-	public Short getStatus() {
+	public boolean isStatus() {
 		return status;
 	}
 
-	public void setStatus(Short status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
@@ -114,11 +108,11 @@ public class Channel extends BaseEntity {
 		this.url = url;
 	}
 
-	public Short getShowType() {
+	public int getShowType() {
 		return showType;
 	}
 
-	public void setShowType(Short showType) {
+	public void setShowType(int showType) {
 		this.showType = showType;
 	}
 

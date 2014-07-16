@@ -11,23 +11,10 @@ import com.sniper.survey.model.MeetUser;
 public class MeetUserServiceImpl extends BaseServiceImpl<MeetUser> implements
 		MeetUserService {
 
-	public String pageHtml;
-
-	@Override
-	public String getPageHtml() {
-		return pageHtml;
-	}
-
-	public void setPageHtml(String pageHtml) {
-		this.pageHtml = pageHtml;
-	}
-
 	@Override
 	@Resource(name = "meetUserDao")
 	public void setDao(BaseDao<MeetUser> dao) {
 		super.setDao(dao);
 	}
-
-	
 
 }

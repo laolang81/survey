@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import com.sniper.survey.model.AdminGroup;
 import com.sniper.survey.model.AdminUser;
 import com.sniper.survey.service.impl.AdminGroupService;
+import com.sniper.survey.util.DataUtil;
 
 @Controller
 @Scope("prototype")
@@ -246,8 +247,8 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 		case "enabled":
 
 			try {
-				adminUserService.batchFiledChange("enables", getMenuValue(),
-						delid);
+				adminUserService.batchFiledChange("enables",
+						DataUtil.stringToBoolean(getMenuValue()), delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
@@ -258,8 +259,8 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 			break;
 		case "locked":
 			try {
-				adminUserService.batchFiledChange("locked", getMenuValue(),
-						delid);
+				adminUserService.batchFiledChange("locked",
+						DataUtil.stringToBoolean(getMenuValue()), delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
