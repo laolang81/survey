@@ -95,6 +95,8 @@ public class Post extends BaseEntity {
 	@JoinColumn(name = "uid")
 	private AdminUser adminUser;
 
+	private Integer version;
+
 	public Integer getId() {
 		return id;
 	}
@@ -277,6 +279,14 @@ public class Post extends BaseEntity {
 
 	public AdminUser getAdminUser() {
 		return adminUser;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 }

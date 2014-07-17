@@ -1,5 +1,7 @@
 package com.sniper.survey.struts2.action.web;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -12,7 +14,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.MeetUser;
+import com.sniper.survey.model.Post;
 import com.sniper.survey.service.impl.MeetUserService;
+import com.sniper.survey.service.impl.PostService;
 
 @Controller()
 @Scope("prototype")
@@ -22,6 +26,9 @@ import com.sniper.survey.service.impl.MeetUserService;
 public class IndexAction extends BaseAction<MeetUser> {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Resource
+	PostService postService;
 
 	@Resource
 	MeetUserService meetUserService;
@@ -33,6 +40,15 @@ public class IndexAction extends BaseAction<MeetUser> {
 		meetUserService.pageList(getListRow());
 		pageHtml = meetUserService.getPageHtml();
 		list = meetUserService.getLists();
+		
+		Integer[] in =  {};
+		
+		List<Post> posts = postService.getCListByChannelID(in, 100);
+		for(Post p: posts){
+			System.out.println(p.getId());
+			System.out.println(p.getName());
+			//System.out.println(p.getChannels().size());
+		}
 
 		return SUCCESS;
 

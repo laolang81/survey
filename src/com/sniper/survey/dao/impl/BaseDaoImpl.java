@@ -188,6 +188,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		return query;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void executeSQL(Class clazz, String hql, Object... Object) {
 		SQLQuery query = this.getCurrentSession().createSQLQuery(hql);
