@@ -2,6 +2,7 @@ package com.sniper.survey.struts2.action.web;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,12 +18,21 @@ public abstract class BaseAction<T> extends RootAction implements
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * 读取记录数
+	 */
+	protected List<T> list;
+
+	public List<T> getList() {
+		return list;
+	}
+
+	/**
 	 * 分页参数
 	 */
-	//当前的页数
+	// 当前的页数
 	private int pageNo;
 	public String pageHtml;
-	//每页显示的记录数
+	// 每页显示的记录数
 	public int listRow = 20;
 
 	public T model;
@@ -30,15 +40,6 @@ public abstract class BaseAction<T> extends RootAction implements
 	 * 获取用户提交的方式
 	 */
 	private String method;
-
-	/**
-	 * 定义模板文件地址
-	 */
-	private String htmlPath = "admin";
-
-	public String getHtmlPath() {
-		return htmlPath;
-	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BaseAction() {
@@ -103,7 +104,6 @@ public abstract class BaseAction<T> extends RootAction implements
 		else
 			return false;
 	}
-
 
 	/**
 	 * @return the pageNo

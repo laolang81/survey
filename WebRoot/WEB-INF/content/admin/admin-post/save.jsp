@@ -47,7 +47,6 @@
 	<div class="form-group">
 		<label for="enabled" class="col-sm-2 control-label">状态</label>
 		<div class="col-sm-2">
-
 			<s:select list="statusList" name="status"></s:select>
 		</div>
 	</div>
@@ -55,10 +54,10 @@
 	<div class="form-group">
 		<label for="locked" class="col-sm-2 control-label">内容</label>
 		<div class="col-sm-10">
-			<s:textarea rows="6" name="postValuePost" cssClass="form-control"></s:textarea>
+			<s:textarea rows="6" cssStyle="height:400px" name="postValue.value" cssClass="form-control"></s:textarea>
 		</div>
 	</div>
-
+	<s:hidden name="postValue.id"></s:hidden>
 
 	<div class="form-group">
 		<div class="col-sm-10 col-md-offset-2">
@@ -85,7 +84,7 @@
 	
 	
 	$(function() {
-		var editor = KindEditor.create('textarea[name="postValuePost"]',{
+		var editor = KindEditor.create('textarea[name="postValue.value"]',{
 			uploadJson : 'admin/file-upload/upload',
 			fileManagerJson : 'admin/file-upload/htmlmanager',
 			allowFileManager : true,

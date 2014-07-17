@@ -19,7 +19,6 @@ import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.Channel;
 import com.sniper.survey.model.Post;
-import com.sniper.survey.model.PostValue;
 import com.sniper.survey.service.impl.ChannelService;
 import com.sniper.survey.service.impl.PostService;
 import com.sniper.survey.util.DataUtil;
@@ -49,7 +48,6 @@ public class AdminPostAction extends BaseAction<Post> {
 	List<Integer> channelChecked = new ArrayList<>();
 	// 栏目提交之后得到的结果
 	private Integer[] channelsPost;
-	private String postValuePost;
 
 	public Map<Integer, String> getChannelTop() {
 
@@ -85,14 +83,6 @@ public class AdminPostAction extends BaseAction<Post> {
 		this.channelsPost = channelsPost;
 	}
 
-	public void setPostValuePost(String postValuePost) {
-		this.postValuePost = postValuePost;
-	}
-
-	public String getPostValuePost() {
-		return postValuePost;
-	}
-
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
@@ -122,13 +112,11 @@ public class AdminPostAction extends BaseAction<Post> {
 	public String save() {
 		if (getMethod().equalsIgnoreCase("post")) {
 			if (channelsPost.length != 0) {
-				model.getChannels().clear();
+
 				model.setChannels(new HashSet<>(channelService
 						.getChannelListById(channelsPost)));
 			}
-			PostValue postValue = new PostValue();
-			postValue.setValue(getPostValuePost());
-			model.setPostValue(postValue);
+
 			postService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
@@ -152,19 +140,11 @@ public class AdminPostAction extends BaseAction<Post> {
 						.getChannelListById(channelsPost)));
 			}
 			
-			System.out.println(model.getPostValue());
-			PostValue postValue1 = new PostValue();
-			postValue1.setId(model.getPostValue().getId());
-			
-			//PostValue postValue = new PostValue();
-			//postValue.setValue(getPostValuePost());
-			//model.setPostValue(postValue);
 			postService.saveOrUpdateEntiry(model);
 		}
 
 		if (getMethod().equalsIgnoreCase("get")) {
 			this.model = postService.getAllEntity(this.model.getId());
-			setPostValuePost(model.getPostValue().getValue());
 
 		}
 
