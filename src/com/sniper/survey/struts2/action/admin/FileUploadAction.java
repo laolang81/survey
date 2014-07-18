@@ -368,7 +368,7 @@ public class FileUploadAction extends BaseAction<Files> {
 	 * @param msg
 	 * @return
 	 */
-	public String alert(String msg) {
+	private String alert(String msg) {
 		result.put("error", 1);
 		result.put("message", msg);
 		return SUCCESS;
