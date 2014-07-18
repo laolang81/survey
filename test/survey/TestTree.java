@@ -25,7 +25,7 @@ public class TestTree {
 
 	@Test
 	public void test() {
-		//System.out.println(rightService.findAllEntitles());
+		
 		List<AdminRight> adminRights = rightService.findAllEntitles();
 		Right root = new Right();
 		root.id = 0;

@@ -121,6 +121,7 @@ public class FileUploadAction extends BaseAction<Files> {
 			webUrl += request.getContextPath();
 		}
 		return webUrl;
+		//return "http://www.yummyshandong.com/";
 	}
 
 	/**
@@ -139,9 +140,10 @@ public class FileUploadAction extends BaseAction<Files> {
 		this.result = result;
 	}
 
-	@Action(value = "upload", results = { @Result(name = "success", type = "json", params = {
-			"root", "result" }) })
-	
+	@Action(value = "upload", results = { 
+			@Result(name = "success", type = "json", params = {"root", "result" }),
+			@Result(name = "input", type = "json", params = {"root", "result" })
+			})
 	public String upload() throws IOException {
 
 		System.out.println(imgFile);
