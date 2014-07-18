@@ -290,7 +290,7 @@ public class FileUploadAction extends BaseAction<Files> {
 		}
 		System.out.println(currentPathFile.listFiles().length);
 		// 遍历目录取的文件信息
-		List<Hashtable> fileList = new ArrayList<>();
+		List<Hashtable<String, Object>> fileList = new ArrayList<>();
 		if (currentPathFile.listFiles() != null) {
 			for (File file : currentPathFile.listFiles()) {
 				Hashtable<String, Object> hash = new Hashtable<>();
@@ -371,7 +371,7 @@ public class FileUploadAction extends BaseAction<Files> {
 
 	public class SizeComparator implements Comparator {
 		public int compare(Object a, Object b) {
-			Hashtable hashA = (Hashtable) a;
+			Hashtable hashA = (Hashtable) a; 
 			Hashtable hashB = (Hashtable) b;
 			if (((Boolean) hashA.get("is_dir"))
 					&& !((Boolean) hashB.get("is_dir"))) {

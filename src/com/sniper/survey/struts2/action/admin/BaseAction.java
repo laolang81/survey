@@ -238,7 +238,7 @@ public abstract class BaseAction<T> extends RootAction implements
 	 * 
 	 * @return
 	 */
-	public static UserDetails UserInfo() {
+	public static UserDetails userInfo() {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
 		return userDetails;
@@ -250,8 +250,8 @@ public abstract class BaseAction<T> extends RootAction implements
 	 * 
 	 * @return
 	 */
-	public int UserID() {
-		String username = UserInfo().getUsername();
+	public int userID() {
+		String username = userInfo().getUsername();
 		AdminUser adminUser = adminUserService.validateByName(username);
 		if (null != adminUser) {
 			return adminUser.getId();
@@ -265,8 +265,8 @@ public abstract class BaseAction<T> extends RootAction implements
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static Collection<GrantedAuthority> getAuthorities() {
-		UserDetails userDetails = UserInfo();
+	public static Collection<GrantedAuthority> authorities() {
+		UserDetails userDetails = userInfo();
 		Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) userDetails
 				.getAuthorities();
 		return authorities;
