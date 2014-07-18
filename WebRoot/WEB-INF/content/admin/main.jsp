@@ -88,6 +88,16 @@
 						
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="dropdown">友情链接管理 <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					<li><s:a action="index" namespace="/admin/link-groups">链接组管理</s:a></li>
+					<li><s:a action="save" namespace="/admin/link-groups">链接组添加</s:a></li>
+					<li class="divider"></li>
+					<li><s:a action="index" namespace="/admin/links">链接管理</s:a></li>
+					<li><s:a action="save" namespace="/admin/links">链接添加</s:a></li>
+					
+				</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">权限管理 <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><s:a action="index" namespace="/admin/admin-right">资源列表</s:a></li>

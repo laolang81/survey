@@ -20,6 +20,11 @@
 		<property name="hibernate.show_sql">true</property>
 		<!-- 输出带有格式的sql -->
 		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.order_updates">true</property>
+		<property name="hibernate.order_inserts">true</property>
+		<property name="hibernate.max_fetch_depth">3</property>
+		<property name="hibernate.default_batch_fetch_size">8</property>
+
 		<!-- 生成数据库表的策略 -->
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- hibernate单独使用时配置和spring不需要配置 -->
@@ -44,8 +49,8 @@
 		<!-- <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property> -->
 		<!-- 启用查询缓存 -->
 		<!-- <property name="cache.use_query_cache">true</property> -->
-		
-		
-		
+
+
+
 	</session-factory>
 </hibernate-configuration>

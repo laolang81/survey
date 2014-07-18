@@ -19,7 +19,7 @@ public class TestDataSource {
 
 	@Before
 	public void iniChannelService() {
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
 		cs = (ChannelService) ctx.getBean("channelService");
 	}
 	@Test
@@ -27,7 +27,7 @@ public class TestDataSource {
 	{
 		Channel channel = new Channel();
 		System.out.println(cs);
-		System.out.println(cs.getEntity(1));
+		//System.out.println(cs.getEntity(1));
 	}
 	
 	public void setFile() {

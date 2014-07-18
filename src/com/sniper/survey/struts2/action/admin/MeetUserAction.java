@@ -79,7 +79,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 			@Result(name = "success", location = "save.jsp") })
 	public String save() {
 		if (getMethod().equalsIgnoreCase("post")) {
-			System.out.println("save");
+			System.out.println(model);
 			meetUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;
@@ -109,8 +109,8 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 			this.model = meetUserService.getEntity(this.model.getId());
 		}
 
-		if (getMethod().equals("POST")) {
-			
+		if (getMethod().equalsIgnoreCase("post")) {
+			System.out.println(model);
 			meetUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;

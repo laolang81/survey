@@ -26,7 +26,7 @@ import com.sniper.survey.service.impl.PostService;
 public class IndexAction extends BaseAction<MeetUser> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Resource
 	PostService postService;
 
@@ -35,23 +35,34 @@ public class IndexAction extends BaseAction<MeetUser> {
 
 	@Actions(value = { @Action(value = "index", results = { @Result(name = "success", location = "index/index.jsp") }) })
 	public String index() {
-		System.out.println("web-index");
+
 		meetUserService.setOrder("id desc");
 		meetUserService.pageList(getListRow());
 		pageHtml = meetUserService.getPageHtml();
 		list = meetUserService.getLists();
-		
-		Integer[] in =  {};
-		
+
+		Integer[] in = {};
+
 		List<Post> posts = postService.getCListByChannelID(in, 100);
-		for(Post p: posts){
+		for (Post p : posts) {
 			System.out.println(p.getId());
 			System.out.println(p.getName());
-			//System.out.println(p.getChannels().size());
+			// System.out.println(p.getChannels().size());
 		}
 
 		return SUCCESS;
 
+	}
+
+	@Action(value = "join", results = {
+			@Result(name = "input", location = "save.jsp"),
+			@Result(name = "success", location = "save.jsp") })
+	public String save() {
+		if (getMethod().equalsIgnoreCase("post")) {
+			
+			meetUserService.saveOrUpdateEntiry(model);
+		}
+		return SUCCESS;
 	}
 
 }

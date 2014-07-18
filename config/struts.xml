@@ -24,7 +24,8 @@
 	<!-- 浏览器是否缓存静态内容 -->
 	<constant name="struts.serve.static.browserCache" value="false" />
 	<!-- 上传文件大小限制设置 -->
-	<constant name="struts.multipart.maxSize" value="-1" />
+	<constant name="struts.multipart.maxSize" value="100000000" />
+	
 	<!-- 指定每次配置文件更改后，自动重新加载 -->
 	<constant name="struts.configuration.xml.reload" value="true" />
 	<!-- 指定XSLT Result使用样式表缓存 -->

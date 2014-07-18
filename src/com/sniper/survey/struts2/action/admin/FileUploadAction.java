@@ -25,7 +25,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -39,7 +38,7 @@ import com.sniper.survey.service.impl.FilesService;
 @ParentPackage("default")
 public class FileUploadAction extends BaseAction<Files> {
 
-	private static final long serialVersionUID = -4573693710739416249L;
+	private static final long serialVersionUID = 1L;
 
 	@Resource
 	private FilesService filesService;
@@ -54,6 +53,7 @@ public class FileUploadAction extends BaseAction<Files> {
 	private String dir = "images";
 	private String order;
 	private String path;
+	private String localUrl;
 
 	/**
 	 * 设置网页显示url
@@ -98,6 +98,14 @@ public class FileUploadAction extends BaseAction<Files> {
 		this.webUrl = webUrl;
 	}
 
+	public String getLocalUrl() {
+		return localUrl;
+	}
+
+	public void setLocalUrl(String localUrl) {
+		this.localUrl = localUrl;
+	}
+
 	/**
 	 * 返回域名部分加目录
 	 * 
@@ -131,13 +139,17 @@ public class FileUploadAction extends BaseAction<Files> {
 		this.result = result;
 	}
 
-	@Action(value = "upload", results = {
-			@Result(name = "success", type = "json", params = { "root",
-					"result" }),
-			@Result(name = "input", type = "json", params = { "root", "result" }) })
-	@SkipValidation
+	@Action(value = "upload", results = { @Result(name = "success", type = "json", params = {
+			"root", "result" }) })
+	
 	public String upload() throws IOException {
 
+		System.out.println(imgFile);
+		System.out.println(imgFileFileName);
+		System.out.println(imgFileContentType);
+		if (imgFile == null) {
+			return alert("文件上传失败");
+		}
 		// 上传文件
 		String saveUrl = uploadFile(imgFile);
 		result.put("error", 0);
@@ -244,8 +256,7 @@ public class FileUploadAction extends BaseAction<Files> {
 			if (!Arrays.<String> asList(
 					new String[] { "image", "flash", "media", "file" })
 					.contains(dirName)) {
-				result.put("message", "Invalid Directory name.");
-				return SUCCESS;
+				return alert("Invalid Directory name.");
 			}
 
 			rootPath += dirName + "/";
@@ -273,20 +284,17 @@ public class FileUploadAction extends BaseAction<Files> {
 
 		// 不允许使用..移动到上一级目录
 		if (path.indexOf("..") >= 0) {
-			result.put("message", "Access is not allowed.");
-			return SUCCESS;
+			return alert("Access is not allowed.");
 		}
 		// 最后一个字符不是/
 		if (!"".equals(path) && !path.endsWith("/")) {
-			result.put("message", "Parameter is not valid.");
-			return SUCCESS;
+			return alert("Parameter is not valid.");
 		}
 		// 目录不存在或不是目录
 		System.out.println(currentPath);
 		File currentPathFile = new File(currentPath);
 		if (!currentPathFile.isDirectory()) {
-			result.put("message", "Directory does not exist.");
-			return SUCCESS;
+			return alert("Directory does not exist.");
 		}
 		System.out.println(currentPathFile.listFiles().length);
 		// 遍历目录取的文件信息
@@ -352,6 +360,18 @@ public class FileUploadAction extends BaseAction<Files> {
 		this.path = path;
 	}
 
+	/**
+	 * 返回错误
+	 * 
+	 * @param msg
+	 * @return
+	 */
+	public String alert(String msg) {
+		result.put("error", 1);
+		result.put("message", msg);
+		return SUCCESS;
+	}
+
 	public class NameComparator implements Comparator {
 		public int compare(Object a, Object b) {
 			Hashtable hashA = (Hashtable) a;
@@ -371,7 +391,7 @@ public class FileUploadAction extends BaseAction<Files> {
 
 	public class SizeComparator implements Comparator {
 		public int compare(Object a, Object b) {
-			Hashtable hashA = (Hashtable) a; 
+			Hashtable hashA = (Hashtable) a;
 			Hashtable hashB = (Hashtable) b;
 			if (((Boolean) hashA.get("is_dir"))
 					&& !((Boolean) hashB.get("is_dir"))) {

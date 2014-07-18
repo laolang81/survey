@@ -69,7 +69,8 @@
 		<label for="reportTime" class="col-sm-2 control-label">报道时间</label>
 		<div class="col-sm-3">
 			<s:textfield name="reportTime" cssClass="form-control"
-				id="reportTime" readonly="true" data-date-format="yyyy-mm-dd hh:ii:ss">
+				id="reportTime" readonly="true"
+				data-date-format="yyyy-mm-dd hh:ii:ss">
 				<s:param name="value">
 					<s:date name="reportTime" format="yyyy-MM-dd HH:mm:ss" />
 				</s:param>
@@ -93,15 +94,15 @@
 	<div class="form-group">
 		<label for="leaveTime" class="col-sm-2 control-label">离开时间</label>
 		<div class="col-sm-3">
-			<s:textfield name="leaveTime" cssClass="form-control" id="leaveTime"
-				readonly="true" data-date-format="yyyy-mm-dd hh:ii">
+			<s:textfield name="leaveTime" cssClass="form-control"
+				id="leaveTime" readonly="true"
+				data-date-format="yyyy-mm-dd hh:ii:ss">
 				<s:param name="value">
 					<s:date name="leaveTime" format="yyyy-MM-dd HH:mm:ss" />
 				</s:param>
 			</s:textfield>
 		</div>
 	</div>
-
 	<div class="form-group">
 		<label for="carLeavePeople" class="col-sm-2 control-label">是否送站</label>
 		<div class="col-sm-10">
@@ -149,6 +150,4 @@
 	$('#reportTime').datetimepicker({
 		language : 'zh-CN'
 	});
-
-	
 </script>
