@@ -8,12 +8,11 @@
 		<tr>
 			<th>ID</th>
 			<th>username</th>
-			<th>nickname</th>
-			<th>email</th>
-			<th>enables</th>
-			<th>usernameExpired</th>
-			<th>passwordExpired</th>
-			<th>locked</th>
+			<th>url</th>
+			<th>groupName</th>
+			<th>enabled</th>
+			<th>timeEnd</th>
+			<th>Sort</th>
 			<th>createTime</th>
 		</tr>
 	</thead>
@@ -31,13 +30,12 @@
 				<s:property value="name"/>
 				</s:a>
 			</td>
-			<td><s:property value="nickName"/></td>
-			<td><s:property value="email"/></td>
-			<td><s:property value="enables"/></td>
-			<td><s:property value="usernameExpired"/></td>
-			<td><s:property value="passwordExpired"/></td>
-			<td><s:property value="locked"/></td>
-			<td><s:date name="ctime" format="yyyy-mm-dd HH:mm:ss"/> </td>
+			<td><s:a href="%{url}" ><s:property value="url"/></s:a> </td>
+			<td><s:property value="channel.name"/></td>
+			<td><s:property value="enabled"/></td>
+			<td><s:date name="timeEnd" format="yyyy-mm-dd HH:mm:ss"/></td>
+			<td><s:property value="sort"/></td>
+			<td><s:date name="cTime" format="yyyy-mm-dd HH:mm:ss"/></td>
 		</tr>
 		</s:iterator>
 		

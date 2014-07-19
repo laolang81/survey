@@ -7,6 +7,9 @@ import com.sniper.survey.service.BaseService;
 
 public interface ChannelService extends BaseService<Channel> {
 
-	
 	public List<Channel> getChannelListById(Integer[] id);
+
+	public List<Channel> getChannelListByType(Integer[] id);
+
+	public List<Channel> getChannelListByType(Integer[] id, boolean enabled);
 }

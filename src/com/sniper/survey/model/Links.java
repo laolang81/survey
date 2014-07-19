@@ -2,7 +2,9 @@ package com.sniper.survey.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +27,9 @@ public class Links extends BaseEntity {
 	@NotNull
 	private String name;
 	private String nameTitle;
-
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(updatable = false)
+	private Date cTime = new Date();
 	private String url;
 	private Boolean isFile = false;
 	private String attachement;
@@ -39,9 +43,9 @@ public class Links extends BaseEntity {
 	private Date timeEnd;
 	private Boolean enabled;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "linkGroupId")
-	private LinkGroups groups;
+	private Channel channel;
 
 	@Override
 	public Integer getId() {
@@ -68,6 +72,14 @@ public class Links extends BaseEntity {
 
 	public void setNameTitle(String nameTitle) {
 		this.nameTitle = nameTitle;
+	}
+
+	public Date getcTime() {
+		return cTime;
+	}
+
+	public void setcTime(Date cTime) {
+		this.cTime = cTime;
 	}
 
 	public String getUrl() {
@@ -150,12 +162,12 @@ public class Links extends BaseEntity {
 		this.enabled = enabled;
 	}
 
-	public LinkGroups getGroups() {
-		return groups;
+	public Channel getChannel() {
+		return channel;
 	}
 
-	public void setGroups(LinkGroups groups) {
-		this.groups = groups;
+	public void setChannel(Channel channel) {
+		this.channel = channel;
 	}
 
 }

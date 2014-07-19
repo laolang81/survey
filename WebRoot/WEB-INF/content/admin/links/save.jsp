@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<s:form method="post"  namespace="/admin/file-upload" id="sniperForm" cssClass="form-horizontal"
-	role="form" >
+<s:form method="post" namespace="/admin/file-upload" id="sniperForm"
+	cssClass="form-horizontal" role="form">
 
 	<s:hidden name="id" />
 
@@ -41,6 +41,14 @@
 		<label for="url" class="col-sm-2 control-label">是否下载</label>
 		<div class="col-sm-10">
 			<s:checkbox name="isFile"></s:checkbox>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="url" class="col-sm-2 control-label">组选择</label>
+		<div class="col-sm-10">
+			<s:select list="channels" listKey="id" listValue="name"
+				name="channel.id"></s:select>
 		</div>
 	</div>
 
@@ -132,15 +140,7 @@
 		<label for="note" class="col-sm-2 control-label">备注</label>
 		<div class="col-sm-10">
 			<s:textarea name="note" rows="6" cssClass="form-control"
-				cssStyle="height:300px"></s:textarea>
-		</div>
-	</div>
-	
-	
-	<div class="form-group">
-		<label for="note" class="col-sm-2 control-label">备注</label>
-		<div class="col-sm-10">
-			<s:file name="note"></s:file>
+				cssStyle="height:100px"></s:textarea>
 		</div>
 	</div>
 
@@ -177,7 +177,7 @@
 	});
 
 	KindEditor.ready(function(K) {
-		var editor1 = KindEditor.create('textarea[name="note"]', {
+		var editor1 = K.editor( {
 			uploadJson : 'admin/file-upload/upload',
 			fileManagerJson : 'admin/file-upload/htmlmanager',
 			allowFileManager : true,

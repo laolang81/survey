@@ -12,8 +12,9 @@ import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 
-import com.sniper.survey.model.LinkGroups;
+import com.sniper.survey.model.Channel;
 import com.sniper.survey.model.Links;
+import com.sniper.survey.service.impl.ChannelService;
 import com.sniper.survey.service.impl.LinkGroupsService;
 import com.sniper.survey.service.impl.LinksService;
 import com.sniper.survey.util.DataUtil;
@@ -27,17 +28,20 @@ public class LinksAction extends BaseAction<Links> {
 	LinkGroupsService groupsService;
 
 	@Resource
+	ChannelService channelService;
+
+	@Resource
 	LinksService linksService;
 
 	// 用户组列表
-	private List<LinkGroups> groups = new ArrayList<>();
+	private List<Channel> channels = new ArrayList<>();
 
-	public List<LinkGroups> getGroups() {
-		if (groups.size() == 0) {
-			groups = groupsService.findAllEntitles();
+	public List<Channel> getChannels() {
+		if (channels.size() == 0) {
+			channels = channelService.getChannelListByType(new Integer[] { 1 },
+					true);
 		}
-
-		return groups;
+		return channels;
 	}
 
 	@Actions({ @Action(value = "index") })

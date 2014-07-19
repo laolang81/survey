@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.json.annotations.JSON;
@@ -29,6 +30,7 @@ import com.sniper.survey.struts2.RootAction;
 @Controller
 @Scope("prototype")
 @ParentPackage("default")
+@Namespace("/admin/")
 public abstract class BaseAction<T> extends RootAction implements
 		ModelDriven<T>, Preparable, ServletRequestAware {
 

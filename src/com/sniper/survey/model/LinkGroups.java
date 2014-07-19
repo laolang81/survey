@@ -1,19 +1,13 @@
 package com.sniper.survey.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Entity
+
 @Table(name = "mc_link_groups")
 public class LinkGroups extends BaseEntity {
 
@@ -26,8 +20,7 @@ public class LinkGroups extends BaseEntity {
 	@Column(columnDefinition = "text")
 	private String note;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "groups")
-	private List<Links> links = new ArrayList<>();
+	
 
 	@Override
 	public Integer getId() {

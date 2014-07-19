@@ -15,6 +15,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import com.sniper.survey.model.Channel;
 import com.sniper.survey.service.impl.ChannelService;
 import com.sniper.survey.util.DataUtil;
+import com.sniper.survey.util.PropertiesUtil;
 
 @Namespace("/admin/admin-channel")
 public class AdminChannelAction extends BaseAction<Channel> {
@@ -43,9 +44,11 @@ public class AdminChannelAction extends BaseAction<Channel> {
 
 	public static Map<Integer, String> getChannelType() {
 		if (channelType.isEmpty()) {
-			channelType.put(0, "默认");
-			channelType.put(1, "类别1");
-			channelType.put(2, "类别2");
+
+			PropertiesUtil propertiesUtil = new PropertiesUtil(
+					"properties/channelType.properties");
+			channelType = propertiesUtil.getAllIntegerValue();
+
 		}
 		return channelType;
 	}
