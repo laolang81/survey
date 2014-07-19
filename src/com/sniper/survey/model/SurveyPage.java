@@ -26,28 +26,26 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "mc_survey_page")
-public class SurveyPage extends BaseEntity{
+public class SurveyPage extends BaseEntity {
 
 	private static final long serialVersionUID = -4119371995632333205L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ms_id")
 	private Integer id;
-	@Column(name = "ms_title")
 	private String title;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ms_ctime", updatable = false)
+	@Column(updatable = false)
 	private Date ctime = new Date();
-	@Column(name = "ms_description")
-	private String description;
+	private double sort = 1d;
+	private String note;
 	// 设置问卷到用户的关系
-	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE })
-	@JoinColumn(name = "ms_survey_id")
+	@ManyToOne
+	@JoinColumn(name = "survey_id")
 	private Survey survey;
 
 	// 问题列表
-	@OneToMany(mappedBy = "page")
-	private List<SurveyQuestion> sq = new ArrayList<SurveyQuestion>();
+	@OneToMany(mappedBy = "page", fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE })
+	private List<SurveyQuestion> sq = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -73,12 +71,20 @@ public class SurveyPage extends BaseEntity{
 		this.ctime = ctime;
 	}
 
-	public String getDescription() {
-		return description;
+	public double getSort() {
+		return sort;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setSort(double sort) {
+		this.sort = sort;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public Survey getSurvey() {

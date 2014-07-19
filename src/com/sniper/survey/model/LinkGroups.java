@@ -3,7 +3,6 @@ package com.sniper.survey.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +26,7 @@ public class LinkGroups extends BaseEntity {
 	@Column(columnDefinition = "text")
 	private String note;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, mappedBy = "groups")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "groups")
 	private List<Links> links = new ArrayList<>();
 
 	@Override

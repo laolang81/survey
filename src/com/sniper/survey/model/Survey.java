@@ -1,14 +1,19 @@
 package com.sniper.survey.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,54 +26,129 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "mc_survey")
-public class Survey extends BaseEntity{
+public class Survey extends BaseEntity {
 
 	private static final long serialVersionUID = -7334373665483843888L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ms_id")
 	private Integer id;
-	@Column(name = "ms_title")
 	private String title;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ms_ctime")
-	private Date ctime = new Date();
-	@Column(name = "ms_description")
-	private String description;
+	@Column(updatable = false)
+	private Date cTime = new Date();
+	private int peopleNum = 0;
+	private boolean locked = false;
+	private boolean publiced = false;
+	private int template = 0;
+	private String note;
 	// 设置问卷到用户的关系
 	@ManyToOne
-	@JoinColumn(name = "ms_uid")
+	@JoinColumn(name = "uid")
 	private AdminUser adminUser;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, mappedBy = "survey")
+	private List<SurveyPage> surveyPages = new ArrayList<>();
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, mappedBy = "survey")
+	private List<SurveyResult> surveyResults = new ArrayList<>();
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, mappedBy = "survey")
+	private List<SurveyResultData> surveyResultDatas = new ArrayList<>();
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Date getCtime() {
-		return ctime;
+
+	public Date getcTime() {
+		return cTime;
 	}
-	public void setCtime(Date ctime) {
-		this.ctime = ctime;
+
+	public void setcTime(Date cTime) {
+		this.cTime = cTime;
 	}
-	public String getDescription() {
-		return description;
+
+	public int getPeopleNum() {
+		return peopleNum;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+
+	public void setPeopleNum(int peopleNum) {
+		this.peopleNum = peopleNum;
 	}
+
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
+	public boolean isPubliced() {
+		return publiced;
+	}
+
+	public void setPubliced(boolean publiced) {
+		this.publiced = publiced;
+	}
+
+	public int getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(int template) {
+		this.template = template;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
 	public AdminUser getAdminUser() {
 		return adminUser;
 	}
+
 	public void setAdminUser(AdminUser adminUser) {
 		this.adminUser = adminUser;
 	}
-	
-	
+
+	public List<SurveyPage> getSurveyPages() {
+		return surveyPages;
+	}
+
+	public void setSurveyPages(List<SurveyPage> surveyPages) {
+		this.surveyPages = surveyPages;
+	}
+
+	public List<SurveyResult> getSurveyResults() {
+		return surveyResults;
+	}
+
+	public void setSurveyResults(List<SurveyResult> surveyResults) {
+		this.surveyResults = surveyResults;
+	}
+
+	public void setSurveyResultDatas(List<SurveyResultData> surveyResultDatas) {
+		this.surveyResultDatas = surveyResultDatas;
+	}
+
+	public List<SurveyResultData> getSurveyResultDatas() {
+		return surveyResultDatas;
+	}
+
 }

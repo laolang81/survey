@@ -25,7 +25,7 @@ public class Links extends BaseEntity {
 	@NotNull
 	private String name;
 	private String nameTitle;
-	
+
 	private String url;
 	private Boolean isFile = false;
 	private String attachement;
