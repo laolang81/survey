@@ -21,7 +21,6 @@ public class LinkGroupsAction extends BaseAction<LinkGroups> {
 	LinkGroupsService linkGroupsService;
 
 	@Actions({ @Action(value = "index") })
-	@SkipValidation
 	public String index() {
 
 		super.sniperUrl = "/link-groups/delete";

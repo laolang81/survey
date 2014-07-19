@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -79,7 +80,23 @@ public class AdminPostAction extends BaseAction<Post> {
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
-
+		
+		
+		for(Entry<String, String> entry :getSearchString().entrySet()){
+			System.out.println("key:" + entry.getKey());
+			System.out.println("value:" + entry.getValue());
+		}
+		
+		for(Entry<String, Boolean> entry :getSearchBoolean().entrySet()){
+			System.out.println("key:" + entry.getKey());
+			System.out.println("value:" + entry.getValue());
+		}
+		
+		
+		for(Entry<String, Integer> entry :getSearchInteger().entrySet()){
+			System.out.println("key:" + entry.getKey());
+			System.out.println("value:" + entry.getValue());
+		}
 		super.sniperUrl = "/admin-channel/delete";
 
 		Map<Boolean, String> show = new HashMap<>();

@@ -27,6 +27,11 @@ import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.service.impl.AdminUserService;
 import com.sniper.survey.struts2.RootAction;
 
+/**
+ * @author laolang
+ * 
+ * @param <T>
+ */
 @Controller
 @Scope("prototype")
 @ParentPackage("default")
@@ -43,6 +48,40 @@ public abstract class BaseAction<T> extends RootAction implements
 
 	// 执行原始的request方法
 	private HttpServletRequest request;
+
+	/**
+	 * 搜索变量
+	 */
+	// 存放字符串
+	private Map<String, String> searchString = new HashMap<>();
+	// 存放数字
+	private Map<String, Integer> searchInteger = new HashMap<>();
+	// 存放boolean
+	private Map<String, Boolean> searchBoolean = new HashMap<>();
+
+	public Map<String, String> getSearchString() {
+		return searchString;
+	}
+
+	public void setSearchString(Map<String, String> searchString) {
+		this.searchString = searchString;
+	}
+
+	public Map<String, Integer> getSearchInteger() {
+		return searchInteger;
+	}
+
+	public void setSearchInteger(Map<String, Integer> searchInteger) {
+		this.searchInteger = searchInteger;
+	}
+
+	public Map<String, Boolean> getSearchBoolean() {
+		return searchBoolean;
+	}
+
+	public void setSearchBoolean(Map<String, Boolean> searchBoolean) {
+		this.searchBoolean = searchBoolean;
+	}
 
 	/**
 	 * sniper_menu菜单
