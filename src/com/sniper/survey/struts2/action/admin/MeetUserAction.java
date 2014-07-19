@@ -9,20 +9,14 @@ import javax.annotation.Resource;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.config.MeetUserData;
 import com.sniper.survey.model.MeetUser;
 import com.sniper.survey.service.impl.MeetUserService;
 
-@Controller
-@Scope("prototype")
 @Namespace("/admin/meet-user")
-@ParentPackage("default")
 public class MeetUserAction extends BaseAction<MeetUser> {
 
 	private static final long serialVersionUID = 1L;

@@ -1,11 +1,16 @@
 package com.sniper.survey.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "mc_survey_result")
 public class SurveyResult extends BaseEntity {
 
 	private static final long serialVersionUID = -945541332137035362L;
@@ -21,7 +26,7 @@ public class SurveyResult extends BaseEntity {
 	// 得票人数
 	private int num = 0;
 
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.REMOVE })
 	@JoinColumn(name = "survey_id")
 	private Survey survey;
 

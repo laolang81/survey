@@ -9,19 +9,16 @@ import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.custom.authentication.AuthenticateResultInfoInterface;
 import com.sniper.survey.custom.authentication.AuthenticationService;
@@ -34,10 +31,7 @@ import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.service.impl.AdminUserService;
 import com.sniper.survey.util.DataUtil;
 
-@Controller
-@Scope("prototype")
 @Namespace("/admin")
-@ParentPackage("default")
 @Results({
 		@Result(name = "success", location = "login/index.jsp", type = "dispatcher"),
 		@Result(name = "error_not_right", location = "errorNotRight", type = "redirectAction"),

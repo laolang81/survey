@@ -10,11 +10,14 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.json.annotations.JSON;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -23,6 +26,9 @@ import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.service.impl.AdminUserService;
 import com.sniper.survey.struts2.RootAction;
 
+@Controller
+@Scope("prototype")
+@ParentPackage("default")
 public abstract class BaseAction<T> extends RootAction implements
 		ModelDriven<T>, Preparable, ServletRequestAware {
 

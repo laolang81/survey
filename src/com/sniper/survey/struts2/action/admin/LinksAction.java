@@ -10,10 +10,7 @@ import javax.annotation.Resource;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.LinkGroups;
 import com.sniper.survey.model.Links;
@@ -21,10 +18,7 @@ import com.sniper.survey.service.impl.LinkGroupsService;
 import com.sniper.survey.service.impl.LinksService;
 import com.sniper.survey.util.DataUtil;
 
-@Controller
 @Namespace("/admin/links")
-@Scope("prototype")
-@ParentPackage("default")
 public class LinksAction extends BaseAction<Links> {
 
 	private static final long serialVersionUID = 1L;

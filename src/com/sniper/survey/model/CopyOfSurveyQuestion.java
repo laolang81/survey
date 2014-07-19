@@ -10,8 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "mc_survey_question")
+
+@Table(name = "mc_survey_question_bak")
 public class CopyOfSurveyQuestion extends BaseEntity {
 
 	private static final long serialVersionUID = -2897085975644254403L;

@@ -7,20 +7,14 @@ import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.SystemConfig;
 import com.sniper.survey.service.impl.SystemConfigService;
 import com.sniper.survey.util.DataUtil;
 
-@Controller
-@Scope("prototype")
 @Namespace("/admin/admin-config")
-@ParentPackage("default")
 public class AdminConfigAction extends BaseAction<SystemConfig> {
 
 	private static final long serialVersionUID = 1L;

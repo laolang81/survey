@@ -10,20 +10,14 @@ import javax.annotation.Resource;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.AdminGroup;
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminGroupService;
 
-@Controller
-@Scope("prototype")
 @Namespace("/admin/admin-group")
-@ParentPackage("default")
 public class AdminGroupAction extends BaseAction<AdminGroup> {
 
 	private static final long serialVersionUID = 1L;

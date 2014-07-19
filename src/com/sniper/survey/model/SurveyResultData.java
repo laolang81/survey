@@ -2,15 +2,20 @@ package com.sniper.survey.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+@Entity
+@Table(name = "mc_survey_result_data")
 public class SurveyResultData extends BaseEntity {
 
 	private static final long serialVersionUID = -200497905494303535L;
@@ -22,12 +27,13 @@ public class SurveyResultData extends BaseEntity {
 	private String resultData;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date cTime = new Date();
+	@Column(length = 15)
 	private String ip;
 	private String cookie;
 	private String agent;
 	private int uid;
 
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.REMOVE })
 	@JoinColumn(name = "survey_id")
 	private Survey survey;
 

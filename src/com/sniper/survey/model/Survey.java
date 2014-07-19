@@ -1,8 +1,8 @@
 package com.sniper.survey.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,9 +11,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,13 +27,14 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name = "mc_survey")
+@Table(name = "mc_survey", indexes = { @Index(columnList = "title", name = "title") })
 public class Survey extends BaseEntity {
 
 	private static final long serialVersionUID = -7334373665483843888L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+
 	private String title;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(updatable = false)
@@ -47,13 +50,8 @@ public class Survey extends BaseEntity {
 	private AdminUser adminUser;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, mappedBy = "survey")
-	private List<SurveyPage> surveyPages = new ArrayList<>();
-
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, mappedBy = "survey")
-	private List<SurveyResult> surveyResults = new ArrayList<>();
-
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, mappedBy = "survey")
-	private List<SurveyResultData> surveyResultDatas = new ArrayList<>();
+	@OrderBy("sort asc")
+	private Set<SurveyPage> surveyPages = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -127,28 +125,12 @@ public class Survey extends BaseEntity {
 		this.adminUser = adminUser;
 	}
 
-	public List<SurveyPage> getSurveyPages() {
+	public Set<SurveyPage> getSurveyPages() {
 		return surveyPages;
 	}
 
-	public void setSurveyPages(List<SurveyPage> surveyPages) {
+	public void setSurveyPages(Set<SurveyPage> surveyPages) {
 		this.surveyPages = surveyPages;
-	}
-
-	public List<SurveyResult> getSurveyResults() {
-		return surveyResults;
-	}
-
-	public void setSurveyResults(List<SurveyResult> surveyResults) {
-		this.surveyResults = surveyResults;
-	}
-
-	public void setSurveyResultDatas(List<SurveyResultData> surveyResultDatas) {
-		this.surveyResultDatas = surveyResultDatas;
-	}
-
-	public List<SurveyResultData> getSurveyResultDatas() {
-		return surveyResultDatas;
 	}
 
 }

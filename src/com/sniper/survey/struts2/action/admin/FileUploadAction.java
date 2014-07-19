@@ -23,19 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.Files;
 import com.sniper.survey.service.impl.FilesService;
 
-@Controller
-@Scope("prototype")
 @Namespace("/admin/file-upload")
-@ParentPackage("default")
 public class FileUploadAction extends BaseAction<Files> {
 
 	private static final long serialVersionUID = 1L;
@@ -121,7 +115,7 @@ public class FileUploadAction extends BaseAction<Files> {
 			webUrl += request.getContextPath();
 		}
 		return webUrl;
-		//return "http://www.yummyshandong.com/";
+		// return "http://www.yummyshandong.com/";
 	}
 
 	/**
@@ -140,10 +134,10 @@ public class FileUploadAction extends BaseAction<Files> {
 		this.result = result;
 	}
 
-	@Action(value = "upload", results = { 
-			@Result(name = "success", type = "json", params = {"root", "result" }),
-			@Result(name = "input", type = "json", params = {"root", "result" })
-			})
+	@Action(value = "upload", results = {
+			@Result(name = "success", type = "json", params = { "root",
+					"result" }),
+			@Result(name = "input", type = "json", params = { "root", "result" }) })
 	public String upload() throws IOException {
 
 		System.out.println(imgFile);

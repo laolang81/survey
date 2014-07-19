@@ -1,8 +1,8 @@
 package com.sniper.survey.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,8 +45,9 @@ public class SurveyPage extends BaseEntity {
 	private Survey survey;
 
 	// 问题列表
-	@OneToMany(mappedBy = "page", fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE })
-	private List<SurveyQuestion> sq = new ArrayList<>();
+	@OneToMany(mappedBy = "surveyPage", fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE })
+	@OrderBy("sort asc")
+	private Set<SurveyQuestion> sq = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -95,11 +97,11 @@ public class SurveyPage extends BaseEntity {
 		this.survey = survey;
 	}
 
-	public List<SurveyQuestion> getSq() {
+	public Set<SurveyQuestion> getSq() {
 		return sq;
 	}
 
-	public void setSq(List<SurveyQuestion> sq) {
+	public void setSq(Set<SurveyQuestion> sq) {
 		this.sq = sq;
 	}
 

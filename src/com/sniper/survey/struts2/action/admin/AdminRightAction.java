@@ -9,21 +9,15 @@ import javax.annotation.Resource;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.AdminRight;
 import com.sniper.survey.service.impl.AdminRightService;
 import com.sniper.survey.util.DataUtil;
 
-@Controller
-@Scope("prototype")
 @Namespace("/admin/admin-right")
-@ParentPackage("default")
 public class AdminRightAction extends BaseAction<AdminRight> {
 
 	private static final long serialVersionUID = 2799348891231755561L;

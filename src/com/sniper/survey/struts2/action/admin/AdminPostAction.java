@@ -11,11 +11,8 @@ import javax.annotation.Resource;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.Channel;
 import com.sniper.survey.model.Post;
@@ -24,11 +21,7 @@ import com.sniper.survey.service.impl.PostService;
 import com.sniper.survey.util.DataUtil;
 import com.sniper.survey.util.PropertiesUtil;
 
-//加注解
-@Controller
-@Scope("prototype")
 @Namespace("/admin/admin-post")
-@ParentPackage("default")
 public class AdminPostAction extends BaseAction<Post> {
 
 	private static final long serialVersionUID = 1L;
@@ -139,7 +132,7 @@ public class AdminPostAction extends BaseAction<Post> {
 				model.setChannels(new HashSet<>(channelService
 						.getChannelListById(channelsPost)));
 			}
-			
+
 			postService.saveOrUpdateEntiry(model);
 		}
 
