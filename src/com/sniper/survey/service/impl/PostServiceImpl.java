@@ -27,6 +27,7 @@ public class PostServiceImpl extends BaseServiceImpl<Post> implements
 	public Post getAllEntity(Integer id) {
 		Post post = super.getEntity(id);
 		post.getPostValue().getValue();
+		post.getChannels().size();
 		return post;
 	}
 
