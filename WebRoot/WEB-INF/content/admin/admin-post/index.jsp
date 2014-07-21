@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-${ searchMap.status}
+
 <div class="seach">
 	<form id="searchFrom" class="form-inline" role="form" name="searchFrom" method="get" action="">
 		<div class="form-group">

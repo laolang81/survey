@@ -1,5 +1,8 @@
 package com.sniper.survey.struts2.action.admin;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +53,46 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 
 		super.sniperUrl = "/meet-user/delete";
 
+		String hqlwhere = " 1=1";
+
+		if (searchInteger.get("sex") != null) {
+			Integer sex = searchInteger.get("sex");
+			hqlwhere += " and sex =  " + sex;
+		}
+
+		String fieldName = "reportTime";
+		if (null != searchInteger.get("timeType")) {
+			Integer timeType = searchInteger.get("timeType");
+			switch (timeType) {
+
+			case 1:
+				fieldName = "leaveTime";
+				break;
+			case 2:
+				fieldName = "createTime";
+				break;
+
+			}
+		}
+		
+		//时间格式转换
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		if (searchDate.get("stime") != null) {
+			Date stime = searchDate.get("stime");
+			hqlwhere += " and " + fieldName + " >  '" + dateFormat.format(stime).replace(" ", "") + "'";
+		}
+
+		if (searchDate.get("etime") != null) {
+			Date etime = searchDate.get("etime");
+			hqlwhere += " and " + fieldName + " <  '" + dateFormat.format(etime).replace(" ", "") + "'";
+		}
+
+		if (searchString.get("name") != null && !searchString.get("name").isEmpty()) {
+			String name = searchString.get("name");
+			hqlwhere += " and name like '%" + name + "%'";
+		}
+		meetUserService.setWhere(hqlwhere);
 		meetUserService.setOrder("id desc");
 		meetUserService.pageList(getListRow());
 		pageHtml = meetUserService.getPageHtml();
@@ -65,6 +108,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 	 */
 	@Actions({ @Action(value = "export") })
 	public String export() {
+
 		return SUCCESS;
 	}
 

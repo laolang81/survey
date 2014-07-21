@@ -1,0 +1,4 @@
+config/propertie/channelType.properties是栏目类型列表
+config/propertie/postStatus.properties是文章状态列表
+config/propertie/webConfig.properties站点统一配置列表(一般不需要修改)
+

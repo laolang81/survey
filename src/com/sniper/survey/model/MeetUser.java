@@ -20,9 +20,8 @@ public class MeetUser extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-
 	private String name;
-	private String sex;
+	private Integer sex;
 	private String nation;
 	private String post;
 	private String unit;
@@ -44,6 +43,18 @@ public class MeetUser extends BaseEntity {
 	private Date createTime = new Date();
 	private int bindUid;
 
+	@Override
+	public Integer getId() {
+
+		return this.id;
+	}
+
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
+
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -52,11 +63,11 @@ public class MeetUser extends BaseEntity {
 		this.name = name;
 	}
 
-	public String getSex() {
+	public Integer getSex() {
 		return sex;
 	}
 
-	public void setSex(String sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 
@@ -193,18 +204,6 @@ public class MeetUser extends BaseEntity {
 
 	public void setBindUid(int bindUid) {
 		this.bindUid = bindUid;
-	}
-
-	@Override
-	public Integer getId() {
-
-		return this.id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-
 	}
 
 }

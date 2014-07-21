@@ -3,6 +3,7 @@ package com.sniper.survey.struts2.action.admin;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,15 +11,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -32,10 +29,7 @@ import com.sniper.survey.struts2.RootAction;
  * 
  * @param <T>
  */
-@Controller
-@Scope("prototype")
-@ParentPackage("default")
-@Namespace("/admin/")
+
 public abstract class BaseAction<T> extends RootAction implements
 		ModelDriven<T>, Preparable, ServletRequestAware {
 
@@ -53,11 +47,12 @@ public abstract class BaseAction<T> extends RootAction implements
 	 * 搜索变量
 	 */
 	// 存放字符串
-	private Map<String, String> searchString = new HashMap<>();
+	protected Map<String, String> searchString = new HashMap<>();
 	// 存放数字
-	private Map<String, Integer> searchInteger = new HashMap<>();
+	protected Map<String, Integer> searchInteger = new HashMap<>();
 	// 存放boolean
-	private Map<String, Boolean> searchBoolean = new HashMap<>();
+	protected Map<String, Boolean> searchBoolean = new HashMap<>();
+	protected Map<String, Date> searchDate = new HashMap<>();
 
 	public Map<String, String> getSearchString() {
 		return searchString;
@@ -81,6 +76,14 @@ public abstract class BaseAction<T> extends RootAction implements
 
 	public void setSearchBoolean(Map<String, Boolean> searchBoolean) {
 		this.searchBoolean = searchBoolean;
+	}
+
+	public void setSearchDate(Map<String, Date> searchDate) {
+		this.searchDate = searchDate;
+	}
+
+	public Map<String, Date> getSearchDate() {
+		return searchDate;
 	}
 
 	/**

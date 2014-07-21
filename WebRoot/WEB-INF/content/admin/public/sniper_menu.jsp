@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<script type="text/javascript" src="myfiles/js/jquery.sniper.menu.js"></script>
+
 <div id="sniper_menu" class="btn-group" data-spy="affix" data-offset-top="100">
 	<div class="btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -51,6 +51,7 @@
 </div>
 
 <!-- 调用 -->
+<script type="text/javascript" src="myfiles/js/jquery.sniper.menu.js"></script>
 <script type="text/javascript">
 
 $(function(){

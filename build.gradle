@@ -1,6 +1,7 @@
 apply plugin: 'java'
+apply plugin: 'idea'
 
-webAppDirName = 'sniper'
+//webAppDirName = 'sniper'
 
 repositories {
 	 
@@ -103,6 +104,11 @@ dependencies {
     	//'jExcelAPI:jxl:2.6',
     	//'net.sourceforge.jexcelapi:jxl:2.6.12',
     	'org.apache.poi:poi:3.10-FINAL',
+    	'org.apache.poi:poi-excelant:3.10-FINAL',
+    	'org.apache.poi:poi-ooxml:3.10-FINAL',
+    	'org.apache.poi:poi-ooxml-schemas:3.10-FINAL',
+    	'org.apache.poi:poi-scratchpad:3.10-FINAL',
+    	'org.apache.xmlbeans:xmlbeans:2.6.0',
     	'jmagick:jmagick:6.6.9'
     	
 
@@ -125,3 +131,5 @@ configurations.all {
         }
     }
 }
+
+
