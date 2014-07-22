@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 //表明类的实体名称默认类名
 @Entity
@@ -86,7 +87,7 @@ public class Post extends BaseEntity {
 	// 默认为延迟加载,由于这里是主键关联，在住表删除时，次表没变化，是个bug
 	private PostValue postValue;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	// referencedColumnName为每个表关联列，主键不用写
 	@JoinTable(name = "mc_post_node", joinColumns = @JoinColumn(name = "pn_pid"), inverseJoinColumns = @JoinColumn(name = "pn_cid"))
 	private Set<Channel> channels = new HashSet<>();
@@ -95,6 +96,7 @@ public class Post extends BaseEntity {
 	@JoinColumn(name = "uid")
 	private AdminUser adminUser;
 
+	@Version
 	private Integer version;
 
 	public Integer getId() {

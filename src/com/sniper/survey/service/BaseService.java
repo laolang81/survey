@@ -99,6 +99,10 @@ public interface BaseService<T> {
 
 	public void setOrder(String order);
 
+	public boolean isDistinct();
+
+	public void setDistinct(boolean distinct);
+
 	public Criteria criteria();
 
 }

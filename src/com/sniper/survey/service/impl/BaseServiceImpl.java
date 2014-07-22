@@ -31,6 +31,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	private String having;
 	private String group;
 	private String order;
+	private boolean distinct = true;
 
 	private String pageHtml;
 	private List<T> lists;
@@ -87,7 +88,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	public String getGroup() {
 		if (ValidateUtil.isValid(group)) {
-			return " GROUP " + group;
+			return " GROUP By " + group;
 		}
 		return "";
 	}
@@ -105,6 +106,14 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	public void setOrder(String order) {
 		this.order = order;
+	}
+
+	public boolean isDistinct() {
+		return distinct;
+	}
+
+	public void setDistinct(boolean distinct) {
+		this.distinct = distinct;
 	}
 
 	public String getPageHtml() {
@@ -273,21 +282,28 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	 */
 	@Override
 	public void pageList(int listRow, Object... Object) {
+		String hql = "SELECT ";
 
-		
-
-		String hql = "SELECT count(" + getEntityAsName() + ") FROM "
-				+ clazz.getSimpleName() + " " + getEntityAsName() + getJoin()
-				+ getWhere();
+		if (isDistinct()) {
+			hql += " count(DISTINCT " + getEntityAsName() + ")";
+		} else {
+			hql += " count(" + getEntityAsName() + ")";
+		}
+		hql += " FROM " + clazz.getSimpleName() + " " + getEntityAsName()
+				+ getJoin() + getWhere() + getHaving();
 		long l = (long) this.uniqueResult(hql, Object);
 		int totalNum = new Long(l).intValue();
 
 		StrutsPage page = new StrutsPage(totalNum, listRow);
 		pageHtml = page.show();
 
-		String hql2 = "FROM " + clazz.getSimpleName() + " " + getEntityAsName()
-				+ getJoin() + getWhere() + getHaving() + getGroup()
-				+ getOrder();
+		String hql2 = "SELECT ";
+		if (isDistinct()) {
+			hql2 += " DISTINCT ";
+		}
+		hql2 += getEntityAsName() + " FROM " + clazz.getSimpleName() + " "
+				+ getEntityAsName() + getJoin() + getWhere() + getHaving()
+				+ getGroup() + getOrder();
 		lists = this.page(hql2, page.getFristRow(), page.getListRow(), Object);
 
 	}

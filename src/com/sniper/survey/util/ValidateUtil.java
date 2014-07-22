@@ -40,6 +40,13 @@ public class ValidateUtil {
 	 * @param i
 	 * @return
 	 */
+	public static boolean isValid(Integer i) {
+		if (null == i) {
+			return false;
+		}
+		return true;
+	}
+
 	public static boolean isValid(int i) {
 
 		return i <= 0 ? false : true;
@@ -66,9 +73,9 @@ public class ValidateUtil {
 		}
 		return false;
 	}
-	
+
 	public static boolean isValid(Object[] paramType) {
-		if(paramType != null && paramType.length > 0){
+		if (paramType != null && paramType.length > 0) {
 			return true;
 		}
 		return false;
@@ -85,7 +92,7 @@ public class ValidateUtil {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static boolean hasRight(String nameSpace, String actionName,
 			HttpServletRequest request, BaseAction action) {
-		
+
 		if (!ValidateUtil.isValid(nameSpace) || "/".equals(actionName)) {
 			nameSpace = "";
 		}
@@ -98,26 +105,26 @@ public class ValidateUtil {
 		ServletContext context = session.getServletContext();
 		Map<String, AdminRight> map = (Map<String, AdminRight>) context
 				.getAttribute("all_rights_map");
-		
+
 		System.out.println(url);
 		AdminRight right = map.get(url);
 		if (right == null || right.isThePublic()) {
 			return true;
 		} else {
 			AdminUser user = (AdminUser) session.getAttribute("user");
-			
-			//是否登录
+
+			// 是否登录
 			if (user == null) {
 				return false;
 			} else {
 				if (action != null && action instanceof UserAware) {
 					((UserAware) action).setUser(user);
 				}
-				//超级管理员
+				// 超级管理员
 				if (user.isSuperAdmin()) {
 					return true;
 				} else {
-					//有权限
+					// 有权限
 					if (user.hasRight(right)) {
 						return true;
 					} else {

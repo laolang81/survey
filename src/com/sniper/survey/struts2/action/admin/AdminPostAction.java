@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -21,6 +20,7 @@ import com.sniper.survey.service.impl.ChannelService;
 import com.sniper.survey.service.impl.PostService;
 import com.sniper.survey.util.DataUtil;
 import com.sniper.survey.util.PropertiesUtil;
+import com.sniper.survey.util.ValidateUtil;
 
 @Namespace("/admin/admin-post")
 public class AdminPostAction extends BaseAction<Post> {
@@ -46,8 +46,8 @@ public class AdminPostAction extends BaseAction<Post> {
 	public Map<Integer, String> getChannelTop() {
 
 		if (channelTop.isEmpty()) {
-
-			List<Channel> channels = channelService.findAllEntitles();
+			List<Channel> channels = channelService.getChannelListByType(
+					new Integer[] { 0 }, true);
 			for (Channel c : channels) {
 				channelTop.put(c.getId(), c.getName());
 			}
@@ -80,23 +80,7 @@ public class AdminPostAction extends BaseAction<Post> {
 	@Actions({ @Action(value = "index") })
 	@SkipValidation
 	public String index() {
-		
-		
-		for(Entry<String, String> entry :getSearchString().entrySet()){
-			System.out.println("key:" + entry.getKey());
-			System.out.println("value:" + entry.getValue());
-		}
-		
-		for(Entry<String, Boolean> entry :getSearchBoolean().entrySet()){
-			System.out.println("key:" + entry.getKey());
-			System.out.println("value:" + entry.getValue());
-		}
-		
-		
-		for(Entry<String, Integer> entry :getSearchInteger().entrySet()){
-			System.out.println("key:" + entry.getKey());
-			System.out.println("value:" + entry.getValue());
-		}
+
 		super.sniperUrl = "/admin-channel/delete";
 
 		Map<Boolean, String> show = new HashMap<>();
@@ -105,10 +89,25 @@ public class AdminPostAction extends BaseAction<Post> {
 		sniperMenu.put("Audit", show);
 
 		sniperMenuInt.put("Status", getStatusList());
-
 		sniperMenuInt.put("Channel", getChannelTop());
 
-		postService.setOrder("id desc");
+		String ean = postService.getEntityAsName();
+		String hqlwhere = " 1=1";
+		if (ValidateUtil.isValid(searchString.get("name"))) {
+			hqlwhere += " and  " + ean + ".name  like '%"
+					+ searchString.get("name") + "%'";
+		}
+		if (ValidateUtil.isValid(searchInteger.get("status"))) {
+			hqlwhere += " and  " + ean + ".status  ="
+					+ searchInteger.get("status");
+		}
+		if (ValidateUtil.isValid(searchInteger.get("channel"))) {
+			hqlwhere += " and  " + "c.id =" + searchInteger.get("channel");
+		}
+		postService.setJoin(" LEFT JOIN " + ean + ".channels as c");
+		postService.setDistinct(true);
+		postService.setWhere(hqlwhere);
+		postService.setOrder(ean + ".id desc");
 		postService.pageList(getListRow());
 		pageHtml = postService.getPageHtml();
 		list = postService.getLists();
@@ -155,7 +154,6 @@ public class AdminPostAction extends BaseAction<Post> {
 
 		if (getMethod().equalsIgnoreCase("get")) {
 			this.model = postService.getAllEntity(this.model.getId());
-
 		}
 
 		for (Channel c : model.getChannels()) {
