@@ -145,7 +145,8 @@ public class AdminPostAction extends BaseAction<Post> {
 				model.setChannels(new HashSet<>(channelService
 						.getChannelListById(channelsPost)));
 			}
-			//model.setVersion(0);
+			
+			model.setLastEditIp(getIp());
 			postService.saveOrUpdateEntiry(model);
 		}
 

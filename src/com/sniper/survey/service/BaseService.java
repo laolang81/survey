@@ -55,7 +55,7 @@ public interface BaseService<T> {
 
 	public List<T> findEntityByHQL(String hql, Object... Object);
 
-	public List<T> findcEntityByHQL(String hql, Object... Object);
+	public List<T> findCEntityByHQL(String hql, Object... Object);
 
 	public Query findEntityByHQLQuery(String hql, Object... Object);
 
@@ -70,6 +70,8 @@ public interface BaseService<T> {
 	public void executeSQL(Class clazz, String hql, Object... Object);
 
 	public void pageList(int listRow, Object... Object);
+	
+	public List<T> findListByHql(Object... Object);
 
 	public String getPageHtml();
 

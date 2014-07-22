@@ -1,5 +1,6 @@
 package com.sniper.survey.struts2.action.admin;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,13 +19,22 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import com.sniper.survey.config.MeetUserData;
 import com.sniper.survey.model.MeetUser;
 import com.sniper.survey.service.impl.MeetUserService;
+import com.sniper.survey.util.PathUtil;
+import com.sniper.survey.util.PoiExeclExportUtil;
 import com.sniper.survey.util.ValidateUtil;
 
 @Namespace("/admin/meet-user")
 public class MeetUserAction extends BaseAction<MeetUser> {
 
 	private static final long serialVersionUID = 1L;
-
+	//导出文件地址
+	private String filePath;
+	
+	public String getFilePath() {
+		return filePath;
+	}
+	
+	
 	private Map<Integer, String> sexs = new HashMap<>();
 	{
 		sexs = MeetUserData.getSex();
@@ -49,7 +59,7 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 	}
 
 	@Actions({ @Action(value = "index", results = { @Result(name = "export", location = "index", type = "redirectAction", params = {
-			"namespace", "/admin/file-download" }) }) })
+			"namespace", "/admin/file-download","filePath","${filePath}","contentType","application/vnd.ms-exce" }) }) })
 	@SkipValidation
 	public String index() {
 
@@ -78,7 +88,8 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		}
 
 		// 时间格式转换
-		DateFormat dateFormat = new SimpleDateFormat(getSystemConfig().get("dateFormatShort"));
+		DateFormat dateFormat = new SimpleDateFormat(getSystemConfig().get(
+				"dateFormatShort"));
 
 		if (searchDate.get("stime") != null) {
 			Date stime = searchDate.get("stime");
@@ -100,7 +111,24 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		if (ValidateUtil.isValid(searchString.get("submit"))) {
 			String submit = searchString.get("submit");
 			if (submit.equals("export")) {
-				return "export";
+				// 没有limit的限制读取
+				list = meetUserService.findListByHql();
+				if (list.size() > 0) {
+					PoiExeclExportUtil<MeetUser> execlExportUtil = new PoiExeclExportUtil<>();
+					execlExportUtil.setList(list);
+					execlExportUtil.intoData();
+					PathUtil pathUtil = new PathUtil();
+					String path;
+					try {
+						path = pathUtil.getWebRoot();
+						this.filePath = path + "data/人员采集名单.xlsx";
+						execlExportUtil.write(this.filePath);
+					} catch (IllegalAccessException | IOException e) {
+						e.printStackTrace();
+					}
+					return "export";
+				}
+
 			}
 		}
 

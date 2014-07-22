@@ -2,10 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-<s:debug></s:debug>
+
 <s:form method="post" id="sniperForm" cssClass="form-horizontal"
 	role="form">
-
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<s:hidden name="id" />
 
 	<div class="form-group">

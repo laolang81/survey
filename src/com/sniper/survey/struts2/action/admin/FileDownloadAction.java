@@ -2,6 +2,7 @@ package com.sniper.survey.struts2.action.admin;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -27,11 +28,12 @@ public class FileDownloadAction extends RootAction {
 	private String contentCharSet = "utf-8";
 	private InputStream inputStream;
 	private String fileName;
+	private String filePath;
 
 	public String getContentType() {
 		return contentType;
 	}
-	
+
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
@@ -92,18 +94,31 @@ public class FileDownloadAction extends RootAction {
 		this.fileName = fileName;
 	}
 
-	public String getFileName() {
+	public String getFileName() throws UnsupportedEncodingException {
+		fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+		fileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
 		return fileName;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public String getFilePath() {
+		return filePath;
 	}
 
 	@Override
 	@Action(value = "index", results = { @Result(name = "success", type = "stream") })
 	public String execute() throws Exception {
 		// 确定各个成员变量的值
-		setContentType("application/vnd.ms-excel");
-		setContentDisposition("attachment;filename='" + getFileName() + "'");
-		inputStream = new FileInputStream(getFileName());
+
+		inputStream = new FileInputStream(getFilePath());
 		setContentLength(inputStream.available());
+		// setContentType("application/vnd.ms-excel");
+
+		setContentDisposition("attachment;filename=\"" + getFileName() + "\"");
+		// System.out.println(getContentDisposition());
 		return SUCCESS;
 	}
 }

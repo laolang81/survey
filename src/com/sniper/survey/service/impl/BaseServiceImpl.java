@@ -240,7 +240,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	@Override
-	public List<T> findcEntityByHQL(String hql, Object... Object) {
+	public List<T> findCEntityByHQL(String hql, Object... Object) {
 		return dao.findEntityByHQL(hql, Object);
 	}
 
@@ -305,6 +305,21 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 				+ getEntityAsName() + getJoin() + getWhere() + getHaving()
 				+ getGroup() + getOrder();
 		lists = this.page(hql2, page.getFristRow(), page.getListRow(), Object);
+
+	}
+
+	@Override
+	public List<T> findListByHql(Object... Object) {
+
+		String hql2 = "SELECT ";
+		if (isDistinct()) {
+			hql2 += " DISTINCT ";
+		}
+		hql2 += getEntityAsName() + " FROM " + clazz.getSimpleName() + " "
+				+ getEntityAsName() + getJoin() + getWhere() + getHaving()
+				+ getGroup() + getOrder();
+
+		return this.findEntityByHQL(hql2, Object);
 
 	}
 
