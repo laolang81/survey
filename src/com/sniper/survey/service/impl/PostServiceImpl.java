@@ -26,7 +26,7 @@ public class PostServiceImpl extends BaseServiceImpl<Post> implements
 	@Override
 	public Post getAllEntity(Integer id) {
 		Post post = super.getEntity(id);
-		post.getPostValue();
+		post.getPostValue().getId();
 		post.getChannels().size();
 		return post;
 	}

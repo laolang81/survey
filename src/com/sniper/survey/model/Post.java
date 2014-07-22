@@ -19,7 +19,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
 
 //表明类的实体名称默认类名
 @Entity
@@ -39,17 +38,18 @@ public class Post extends BaseEntity {
 	// 跨平台自适应
 	@Column(name = "pt_id")
 	private Integer id;
+	/*
+	 * @Version private int version;
+	 */
 	@Column(name = "pt_name")
 	private String name;
-	// @Column(name = "pt_uid", updatable = false)
-	// private Integer uid;
+	
 
 	@Column(name = "pt_status")
-	private Integer status;
+	private int status;
 	@Column(name = "pt_last_edit_ip")
 	private String lastEditIp;
-	@Column(name = "pt_order")
-	private Long order;
+	private long sort;
 	@Column(name = "pt_source")
 	private String source;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -60,20 +60,7 @@ public class Post extends BaseEntity {
 	private Date stime = new Date();
 	@Column(name = "pt_attachment")
 	private String attachment;
-	@Column(name = "pt_audit_uid")
-	private Integer auditUid;
-	@Column(name = "pt_audit_uid_ip")
-	private String auditUidIp;
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "pt_audit_uid_time")
-	private Date auditUidTime;
-	@Column(name = "pt_mv_uid")
-	private Integer mvUid;
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "pt_mv_time")
-	private Date mvTime;
-	@Column(name = "pt_mv_ip")
-	private Date mvIp;
+
 	@Column(name = "pt_url")
 	private String url;
 	@Column(name = "pt_comment_count")
@@ -96,9 +83,6 @@ public class Post extends BaseEntity {
 	@JoinColumn(name = "uid")
 	private AdminUser adminUser;
 
-	@Version
-	private Integer version;
-
 	public Integer getId() {
 		return id;
 	}
@@ -115,11 +99,11 @@ public class Post extends BaseEntity {
 		this.name = name;
 	}
 
-	public Integer getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
@@ -131,12 +115,12 @@ public class Post extends BaseEntity {
 		this.lastEditIp = lastEditIp;
 	}
 
-	public Long getOrder() {
-		return order;
+	public Long getSort() {
+		return sort;
 	}
 
-	public void setOrder(Long order) {
-		this.order = order;
+	public void setSort(Long sort) {
+		this.sort = sort;
 	}
 
 	public String getSource() {
@@ -169,54 +153,6 @@ public class Post extends BaseEntity {
 
 	public void setAttachment(String attachment) {
 		this.attachment = attachment;
-	}
-
-	public Integer getAuditUid() {
-		return auditUid;
-	}
-
-	public void setAuditUid(Integer auditUid) {
-		this.auditUid = auditUid;
-	}
-
-	public String getAuditUidIp() {
-		return auditUidIp;
-	}
-
-	public void setAuditUidIp(String auditUidIp) {
-		this.auditUidIp = auditUidIp;
-	}
-
-	public Date getAuditUidTime() {
-		return auditUidTime;
-	}
-
-	public void setAuditUidTime(Date auditUidTime) {
-		this.auditUidTime = auditUidTime;
-	}
-
-	public Integer getMvUid() {
-		return mvUid;
-	}
-
-	public void setMvUid(Integer mvUid) {
-		this.mvUid = mvUid;
-	}
-
-	public Date getMvTime() {
-		return mvTime;
-	}
-
-	public void setMvTime(Date mvTime) {
-		this.mvTime = mvTime;
-	}
-
-	public Date getMvIp() {
-		return mvIp;
-	}
-
-	public void setMvIp(Date mvIp) {
-		this.mvIp = mvIp;
 	}
 
 	public String getUrl() {
@@ -283,12 +219,12 @@ public class Post extends BaseEntity {
 		return adminUser;
 	}
 
-	public Integer getVersion() {
+	/*public int getVersion() {
 		return version;
 	}
 
-	public void setVersion(Integer version) {
+	public void setVersion(int version) {
 		this.version = version;
-	}
+	}*/
 
 }

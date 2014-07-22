@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 
-
+<s:debug></s:debug>
 <s:form method="post" id="sniperForm" cssClass="form-horizontal"
 	role="form">
 
@@ -29,18 +29,18 @@
 	</div>
 
 	<div class="form-group">
-		<label for="nickName" class="col-sm-2 control-label">Sort</label>
+		<label for="sort" class="col-sm-2 control-label">Sort</label>
 		<div class="col-sm-10">
-			<s:textfield name="order" cssClass="form-control" id="order" />
+			<s:textfield name="sort" cssClass="form-control" id="sort" />
 
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="adminGroup" class="col-sm-2 control-label">栏目组</label>
+		<label class="col-sm-2 control-label">栏目组</label>
 		<div class="col-sm-10">
 			<s:checkboxlist list="channelTop" value="channelChecked"
-				listKey="key" listValue="value" name="channelsPost" cssClass=""></s:checkboxlist>
+				listKey="key" listValue="value" name="channelsPost" />
 		</div>
 	</div>
 
@@ -54,7 +54,8 @@
 	<div class="form-group">
 		<label for="locked" class="col-sm-2 control-label">内容</label>
 		<div class="col-sm-10">
-			<s:textarea rows="6" cssStyle="height:400px" name="postValue.value" cssClass="form-control"></s:textarea>
+			<s:textarea rows="6" cssStyle="height:400px" name="postValue.value"
+				cssClass="form-control"></s:textarea>
 		</div>
 	</div>
 	<s:hidden name="postValue.id"></s:hidden>
@@ -65,31 +66,21 @@
 		</div>
 	</div>
 </s:form>
-<script type="text/javascript" src="myfiles/Plugin/kindeditor/kindeditor-min.js"></script>
-<script type="text/javascript" src="myfiles/Plugin/kindeditor/lang/zh_CN.js"></script>
-<link
-	href="myfiles/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"
-	rel="stylesheet" media="screen">
+<script type="text/javascript"
+	src="myfiles/Plugin/kindeditor/kindeditor-min.js"></script>
+<script type="text/javascript"
+	src="myfiles/Plugin/kindeditor/lang/zh_CN.js"></script>
 
-<script type="text/javascript"
-	src="myfiles/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"
-	charset="UTF-8"></script>
-<script type="text/javascript"
-	src="myfiles/Plugin/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
-	charset="UTF-8"></script>
 <script type="text/javascript">
-	$('#usernameExpired').datetimepicker({
-		language : 'zh-CN'
-	});
-	
-	
 	$(function() {
-		var editor = KindEditor.create('textarea[name="postValue.value"]',{
+		var editor = KindEditor.create('textarea[name="postValue.value"]', {
 			uploadJson : 'admin/file-upload/upload',
 			fileManagerJson : 'admin/file-upload/htmlmanager',
 			allowFileManager : true,
-				
-			afterBlur: function(){this.sync();}
+
+			afterBlur : function() {
+				this.sync();
+			}
 		});
 	});
 </script>

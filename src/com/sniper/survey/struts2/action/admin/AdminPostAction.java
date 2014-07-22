@@ -12,7 +12,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.sniper.survey.model.Channel;
 import com.sniper.survey.model.Post;
@@ -78,7 +77,6 @@ public class AdminPostAction extends BaseAction<Post> {
 	}
 
 	@Actions({ @Action(value = "index") })
-	@SkipValidation
 	public String index() {
 
 		super.sniperUrl = "/admin-channel/delete";
@@ -92,7 +90,7 @@ public class AdminPostAction extends BaseAction<Post> {
 		sniperMenuInt.put("Channel", getChannelTop());
 
 		String ean = postService.getEntityAsName();
-		String hqlwhere = " 1=1";
+		String hqlwhere = "1=1";
 		if (ValidateUtil.isValid(searchString.get("name"))) {
 			hqlwhere += " and  " + ean + ".name  like '%"
 					+ searchString.get("name") + "%'";
@@ -134,7 +132,6 @@ public class AdminPostAction extends BaseAction<Post> {
 	@Action(value = "update", results = {
 			@Result(name = "input", location = "save.jsp"),
 			@Result(name = "success", location = "save.jsp") })
-	@SkipValidation
 	public String update() {
 
 		if (model.getId() == 0) {
@@ -148,7 +145,7 @@ public class AdminPostAction extends BaseAction<Post> {
 				model.setChannels(new HashSet<>(channelService
 						.getChannelListById(channelsPost)));
 			}
-
+			//model.setVersion(0);
 			postService.saveOrUpdateEntiry(model);
 		}
 
@@ -165,7 +162,6 @@ public class AdminPostAction extends BaseAction<Post> {
 
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
-	@SkipValidation
 	@Override
 	public String delete() {
 		// code 小于1表示有错误,大于0表示ok,==0表示未操作

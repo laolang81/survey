@@ -18,6 +18,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import com.sniper.survey.config.MeetUserData;
 import com.sniper.survey.model.MeetUser;
 import com.sniper.survey.service.impl.MeetUserService;
+import com.sniper.survey.util.ValidateUtil;
 
 @Namespace("/admin/meet-user")
 public class MeetUserAction extends BaseAction<MeetUser> {
@@ -47,13 +48,15 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		return meetUsers;
 	}
 
-	@Actions({ @Action(value = "index") })
+	@Actions({ @Action(value = "index", results = { @Result(name = "export", location = "index", type = "redirectAction", params = {
+			"namespace", "/admin/file-download" }) }) })
 	@SkipValidation
 	public String index() {
 
-		super.sniperUrl = "/meet-user/delete";
-
-		String hqlwhere = " 1=1";
+		sniperUrl = "/meet-user/delete";
+		// 表别名
+		// String ean = meetUserService.getEntityAsName();
+		String hqlwhere = "1=1";
 
 		if (searchInteger.get("sex") != null) {
 			Integer sex = searchInteger.get("sex");
@@ -71,27 +74,36 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 			case 2:
 				fieldName = "createTime";
 				break;
-
 			}
 		}
-		
-		//时间格式转换
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		// 时间格式转换
+		DateFormat dateFormat = new SimpleDateFormat(getSystemConfig().get("dateFormatShort"));
 
 		if (searchDate.get("stime") != null) {
 			Date stime = searchDate.get("stime");
-			hqlwhere += " and " + fieldName + " >  '" + dateFormat.format(stime).replace(" ", "") + "'";
+			hqlwhere += " and " + fieldName + " >  '"
+					+ dateFormat.format(stime).replace(" ", "") + "'";
 		}
 
 		if (searchDate.get("etime") != null) {
 			Date etime = searchDate.get("etime");
-			hqlwhere += " and " + fieldName + " <  '" + dateFormat.format(etime).replace(" ", "") + "'";
+			hqlwhere += " and " + fieldName + " <  '"
+					+ dateFormat.format(etime).replace(" ", "") + "'";
 		}
 
-		if (searchString.get("name") != null && !searchString.get("name").isEmpty()) {
+		if (searchString.get("name") != null
+				&& !searchString.get("name").isEmpty()) {
 			String name = searchString.get("name");
 			hqlwhere += " and name like '%" + name + "%'";
 		}
+		if (ValidateUtil.isValid(searchString.get("submit"))) {
+			String submit = searchString.get("submit");
+			if (submit.equals("export")) {
+				return "export";
+			}
+		}
+
 		meetUserService.setWhere(hqlwhere);
 		meetUserService.setOrder("id desc");
 		meetUserService.pageList(getListRow());
