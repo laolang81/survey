@@ -64,8 +64,7 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">LOGO</a></li>
-				<li><a href="#">网站站点</a></li>
+				<!-- <li class="active"><a href="/">网站站点</a></li> -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">人员采集 <b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -87,14 +86,7 @@
 						<li><s:a action="save" namespace="/admin/admin-channel">频道添加</s:a></li>
 						
 					</ul></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-				data-toggle="dropdown">友情链接管理 <b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					
-					<li><s:a action="index" namespace="/admin/links">链接管理</s:a></li>
-					<li><s:a action="save" namespace="/admin/links">链接添加</s:a></li>
-					
-				</ul></li>
+				
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">权限管理 <b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -120,8 +112,6 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Holle, <sec:authentication property="name"/> <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">我的设置</a></li>
-						
 						<li><s:a action="changepassword" namespace="/admin/admin-user">更改密码</s:a></li>
 						<li class="divider"></li>
 						<li><a href="j_spring_security_logout">退出</a></li>

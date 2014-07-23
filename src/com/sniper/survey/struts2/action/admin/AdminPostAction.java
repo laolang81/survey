@@ -113,9 +113,7 @@ public class AdminPostAction extends BaseAction<Post> {
 		return SUCCESS;
 	}
 
-	@Action(value = "save", results = {
-			@Result(name = "input", location = "save.jsp"),
-			@Result(name = "success", location = "save.jsp") })
+	@Action(value = "save", results = { @Result(name = "success", location = "save", type = "redirect") })
 	public String save() {
 		if (getMethod().equalsIgnoreCase("post")) {
 			if (channelsPost.length != 0) {
@@ -125,13 +123,15 @@ public class AdminPostAction extends BaseAction<Post> {
 			}
 
 			postService.saveOrUpdateEntiry(model);
+			return SUCCESS;
 		}
-		return SUCCESS;
+		return INPUT;
 	}
 
 	@Action(value = "update", results = {
-			@Result(name = "input", location = "save.jsp"),
-			@Result(name = "success", location = "save.jsp") })
+			@Result(name = "input", location = "save-input.jsp"),
+			@Result(name = "success", location = "update", type = "redirectAction", params = {
+					"id", "${id}" }) })
 	public String update() {
 
 		if (model.getId() == 0) {
@@ -145,9 +145,11 @@ public class AdminPostAction extends BaseAction<Post> {
 				model.setChannels(new HashSet<>(channelService
 						.getChannelListById(channelsPost)));
 			}
-			
+
 			model.setLastEditIp(getIp());
 			postService.saveOrUpdateEntiry(model);
+
+			return SUCCESS;
 		}
 
 		if (getMethod().equalsIgnoreCase("get")) {
@@ -158,7 +160,7 @@ public class AdminPostAction extends BaseAction<Post> {
 			channelChecked.add(c.getId());
 		}
 
-		return SUCCESS;
+		return INPUT;
 	}
 
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {

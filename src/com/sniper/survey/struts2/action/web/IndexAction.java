@@ -1,11 +1,11 @@
 package com.sniper.survey.struts2.action.web;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
+import org.apache.struts2.convention.annotation.InterceptorRef;
+import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -14,14 +14,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.sniper.survey.model.MeetUser;
-import com.sniper.survey.model.Post;
 import com.sniper.survey.service.impl.MeetUserService;
 import com.sniper.survey.service.impl.PostService;
 
 @Controller()
 @Scope("prototype")
 @Namespace("/")
-@ParentPackage("convention-default")
+@InterceptorRefs(value = { @InterceptorRef("tokenSession"),
+		@InterceptorRef("defaultInterceptor") })
+@ParentPackage("default")
 @ResultPath("/WEB-INF/content/web")
 public class IndexAction extends BaseAction<MeetUser> {
 
@@ -41,15 +42,6 @@ public class IndexAction extends BaseAction<MeetUser> {
 		pageHtml = meetUserService.getPageHtml();
 		list = meetUserService.getLists();
 
-		Integer[] in = {};
-
-		List<Post> posts = postService.getCListByChannelID(in, 100);
-		for (Post p : posts) {
-			System.out.println(p.getId());
-			System.out.println(p.getName());
-			// System.out.println(p.getChannels().size());
-		}
-
 		return SUCCESS;
 
 	}
@@ -59,7 +51,7 @@ public class IndexAction extends BaseAction<MeetUser> {
 			@Result(name = "success", location = "save.jsp") })
 	public String save() {
 		if (getMethod().equalsIgnoreCase("post")) {
-			
+
 			meetUserService.saveOrUpdateEntiry(model);
 		}
 		return SUCCESS;

@@ -76,13 +76,19 @@ public class PoiExeclExportUtil<T extends BaseEntity> {
 		}
 	}
 
+	/**
+	 * 定义样式
+	 * 
+	 * @return
+	 */
 	protected CellStyle createCellStyle() {
 
 		CellStyle cellStyle = this.workbook.createCellStyle();
+		// 设置背景颜色
 		cellStyle.setFillBackgroundColor(HSSFColor.LIGHT_YELLOW.index);
 
 		Font font = this.workbook.createFont();
-		font.setColor(HSSFColor.BLUE.index);
+		font.setColor(HSSFColor.BLACK.index);
 		cellStyle.setFont(font);
 		return cellStyle;
 	}
@@ -128,8 +134,8 @@ public class PoiExeclExportUtil<T extends BaseEntity> {
 			} else if (methodName.startsWith("is")) {
 				cell.setCellValue(methodName.substring(2));
 			}
-
 		}
+		
 		int index = 1;
 		while (it.hasNext()) {
 
@@ -156,40 +162,33 @@ public class PoiExeclExportUtil<T extends BaseEntity> {
 
 					// System.out.println("value:" + value);
 					String textValue = html(String.valueOf(value));
-					// System.out.println("专程字符串value:" + value);
 
 					if (value instanceof Integer) {
 						int intValue = Integer.parseInt(textValue);
-						// System.out.println("intValue" + intValue);
 						cell.setCellValue(intValue);
 					} else if (value instanceof Float) {
 						float f = Float.parseFloat(textValue);
 						XSSFRichTextString hssfRichTextString = new XSSFRichTextString(
 								String.valueOf(f));
-						// System.out.println("Float" + hssfRichTextString);
 						cell.setCellValue(hssfRichTextString);
 					} else if (value instanceof Double) {
 						Double d = Double.parseDouble(textValue);
 						XSSFRichTextString hssfRichTextString = new XSSFRichTextString(
 								String.valueOf(d));
-						// System.out.println("Double" + hssfRichTextString);
 						cell.setCellValue(hssfRichTextString);
 					} else if (value instanceof Long) {
 						Long l = Long.parseLong(textValue);
 						XSSFRichTextString hssfRichTextString = new XSSFRichTextString(
 								String.valueOf(l));
-						// System.out.println("Long" + hssfRichTextString);
 						cell.setCellValue(hssfRichTextString);
 					} else if (value instanceof Boolean) {
 						Boolean boolean1 = Boolean.parseBoolean(textValue);
-						// System.out.println("Boolean" + boolean1);
 						cell.setCellValue(boolean1);
 					} else if (value instanceof Date) {
 						Date date = (Date) value;
 
 						DateFormat dateFormat = new SimpleDateFormat(
 								"yyyy-MM-dd HH:mm:ss");
-						// System.out.println("Date" + dateFormat.format(date));
 						cell.setCellValue(dateFormat.format(date));
 					} else if (value instanceof byte[]) {
 						// 二进制
@@ -241,7 +240,6 @@ public class PoiExeclExportUtil<T extends BaseEntity> {
 
 			}
 
-			// System.out.println("<hr>");
 		}
 	}
 
@@ -251,6 +249,7 @@ public class PoiExeclExportUtil<T extends BaseEntity> {
 	public void write(String filepath) throws IOException {
 
 		FileOutputStream out = new FileOutputStream(filepath);
+		
 		workbook.write(out);
 		out.close();
 	}
