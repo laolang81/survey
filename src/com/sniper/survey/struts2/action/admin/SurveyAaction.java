@@ -77,10 +77,9 @@ public class SurveyAaction extends BaseAction<Survey> {
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
 	@SkipValidation
-	@Override
 	public String delete() {
 
-		super.delete();
+		//super.delete();
 
 		switch (menuType) {
 		case "delete":

@@ -231,6 +231,17 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	@Override
+	public List<T> getEntity(Integer[] id) {
+		String hql = "SELECT " 
+				+ getEntityAsName() + " FROM "
+				+ clazz.getSimpleName() + " as "
+				+ getEntityAsName() + " where id in("
+				+ StringUtils.join(id, ",") + ") ";
+
+		return this.findCEntityByHQL(hql);
+	}
+
+	@Override
 	public T getCEntity(Integer id) {
 		return dao.getEntity(id);
 	}

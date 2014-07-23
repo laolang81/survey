@@ -54,7 +54,7 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 
 	@Actions({ @Action(value = "index") })
 	public String list() {
-
+		super.sniperUrl = "/admin-group/delete";
 		adminGroupService.setOrder("id desc");
 		adminGroupService.pageList(getListRow());
 		pageHtml = adminGroupService.getPageHtml();
@@ -122,10 +122,7 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
-	@SkipValidation
-	@Override
 	public String delete() {
-		super.delete();
 
 		switch (menuType) {
 		case "delete":
@@ -144,6 +141,15 @@ public class AdminGroupAction extends BaseAction<AdminGroup> {
 
 		return SUCCESS;
 
+	}
+
+	/**
+	 * delete公共调用的类
+	 * 
+	 * @return
+	 */
+	public void prepareDoDelete() {
+		super.ajaxResultDelete();
 	}
 
 }

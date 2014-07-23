@@ -25,7 +25,7 @@
 	<!-- 浏览器是否缓存静态内容 -->
 	<constant name="struts.serve.static.browserCache" value="false" />
 	<!-- 上传文件大小限制设置 -->
-	<!-- <constant name="struts.multipart.maxSize" value="100000000" /> -->
+	<constant name="struts.multipart.maxSize" value="1024000000" />
 
 	<!-- 指定每次配置文件更改后，自动重新加载 -->
 	<constant name="struts.configuration.xml.reload" value="true" />
@@ -33,6 +33,8 @@
 	<constant name="struts.xslt.nocache" value="true" />
 	<!-- 动态方法加载 -->
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+
+	<constant name="struts.objectFactory" value="spring" />
 
 	<package name="default" extends="json-default">
 		<interceptors>
@@ -49,13 +51,16 @@
 					<param name="excludeMethods">input,back,cancel,browse</param>
 					<param name="validateAnnotatedMethodOnly">true</param>
 				</interceptor-ref>
-				<interceptor-ref name="defaultStack">
+				<interceptor-ref name="paramsPrepareParamsStack">
 					<param name="modelDriven.refreshModelBeforeResult">true</param>
 				</interceptor-ref>
+				<!-- <interceptor-ref name="defaultStack">
+					<param name="modelDriven.refreshModelBeforeResult">true</param>
+				</interceptor-ref> -->
 			</interceptor-stack>
 		</interceptors>
 
-		<default-interceptor-ref name="defaultInterceptor"></default-interceptor-ref>
+		<default-interceptor-ref name="defaultInterceptor"/>
 
 		<default-action-ref name="notFound" />
 		<action name="notFound">

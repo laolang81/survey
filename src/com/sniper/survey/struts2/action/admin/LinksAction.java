@@ -97,11 +97,10 @@ public class LinksAction extends BaseAction<Links> {
 	 */
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
-	@Override
 	public String delete() {
 		// code 小于1表示有错误,大于0表示ok,==0表示未操作
 
-		super.delete();
+		//super.delete();
 
 		switch (menuType) {
 		case "delete":

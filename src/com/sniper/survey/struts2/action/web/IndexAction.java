@@ -5,7 +5,6 @@ import javax.annotation.Resource;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.InterceptorRef;
-import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -20,8 +19,6 @@ import com.sniper.survey.service.impl.PostService;
 @Controller()
 @Scope("prototype")
 @Namespace("/")
-@InterceptorRefs(value = { @InterceptorRef("tokenSession"),
-		@InterceptorRef("defaultInterceptor") })
 @ParentPackage("default")
 @ResultPath("/WEB-INF/content/web")
 public class IndexAction extends BaseAction<MeetUser> {
@@ -34,7 +31,9 @@ public class IndexAction extends BaseAction<MeetUser> {
 	@Resource
 	MeetUserService meetUserService;
 
-	@Actions(value = { @Action(value = "index", results = { @Result(name = "success", location = "index/index.jsp") }) })
+	@Actions(value = { @Action(value = "index", results = {
+			@Result(name = "success", location = "index/index.jsp"),
+			@Result(name = "invalid.token", location = "index/index.jsp") }) })
 	public String index() {
 
 		meetUserService.setOrder("id desc");
@@ -48,7 +47,10 @@ public class IndexAction extends BaseAction<MeetUser> {
 
 	@Action(value = "join", results = {
 			@Result(name = "input", location = "save.jsp"),
-			@Result(name = "success", location = "save.jsp") })
+			@Result(name = "success", location = "save.jsp"),
+			@Result(name = "invalid.token", location = "save.jsp") }, interceptorRefs = {
+			@InterceptorRef("tokenSession"),
+			@InterceptorRef("defaultInterceptor") })
 	public String save() {
 		if (getMethod().equalsIgnoreCase("post")) {
 

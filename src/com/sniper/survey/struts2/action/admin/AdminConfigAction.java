@@ -81,9 +81,7 @@ public class AdminConfigAction extends BaseAction<SystemConfig> {
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
 	@SkipValidation
-	@Override
 	public String delete() {
-		super.delete();
 
 		switch (menuType) {
 		case "delete":
@@ -115,6 +113,15 @@ public class AdminConfigAction extends BaseAction<SystemConfig> {
 
 		return SUCCESS;
 
+	}
+
+	/**
+	 * delete公共调用的类
+	 * 
+	 * @return
+	 */
+	public void prepareDoDelete() {
+		super.ajaxResultDelete();
 	}
 
 	/**

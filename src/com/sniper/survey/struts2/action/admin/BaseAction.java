@@ -91,8 +91,8 @@ public abstract class BaseAction<T> extends RootAction implements
 	 */
 	protected Map<String, Map<Integer, String>> sniperMenuInt = new HashMap<>();
 	protected Map<String, Map<Boolean, String>> sniperMenu = new HashMap<>();
-	protected String menuType;
-	protected String menuValue;
+	protected String menuType = "";
+	protected String menuValue = "";
 	protected Integer[] delid;
 	// 菜单处理url
 	protected String sniperUrl;
@@ -300,13 +300,13 @@ public abstract class BaseAction<T> extends RootAction implements
 	 * 
 	 * @return
 	 */
-	public int userID() {
+	public AdminUser AdminUser() {
 		String username = userInfo().getUsername();
 		AdminUser adminUser = adminUserService.validateByName(username);
 		if (null != adminUser) {
-			return adminUser.getId();
+			return adminUser;
 		}
-		return 0;
+		return null;
 	}
 
 	/**
@@ -370,17 +370,24 @@ public abstract class BaseAction<T> extends RootAction implements
 	 * 
 	 * @return
 	 */
-	public String delete() {
+	public void ajaxResultDelete() {
 		// code 小于1表示有错误,大于0表示ok,==0表示未操作
-		ajaxResult.put("code", 0);
+		ajaxResult.put("code", -1);
 		ajaxResult.put("msg", "error");
+		ajaxResult.put("data", "");
+		
 		if (!getMethod().equalsIgnoreCase("post") || !isXMLHttpRequest()) {
-			return SUCCESS;
+			ajaxResult.put("code", -2);
+			ajaxResult.put("msg", "非有效请求");
 		}
-
-		if (getMenuType() == null || getMenuValue() == null) {
-			return SUCCESS;
+		if ("".equals(getMenuType()) || "".equals(getMenuValue())) {
+			ajaxResult.put("code", -3);
+			ajaxResult.put("msg", "非有效参数");
 		}
-		return NONE;
+		
+		ajaxResult.put("menuType", getMenuType());
+		ajaxResult.put("code", 0);
+		ajaxResult.put("msg", "Go On");
+		
 	}
 }

@@ -1,5 +1,6 @@
 package com.sniper.survey.struts2.action.admin;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,14 +28,13 @@ import com.sniper.survey.util.ValidateUtil;
 public class MeetUserAction extends BaseAction<MeetUser> {
 
 	private static final long serialVersionUID = 1L;
-	//导出文件地址
+	// 导出文件地址
 	private String filePath;
-	
+
 	public String getFilePath() {
 		return filePath;
 	}
-	
-	
+
 	private Map<Integer, String> sexs = new HashMap<>();
 	{
 		sexs = MeetUserData.getSex();
@@ -59,7 +59,8 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 	}
 
 	@Actions({ @Action(value = "index", results = { @Result(name = "export", location = "index", type = "redirectAction", params = {
-			"namespace", "/admin/file-download","filePath","${filePath}","contentType","application/vnd.ms-exce" }) }) })
+			"namespace", "/admin/file-download", "filePath", "${filePath}",
+			"contentType", "application/vnd.ms-exce" }) }) })
 	@SkipValidation
 	public String index() {
 
@@ -116,12 +117,33 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 				if (list.size() > 0) {
 					PoiExeclExportUtil<MeetUser> execlExportUtil = new PoiExeclExportUtil<>();
 					execlExportUtil.setList(list);
-					execlExportUtil.intoData();
+					Map<String, String> header = new HashMap<>();
+					header.put("name", "名称");
+					header.put("sex", "性别");
+					header.put("nation", "民族");
+					header.put("post", "职务");
+					header.put("unit", "单位");
+					header.put("mobilePhone", "电话");
+					header.put("shopInfo", "住宿信息");
+					header.put("moneyType", "会务费用支付方式");
+					header.put("reportTime", "报道时间");
+					header.put("carNum", "车次(航班)");
+					header.put("carPeople", "是否接站");
+					header.put("leaveTime", "离开时间");
+					header.put("carLeavePeople", "是否送站");
+					header.put("carLeaveNum", "返程车次(航班)");
+					header.put("other", "其他");
+					header.put("createTime", "创建时间");
+					execlExportUtil.customMeetUserIntoData(list, header);
 					PathUtil pathUtil = new PathUtil();
 					String path;
 					try {
 						path = pathUtil.getWebRoot();
 						this.filePath = path + "data/人员采集名单.xlsx";
+						File file = new File(this.filePath);
+						if (file.isFile()) {
+							file.delete();
+						}
 						execlExportUtil.write(this.filePath);
 					} catch (IllegalAccessException | IOException e) {
 						e.printStackTrace();
@@ -209,18 +231,18 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
 	@SkipValidation
-	@Override
 	public String delete() {
 		// code 小于1表示有错误,大于0表示ok,==0表示未操作
 
-		super.delete();
-
 		switch (menuType) {
 		case "delete":
-
-			break;
-		case "IsShow":
-
+			if (meetUserService.deleteBatchEntityById(delid)) {
+				ajaxResult.put("code", 1);
+				ajaxResult.put("msg", "success");
+			} else {
+				ajaxResult.put("code", -1);
+				ajaxResult.put("msg", "删除失败");
+			}
 			break;
 
 		default:
@@ -228,6 +250,15 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 		}
 
 		return SUCCESS;
+	}
+
+	/**
+	 * delete公共调用的类
+	 * 
+	 * @return
+	 */
+	public void prepareDoDelete() {
+		super.ajaxResultDelete();
 	}
 
 }

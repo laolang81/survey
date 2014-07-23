@@ -127,9 +127,8 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
 	@SkipValidation
-	@Override
 	public String delete() {
-		super.delete();
+		// super.delete();
 
 		switch (menuType) {
 		case "delete":
@@ -186,6 +185,15 @@ public class AdminRightAction extends BaseAction<AdminRight> {
 
 		return SUCCESS;
 
+	}
+
+	/**
+	 * delete公共调用的类
+	 * 
+	 * @return
+	 */
+	public void prepareDoDelete() {
+		super.ajaxResultDelete();
 	}
 
 }

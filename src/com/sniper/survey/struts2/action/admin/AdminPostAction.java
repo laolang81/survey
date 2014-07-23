@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 
+import com.opensymphony.xwork2.Preparable;
 import com.sniper.survey.model.Channel;
 import com.sniper.survey.model.Post;
 import com.sniper.survey.service.impl.ChannelService;
@@ -22,7 +23,7 @@ import com.sniper.survey.util.PropertiesUtil;
 import com.sniper.survey.util.ValidateUtil;
 
 @Namespace("/admin/admin-post")
-public class AdminPostAction extends BaseAction<Post> {
+public class AdminPostAction extends BaseAction<Post> implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -79,15 +80,9 @@ public class AdminPostAction extends BaseAction<Post> {
 	@Actions({ @Action(value = "index") })
 	public String index() {
 
-		super.sniperUrl = "/admin-channel/delete";
+		super.sniperUrl = "/admin-post/delete";
 
-		Map<Boolean, String> show = new HashMap<>();
-		show.put(false, "否");
-		show.put(true, "是");
-		sniperMenu.put("Audit", show);
-
-		sniperMenuInt.put("Status", getStatusList());
-		sniperMenuInt.put("Channel", getChannelTop());
+		sniperMenuInt.put("Audit", getStatusList());
 
 		String ean = postService.getEntityAsName();
 		String hqlwhere = "1=1";
@@ -165,12 +160,10 @@ public class AdminPostAction extends BaseAction<Post> {
 
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
-	@Override
 	public String delete() {
 		// code 小于1表示有错误,大于0表示ok,==0表示未操作
-
-		super.delete();
-
+		
+		
 		switch (menuType) {
 		case "delete":
 			if (postService.deleteBatchEntityById(delid)) {
@@ -181,21 +174,11 @@ public class AdminPostAction extends BaseAction<Post> {
 				ajaxResult.put("msg", "删除失败");
 			}
 			break;
-		case "MoveType":
-			try {
-				postService.batchFiledChange("showType",
-						DataUtil.stringToInteger(getMenuValue()), delid);
-				ajaxResult.put("code", 1);
-				ajaxResult.put("msg", "success");
-			} catch (Exception e) {
-				ajaxResult.put("code", -1);
-				ajaxResult.put("msg", e.getMessage());
-			}
-			break;
+		
 		case "Audit":
 			try {
 				postService.batchFiledChange("status",
-						DataUtil.stringToBoolean(getMenuValue()), delid);
+						DataUtil.stringToInteger(getMenuValue()), delid);
 				ajaxResult.put("code", 1);
 				ajaxResult.put("msg", "success");
 			} catch (Exception e) {
@@ -210,5 +193,16 @@ public class AdminPostAction extends BaseAction<Post> {
 
 		return SUCCESS;
 	}
+	
+	/**
+	 * delete公共调用的类
+	 * 
+	 * @return
+	 */
+	public void prepareDoDelete() {
+		super.ajaxResultDelete();
+	}
+	
+	
 
 }

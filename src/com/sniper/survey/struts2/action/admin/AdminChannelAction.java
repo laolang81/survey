@@ -103,11 +103,8 @@ public class AdminChannelAction extends BaseAction<Channel> {
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
 	@SkipValidation
-	@Override
 	public String delete() {
 		// code 小于1表示有错误,大于0表示ok,==0表示未操作
-
-		super.delete();
 
 		switch (menuType) {
 		case "delete":
@@ -136,6 +133,15 @@ public class AdminChannelAction extends BaseAction<Channel> {
 		}
 
 		return SUCCESS;
+	}
+
+	/**
+	 * delete公共调用的类
+	 * 
+	 * @return
+	 */
+	public void prepareDoDelete() {
+		super.ajaxResultDelete();
 	}
 
 }

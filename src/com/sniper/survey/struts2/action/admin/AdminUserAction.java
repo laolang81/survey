@@ -162,8 +162,8 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 			@Result(name = "input", location = "change-password.jsp") })
 	public String changepassword() {
 
-		Integer uid = userID();
-		if (0 == uid) {
+		AdminUser adminUser = AdminUser();
+		if (null == adminUser) {
 			return ERROR;
 		}
 
@@ -206,7 +206,8 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 		}
 		if (getMethod().equalsIgnoreCase("get")) {
-			this.model = adminUserService.getEntity(uid);
+			// this.model = adminUserService.getEntity(uid);
+			this.model = adminUser;
 		}
 
 		return SUCCESS;
@@ -219,11 +220,8 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 	 */
 	@Action(value = "delete", results = { @Result(name = "success", type = "json", params = {
 			"root", "ajaxResult" }) })
-	@Override
 	public String delete() {
 		// code 小于1表示有错误,大于0表示ok,==0表示未操作
-
-		super.delete();
 
 		switch (menuType) {
 		case "delete":
@@ -269,6 +267,15 @@ public class AdminUserAction extends BaseAction<AdminUser> {
 
 		return SUCCESS;
 
+	}
+
+	/**
+	 * delete公共调用的类
+	 * 
+	 * @return
+	 */
+	public void prepareDoDelete() {
+		super.ajaxResultDelete();
 	}
 
 }

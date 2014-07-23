@@ -51,6 +51,8 @@ public interface BaseService<T> {
 
 	public T getEntity(Integer id);
 
+	public List<T> getEntity(Integer[] id);
+
 	public T getCEntity(Integer id);
 
 	public List<T> findEntityByHQL(String hql, Object... Object);
@@ -70,7 +72,7 @@ public interface BaseService<T> {
 	public void executeSQL(Class clazz, String hql, Object... Object);
 
 	public void pageList(int listRow, Object... Object);
-	
+
 	public List<T> findListByHql(Object... Object);
 
 	public String getPageHtml();

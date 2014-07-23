@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
@@ -27,6 +28,7 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.sniper.survey.model.BaseEntity;
+import com.sniper.survey.model.MeetUser;
 
 public class PoiExeclExportUtil<T extends BaseEntity> {
 
@@ -135,7 +137,7 @@ public class PoiExeclExportUtil<T extends BaseEntity> {
 				cell.setCellValue(methodName.substring(2));
 			}
 		}
-		
+
 		int index = 1;
 		while (it.hasNext()) {
 
@@ -243,13 +245,105 @@ public class PoiExeclExportUtil<T extends BaseEntity> {
 		}
 	}
 
+	/**
+	 * 自定义插入数据
+	 */
+	public void customMeetUserIntoData(List<MeetUser> lists,
+			Map<String, String> header) {
+		Sheet sheet = this.workbook.createSheet();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		// 设置第一行
+		Row row = sheet.createRow(0);
+		int i = 0;
+		for (String string : header.values()) {
+			Cell cell = row.createCell(i);
+			cell.setCellValue(string);
+			i++;
+		}
+
+		int index = 1;
+		for (MeetUser it : lists) {
+			row = sheet.createRow(index);
+			index++;
+			// 设置名称
+			Cell cell = row.createCell(0);
+			XSSFRichTextString textString = new XSSFRichTextString(it.getName());
+			cell.setCellValue(textString);
+			cell = row.createCell(1);
+			if (it.getSex() == 0) {
+				cell.setCellValue("男");
+			} else {
+				cell.setCellValue("女");
+			}
+			cell = row.createCell(2);
+			textString = new XSSFRichTextString(it.getNation());
+			cell.setCellValue(textString);
+			cell = row.createCell(3);
+			textString = new XSSFRichTextString(it.getPost());
+			cell.setCellValue(textString);
+			cell = row.createCell(4);
+			textString = new XSSFRichTextString(it.getUnit());
+			cell.setCellValue(textString);
+			cell = row.createCell(5);
+			textString = new XSSFRichTextString(it.getMobilePhone());
+			cell.setCellValue(textString);
+			cell = row.createCell(6);
+			textString = new XSSFRichTextString(it.getMoneyType());
+			cell.setCellValue(textString);
+
+			cell = row.createCell(7);
+			if (it.getReportTime() != null) {
+				cell.setCellValue(dateFormat.format(it.getReportTime()));
+			} else {
+				cell.setCellValue("");
+			}
+
+			cell = row.createCell(8);
+			textString = new XSSFRichTextString(it.getCarNum());
+			cell.setCellValue(textString);
+			cell = row.createCell(9);
+			if (it.isCarPeople()) {
+				cell.setCellValue("是");
+			} else {
+				cell.setCellValue("否");
+			}
+			cell = row.createCell(10);
+			if (it.getLeaveTime() != null) {
+				cell.setCellValue(dateFormat.format(it.getLeaveTime()));
+			} else {
+				cell.setCellValue("");
+			}
+			cell = row.createCell(11);
+			if (it.isCarLeavePeople()) {
+				cell.setCellValue("是");
+			} else {
+				cell.setCellValue("否");
+			}
+			cell = row.createCell(12);
+			textString = new XSSFRichTextString(it.getCarLeaveNum());
+			cell.setCellValue(textString);
+			cell = row.createCell(13);
+			textString = new XSSFRichTextString(it.getOther());
+			cell.setCellValue(textString);
+			cell = row.createCell(14);
+			if (it.getCreateTime() != null) {
+				cell.setCellValue(dateFormat.format(it.getCreateTime()));
+			} else {
+				cell.setCellValue("");
+			}
+		}
+
+	}
+
 	/*
 	 * 输出路径
 	 */
 	public void write(String filepath) throws IOException {
 
 		FileOutputStream out = new FileOutputStream(filepath);
-		
+
 		workbook.write(out);
 		out.close();
 	}
