@@ -109,7 +109,8 @@ dependencies {
     	'org.apache.poi:poi-ooxml-schemas:3.10-FINAL',
     	'org.apache.poi:poi-scratchpad:3.10-FINAL',
     	'org.apache.xmlbeans:xmlbeans:2.6.0',
-    	'jmagick:jmagick:6.6.9'
+    	'jmagick:jmagick:6.6.9',
+    	'redis.clients:jedis:2.5.1'
     	
 
     )

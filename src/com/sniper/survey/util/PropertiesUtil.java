@@ -42,6 +42,11 @@ public class PropertiesUtil {
 		return value;
 	}
 
+	public Integer getIntegerValue(String key) {
+		Integer value = Integer.parseInt(properties.getProperty(key));
+		return value;
+	}
+
 	@SuppressWarnings("rawtypes")
 	public Map<String, String> getAllValue() {
 		Map<String, String> list = new HashMap<>();
