@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -113,27 +114,29 @@ public class MeetUserAction extends BaseAction<MeetUser> {
 			String submit = searchString.get("submit");
 			if (submit.equals("export")) {
 				// 没有limit的限制读取
+				meetUserService.setOrder("id desc");
 				list = meetUserService.findListByHql();
 				if (list.size() > 0) {
 					PoiExeclExportUtil<MeetUser> execlExportUtil = new PoiExeclExportUtil<>();
-					execlExportUtil.setList(list);
-					Map<String, String> header = new HashMap<>();
-					header.put("name", "名称");
-					header.put("sex", "性别");
-					header.put("nation", "民族");
-					header.put("post", "职务");
-					header.put("unit", "单位");
-					header.put("mobilePhone", "电话");
-					header.put("shopInfo", "住宿信息");
-					header.put("moneyType", "会务费用支付方式");
-					header.put("reportTime", "报道时间");
-					header.put("carNum", "车次(航班)");
-					header.put("carPeople", "是否接站");
-					header.put("leaveTime", "离开时间");
-					header.put("carLeavePeople", "是否送站");
-					header.put("carLeaveNum", "返程车次(航班)");
-					header.put("other", "其他");
-					header.put("createTime", "创建时间");
+					
+					List<String> header = new ArrayList<>();
+					header.add("名称");
+					header.add("性别");
+					header.add("民族");
+					header.add("职务");
+					header.add("单位");
+					header.add("电话");
+					header.add("住宿信息");
+					header.add("会务费用支付方式");
+					header.add("报道时间");
+					header.add("车次(航班)");
+					header.add("是否接站");
+					header.add("离开时间");
+					header.add("是否送站");
+					header.add("返程车次(航班)");
+					header.add("其他");
+					header.add("创建时间");
+					
 					execlExportUtil.customMeetUserIntoData(list, header);
 					PathUtil pathUtil = new PathUtil();
 					String path;

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
@@ -248,8 +247,7 @@ public class PoiExeclExportUtil<T extends BaseEntity> {
 	/**
 	 * 自定义插入数据
 	 */
-	public void customMeetUserIntoData(List<MeetUser> lists,
-			Map<String, String> header) {
+	public void customMeetUserIntoData(List<MeetUser> lists, List<String> header) {
 		Sheet sheet = this.workbook.createSheet();
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -257,7 +255,7 @@ public class PoiExeclExportUtil<T extends BaseEntity> {
 		// 设置第一行
 		Row row = sheet.createRow(0);
 		int i = 0;
-		for (String string : header.values()) {
+		for (String string : header) {
 			Cell cell = row.createCell(i);
 			cell.setCellValue(string);
 			i++;
@@ -290,44 +288,47 @@ public class PoiExeclExportUtil<T extends BaseEntity> {
 			textString = new XSSFRichTextString(it.getMobilePhone());
 			cell.setCellValue(textString);
 			cell = row.createCell(6);
+			textString = new XSSFRichTextString(it.getShopInfo());
+			cell.setCellValue(textString);
+			cell = row.createCell(7);
 			textString = new XSSFRichTextString(it.getMoneyType());
 			cell.setCellValue(textString);
 
-			cell = row.createCell(7);
+			cell = row.createCell(8);
 			if (it.getReportTime() != null) {
 				cell.setCellValue(dateFormat.format(it.getReportTime()));
 			} else {
 				cell.setCellValue("");
 			}
 
-			cell = row.createCell(8);
+			cell = row.createCell(9);
 			textString = new XSSFRichTextString(it.getCarNum());
 			cell.setCellValue(textString);
-			cell = row.createCell(9);
+			cell = row.createCell(10);
 			if (it.isCarPeople()) {
 				cell.setCellValue("是");
 			} else {
 				cell.setCellValue("否");
 			}
-			cell = row.createCell(10);
+			cell = row.createCell(11);
 			if (it.getLeaveTime() != null) {
 				cell.setCellValue(dateFormat.format(it.getLeaveTime()));
 			} else {
 				cell.setCellValue("");
 			}
-			cell = row.createCell(11);
+			cell = row.createCell(12);
 			if (it.isCarLeavePeople()) {
 				cell.setCellValue("是");
 			} else {
 				cell.setCellValue("否");
 			}
-			cell = row.createCell(12);
+			cell = row.createCell(13);
 			textString = new XSSFRichTextString(it.getCarLeaveNum());
 			cell.setCellValue(textString);
-			cell = row.createCell(13);
+			cell = row.createCell(14);
 			textString = new XSSFRichTextString(it.getOther());
 			cell.setCellValue(textString);
-			cell = row.createCell(14);
+			cell = row.createCell(15);
 			if (it.getCreateTime() != null) {
 				cell.setCellValue(dateFormat.format(it.getCreateTime()));
 			} else {
