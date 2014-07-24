@@ -9,7 +9,7 @@
 	<constant name="struts.convention.package.locators" value="struts2,action" />
 
 	<constant name="struts.convention.action.mapAllMatches" value="true" />
-
+	
 	<constant name="struts.custom.i18n.resources" value="i18n" />
 	<!-- 是否自动加载国际化资源文件 -->
 	<constant name="struts.i18n.reload" value="true" />
@@ -54,13 +54,12 @@
 				<interceptor-ref name="paramsPrepareParamsStack">
 					<param name="modelDriven.refreshModelBeforeResult">true</param>
 				</interceptor-ref>
-				<!-- <interceptor-ref name="defaultStack">
-					<param name="modelDriven.refreshModelBeforeResult">true</param>
-				</interceptor-ref> -->
+				<!-- <interceptor-ref name="defaultStack"> <param name="modelDriven.refreshModelBeforeResult">true</param> 
+					</interceptor-ref> -->
 			</interceptor-stack>
 		</interceptors>
 
-		<default-interceptor-ref name="defaultInterceptor"/>
+		<default-interceptor-ref name="defaultInterceptor" />
 
 		<default-action-ref name="notFound" />
 		<action name="notFound">

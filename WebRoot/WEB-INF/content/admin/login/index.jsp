@@ -4,7 +4,6 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -14,7 +13,9 @@
 	href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+<meta name="_csrf" content="${_csrf.token}" />
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <script type="text/javascript" src="myfiles/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript"
 	src="myfiles/Plugin/Bootstrap/js/bootstrap.min.js"></script>
@@ -44,18 +45,23 @@
 
 </head>
 <body>
-
+	
 	<div class="container">
-
+	
+	<s:hidden name="%{#attr._csrf.parameterName}" value="%{#attr._csrf.token}"/>
 		
-		<form data-status='<s:text name="login.loading" />'
-			data-url="<s:url action="list"  namespace="/admin/right" />"
-			class="form-signin" role="form" name="login"
-			action="j_spring_security_check" method="post">
+		
+		${_csrf.parameterName}
+		${_csrf.token}
+		<s:form cssClass="form-signin" data-status='<s:text name="login.loading" />' 
+			data-url='<s:url action="index"  namespace="/admin/meet-user" />'
+			 role="form" name="login"
+			action="j_spring_security_check" method="post" >
+			
 			<h2 class="form-signin-heading">
 				<s:text name="login.sign.in" />
 			</h2>
-			
+
 			<s:set name="login_error">${param.error }</s:set>
 			<s:if test="%{#login_error == 'true' }">
 				<div class="alert alert-warning alert-dismissible" role="alert">
@@ -66,17 +72,14 @@
 					${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}
 				</div>
 			</s:if>
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" />
+			
 			<div class="form-group input-group-lg">
-				<label for="username"><s:text name="login.username" /></label> <input
-					type="text" id="username" name="username" class="form-control"
-					placeholder="<s:text name="login.username"/>" required autofocus>
+				<label for="username"><s:text name="login.username" /></label> 
+				<input type="text" name="username" class="form-control" placeholder="<s:text name="login.username"/>" required autofocus>
 			</div>
 			<div class="form-group input-group-lg">
-				<label for="password"><s:text name="login.password" /></label> <input
-					id="password" type="password" name="password" class="form-control"
-					placeholder="<s:text name="login.password"/>" required>
+				<label for="password"><s:text name="login.password" /></label>
+				<input type="password" name="password" class="form-control" placeholder="<s:text name="login.password"/>" required>
 			</div>
 
 			<div class="form-group input-group-lg">
@@ -84,8 +87,8 @@
 						name="login.message.verity.code" /> </label> <input type="text"
 					name="verifycode"
 					style=" display: inline;width: 44%;  float: left;"
-					placeholder="<s:text name="login.message.verity.code"/>"
-					id="verifycode" class="form-control"> <img
+					placeholder="<s:text name="login.message.verity.code"/>" 
+					class="form-control"> <img
 					alt="<s:text name="login.message.verity.alt"/>"
 					style="cursor: pointer; margin-left:2%"
 					src="<s:url action="verify" namespace="/" />" class="fl">
@@ -99,7 +102,7 @@
 			<button class="btn btn-lg btn-primary btn-block" type="submit">
 				<s:text name="login.sign.name" />
 			</button>
-		</form>
+		</s:form>
 
 	</div>
 	<!-- /container -->

@@ -3,12 +3,11 @@ package com.sniper.survey.struts2;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -35,7 +34,8 @@ public abstract class RootAction extends ActionSupport {
 
 	private static final long serialVersionUID = -4888324940150304798L;
 
-	@Resource
+	
+	@Autowired
 	SystemConfigService configService;
 	// 存放网站配置
 	private static Map<String, String> systemConfig = new HashMap<>();

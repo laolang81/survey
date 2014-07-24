@@ -6,12 +6,12 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.sniper.survey.dao.BaseDao;
 import com.sniper.survey.model.SystemConfig;
 
-@Repository("systemConfigService")
+@Service("systemConfigService")
 public class SystemConfigServiceImpl extends BaseServiceImpl<SystemConfig>
 		implements SystemConfigService {
 
